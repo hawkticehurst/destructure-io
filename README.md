@@ -4,26 +4,28 @@
 ## Contributions are licensed through MIT Open Source
 
 
-npm install
+## Getting Started
+
+1. Run `npm install` in NodeWarrior
+2. Run `npm start` to start local dev server (http://localhost:3000).
+
+Do not commit NodeWarrior/node_module directory
+
+## NPM Commands
+
+`npm install`
   Build dependencies
   *DO THIS FIRST*
 
-npm start
+`npm start`
   Starts the development server.
 
-npm run build
+`npm run build`
   Bundles the app into static files for production.
 
-npm test
+`npm test`
   Starts the test runner.
 
-npm run eject
+`npm run eject`
   Removes this tool and copies build dependencies, configuration files
   and scripts into the app directory. If you do this, you can’t go back!
-
-
-1. Run npm install in node-warrior-app.
-2. Run npm start to start local dev server (http://localhost:3000).
-
-
-Do not commit node-warrior-app/node_module directory
