@@ -1,4 +1,8 @@
 # NodeWarrior
+## Includes all code and documentation for the NodeWarrior project for Capstone 2020
+## Conner Ardman, Hari Kaushik, Zachary Palmer, Hawk Ticehurst
+## Contributions are licensed through MIT Open Source
+
 
 npm install
   Build dependencies
