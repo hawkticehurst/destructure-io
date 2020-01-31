@@ -4,6 +4,7 @@ body {
 }
 
 .App {
+  height: 100vh;
   text-align: center;
 }
 
@@ -16,4 +17,40 @@ body {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+/*********** COMMON COMPONENTS ***********/
+
+.two-column-container {
+  display: flex;
+  height: 100%;
+}
+
+.two-column-container-horizontal {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+/* TODO make these look cleaner */
+.two-column-divider {
+  background-color: black;
+  cursor: col-resize;
+  width: 5px;
+}
+
+/* TODO make these look cleaner */
+.two-column-divider-horizontal {
+  background-color: black;
+  width: 100%;
+  height: 5px;
+  cursor: row-resize;
+}
+
+.pane-resizing {
+  cursor: col-resize;
+}
+
+.pane-resizing-horizontal {
+  cursor: row-resize;
 }
