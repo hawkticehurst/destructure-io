@@ -20,8 +20,8 @@ npm run eject
   and scripts into the app directory. If you do this, you can’t go back!
 
 
-1. Run npm install in node-warrior-app.
+1. Run npm install in NodeWarrior.
 2. Run npm start to start local dev server (http://localhost:3000).
 
 
-Do not commit node-warrior-app/node_module directory
+Do not commit node_module directory
