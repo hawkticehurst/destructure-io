@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import {findDOMNode} from 'react-dom';
 import hljs from 'highlight.js';
-import './highlight-styles/xcode.css'; // examples of options: https://highlightjs.org/static/demo/
+import './highlight-styles/xcode.css'; // examples of options, most need to be downloaded: https://highlightjs.org/static/demo/
 
 /**
  * Required Props:
