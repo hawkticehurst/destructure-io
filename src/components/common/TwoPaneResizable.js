@@ -48,7 +48,7 @@ function TwoPaneResizable(props) {
 
   const containerClass = splitHorizontal ? 'two-column-container-horizontal' : 'two-column-container';
   const dividerClass = splitHorizontal ? 'two-column-divider-horizontal' : 'two-column-divider';
-  const paneClass = isResizing ? (splitHorizontal ? 'pane-resizing-horizontal' : 'pane-resizing') : '';
+  const paneClass = isResizing ? (splitHorizontal ? 'pane pane-resizing-horizontal' : 'pane pane-resizing') : 'pane';
 
   return (
     <div className={containerClass} ref={container}>
