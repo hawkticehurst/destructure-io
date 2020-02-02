@@ -1,0 +1,102 @@
+[
+   {
+      "code":{
+         "java":{
+            "given":"int x = 3;"
+         }
+      },
+      "animations":[
+
+      ]
+   },
+   {
+      "code":{
+         "java":{
+            "given":"int y = 4;"
+         }
+      },
+      "animations":[
+
+      ]
+   },
+   {
+      "code":{
+         "java":{
+            "given":""
+         }
+      },
+      "animations":[
+
+      ]
+   },
+   {
+      "code":{
+         "java":{
+            "given":"if (y == 4) {"
+         }
+      },
+      "animations":[
+
+      ]
+   },
+   {
+      "code":{
+         "java":{
+            "given":"  x = 5;"
+         }
+      },
+      "animations":[
+
+      ]
+   },
+   {
+      "code":{
+         "java":{
+            "given":"}"
+         }
+      },
+      "animations":[
+
+      ]
+   },
+   {
+      "code":{
+         "java":{
+            "given":""
+         }
+      },
+      "animations":[
+
+      ]
+   },
+   {
+      "code":{
+         "java":{
+            "given":"for (int i = 0; i < 5; i++) { "
+         }
+      },
+      "animations":[
+
+      ]
+   },
+   {
+      "code":{
+         "java":{
+            "given":"  y = x + i * 3;"
+         }
+      },
+      "animations":[
+
+      ]
+   },
+   {
+      "code":{
+         "java":{
+            "given":"}"
+         }
+      },
+      "animations":[
+
+      ]
+   }
+]
