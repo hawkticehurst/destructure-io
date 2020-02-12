@@ -88,4 +88,5 @@ body {
   padding-right: 5px;
   padding-top: var(--code-padding-vertical);
   padding-bottom: var(--code-padding-vertical);
+  user-select: none;
 }

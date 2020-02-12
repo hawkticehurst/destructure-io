@@ -1,102 +1,106 @@
 [
-   {
-      "code":{
-         "java":{
-            "given":"int x = 3;"
-         }
-      },
-      "animations":[
-
+  {
+    "type": "hidden",
+    "code": {
+      "java": [
+        {
+          "given": "class Node {"
+        },
+        {
+          "given": "  int data;"
+        },
+        {
+          "given": "  Node next;"
+        },
+        {
+          "given": "}"
+        },
+        {
+          "given": ""
+        },
+        {
+          "given": "public Node(int data) {"
+        },
+        {
+          "given": "  this.data = data;"
+        },
+        {
+          "given": "  this.next = null;"
+        },
+        {
+          "given": "}"
+        }
       ]
-   },
-   {
-      "code":{
-         "java":{
-            "given":"int y = 4;"
-         }
-      },
-      "animations":[
+    }
+  },
+  {
+    "type": "skipped",
+    "code": {
+      "java": [{
+        "given": ""
+      }]
+    }
+  },
+  {
+    "type": "auto",
+    "code": {
+      "java": [{
+        "given": "public void example() {",
+        "animations": [
 
-      ]
-   },
-   {
-      "code":{
-         "java":{
-            "given":""
-         }
-      },
-      "animations":[
+        ]
+      },{
+        "given": "  Node head = new Node(0);",
+        "animations": [
 
-      ]
-   },
-   {
-      "code":{
-         "java":{
-            "given":"if (y == 4) {"
-         }
+        ]
       },
-      "animations":[
+      {
+        "given": "  Node curr = head;",
+        "animations": [
 
-      ]
-   },
-   {
-      "code":{
-         "java":{
-            "given":"  x = 5;"
-         }
+        ]
+      }
+    ]
+    }
+  },
+  {
+    "type": "loop",
+    "loopCounter": [3],
+    "code": {
+      "java": [{
+        "given": "  for (int i = 0; i < 3; i++) {",
+        "animations": [
+
+        ]
       },
-      "animations":[
+      {
+        "given": "    curr.next = new Node(i);",
+        "animations": [
 
-      ]
-   },
-   {
-      "code":{
-         "java":{
-            "given":"}"
-         }
+        ]
       },
-      "animations":[
+      {
+        "given": "    curr = curr.next;",
+        "animations": [
 
-      ]
-   },
-   {
-      "code":{
-         "java":{
-            "given":""
-         }
+        ]
       },
-      "animations":[
+      {
+        "given": "  }",
+        "animations": [
 
-      ]
-   },
-   {
-      "code":{
-         "java":{
-            "given":"for (int i = 0; i < 5; i++) { "
-         }
-      },
-      "animations":[
-
-      ]
-   },
-   {
-      "code":{
-         "java":{
-            "given":"  y = x + i * 3;"
-         }
-      },
-      "animations":[
-
-      ]
-   },
-   {
-      "code":{
-         "java":{
-            "given":"}"
-         }
-      },
-      "animations":[
-
-      ]
-   }
+        ]
+      }
+    ]
+  }
+},
+{
+  "type": "auto",
+  "code": {
+    "java": [{
+      "given": "}"
+    }]
+  }
+}
 ]
