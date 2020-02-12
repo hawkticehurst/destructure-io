@@ -20,9 +20,7 @@ function App() {
                 </div>
               }
               secondComponent={
-                <div>
-                  <CodeDisplay language="java" codeData={data} />
-                </div>
+                <CodeDisplay language="java" codeData={data} />
               }
               initialStartSize={30}
               splitHorizontal={true}

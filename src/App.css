@@ -62,13 +62,17 @@ body {
 
 /*********** CODE DISPLAY ***********/
 
+.code-display {
+  overflow: scroll;
+  height: 100%;
+}
+
 .code-format {
   margin: 0;
-  white-space: pre-wrap;
 }
 
 .hljs { /* highlight JS created class */
-  padding: var(--code-padding-vertical);
+  padding: var(--code-padding-vertical) !important; /* important to override any of the highlight styles */
 }
 
 .code-line {
@@ -78,6 +82,7 @@ body {
 }
 
 .code-content {
+  width: 100%;
   margin-left: 10px;
 }
 

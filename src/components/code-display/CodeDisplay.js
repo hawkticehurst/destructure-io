@@ -33,6 +33,7 @@ function CodeDisplay(props) {
         language={language}
         code={chunkObj.code[language]}
         lineNumberStart={currLineNumber}
+        isHidden={chunkObj.type === "hidden"}
         key={index} />
     );
     currLineNumber += chunkObj.code[language].length;
@@ -40,7 +41,7 @@ function CodeDisplay(props) {
   });
 
   return (
-    <div>
+    <div className="code-display">
       {codeChunks}
     </div>
   );
