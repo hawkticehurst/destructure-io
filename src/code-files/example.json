@@ -13,19 +13,19 @@
           "given": "  Node next;"
         },
         {
-          "given": "}"
-        },
-        {
           "given": ""
         },
         {
-          "given": "public Node(int data) {"
+          "given": "  public Node(int data) {"
         },
         {
-          "given": "  this.data = data;"
+          "given": "    this.data = data;"
         },
         {
-          "given": "  this.next = null;"
+          "given": "    this.next = null;"
+        },
+        {
+          "given": "  }"
         },
         {
           "given": "}"

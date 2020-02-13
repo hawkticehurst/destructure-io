@@ -68,11 +68,39 @@ body {
 }
 
 .code-format {
+  transition: position 1s;
   margin: 0;
 }
 
 .hljs { /* highlight JS created class */
   padding: var(--code-padding-vertical) !important; /* important to override any of the highlight styles */
+}
+
+@keyframes delay-overflow {
+  from {
+    overflow-y: hidden;
+  }
+}
+
+.chunk {
+  max-height: 1000px;
+  /* overflow-y: hidden; */
+  transition: 1s;
+  animation: 1s delay-overflow;
+}
+
+.chunk-collapsed {
+  max-height: 18px; /* TODO this should probably be calculated somehow */
+  overflow-y: hidden;
+  transition: .5s;
+}
+
+.hidden-chunk {
+  background-color: lightgray;
+
+  /* This mostly fixes the background color not scaling */
+  display: inline-block;
+  min-width: 100%;
 }
 
 .code-line {
@@ -94,4 +122,34 @@ body {
   padding-top: var(--code-padding-vertical);
   padding-bottom: var(--code-padding-vertical);
   user-select: none;
+}
+
+/* Chevrons from https://codepen.io/egf/pen/jzylw */
+.chevron::before {
+	border-style: solid;
+	border-width: 0.2em 0.2em 0 0;
+	content: '';
+	display: inline-block;
+	height: 0.45em;
+	left: 0.15em;
+	position: relative;
+	top: 0.15em;
+	transform: rotate(-45deg);
+	width: 0.45em;
+  transition: .5s;
+}
+
+.chevron:hover {
+  transform: scale(1.1);
+  transition: .5s;
+}
+
+.chevron.right:before {
+	left: 0;
+	transform: rotate(45deg);
+}
+
+.chevron.bottom:before {
+	top: 0;
+	transform: rotate(135deg);
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import CodeLine from './CodeLine';
 
 /**
@@ -12,21 +12,33 @@ import CodeLine from './CodeLine';
  */
 function CodeChunk(props) {
   const {code, language, lineNumberStart, isHidden} = props;
+  const [isCollapsed, setIsCollapsed] = useState(isHidden);
 
   const codeLines = code.map((lineData, index) => {
     return <CodeLine
             language={language}
             code={lineData.given}
             lineNumber={index + lineNumberStart}
+            onChevronClick={index === 0 ? () => setIsCollapsed(!isCollapsed) : null}
+            isCollapsed={isCollapsed}
             isHidden={isHidden}
             key={index} />
   });
 
+  let className = "chunk";
+  if (isCollapsed) {
+    className += "-collapsed";
+  }
+  if (isHidden) {
+    className += " hidden-chunk";
+  }
+
   return (
-    <div>
+    <div className={className}>
       {codeLines}
     </div>
   );
+
 }
 
 export default CodeChunk;
