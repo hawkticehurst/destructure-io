@@ -9,15 +9,15 @@ function NavBar(props) {
   const { brandTitle } = props;
 
   return (
-    <div className={'nav-bar-container'}>
-      <div className={'nav-back-btn'}>
-        <svg className={'hamburger-icon'}>
-          <use xlinkHref={'/website-icons.svg#hamburger-icon'}></use>
+    <div className="nav-bar-container">
+      <div className="nav-back-btn">
+        <svg className="hamburger-icon">
+          <use xlinkHref="/website-icons.svg#hamburger-icon"></use>
         </svg>
         <a href="#">Sub-Module</a>
       </div>
       <h1>{brandTitle}</h1>
-      <div className={'nav-links'}>
+      <div className="nav-links">
         <a href="#">Account</a>
       </div>
     </div>
