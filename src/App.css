@@ -2,22 +2,106 @@
 :root {
   /* Common */
   --two-pane-divider-size: 5px;
-  --two-pane-divider-color: black;
+  --two-pane-divider-color: #1b2631;
 
   /* Code Display */
   --code-padding-vertical: 2px;
+
+  /* Colors */
+  --hero-yellow: #ffc300;
+  --hero-yellow-hover: #ffca25;
+  --hero-navy: #1b2631;
+
+  /* Nav Bar */
+  --hamburger-icon-width: 32px;
+  --hamburger-icon-height: 32px;
+
+  /* Learning Module */
+  --learning-module-height: 84vh;
 }
+
+/* Import Fonts */
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,500,700&display=swap');
 
 body {
   margin: 0;
-  font-family: -apple-system, sans-serif;
+  font-family: 'IBM Plex Sans', 'Arial', sans-serif;
+  font-weight: 400;
+}
+
+h1 {
+  font-weight: 700;
 }
 
 .App {
   height: 100vh;
 }
 
+/* TODO: REMOVE ONCE TEXT AND VISUALIZATION CONTENT IMPLEMENTED */
+.filler-text {
+  font-size: 14pt;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 /*********** COMMON COMPONENTS ***********/
+
+.nav-bar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 1.5em;
+  color: white;
+  background-color: var(--hero-navy);
+}
+
+.nav-bar-container a {
+  text-decoration: none;
+  margin: 0;
+  font-size: 18px;
+}
+
+.hamburger-icon {
+  width: var(--hamburger-icon-width);
+  height: var(--hamburger-icon-height);
+}
+
+.nav-back-btn {
+  display: flex;
+  align-items: center;
+  background-color: var(--hero-yellow);
+  font-weight: 500;
+  padding: 0.75em;
+}
+
+.nav-back-btn:hover {
+  background-color: var(--hero-yellow-hover);
+}
+
+.nav-back-btn a {
+  color: black;
+  margin-left: 0.3em;
+}
+
+.nav-back-btn:hover {
+  cursor: pointer;
+}
+
+.nav-bar-container h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.nav-links {
+  margin: 0;
+}
+
+.nav-links a {
+  color: white;
+}
 
 .two-column-container {
   display: flex;
@@ -60,6 +144,37 @@ body {
   cursor: row-resize;
 }
 
+/*********** LEARNING MODULE ***********/
+
+.learning-module-container {
+  border-radius: 5px;
+  margin: 0;
+  height: var(--learning-module-height);
+}
+
+/*********** ANIMATION BUTTONS ***********/
+
+.animate-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--hero-navy);
+  position: fixed;
+  width: 100%;
+  margin: 0;
+  padding: 10px 0 10px 0;
+  z-index: 1;
+}
+
+.animate-btn-container button {
+  background-color: var(--hero-yellow);
+  border-style: none;
+  border-radius: 5px;
+  padding: 1em;
+  font-weight: bold;
+  margin: 0 0.5em 0em 0.5em;
+}
+
 /*********** CODE DISPLAY ***********/
 
 .code-display {
@@ -72,8 +187,11 @@ body {
   margin: 0;
 }
 
-.hljs { /* highlight JS created class */
-  padding: var(--code-padding-vertical) !important; /* important to override any of the highlight styles */
+.hljs {
+  /* highlight JS created class */
+  padding: var(
+    --code-padding-vertical
+  ) !important; /* important to override any of the highlight styles */
 }
 
 @keyframes delay-overflow {
@@ -96,7 +214,7 @@ body {
 .chunk-collapsed {
   max-height: 18px; /* TODO this should probably be calculated somehow */
   overflow-y: hidden;
-  transition: .5s;
+  transition: 0.5s;
 }
 
 .hidden-chunk {
@@ -104,13 +222,13 @@ body {
 }
 
 .selected-line {
-  background-color: lightyellow;
+  background-color: var(--hero-yellow);
 }
 
 .code-line {
   min-width: 100%;
   display: flex;
-  font-size: 13px;
+  font-size: 15px;
   font-family: monospace;
 }
 
@@ -131,33 +249,33 @@ body {
 
 /* Chevrons based on https://codepen.io/egf/pen/jzylw */
 .chevron {
-  transition: .5s;
+  transition: 0.5s;
 }
 
 .chevron::before {
-	border-style: solid;
-	border-width: 0.2em 0.2em 0 0;
-	content: '';
-	display: inline-block;
-	height: 0.45em;
-	left: 0.15em;
-	position: relative;
-	top: 5px;
-	transform: rotate(-45deg);
-	width: 0.45em;
-  transition: .5s;
+  border-style: solid;
+  border-width: 0.2em 0.2em 0 0;
+  content: '';
+  display: inline-block;
+  height: 0.45em;
+  left: 0.15em;
+  position: relative;
+  top: 5px;
+  transform: rotate(-45deg);
+  width: 0.45em;
+  transition: 0.5s;
   vertical-align: top;
 }
 
 .chevron:hover {
   transform: scale(1.1);
-  transition: .5s;
+  transition: 0.5s;
 }
 
 .chevron.right:before {
-	transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
 .chevron.bottom:before {
-	transform: rotate(135deg);
+  transform: rotate(135deg);
 }

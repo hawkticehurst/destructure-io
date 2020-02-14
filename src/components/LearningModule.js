@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import TwoPaneResizable from './common/TwoPaneResizable';
 import CodeDisplay from './code-display/CodeDisplay';
 import useInterval from '../hooks/useInterval';
@@ -14,7 +14,7 @@ const trueSelecteLineMap = new Map();
 let iterationNumber = 1;
 let startingLine = 1;
 data.forEach(chunkObj => {
-  const {code, type, loopCounter} = chunkObj;
+  const { code, type, loopCounter } = chunkObj;
   if (type !== 'hidden' && type !== 'skipped') {
     // TODO use loopCounter of selected input box
     let remainingLoops = loopCounter != null ? loopCounter[0] : 1;
@@ -72,17 +72,13 @@ function LearningModule() {
   return (
     <div>
       {/* TODO these inline styles are just temporary */}
-      <button style={{margin: "10px"}} onClick={setPreviousLine} disabled={selectedLine <= 0}>Previous line</button>
-      <button style={{margin: "10px"}} onClick={setNextLine}>Next line</button>
-      <button style={{margin: "10px"}} onClick={startAnimation} disabled={speed != null}>Play All</button>
-      <button style={{margin: "10px"}} onClick={stopAnimation} disabled={speed == null}>Pause Animation</button>
-      <div style={{margin: "5px", border: "solid black 2px", height: "90vh"}}>
+      <div className="learning-module-container">
         <TwoPaneResizable
           firstComponent={
             <TwoPaneResizable
               firstComponent={
-                <div>
-                  Text explanation going here
+                <div className="filler-text">
+                  Text Content Here
                 </div>
               }
               secondComponent={
@@ -90,15 +86,21 @@ function LearningModule() {
               }
               initialStartSize={30}
               splitHorizontal={true}
-              />
+            />
           }
           secondComponent={
-            <div>
-              Visualization here
+            <div className="filler-text">
+              Visualization Here
             </div>
           }
           initialStartSize={40}
-           />
+        />
+      </div>
+      <div className="animate-btn-container">
+        <button onClick={startAnimation} disabled={speed != null}>Play Animation</button>
+        <button onClick={stopAnimation} disabled={speed == null}>Pause Animation</button>
+        <button onClick={setPreviousLine} disabled={selectedLine <= 0}>Previous Line</button>
+        <button onClick={setNextLine}>Next Line</button>
       </div>
     </div>
   );
