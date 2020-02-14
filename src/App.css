@@ -1,282 +1,282 @@
 /* CSS Variables */
 :root {
-	/* Common */
-	--two-pane-divider-size: 5px;
-	--two-pane-divider-color: #1b2631;
+  /* Common */
+  --two-pane-divider-size: 5px;
+  --two-pane-divider-color: #1b2631;
 
-	/* Code Display */
-	--code-padding-vertical: 2px;
+  /* Code Display */
+  --code-padding-vertical: 2px;
 
-	/* Colors */
-	--hero-yellow: #ffc300;
-	--hero-yellow-hover: #ffca25;
-	--hero-navy: #1b2631;
+  /* Colors */
+  --hero-yellow: #ffc300;
+  --hero-yellow-hover: #ffca25;
+  --hero-navy: #1b2631;
 
-	/* Nav Bar */
-	--hamburger-icon-width: 32px;
-	--hamburger-icon-height: 32px;
+  /* Nav Bar */
+  --hamburger-icon-width: 32px;
+  --hamburger-icon-height: 32px;
 
-	/* Learning Module */
-	--learning-module-height: 84vh;
+  /* Learning Module */
+  --learning-module-height: 84vh;
 }
 
 /* Import Fonts */
 @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,500,700&display=swap');
 
 body {
-	margin: 0;
-	font-family: 'IBM Plex Sans', 'Arial', sans-serif;
-	font-weight: 400;
+  margin: 0;
+  font-family: 'IBM Plex Sans', 'Arial', sans-serif;
+  font-weight: 400;
 }
 
 h1 {
-	font-weight: 700;
+  font-weight: 700;
 }
 
 .App {
-	height: 100vh;
+  height: 100vh;
 }
 
 /* TODO: REMOVE ONCE TEXT AND VISUALIZATION CONTENT IMPLEMENTED */
 .filler-text {
-	font-size: 14pt;
-	font-weight: bold;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100%;
+  font-size: 14pt;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 /*********** COMMON COMPONENTS ***********/
 
 .nav-bar-container {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding-right: 1.5em;
-	color: white;
-	background-color: var(--hero-navy);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 1.5em;
+  color: white;
+  background-color: var(--hero-navy);
 }
 
 .nav-bar-container a {
-	text-decoration: none;
-	margin: 0;
-	font-size: 18px;
+  text-decoration: none;
+  margin: 0;
+  font-size: 18px;
 }
 
 .hamburger-icon {
-	width: var(--hamburger-icon-width);
-	height: var(--hamburger-icon-height);
+  width: var(--hamburger-icon-width);
+  height: var(--hamburger-icon-height);
 }
 
 .nav-back-btn {
-	display: flex;
-	align-items: center;
-	background-color: var(--hero-yellow);
-	font-weight: 500;
-	padding: 0.75em;
+  display: flex;
+  align-items: center;
+  background-color: var(--hero-yellow);
+  font-weight: 500;
+  padding: 0.75em;
 }
 
 .nav-back-btn:hover {
-	background-color: var(--hero-yellow-hover);
+  background-color: var(--hero-yellow-hover);
 }
 
 .nav-back-btn a {
-	color: black;
-	margin-left: 0.3em;
+  color: black;
+  margin-left: 0.3em;
 }
 
 .nav-back-btn:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .nav-bar-container h1 {
-	margin: 0;
-	font-size: 22px;
+  margin: 0;
+  font-size: 22px;
 }
 
 .nav-links {
-	margin: 0;
+  margin: 0;
 }
 
 .nav-links a {
-	color: white;
+  color: white;
 }
 
 .two-column-container {
-	display: flex;
-	height: 100%;
+  display: flex;
+  height: 100%;
 }
 
 .two-column-container-horizontal {
-	display: flex;
-	height: 100%;
-	flex-direction: column;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
 }
 
 /* TODO make these look cleaner */
 .two-column-divider {
-	background-color: var(--two-pane-divider-color);
-	cursor: col-resize;
-	width: var(--two-pane-divider-size);
+  background-color: var(--two-pane-divider-color);
+  cursor: col-resize;
+  width: var(--two-pane-divider-size);
 }
 
 /* TODO make these look cleaner */
 .two-column-divider-horizontal {
-	background-color: var(--two-pane-divider-color);
-	width: 100%;
-	height: var(--two-pane-divider-size);
-	cursor: row-resize;
+  background-color: var(--two-pane-divider-color);
+  width: 100%;
+  height: var(--two-pane-divider-size);
+  cursor: row-resize;
 }
 
 .pane {
-	overflow: hidden;
-	height: 100%;
+  overflow: hidden;
+  height: 100%;
 }
 
 .pane-resizing {
-	overflow: hidden;
-	cursor: col-resize;
+  overflow: hidden;
+  cursor: col-resize;
 }
 
 .pane-resizing-horizontal {
-	overflow: hidden;
-	cursor: row-resize;
+  overflow: hidden;
+  cursor: row-resize;
 }
 
 /*********** LEARNING MODULE ***********/
 
 .learning-module-container {
-	border-radius: 5px;
-	margin: 0;
-	height: var(--learning-module-height);
+  border-radius: 5px;
+  margin: 0;
+  height: var(--learning-module-height);
 }
 
 /*********** ANIMATION BUTTONS ***********/
 
 .animate-btn-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: var(--hero-navy);
-	position: fixed;
-	width: 100%;
-	margin: 0;
-	padding: 10px 0 10px 0;
-	display: flex;
-	z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--hero-navy);
+  position: fixed;
+  width: 100%;
+  margin: 0;
+  padding: 10px 0 10px 0;
+  display: flex;
+  z-index: 1;
 }
 
 .animate-btn-container button {
-	background-color: var(--hero-yellow);
-	border-style: none;
-	border-radius: 5px;
-	padding: 1em;
-	font-weight: bold;
-	margin: 0 0.5em 0em 0.5em;
+  background-color: var(--hero-yellow);
+  border-style: none;
+  border-radius: 5px;
+  padding: 1em;
+  font-weight: bold;
+  margin: 0 0.5em 0em 0.5em;
 }
 
 /*********** CODE DISPLAY ***********/
 
 .code-display {
-	overflow: scroll;
-	height: 100%;
+  overflow: scroll;
+  height: 100%;
 }
 
 .code-format {
-	transition: position 1s;
-	margin: 0;
+  transition: position 1s;
+  margin: 0;
 }
 
 .hljs {
-	/* highlight JS created class */
-	padding: var(
-		--code-padding-vertical
-	) !important; /* important to override any of the highlight styles */
+  /* highlight JS created class */
+  padding: var(
+    --code-padding-vertical
+  ) !important; /* important to override any of the highlight styles */
 }
 
 @keyframes delay-overflow {
-	from {
-		overflow-y: hidden;
-	}
+  from {
+    overflow-y: hidden;
+  }
 }
 
 .chunk {
-	min-width: 100%;
+  min-width: 100%;
 }
 
 .chunk-open {
-	max-height: 1000px;
-	/* overflow-y: hidden; */
-	transition: 1s;
-	animation: 1s delay-overflow;
+  max-height: 1000px;
+  /* overflow-y: hidden; */
+  transition: 1s;
+  animation: 1s delay-overflow;
 }
 
 .chunk-collapsed {
-	max-height: 18px; /* TODO this should probably be calculated somehow */
-	overflow-y: hidden;
-	transition: 0.5s;
+  max-height: 18px; /* TODO this should probably be calculated somehow */
+  overflow-y: hidden;
+  transition: 0.5s;
 }
 
 .hidden-chunk {
-	background-color: lightgray;
+  background-color: lightgray;
 }
 
 .selected-line {
-	background-color: var(--hero-yellow);
+  background-color: var(--hero-yellow);
 }
 
 .code-line {
-	min-width: 100%;
-	display: flex;
-	font-size: 15px;
-	font-family: monospace;
+  min-width: 100%;
+  display: flex;
+  font-size: 15px;
+  font-family: monospace;
 }
 
 .code-content {
-	width: 100%;
-	margin-left: 10px;
+  width: 100%;
+  margin-left: 10px;
 }
 
 .line-number {
-	min-width: 15px;
-	text-align: right;
-	padding-left: 5px;
-	padding-right: 5px;
-	padding-top: var(--code-padding-vertical);
-	padding-bottom: var(--code-padding-vertical);
-	user-select: none;
+  min-width: 15px;
+  text-align: right;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: var(--code-padding-vertical);
+  padding-bottom: var(--code-padding-vertical);
+  user-select: none;
 }
 
 /* Chevrons based on https://codepen.io/egf/pen/jzylw */
 .chevron {
-	transition: 0.5s;
+  transition: 0.5s;
 }
 
 .chevron::before {
-	border-style: solid;
-	border-width: 0.2em 0.2em 0 0;
-	content: '';
-	display: inline-block;
-	height: 0.45em;
-	left: 0.15em;
-	position: relative;
-	top: 5px;
-	transform: rotate(-45deg);
-	width: 0.45em;
-	transition: 0.5s;
-	vertical-align: top;
+  border-style: solid;
+  border-width: 0.2em 0.2em 0 0;
+  content: '';
+  display: inline-block;
+  height: 0.45em;
+  left: 0.15em;
+  position: relative;
+  top: 5px;
+  transform: rotate(-45deg);
+  width: 0.45em;
+  transition: 0.5s;
+  vertical-align: top;
 }
 
 .chevron:hover {
-	transform: scale(1.1);
-	transition: 0.5s;
+  transform: scale(1.1);
+  transition: 0.5s;
 }
 
 .chevron.right:before {
-	transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
 .chevron.bottom:before {
-	transform: rotate(135deg);
+  transform: rotate(135deg);
 }
