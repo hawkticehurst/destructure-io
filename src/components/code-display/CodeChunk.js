@@ -9,25 +9,30 @@ import CodeLine from './CodeLine';
  *
  * Optional Props:
  * isHidden {Boolean} - Defaults to false, if true it shows as "grayed out"
+ * selectedLine {number} - Number of selected line. If undefined or -1 is passed, no lines are selected
  */
 function CodeChunk(props) {
-  const {code, language, lineNumberStart, isHidden} = props;
+  const {code, language, lineNumberStart, isHidden, selectedLine} = props;
   const [isCollapsed, setIsCollapsed] = useState(isHidden);
 
   const codeLines = code.map((lineData, index) => {
+    const lineNumber = index + lineNumberStart;
     return <CodeLine
             language={language}
             code={lineData.given}
-            lineNumber={index + lineNumberStart}
+            lineNumber={lineNumber}
             onChevronClick={index === 0 ? () => setIsCollapsed(!isCollapsed) : null}
             isCollapsed={isCollapsed}
             isHidden={isHidden}
+            isSelected={selectedLine === lineNumber}
             key={index} />
   });
 
   let className = "chunk";
   if (isCollapsed) {
-    className += "-collapsed";
+    className += " chunk-collapsed";
+  } else {
+    className += " chunk-open"
   }
   if (isHidden) {
     className += " hidden-chunk";

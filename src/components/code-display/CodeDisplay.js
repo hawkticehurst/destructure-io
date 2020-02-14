@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import CodeChunk from './CodeChunk';
 
 /**
  * Required Props:
  * language {String} - "java", "javascript", etc
+ * selectedLine {number} - line number to highlight, -1 to highlight nothing
  * codeData {Array<Obj>} - Code data as a JS object in format:
  [
     {
@@ -24,22 +25,41 @@ import CodeChunk from './CodeChunk';
   ]
  */
 function CodeDisplay(props) {
-  const {codeData, language} = props;
+  const {codeData, language, selectedLine} = props;
+
+  // This is a bit hacky, but it listens for horizontal scrolls on the code display
+  // If any happen, it makes sure all lines stay the full width of the container,
+  // which keeps the background colors visable.
+  useEffect(() => {
+    document.querySelector('.code-display').addEventListener('scroll', () => {
+      const chunks = document.querySelectorAll('.chunk');
+      let maxWidth = 0;
+      chunks.forEach((line) => {
+        if (line.scrollWidth > maxWidth) {
+          maxWidth = line.scrollWidth;
+        }
+      });
+      chunks.forEach((line) => {
+        line.style.width = maxWidth + "px";
+      });
+    });
+  }, []);
 
   let currLineNumber = 1;
   const codeChunks = codeData.map((chunkObj, index) => {
+    const {code, type} = chunkObj;
     const codeChunk = (
       <CodeChunk
         language={language}
-        code={chunkObj.code[language]}
+        code={code[language]}
         lineNumberStart={currLineNumber}
-        isHidden={chunkObj.type === "hidden"}
+        isHidden={type === "hidden"}
+        selectedLine={selectedLine}
         key={index} />
     );
-    currLineNumber += chunkObj.code[language].length;
+    currLineNumber += code[language].length;
     return codeChunk;
   });
-
   return (
     <div className="code-display">
       {codeChunks}

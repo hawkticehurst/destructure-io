@@ -2,7 +2,8 @@ import React, {useEffect, useRef} from 'react';
 import {findDOMNode} from 'react-dom';
 import hljs from 'highlight.js';
 import './highlight-styles/xcode.scss'; // examples of options, most need to be downloaded: https://highlightjs.org/static/demo/
-import './highlight-styles/hidden.scss'; // examples of options, most need to be downloaded: https://highlightjs.org/static/demo/
+import './highlight-styles/hidden.scss';
+import './highlight-styles/selected.scss';
 
 /**
  * Required Props:
@@ -10,6 +11,7 @@ import './highlight-styles/hidden.scss'; // examples of options, most need to be
  *
  * Optional Props:
  * isHidden {Boolean} - defaults to false, true to "gray" out code
+ * isSelected {Boolean} - defaults to false, true to show code as selected
  *
  * Children:
  * Any text to be highlighted should be a child.
@@ -18,7 +20,7 @@ import './highlight-styles/hidden.scss'; // examples of options, most need to be
  * <CodeHighlight language="java">int x = 5;</CodeHighlight>
  */
 function CodeHighlight(props) {
-  const {language, children, isHidden} = props;
+  const {language, children, isHidden, isSelected} = props;
   const codeRef = useRef(null);
 
   useEffect(() => {
@@ -26,7 +28,7 @@ function CodeHighlight(props) {
   });
 
   return (
-    <div className={isHidden ? "hidden-code" : "standard-code"}>
+    <div className={isHidden ? "hidden-code" : isSelected ? "selected-code" : "standard-code"}>
       <pre className="code-format">
         <code className={language} ref={codeRef}>
           {children}

@@ -83,6 +83,10 @@ body {
 }
 
 .chunk {
+  min-width: 100%;
+}
+
+.chunk-open {
   max-height: 1000px;
   /* overflow-y: hidden; */
   transition: 1s;
@@ -97,13 +101,14 @@ body {
 
 .hidden-chunk {
   background-color: lightgray;
+}
 
-  /* This mostly fixes the background color not scaling */
-  display: inline-block;
-  min-width: 100%;
+.selected-line {
+  background-color: lightyellow;
 }
 
 .code-line {
+  min-width: 100%;
   display: flex;
   font-size: 13px;
   font-family: monospace;
@@ -124,7 +129,11 @@ body {
   user-select: none;
 }
 
-/* Chevrons from https://codepen.io/egf/pen/jzylw */
+/* Chevrons based on https://codepen.io/egf/pen/jzylw */
+.chevron {
+  transition: .5s;
+}
+
 .chevron::before {
 	border-style: solid;
 	border-width: 0.2em 0.2em 0 0;
@@ -133,10 +142,11 @@ body {
 	height: 0.45em;
 	left: 0.15em;
 	position: relative;
-	top: 0.15em;
+	top: 5px;
 	transform: rotate(-45deg);
 	width: 0.45em;
   transition: .5s;
+  vertical-align: top;
 }
 
 .chevron:hover {
@@ -145,11 +155,9 @@ body {
 }
 
 .chevron.right:before {
-	left: 0;
 	transform: rotate(45deg);
 }
 
 .chevron.bottom:before {
-	top: 0;
 	transform: rotate(135deg);
 }
