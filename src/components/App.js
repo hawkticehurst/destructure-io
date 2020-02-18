@@ -1,7 +1,7 @@
 import React from 'react';
 import LearningModule from './LearningModule';
 import SignIn from './auth/SignIn';
-import SignUp from './auth/SignUp';
+// import SignUp from './auth/SignUp';
 import NavBar from './common/NavBar';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import '../App.css';
@@ -16,7 +16,7 @@ function App() {
               <SignIn />
             </Route>
             <Route path="/signup">
-              <SignUp />
+              <div>sign up</div>
             </Route>
             <Route path="/">
               {/* TODO going to put some form of routing here eventually */}
