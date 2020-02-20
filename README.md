@@ -3,10 +3,14 @@
 An interactive visualization platform for learning data structures.
 
 ## Local Deploy Instructions
+
+1. Run `npm install` in the NodeWarrior base directory.
+2. Run `npm start` to start a local development server (http://localhost:3000).
+
+### NPM Reference
 ```
 npm install
-  Build dependencies
-  *DO THIS FIRST*
+  Install dependencies.
 
 npm start
   Starts the development server.
@@ -21,12 +25,7 @@ npm run eject
   Removes this tool and copies build dependencies, configuration files
   and scripts into the app directory. If you do this, you can’t go back!
 
-
-1. Run npm install in NodeWarrior.
-2. Run npm start to start local dev server (http://localhost:3000).
-
-
-Do not commit node_module directory
+Extra Note: Do not commit the node_modules directory.
 ```
 
 ## Authors
