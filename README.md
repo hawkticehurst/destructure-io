@@ -2,10 +2,12 @@
 
 An interactive visualization platform for learning data structures.
 
-## Local Deploy Instructions
+## Local Deployment Instructions
 
-1. Run `npm install` in the NodeWarrior base directory.
-2. Run `npm start` to start a local development server (http://localhost:3000).
+1. Clone or download the `master branch` of the [NodeWarrior](https://github.com/harik98/NodeWarrior/tree/master) repository.
+2. Run `npm install` in the NodeWarrior base directory.
+3. Run `npm start` to start a local development server. 
+4. Navigate to http://localhost:3000 in your web browser of choice (we recommend Chrome).
 
 ### NPM Reference
 ```
@@ -13,7 +15,7 @@ npm install
   Install dependencies.
 
 npm start
-  Starts the development server.
+  Starts a local development server.
 
 npm run build
   Bundles the app into static files for production.
