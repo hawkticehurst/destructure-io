@@ -1,4 +1,10 @@
-.standard-code {
+.selected-code {
+  .hljs {
+    background-color: #ffc300;
+  }
+}
+
+.selected-code, .standard-code {
   .hljs {
     display: block;
     padding: 0.5em;
