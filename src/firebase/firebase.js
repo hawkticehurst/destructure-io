@@ -66,11 +66,6 @@ export const addModule = (moduleJson) => {
 
   let updates = {};
   updates['/modules/' + newModuleKey] = moduleJson;
-  
-  // This code will come into play when the user attempts a module
-  // The module id will be written under their user id, fixing the many-many
-  // relationship of modules to users
-   updates['/user-modules/' + moduleJson.uid + '/' + newModuleKey]
 
   firebase.database().ref().update(updates);
   return newModuleKey;
