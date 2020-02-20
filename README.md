@@ -1,13 +1,9 @@
-# NodeWarrior
-### This project includes all code and documentation of the NodeWarrior project for Capstone 2020. 
-* Conner Ardman ardmanc@uw.edu
-* Hari Kaushik harik98@uw.edu
-* Zachary Palmer zachbhs@uw.edu
-* Hawk Ticehurst hawkt88@uw.edu
+# Node Warrior
 
-Contributions are licensed through MIT Open Source.
+An interactive visualization platform for learning data structures.
 
-
+## Local Deploy Instructions
+```
 npm install
   Build dependencies
   *DO THIS FIRST*
@@ -31,3 +27,13 @@ npm run eject
 
 
 Do not commit node_module directory
+```
+
+## Authors
+* Conner Ardman –– [ardmanc@uw.edu](mailto:ardmanc@uw.edu)
+* Hari Kaushik –– [harik98@uw.edu](mailto:harik98@uw.edu)
+* Zachary Palmer –– [zachbhs@uw.edu](mailto:zachbhs@uw.edu)
+* Hawk Ticehurst –– [hawkt88@uw.edu](mailto:hawkt88@uw.edu)
+
+## Licensing
+Contributions are licensed through MIT Open Source.
