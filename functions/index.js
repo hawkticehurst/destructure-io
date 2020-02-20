@@ -15,7 +15,7 @@ function hashedString(string) {
   return crypto.createHash('md5').update(string).digest('hex');
 }
 
-  // Listens for new messages added to 
+  // Listens for new messages added to
 exports.addModuleToUserModules = functions.database.ref('/modules/{moduleKey}/')
 .onCreate((snapshot, context) => {
   // Grab the current value of what was written to the Realtime Database.
@@ -85,8 +85,6 @@ exports.displayNameExists = functions.https.onRequest(async(req, res) => {
   if (test.length === 0 && promises.length !== 0) {
     res.status(200).send(true);
   } else {
-
-
     admin.database().ref(`/users/${uid}`).child('displayName').set(displayName)
     .then(res.status(200).send(false))
     .catch(error => res.sendStatus(400))
