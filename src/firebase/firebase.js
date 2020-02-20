@@ -83,7 +83,9 @@ export const updateUserModule = (moduleKey) => {
   // This code will come into play when the user attempts a module
   // The module id will be written under their user id, fixing the many-many
   // relationship of modules to users
-  updates['/user-modules/' + uid + '/' + moduleKey + '/' + moduleData]
+  updates['/user-modules/' + uid + '/' + moduleKey] = moduleData;
 
   firebase.database().ref().update(updates);
+
+  return moduleData;
 }
