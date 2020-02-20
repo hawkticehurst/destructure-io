@@ -1,8 +1,6 @@
-# Node Warrior
+# Node Warrior – [Landing Page](https://harik98.github.io/NodeWarrior/)
 
 An interactive visualization platform for learning data structures.
-
-Landing Page: [Node Warrior](https://harik98.github.io/NodeWarrior/)
 
 ## Local Deployment Instructions
 
