@@ -2,7 +2,11 @@
 
 An interactive visualization platform for learning data structures.
 
+Landing Page: [Node Warrior](https://harik98.github.io/NodeWarrior/)
+
 ## Local Deployment Instructions
+
+*Prerequisite: [Download npm/node.js](https://www.npmjs.com/get-npm)*
 
 1. Clone or download the `master branch` of the [NodeWarrior](https://github.com/harik98/NodeWarrior/tree/master) repository.
 2. Run `npm install` in the NodeWarrior base directory.
