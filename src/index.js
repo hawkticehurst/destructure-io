@@ -2,6 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDeMsUdMj0mx6q4VdnxkGcdbJp5OIAL2JI",
+    authDomain: "node-warrior.firebaseapp.com",
+    databaseURL: "https://node-warrior.firebaseio.com",
+    projectId: "node-warrior",
+    storageBucket: "node-warrior.appspot.com",
+    messagingSenderId: "1044681182278",
+    appId: "1:1044681182278:web:5de0f9ea5433e8b7858e47",
+    measurementId: "G-W82LT744WE"
+};
+firebase.initializeApp(firebaseConfig);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
