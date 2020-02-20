@@ -1,6 +1,8 @@
-# Node Warrior – [Landing Page](https://harik98.github.io/NodeWarrior/)
+# Node Warrior
 
 An interactive visualization platform for learning data structures.
+
+Visit our [landing page](https://harik98.github.io/NodeWarrior/) to get an overview of the project and its goals.
 
 ## Local Deployment Instructions
 
@@ -29,7 +31,7 @@ npm run eject
   Removes this tool and copies build dependencies, configuration files
   and scripts into the app directory. If you do this, you can’t go back!
 
-Extra Note: Do not commit the node_modules directory.
+Important Note: Do not commit the node_modules directory.
 ```
 
 ## Authors
@@ -40,3 +42,6 @@ Extra Note: Do not commit the node_modules directory.
 
 ## Licensing
 Contributions are licensed through MIT Open Source.
+
+## Notes & Ackowledgements
+This project was started as a part of the 2020 [Capstone Project](https://ischool.uw.edu/capstone) course at the University of Washington Information School.
