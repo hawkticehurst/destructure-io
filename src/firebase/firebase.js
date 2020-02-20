@@ -16,6 +16,9 @@ export const doCreateUserWithEmailAndPassword = (email, password) => {
     }).then(() => {
       resolve(true);
     });
+    firebase.database().ref('users/' + firebase.auth().currentUser).set({
+      email: email
+    });
   });
 }
 
@@ -63,11 +66,29 @@ export const addModule = (moduleJson) => {
 
   let updates = {};
   updates['/modules/' + newModuleKey] = moduleJson;
-  // User modules is used to connect the many-to-many relationship of users to modules attempted
-
-  // TODO this code was here but it didn't assign anything...
-  // updates['/user-modules/' + moduleJson.uid + '/' + newModuleKey]
+  
+  // This code will come into play when the user attempts a module
+  // The module id will be written under their user id, fixing the many-many
+  // relationship of modules to users
+   updates['/user-modules/' + moduleJson.uid + '/' + newModuleKey]
 
   firebase.database().ref().update(updates);
   return newModuleKey;
+}
+
+export const updateUserModule = (moduleKey) => {
+  let uid = firebase.auth().currentUser;
+
+  let moduleData = {
+    attempted: true
+  };
+
+  let updates = {};
+
+  // This code will come into play when the user attempts a module
+  // The module id will be written under their user id, fixing the many-many
+  // relationship of modules to users
+  updates['/user-modules/' + uid + '/' + moduleKey + '/' + moduleData]
+
+  firebase.database().ref().update(updates);
 }
