@@ -11,7 +11,7 @@ Visit our [landing page](https://harik98.github.io/NodeWarrior/) to get an overv
 1. Clone or download the `master branch` of the [NodeWarrior](https://github.com/harik98/NodeWarrior/tree/master) repository.
 2. Run `npm install` in the NodeWarrior base directory.
 3. Run `npm start` to start a local development server. 
-4. Navigate to http://localhost:3000 in your web browser of choice (we recommend Chrome).
+4. Navigate to the localhost URL (i.e. http://localhost:3000) given in the output of `npm start` in your web browser of choice (we recommend Chrome).
 
 ### NPM Reference
 ```
@@ -41,5 +41,5 @@ npm run eject
 ## Licensing
 Contributions are licensed through MIT Open Source.
 
-## Notes & Ackowledgements
+## Notes & Acknowledgements
 This project was started as a part of the 2020 [Capstone Project](https://ischool.uw.edu/capstone) course at the University of Washington Information School.
