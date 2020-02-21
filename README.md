@@ -30,8 +30,6 @@ npm test
 npm run eject
   Removes this tool and copies build dependencies, configuration files
   and scripts into the app directory. If you do this, you can’t go back!
-
-Important Note: Do not commit the node_modules directory.
 ```
 
 ## Authors
