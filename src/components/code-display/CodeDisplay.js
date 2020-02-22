@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import CodeChunk from './CodeChunk';
 
 /**
@@ -25,7 +25,7 @@ import CodeChunk from './CodeChunk';
   ]
  */
 function CodeDisplay(props) {
-  const {codeData, language, selectedLine} = props;
+  const { codeData, language, selectedLine } = props;
 
   // This is a bit hacky, but it listens for horizontal scrolls on the code display
   // If any happen, it makes sure all lines stay the full width of the container,
@@ -47,7 +47,7 @@ function CodeDisplay(props) {
 
   let currLineNumber = 1;
   const codeChunks = codeData.map((chunkObj, index) => {
-    const {code, type} = chunkObj;
+    const { code, type } = chunkObj;
     const codeChunk = (
       <CodeChunk
         language={language}

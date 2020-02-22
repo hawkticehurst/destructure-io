@@ -14,11 +14,12 @@ function NavBar(props) {
         <svg className="hamburger-icon">
           <use xlinkHref="/website-icons.svg#hamburger-icon"></use>
         </svg>
-        <a href="#">Sub-Module</a>
+        <a href="/">3. Linked List Insertion</a>
       </div>
-      <h1>{brandTitle}</h1>
-      <div className="nav-links">
-        <a href="#">Account</a>
+      <h1><a href="/">{brandTitle}</a></h1>
+      <div className="nav-links-container">
+        {/* <div className="user-account-circle"></div> */}
+        <a href="/">Account</a>
       </div>
     </div>
   );
