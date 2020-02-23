@@ -11,7 +11,7 @@ import React from 'react';
  * Optional props:
  * codeDisplay {React Component} - Component for displaying code
  */
-function TextContent(props) {
+function LearningContent(props) {
   const { contentTitleString, contentParagraphs, codeDisplay } = props;
 
   return (
@@ -24,4 +24,4 @@ function TextContent(props) {
   );
 }
 
-export default TextContent;
+export default LearningContent;

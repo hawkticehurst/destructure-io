@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import TwoPaneResizable from './common/TwoPaneResizable';
 import CodeDisplay from './code-display/CodeDisplay';
-import TextContent from './common/TextContent';
+import LearningContent from './common/LearningContent';
 import useInterval from '../hooks/useInterval';
 
 // TODO Remove this. We will probably want to load these in from some submodule component later
@@ -76,7 +76,7 @@ function LearningModule() {
       <div className="learning-module-container">
         <TwoPaneResizable
           firstComponent={
-            <TextContent
+            <LearningContent
               contentTitleString="Linked List Insertion"
               contentParagraphs={[
                 "Follow along with this visualization to insert into a linked list.",
