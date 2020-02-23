@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import TwoPaneResizable from './common/TwoPaneResizable';
 import CodeDisplay from './code-display/CodeDisplay';
+import NavBar from './common/NavBar';
+import Sidebar from './common/Sidebar';
 import useInterval from '../hooks/useInterval';
 
 // TODO Remove this. We will probably want to load these in from some submodule component later
@@ -37,6 +39,7 @@ data.forEach(chunkObj => {
 function LearningModule() {
   const [selectedLine, setSelectedLine] = useState(-1);
   const [speed, setSpeed] = useState(null);
+  const [sidebarShown, setSidebarShown] = useState(false);
 
   useInterval(() => {
     setNextLine();
@@ -71,6 +74,8 @@ function LearningModule() {
 
   return (
     <div>
+      <Sidebar setSidebarShown={setSidebarShown} sidebarShown={sidebarShown} />
+      <NavBar brandTitle="Node Warrior" toggleSidebar={() => setSidebarShown(!sidebarShown)} />
       {/* TODO these inline styles are just temporary */}
       <div className="learning-module-container">
         <TwoPaneResizable

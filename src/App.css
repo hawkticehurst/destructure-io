@@ -19,6 +19,12 @@
   /* Code Display */
   --code-padding-vertical: 2px;
 
+  /* Sidebar */
+  --tint-opacity: .9;
+  --sidebar-min-width: 360px;
+  --sidebar-width: 33%;
+
+
   /* Nav Bar */
   --hamburger-icon-width: 32px;
   --hamburger-icon-height: 32px;
@@ -189,6 +195,69 @@ a:hover {
 .hamburger-icon {
   width: var(--hamburger-icon-width);
   height: var(--hamburger-icon-height);
+}
+
+/********* Sidebar *********/
+.sidebar {
+  z-index: 2;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  min-width: var(--sidebar-min-width);
+  width: var(--sidebar-width);
+  background: var(--hero-purple);
+}
+
+@keyframes sidebarFadeIn {
+  0% {
+    min-width: 0;
+    width: 0;
+  }
+  100% {
+    min-width: var(--sidebar-min-width);
+    width: var(--sidebar-width);
+  }
+}
+
+@keyframes sidebarFadeOut {
+  0% {
+    min-width: var(--sidebar-min-width);
+    width: var(--sidebar-width);
+  }
+  100% {
+    min-width: 0;
+    width: 0;
+  }
+}
+
+.page-tint {
+  z-index: 1;
+  opacity: var(--tint-opacity);
+  background-color: black;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+@keyframes tintFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: var(--tint-opacity);
+  }
+}
+
+@keyframes tintFadeOut {
+  0% {
+    opacity: var(--tint-opacity);
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 /********* CODE DISPLAY COMPONENT *********/

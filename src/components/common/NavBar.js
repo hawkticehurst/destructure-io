@@ -3,18 +3,19 @@ import React from 'react';
 /**
  * Required Props:
  * brandTitle {string} - String representing the website brand name
+ * toggleSidebar {function} - Callback for toggling the sidebar
  * TODO: Include other nav bar links
  */
 function NavBar(props) {
-  const { brandTitle } = props;
+  const { brandTitle, toggleSidebar } = props;
 
   return (
     <div className="nav-bar-container">
       <div className="nav-back-btn">
-        <svg className="hamburger-icon">
+        <svg className="hamburger-icon" onClick={toggleSidebar}>
           <use xlinkHref="/website-icons.svg#hamburger-icon"></use>
         </svg>
-        <a href="/">3. Linked List Insertion</a>
+        <p>3. Linked List Insertion</p>
       </div>
       <h1><a href="/">{brandTitle}</a></h1>
       <div className="nav-links-container">
