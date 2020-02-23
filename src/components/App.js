@@ -1,6 +1,7 @@
 import React from 'react';
 import LearningModule from './LearningModule';
 import HomePage from './HomePage';
+import Catalog from './Catalog';
 import SignIn from './auth/SignIn';
 import SignUp from './auth/SignUp';
 import NavBar from './common/NavBar';
@@ -19,12 +20,17 @@ function App() {
             <SignUp />
           </Route>
           <Route path="/module">
-            <LearningModule 
+            <LearningModule
               navBar={<NavBar navBarType="module" />}
             />
           </Route>
+          <Route path="/catalog">
+            <Catalog
+              navBar={<NavBar navBarType="catalog" />}
+            />
+          </Route>
           <Route path="/">
-            <HomePage 
+            <HomePage
               navBar={<NavBar navBarType="homepage" />}
             />
           </Route>
