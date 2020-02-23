@@ -31,11 +31,13 @@ data.forEach(chunkObj => {
 });
 
 /**
- * No props, this is the primary component for a module
+ * Required Props:
+ * navBar {React Component} – Component representing the page nav bar
  *
  * TODO add props to select a different submodule based on route
  */
-function LearningModule() {
+function LearningModule(props) {
+  const { navBar } = props;
   const [selectedLine, setSelectedLine] = useState(-1);
   const [speed, setSpeed] = useState(null);
 
@@ -72,7 +74,7 @@ function LearningModule() {
 
   return (
     <div>
-      {/* TODO these inline styles are just temporary */}
+      {navBar}
       <div className="learning-module-container">
         <TwoPaneResizable
           firstComponent={
