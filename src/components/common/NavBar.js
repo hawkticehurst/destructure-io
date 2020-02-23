@@ -14,16 +14,16 @@ function NavBar(props) {
   let navBarContainer = "nav-bar-container";
   const navBarLinks = [];
 
-  if (navBarType == "homepage") {
+  if (navBarType === "homepage") {
     navBackBtn = "hidden";
     navBarContainer += " homepage-nav-bar";
     navBarLinks.push("Log In");
     navBarLinks.push("Get Started");
-  } else if (navBarType == "module") {
+  } else if (navBarType === "module") {
     navBackBtn = "nav-back-btn";
     navBarContainer += " module-nav-bar";
     navBarLinks.push("Account");
-  } else if (navBarType == "catalog") {
+  } else if (navBarType === "catalog") {
     navBackBtn = "hidden";
     navBarContainer += " homepage-nav-bar";
     navBarLinks.push("Catalog");

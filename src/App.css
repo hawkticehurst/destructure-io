@@ -33,7 +33,6 @@ body {
   margin: 0;
   font-family: var(--font-family), Arial, Helvetica, sans-serif;
   font-weight: 400;
-  overflow: hidden;
 }
 
 h1 {
@@ -47,6 +46,10 @@ a {
 
 a:hover {
   color: var(--hero-purple-highlighted);
+}
+
+code {
+  font-family: Menlo, Monaco, 'Courier New', monospace, sans-serif;
 }
 
 .hidden {
@@ -215,17 +218,29 @@ a:hover {
 }
 
 .catalog-card-container {
-  display: flex;
-  justify-content: flex-start;
-  flex-flow: row wrap;
-  padding: 1em 1.5em;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 2em;
+  justify-items: center;
+  padding: 1em 1.5em 2em 1.5em;
 }
 
 .catalog-card {
+  margin: 0;
   padding: 1em;
+  width: 275px;
+  height: 140px;
+  border-top: 8px solid var(--hero-purple);
   border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 20%;
+	transform: scale(1);
+  transition: all 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.catalog-card:hover {
+  cursor: pointer;
+  transform: scale(1.01);
+  box-shadow: 0 1px 11px rgba(0,0,0,0.3);
 }
 
 .catalog-card h2 {
@@ -233,8 +248,8 @@ a:hover {
   margin: 0;
 }
 
-.catalog-card:hover {
-  cursor: pointer;
+.catalog-card p {
+  font-size: 16px;
 }
 
 /********* LEARNING MODULE *********/
