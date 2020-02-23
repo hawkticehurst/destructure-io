@@ -31,7 +31,7 @@ function CodeDisplay(props) {
   // If any happen, it makes sure all lines stay the full width of the container,
   // which keeps the background colors visable.
   useEffect(() => {
-    document.querySelector('.code-display').addEventListener('scroll', () => {
+    document.querySelector('.code-display-container').addEventListener('scroll', () => {
       const chunks = document.querySelectorAll('.chunk');
       let maxWidth = 0;
       chunks.forEach((line) => {
@@ -61,7 +61,7 @@ function CodeDisplay(props) {
     return codeChunk;
   });
   return (
-    <div className="code-display">
+    <div className="code-display-container">
       {codeChunks}
     </div>
   );

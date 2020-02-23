@@ -11,6 +11,7 @@
   --hero-purple-highlighted: #4628ff;
   --hero-green: #4FD362;
   --hero-red: #D3624F;
+  --hero-yellow: #ffc300;
 
   /* Common */
   --two-pane-divider-size: 5px;
@@ -177,13 +178,11 @@ a:hover {
 .nav-back-btn {
   display: flex;
   align-items: center;
-  background-color: var(--hero-yellow);
   font-weight: 500;
   float: left;
 }
 
 .nav-back-btn:hover {
-  background-color: var(--hero-yellow-hover);
   cursor: pointer;
 }
 
@@ -197,6 +196,7 @@ a:hover {
   height: var(--hamburger-icon-height);
 }
 
+<<<<<<< HEAD
 /********* Sidebar *********/
 .sidebar {
   z-index: 2;
@@ -261,6 +261,16 @@ a:hover {
 }
 
 /********* CODE DISPLAY COMPONENT *********/
+=======
+/********* LEARNING MODULE *********/
+.learning-module-container {
+  border-radius: 5px;
+  margin: 0;
+  height: var(--learning-module-height);
+}
+
+/********* RESIZABLE PANE COMPONENT *********/
+>>>>>>> origin/master
 .two-column-container {
   display: flex;
   height: 100%;
@@ -288,8 +298,10 @@ a:hover {
 }
 
 .pane {
-  overflow: hidden;
+  overflow: scroll;
   height: 100%;
+  min-width: 20%;
+  max-width: 80%;
 }
 
 .pane-resizing {
@@ -300,13 +312,6 @@ a:hover {
 .pane-resizing-horizontal {
   overflow: hidden;
   cursor: row-resize;
-}
-
-/********* LEARNING MODULE *********/
-.learning-module-container {
-  border-radius: 5px;
-  margin: 0;
-  height: var(--learning-module-height);
 }
 
 /********* ANIMATION BUTTONS *********/
@@ -334,10 +339,26 @@ a:hover {
   margin: 0 0.5em 0em 0.5em;
 }
 
+/********* TEXT CONTENT COMPONENT *********/
+.text-content-container {
+  padding: 0.75em 1.5em 1.5em 1.5em;
+}
+
+.text-content-container h1 {
+  font-size: 20px;
+}
+
+.text-content-container h2 {
+  font-size: 18px;
+}
+
 /********* CODE DISPLAY *********/
-.code-display {
+.code-display-container {
   overflow: scroll;
   height: 100%;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
 }
 
 .code-format {
@@ -370,13 +391,13 @@ a:hover {
 }
 
 .chunk-collapsed {
-  max-height: 18px; /* TODO this should probably be calculated somehow */
+  max-height: 20px; /* TODO this should probably be calculated somehow */
   overflow-y: hidden;
   transition: 0.5s;
 }
 
 .hidden-chunk {
-  background-color: lightgray;
+  background-color: #D6D0FF;
 }
 
 .selected-line {
@@ -428,6 +449,7 @@ a:hover {
 .chevron:hover {
   transform: scale(1.1);
   transition: 0.5s;
+  cursor: pointer;
 }
 
 .chevron.right:before {
