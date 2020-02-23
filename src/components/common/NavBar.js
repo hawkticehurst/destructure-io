@@ -12,13 +12,17 @@ function NavBar(props) {
 
   let navBackBtn = undefined;
   let navBarContainer = "nav-bar-container";
+  const navBarLinks = [];
 
-  if (navBarType == "module") {
-    navBackBtn = "nav-back-btn";
-    navBarContainer += " module-nav-bar";
-  } else if (navBarType == "homepage") {
+  if (navBarType == "homepage") {
     navBackBtn = "hidden";
     navBarContainer += " homepage-nav-bar";
+    navBarLinks.push("Log In");
+    navBarLinks.push("Get Started");
+  } else if (navBarType == "module") {
+    navBackBtn = "nav-back-btn";
+    navBarContainer += " module-nav-bar";
+    navBarLinks.push("Account");
   }
 
   return (
@@ -31,8 +35,9 @@ function NavBar(props) {
       </div>
       <h1><a href="/">Node Warrior</a></h1>
       <div className="nav-links-container">
+        {/* TODO: How to dynamically set href? */}
+        {navBarLinks.map((link, index) => <a key={index} href={"/"}>{link}</a>)}
         {/* <div className="user-account-circle"></div> */}
-        <a href="/">Account</a>
       </div>
     </div>
   );
