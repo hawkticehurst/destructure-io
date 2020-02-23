@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * Required Props:
  * navBarType {String} - String representing which version of the navbar to render
- *    Nav Bar Types: 'module', 'homepage', 'landing', and (??)
+ *    Nav Bar Types: 'module', 'homepage', 'catalog', and (??)
  * 
  * TODO: Include props for other nav bar information/links
  */
@@ -22,6 +22,11 @@ function NavBar(props) {
   } else if (navBarType == "module") {
     navBackBtn = "nav-back-btn";
     navBarContainer += " module-nav-bar";
+    navBarLinks.push("Account");
+  } else if (navBarType == "catalog") {
+    navBackBtn = "hidden";
+    navBarContainer += " homepage-nav-bar";
+    navBarLinks.push("Catalog");
     navBarLinks.push("Account");
   }
 
