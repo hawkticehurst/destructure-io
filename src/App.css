@@ -75,18 +75,18 @@ a:hover {
 .nav-bar-container {
   display: flex;
   align-items: center;
-  padding: 0.25em 1.5em 0.25em 1.25em;
 }
 
 .module-nav-bar {
   justify-content: flex-start;
-  background-color: var(--hero-navy);
+  padding: 0.25em 1.5em 0.25em 1.25em;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   height: 3em;
 }
 
 .homepage-nav-bar {
   justify-content: space-between;
+  padding: 1em 1.5em;
 }
 
 /* Adjust modules button, title, and links container to have the same width */
@@ -108,12 +108,15 @@ a:hover {
 
 .nav-bar-container h1 {
   margin: 0;
+  padding: 0;
 }
 
 .nav-bar-container h1 > a {
   color: black;
+  font-size: 22px;
+  display: block;
   margin: 0;
-  font-size: 25px;
+  padding: 0;
 }
 
 .nav-bar-container h1 > a:hover {
@@ -121,9 +124,8 @@ a:hover {
 }
 
 .nav-bar-container a {
+  font-size: 15px;
   text-decoration: none;
-  margin: 0;
-  font-size: 16px;
 }
 
 .user-account-circle {
