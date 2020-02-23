@@ -74,28 +74,35 @@ a:hover {
 /********* NAV BAR COMPONENT *********/
 .nav-bar-container {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
   padding: 0.25em 1.5em 0.25em 1.25em;
+}
+
+.module-nav-bar {
+  justify-content: flex-start;
   background-color: var(--hero-navy);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   height: 3em;
 }
 
+.homepage-nav-bar {
+  justify-content: space-between;
+}
+
 /* Adjust modules button, title, and links container to have the same width */
-.nav-back-btn, .nav-bar-container h1, .nav-links-container {
+.module-nav-bar .nav-back-btn, .module-nav-bar .nav-bar-container h1, .module-nav-bar .nav-links-container {
   flex: 1;
 }
 
-.nav-back-btn {
+.module-nav-bar .nav-back-btn {
   text-align: left;
 }
 
-.nav-bar-container h1 {
+.module-nav-bar .nav-bar-container h1 {
   text-align: center;
 }
 
-.nav-links-container {
+.module-nav-bar .nav-links-container {
   text-align: right;
 }
 
