@@ -5,22 +5,19 @@ import React from 'react';
  * 
  * Required Props:
  * contentTitleString {String} – String representing the title a sub module
+ * contentParagraphs {Array} – An array of strings representing paragraphs
+ *  of content of a sub module
  * 
  * Optional props:
- * contentFirstParagraph {String} – String representing the first paragraph of content of a sub module
- * contentSecondParagraph {String} – String representing the second paragraph of content of a sub module
- * contentThirdParagraph {String} – String representing the third paragraph of content of a sub module
  * codeDisplay {React Component} - Component for displaying code
  */
 function TextContent(props) {
-  const { contentTitleString, contentFirstParagraph, contentSecondParagraph, contentThirdParagraph, codeDisplay } = props;
+  const { contentTitleString, contentParagraphs, codeDisplay } = props;
 
   return (
     <div className="text-content-container">
       <h1>{contentTitleString}</h1>
-      <p>{contentFirstParagraph}</p>
-      <p>{contentSecondParagraph}</p>
-      <p>{contentThirdParagraph}</p>
+      {contentParagraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
       <h2>{contentTitleString} Code</h2>
       {codeDisplay}
     </div>

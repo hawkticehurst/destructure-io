@@ -78,9 +78,11 @@ function LearningModule() {
           firstComponent={
             <TextContent
               contentTitleString="Linked List Insertion"
-              contentFirstParagraph="Follow along with this visualization to insert into a linked list."
-              contentSecondParagraph="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis et dapibus massa. Donec laoreet sollicitudin velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce quis auctor risus. Nulla vitae magna nunc. Nulla ullamcorper pretium neque quis rhoncus. Integer ornare sagittis tellus eu posuere. Nunc luctus mattis semper."
-              contentThirdParagraph="Vestibulum finibus pretium convallis. Sed varius hendrerit posuere. Nam tincidunt elit neque, id luctus leo elementum vel. Cras euismod sem nec enim vehicula, id malesuada augue vehicula. Phasellus sit amet odio felis. Vivamus non nulla in augue vulputate ullamcorper sed quis nulla. Proin vel dui pulvinar, vestibulum augue ac, sodales nibh."
+              contentParagraphs={[
+                "Follow along with this visualization to insert into a linked list.",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis et dapibus massa. Donec laoreet sollicitudin velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce quis auctor risus. Nulla vitae magna nunc. Nulla ullamcorper pretium neque quis rhoncus. Integer ornare sagittis tellus eu posuere. Nunc luctus mattis semper.",
+                "Vestibulum finibus pretium convallis. Sed varius hendrerit posuere. Nam tincidunt elit neque, id luctus leo elementum vel. Cras euismod sem nec enim vehicula, id malesuada augue vehicula. Phasellus sit amet odio felis. Vivamus non nulla in augue vulputate ullamcorper sed quis nulla. Proin vel dui pulvinar, vestibulum augue ac, sodales nibh."
+              ]}
               codeDisplay={<CodeDisplay language={language} codeData={data} selectedLine={trueSelecteLineMap.get(selectedLine)} />}
             />
           }
