@@ -1,6 +1,6 @@
 import React from 'react';
 import LearningModule from './LearningModule';
-import UserHomePage from './UserHomePage';
+import HomePage from './HomePage';
 import SignIn from './auth/SignIn';
 import SignUp from './auth/SignUp';
 import NavBar from './common/NavBar';
@@ -24,7 +24,7 @@ function App() {
             />
           </Route>
           <Route path="/">
-            <UserHomePage 
+            <HomePage 
               navBar={<NavBar navBarType="homepage" />}
             />
           </Route>
