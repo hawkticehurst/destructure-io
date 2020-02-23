@@ -75,18 +75,19 @@ function LearningModule() {
       <div className="learning-module-container">
         <TwoPaneResizable
           firstComponent={
-            <TwoPaneResizable
-              firstComponent={
-                <div className="filler-text">
-                  Text Content Here
-                </div>
-              }
-              secondComponent={
-                <CodeDisplay language={language} codeData={data} selectedLine={trueSelecteLineMap.get(selectedLine)} />
-              }
-              initialStartSize={30}
-              splitHorizontal={true}
-            />
+            <CodeDisplay language={language} codeData={data} selectedLine={trueSelecteLineMap.get(selectedLine)} />
+            // <TwoPaneResizable
+            //   firstComponent={
+            //     <div className="filler-text">
+            //       Text Content Here
+            //     </div>
+            //   }
+            //   secondComponent={
+            //     <CodeDisplay language={language} codeData={data} selectedLine={trueSelecteLineMap.get(selectedLine)} />
+            //   }
+            //   initialStartSize={30}
+            //   splitHorizontal={true}
+            // />
           }
           secondComponent={
             <div className="filler-text">

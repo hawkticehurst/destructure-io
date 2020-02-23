@@ -1,5 +1,17 @@
-/* CSS Variables */
+/********* IMPORTS *********/
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap');
+
+/********* VARIABLES *********/
 :root {
+  /* Fonts */
+  --font-family: 'Poppins';
+
+  /* Colors */
+  --hero-purple: #5d42ff;
+  --hero-purple-highlighted: #4628ff;
+  --hero-green: #4FD362;
+  --hero-red: #D3624F;
+
   /* Common */
   --two-pane-divider-size: 5px;
   --two-pane-divider-color: #1b2631;
@@ -7,29 +19,40 @@
   /* Code Display */
   --code-padding-vertical: 2px;
 
-  /* Colors */
-  --hero-yellow: #ffc300;
-  --hero-yellow-hover: #ffca25;
-  --hero-navy: #1b2631;
-
   /* Nav Bar */
   --hamburger-icon-width: 32px;
   --hamburger-icon-height: 32px;
 
   /* Learning Module */
-  --learning-module-height: 84vh;
+  --learning-module-height: calc(100vh - 6.5em);
 }
 
-/* Import Fonts */
-@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,500,700&display=swap');
-
+/********* GLOBAL STYLES *********/
 body {
   margin: 0;
-  font-family: 'IBM Plex Sans', 'Arial', sans-serif;
+  font-family: var(--font-family), Arial, Helvetica, sans-serif;
   font-weight: 400;
+  overflow: hidden;
 }
 
 h1 {
+  font-weight: 700;
+}
+
+a {
+  color: var(--hero-purple);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--hero-purple-highlighted);
+}
+
+.hidden {
+  display: none;
+}
+
+.bold {
   font-weight: 700;
 }
 
@@ -47,26 +70,102 @@ h1 {
   height: 100%;
 }
 
-/*********** COMMON COMPONENTS ***********/
-
+/********* NAV BAR COMPONENT *********/
 .nav-bar-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  padding-right: 1.5em;
-  color: white;
+  padding: 0.25em 1.5em 0.25em 1.25em;
   background-color: var(--hero-navy);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 3em;
+}
+
+/* Adjust modules button, title, and links container to have the same width */
+.nav-back-btn, .nav-bar-container h1, .nav-links-container {
+  flex: 1;
+}
+
+.nav-back-btn {
+  text-align: left;
+}
+
+.nav-bar-container h1 {
+  text-align: center;
+}
+
+.nav-links-container {
+  text-align: right;
+}
+
+.nav-bar-container h1 {
+  margin: 0;
+}
+
+.nav-bar-container h1 > a {
+  color: black;
+  margin: 0;
+  font-size: 25px;
+}
+
+.nav-bar-container h1 > a:hover {
+  color: var(--hero-purple-highlighted);
 }
 
 .nav-bar-container a {
   text-decoration: none;
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
 }
 
-.hamburger-icon {
-  width: var(--hamburger-icon-width);
-  height: var(--hamburger-icon-height);
+.user-account-circle {
+  background-color: var(--hero-purple);
+  border-radius: 50%;
+  min-width: 40px;
+  min-height: 40px;
+  max-width: 40px;
+  max-height: 40px;
+}
+
+.user-account-circle:hover {
+  cursor: pointer;
+}
+
+.nav-links-container {
+  float: right;
+}
+
+.nav-links-container a {
+  margin-left: 2em;
+  color: var(--hero-purple);
+  position: relative;
+}
+
+/*
+  Animating Underline in Navigation Bar
+  Source: http://tobiasahlin.com/blog/css-trick-animating-link-underlines/
+*/
+.nav-links-container a:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--hero-purple);
+  visibility: hidden;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform-origin: top left;
+  transform-origin: top left;
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.nav-links-container a:hover:after {
+  visibility: visible;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
 }
 
 .nav-back-btn {
@@ -74,11 +173,12 @@ h1 {
   align-items: center;
   background-color: var(--hero-yellow);
   font-weight: 500;
-  padding: 0.75em;
+  float: left;
 }
 
 .nav-back-btn:hover {
   background-color: var(--hero-yellow-hover);
+  cursor: pointer;
 }
 
 .nav-back-btn a {
@@ -86,23 +186,12 @@ h1 {
   margin-left: 0.3em;
 }
 
-.nav-back-btn:hover {
-  cursor: pointer;
+.hamburger-icon {
+  width: var(--hamburger-icon-width);
+  height: var(--hamburger-icon-height);
 }
 
-.nav-bar-container h1 {
-  margin: 0;
-  font-size: 22px;
-}
-
-.nav-links {
-  margin: 0;
-}
-
-.nav-links a {
-  color: white;
-}
-
+/********* CODE DISPLAY COMPONENT *********/
 .two-column-container {
   display: flex;
   height: 100%;
@@ -144,30 +233,31 @@ h1 {
   cursor: row-resize;
 }
 
-/*********** LEARNING MODULE ***********/
-
+/********* LEARNING MODULE *********/
 .learning-module-container {
   border-radius: 5px;
   margin: 0;
   height: var(--learning-module-height);
 }
 
-/*********** ANIMATION BUTTONS ***********/
-
+/********* ANIMATION BUTTONS *********/
 .animate-btn-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--hero-navy);
   position: fixed;
   width: 100%;
   margin: 0;
-  padding: 10px 0 10px 0;
-  z-index: 1;
+  bottom: 0;
+  margin: 0;
+  left: 0;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  height: 3em;
 }
 
 .animate-btn-container button {
-  background-color: var(--hero-yellow);
+  background-color: var(--hero-purple);
+  color: white;
   border-style: none;
   border-radius: 5px;
   padding: 1em;
@@ -175,8 +265,7 @@ h1 {
   margin: 0 0.5em 0em 0.5em;
 }
 
-/*********** CODE DISPLAY ***********/
-
+/********* CODE DISPLAY *********/
 .code-display {
   overflow: scroll;
   height: 100%;
