@@ -2,21 +2,34 @@ import React from 'react';
 
 /**
  * Required Props:
- * brandTitle {string} - String representing the website brand name
- * TODO: Include other nav bar links
+ * navBarType {String} - String representing which version of the navbar to render
+ *    Nav Bar Types: 'module', 'homepage', 'landing', and (??)
+ * 
+ * TODO: Include props for other nav bar information/links
  */
 function NavBar(props) {
-  const { brandTitle } = props;
+  const { navBarType } = props;
+
+  let navBackBtn = undefined;
+  let navBarContainer = "nav-bar-container";
+
+  if (navBarType == "module") {
+    navBackBtn = "nav-back-btn";
+    navBarContainer += " module-nav-bar";
+  } else if (navBarType == "homepage") {
+    navBackBtn = "hidden";
+    navBarContainer += " homepage-nav-bar";
+  }
 
   return (
-    <div className="nav-bar-container">
-      <div className="nav-back-btn">
+    <div className={navBarContainer}>
+      <div className={navBackBtn}>
         <svg className="hamburger-icon">
           <use xlinkHref="/website-icons.svg#hamburger-icon"></use>
         </svg>
         <a href="/">3. Linked List Insertion</a>
       </div>
-      <h1><a href="/">{brandTitle}</a></h1>
+      <h1><a href="/">Node Warrior</a></h1>
       <div className="nav-links-container">
         {/* <div className="user-account-circle"></div> */}
         <a href="/">Account</a>
