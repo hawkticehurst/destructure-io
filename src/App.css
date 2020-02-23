@@ -25,7 +25,6 @@
   --sidebar-min-width: 360px;
   --sidebar-width: 33%;
 
-
   /* Nav Bar */
   --hamburger-icon-width: 32px;
   --hamburger-icon-height: 32px;
@@ -196,7 +195,6 @@ a:hover {
   height: var(--hamburger-icon-height);
 }
 
-<<<<<<< HEAD
 /********* Sidebar *********/
 .sidebar {
   z-index: 2;
@@ -260,8 +258,6 @@ a:hover {
   }
 }
 
-/********* CODE DISPLAY COMPONENT *********/
-=======
 /********* LEARNING MODULE *********/
 .learning-module-container {
   border-radius: 5px;
@@ -270,7 +266,6 @@ a:hover {
 }
 
 /********* RESIZABLE PANE COMPONENT *********/
->>>>>>> origin/master
 .two-column-container {
   display: flex;
   height: 100%;
