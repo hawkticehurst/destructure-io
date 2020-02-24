@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import TwoPaneResizable from './common/TwoPaneResizable';
 import CodeDisplay from './code-display/CodeDisplay';
 import NavBar from './common/NavBar';
-import Sidebar from './common/Sidebar';
+import SideBar from './common/SideBar';
+import SubModuleProgressRow from './common/SubModuleProgressRow';
 import LearningContent from './common/LearningContent';
 import useInterval from '../hooks/useInterval';
 
@@ -40,7 +41,7 @@ data.forEach(chunkObj => {
 function LearningModule() {
   const [selectedLine, setSelectedLine] = useState(-1);
   const [speed, setSpeed] = useState(null);
-  const [sidebarShown, setSidebarShown] = useState(false);
+  const [sideBarShown, setSideBarShown] = useState(false);
 
   useInterval(() => {
     setNextLine();
@@ -75,8 +76,15 @@ function LearningModule() {
 
   return (
     <div>
-      <Sidebar setSidebarShown={setSidebarShown} sidebarShown={sidebarShown} />
-      <NavBar brandTitle="Node Warrior" toggleSidebar={() => setSidebarShown(!sidebarShown)} />
+      <SideBar headerText="Linked List Lessons" setSideBarShown={setSideBarShown} sideBarShown={sideBarShown}>
+        <SubModuleProgressRow moduleTitle="1. Creating Your First List" completionState="completed" />
+        <SubModuleProgressRow moduleTitle="2. Adding To The List" completionState="completed" />
+        <SubModuleProgressRow moduleTitle="3. Iterating Through The List" completionState="flagged" />
+        <SubModuleProgressRow moduleTitle="4. Deleting Nodes" completionState="incomplete" selected={true} />
+        <SubModuleProgressRow moduleTitle="5. Reversing The List" completionState="incomplete" />
+        <SubModuleProgressRow moduleTitle="6. Sorting The List" completionState="incomplete" />
+      </SideBar>
+      <NavBar brandTitle="Node Warrior" toggleSideBar={() => setSideBarShown(!sideBarShown)} />
       {/* TODO these inline styles are just temporary */}
       <div className="learning-module-container">
         <TwoPaneResizable

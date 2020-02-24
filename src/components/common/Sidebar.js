@@ -3,27 +3,28 @@ import PageTint from './PageTint';
 
 /**
  * Required Props:
- * content {React Node} - Content to be contained in the sidebar
- * setSidebarShown {function} - set if the sidebar should be shown
- * sidebarShown {boolean} - true if sidebar is showing, else false
+ * children {React Node} - Content to be contained in the sideBar
+ * headerText {String} - Heading to display for the sidebar
+ * setSideBarShown {function} - set if the sideBar should be shown
+ * sideBarShown {boolean} - true if sideBar is showing, else false
  */
-function Sidebar(props) {
-  const {content, setSidebarShown, sidebarShown} = props;
-  const [render, setRender] = useState(sidebarShown);
+function SideBar(props) {
+  const {children, headerText, setSideBarShown, sideBarShown} = props;
+  const [render, setRender] = useState(sideBarShown);
 
   useEffect(() => {
-    if (sidebarShown) {
+    if (sideBarShown) {
       setRender(true);
     }
-  }, [sidebarShown]);
+  }, [sideBarShown]);
 
   const onAnimationEnd = () => {
-    if (!sidebarShown) {
+    if (!sideBarShown) {
       setRender(false);
     }
   };
 
-  // Don't click on things below the sidebar
+  // Don't click on things below the sideBar
   const stopPropagation = (event) => {
     event.stopPropagation();
   };
@@ -31,17 +32,18 @@ function Sidebar(props) {
   return (
     render ? (
       <Fragment>
-        <PageTint clickedTint={() => setSidebarShown(false)} tintShown={sidebarShown} />
+        <PageTint clickedTint={() => setSideBarShown(false)} tintShown={sideBarShown} />
         <div
           className="sidebar"
-          style={{ animation: `${sidebarShown ? "sidebarFadeIn" : "sidebarFadeOut"} .5s` }}
+          style={{ animation: `${sideBarShown ? "sidebarFadeIn" : "sidebarFadeOut"} .5s` }}
           onClick={stopPropagation}
           onAnimationEnd={onAnimationEnd}>
-            {content}
+          <h1 className="sidebar-header">{headerText}</h1>
+          {children}
         </div>
       </Fragment>
     ) : null
   );
 }
 
-export default Sidebar;
+export default SideBar;
