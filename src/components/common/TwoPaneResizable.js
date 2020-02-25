@@ -8,9 +8,11 @@ import React, {useEffect, useRef, useState} from 'react';
  * Optional props:
  * initialStartSize {number} - Starting size percentage of left/top pane, defaults to 50%
  * splitHorizontal {boolean} - True = horizontal divider, defaults to false
+ * firstComponentRef {Ref} - Ref created with useRef to be the container div of firstComponent
+ *                           This is useful for resetting scroll heights
  */
 function TwoPaneResizable(props) {
-  const {firstComponent, secondComponent, initialStartSize, splitHorizontal} = props;
+  const {firstComponent, secondComponent, initialStartSize, splitHorizontal, firstComponentRef} = props;
   const [startSize, setstartSize] = useState(initialStartSize != null ? initialStartSize : 50);
   const [isResizing, setIsResizing] = useState(false);
   const container = useRef(null);
@@ -52,7 +54,7 @@ function TwoPaneResizable(props) {
 
   return (
     <div className={containerClass} ref={container}>
-      <div className={paneClass} style={{flex: startSize}}>
+      <div ref={firstComponentRef} className={paneClass} style={{flex: startSize}}>
         {firstComponent}
       </div>
       <div className={dividerClass} onMouseDown={onMouseDown} />
