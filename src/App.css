@@ -39,7 +39,6 @@ body {
   margin: 0;
   font-family: var(--font-family), Arial, Helvetica, sans-serif;
   font-weight: 400;
-  overflow: hidden;
 }
 
 h1 {
@@ -53,6 +52,10 @@ a {
 
 a:hover {
   color: var(--hero-purple-highlighted);
+}
+
+code {
+  font-family: Menlo, Monaco, 'Courier New', monospace, sans-serif;
 }
 
 .hidden {
@@ -80,39 +83,49 @@ a:hover {
 /********* NAV BAR COMPONENT *********/
 .nav-bar-container {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
+}
+
+.module-nav-bar {
+  justify-content: flex-start;
   padding: 0.25em 1.5em 0.25em 1.25em;
-  background-color: var(--hero-navy);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   height: 3em;
 }
 
+.homepage-nav-bar {
+  justify-content: space-between;
+  padding: 1em 1.5em;
+}
+
 /* Adjust modules button, title, and links container to have the same width */
-.nav-back-btn, .nav-bar-container h1, .nav-links-container {
+.module-nav-bar .nav-back-btn, .module-nav-bar .nav-bar-container h1, .module-nav-bar .nav-links-container {
   flex: 1;
 }
 
-.nav-back-btn {
+.module-nav-bar .nav-back-btn {
   text-align: left;
 }
 
-.nav-bar-container h1 {
+.module-nav-bar .nav-bar-container h1 {
   text-align: center;
 }
 
-.nav-links-container {
+.module-nav-bar .nav-links-container {
   text-align: right;
 }
 
 .nav-bar-container h1 {
   margin: 0;
+  padding: 0;
 }
 
 .nav-bar-container h1 > a {
   color: black;
+  font-size: 22px;
+  display: block;
   margin: 0;
-  font-size: 25px;
+  padding: 0;
 }
 
 .nav-bar-container h1 > a:hover {
@@ -120,9 +133,8 @@ a:hover {
 }
 
 .nav-bar-container a {
+  font-size: 15px;
   text-decoration: none;
-  margin: 0;
-  font-size: 16px;
 }
 
 .user-account-circle {
@@ -344,6 +356,56 @@ a:hover {
   100% {
     opacity: 0;
   }
+}
+
+/********* LEARNING MODULE *********/
+.catalog-hero-container {
+  padding: 1em 1.5em;
+}
+
+.catalog-hero-container p {
+  margin-bottom: 1.5em;
+}
+
+.catalog-hero-container hr {
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-style: none;
+}
+
+.catalog-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 2em;
+  justify-items: center;
+  padding: 1em 1.5em 2em 1.5em;
+}
+
+.catalog-card {
+  margin: 0;
+  padding: 1em;
+  width: 275px;
+  height: 140px;
+  border-top: 8px solid var(--hero-purple);
+  border-radius: 5px;
+  transform: scale(1);
+  transition: all 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.catalog-card:hover {
+  cursor: pointer;
+  transform: scale(1.01);
+  box-shadow: 0 1px 11px rgba(0,0,0,0.3);
+}
+
+.catalog-card h2 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.catalog-card p {
+  font-size: 16px;
 }
 
 /********* LEARNING MODULE *********/

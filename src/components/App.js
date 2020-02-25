@@ -1,5 +1,6 @@
 import React from 'react';
 import LearningModule from './LearningModule';
+import Catalog from './Catalog';
 import SignIn from './auth/SignIn';
 import SignUp from './auth/SignUp';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
@@ -19,8 +20,11 @@ function App() {
           <Route path={['/learn/:module/:submodule', '/learn/:module']}>
             <LearningModule />
           </Route>
+          <Route path="/catalog">
+            <Catalog />
+          </Route>
           <Route path="/">
-            <LearningModule />
+            <div>TODO Landing Page</div>
           </Route>
         </Switch>
       </div>

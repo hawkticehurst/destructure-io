@@ -132,6 +132,7 @@ function LearningModule() {
         }
       </SideBar>
       <NavBar
+        navBarType="module"
         brandTitle="Node Warrior"
         toggleSideBar={() => setSideBarShown(!sideBarShown)}
         SubModuleTitle={selectedSubModuleIndex + '. ' + selectedSubmoduleName} />
