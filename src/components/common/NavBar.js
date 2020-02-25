@@ -3,14 +3,13 @@ import { Link } from 'react-router-dom';
 
 /**
  * Required Props:
- * brandTitle {string} - String representing the website brand name
  * toggleSideBar {function} - Callback for toggling the sidebar
  * SubModuleTitle {String} - Title of current submodule
  * navBarType {String} - String representing which version of the navbar to render
  *    Nav Bar Types: 'module', 'homepage', 'catalog'
  */
 function NavBar(props) {
-  const { brandTitle, toggleSideBar, SubModuleTitle, navBarType } = props;
+  const { toggleSideBar, SubModuleTitle, navBarType } = props;
 
   let containerClass = "nav-bar-container";
   const navBarLinks = [];
@@ -40,7 +39,7 @@ function NavBar(props) {
   return (
     <div className={containerClass}>
       {backBtn}
-      <h1><Link to="/">{brandTitle}</Link></h1>
+      <h1><Link to="/">Node Warrior</Link></h1>
       <div className="nav-links-container">
         {/* TODO: How to dynamically set href? */}
         {navBarLinks.map((link, index) => <Link key={index} to="/">{link}</Link>)}
