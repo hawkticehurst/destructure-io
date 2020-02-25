@@ -23,6 +23,7 @@ function LearningModule() {
   const [selectedSubmoduleName, setSelectedSubModuleName] = useState('');
   const [selectedSubModuleIndex, setSelectedSubModuleIndex] = useState(0);
   const [subModuleList, setSubModuleList] = useState([]);
+  const [moduleName, setModuleName] = useState('');
   const {module, submodule} = useParams();
 
   useInterval(() => {
@@ -68,6 +69,7 @@ function LearningModule() {
       }
       startingLine += code[language].length;
     });
+    setModuleName(moduleData.name);
     setLoading(false);
     setSubModuleList(moduleData.submodules);
     setSelectedSubModuleIndex(tempSelectedSubModuleIndex);
@@ -116,7 +118,7 @@ function LearningModule() {
 
   return (
     <div>
-      <SideBar headerText="Linked List Lessons" setSideBarShown={setSideBarShown} sideBarShown={sideBarShown}>
+      <SideBar headerText={moduleName + ' Lessons'} setSideBarShown={setSideBarShown} sideBarShown={sideBarShown}>
         {
           subModuleList.map((subModule, index) => {
             return (
