@@ -76,6 +76,8 @@ function LearningModule() {
     setSelectedSubModuleName(subModuleData.name)
     setTrueSelectedLineMap(tempTrueSelectedLineMap);
     setData(tempData);
+    setSpeed(null);
+    setSelectedLine(-1);
   }, [module, submodule]); // Only run this function when the module or submodule changes
 
   // Prevent showing errors while files are loaded in
@@ -92,7 +94,7 @@ function LearningModule() {
   const setNextLine = () => {
     if (selectedLine === -1) {
       setSelectedLine(1);
-    } else if (selectedLine === trueSelectedLineMap.size) {
+    } else if (selectedLine === trueSelectedLineMap.length) {
       setSelectedLine(-1);
       stopAnimation();
     } else {
