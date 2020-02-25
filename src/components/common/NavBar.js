@@ -1,25 +1,48 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 /**
  * Required Props:
- * brandTitle {string} - String representing the website brand name
- * TODO: Include other nav bar links
+ * toggleSideBar {function} - Callback for toggling the sidebar
+ * SubModuleTitle {String} - Title of current submodule
+ * navBarType {String} - String representing which version of the navbar to render
+ *    Nav Bar Types: 'module', 'homepage', 'catalog'
  */
 function NavBar(props) {
-  const { brandTitle } = props;
+  const { toggleSideBar, SubModuleTitle, navBarType } = props;
+
+  let containerClass = "nav-bar-container";
+  const navBarLinks = [];
+
+  if (navBarType === "homepage") {
+    containerClass += " homepage-nav-bar";
+    navBarLinks.push("Log In");
+    navBarLinks.push("Get Started");
+  } else if (navBarType === "module") {
+    containerClass += " module-nav-bar";
+    navBarLinks.push("Account");
+  } else if (navBarType === "catalog") {
+    containerClass += " homepage-nav-bar";
+    navBarLinks.push("Catalog");
+    navBarLinks.push("Account");
+  }
+
+  const backBtn = navBarType === "module" ? (
+    <div className="nav-back-btn" onClick={toggleSideBar}>
+      <svg className="hamburger-icon">
+        <use xlinkHref="/website-icons.svg#hamburger-icon"></use>
+      </svg>
+      <p>{SubModuleTitle}</p>
+    </div>
+  ) : null;
 
   return (
-    <div className="nav-bar-container">
-      <div className="nav-back-btn">
-        <svg className="hamburger-icon">
-          <use xlinkHref="/website-icons.svg#hamburger-icon"></use>
-        </svg>
-        <a href="/">3. Linked List Insertion</a>
-      </div>
-      <h1><a href="/">{brandTitle}</a></h1>
+    <div className={containerClass}>
+      {backBtn}
+      <h1><Link to="/">Node Warrior</Link></h1>
       <div className="nav-links-container">
-        {/* <div className="user-account-circle"></div> */}
-        <a href="/">Account</a>
+        {/* TODO: How to dynamically set href? */}
+        {navBarLinks.map((link, index) => <Link key={index} to="/">{link}</Link>)}
       </div>
     </div>
   );
