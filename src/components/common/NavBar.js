@@ -29,8 +29,8 @@ function NavBar(props) {
   }
 
   const backBtn = navBarType === "module" ? (
-    <div className="nav-back-btn">
-      <svg className="hamburger-icon" onClick={toggleSideBar}>
+    <div className="nav-back-btn" onClick={toggleSideBar}>
+      <svg className="hamburger-icon">
         <use xlinkHref="/website-icons.svg#hamburger-icon"></use>
       </svg>
       <p>{SubModuleTitle}</p>

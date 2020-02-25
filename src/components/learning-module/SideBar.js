@@ -1,5 +1,5 @@
 import React, {useEffect, useState, Fragment} from 'react';
-import PageTint from './PageTint';
+import PageTint from '../common/PageTint';
 
 /**
  * Required Props:

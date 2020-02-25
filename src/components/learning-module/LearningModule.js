@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import TwoPaneResizable from './common/TwoPaneResizable';
-import CodeDisplay from './code-display/CodeDisplay';
-import NavBar from './common/NavBar';
-import SideBar from './common/SideBar';
-import SubModuleProgressRow from './common/SubModuleProgressRow';
-import LearningContent from './common/LearningContent';
-import useInterval from '../hooks/useInterval';
-import contentOutline from '../lesson-content/contentOutline.json';
+import TwoPaneResizable from '../common/TwoPaneResizable';
+import CodeDisplay from '../code-display/CodeDisplay';
+import NavBar from '../common/NavBar';
+import SideBar from './SideBar';
+import SubModuleProgressRow from './SubModuleProgressRow';
+import LearningContent from './LearningContent';
+import useInterval from '../../hooks/useInterval';
+import contentOutline from '../../lesson-content/contentOutline.json';
 import {useParams} from "react-router-dom";
 
 const language = "java"; // TODO make this selectable
@@ -45,7 +45,7 @@ function LearningModule() {
       subModuleData = moduleData.submodules[0];
     }
     try {
-      tempData = require('../lesson-content/' + module + '/' + subModuleData.filename);
+      tempData = require('../../lesson-content/' + module + '/' + subModuleData.filename);
     } catch (e) {
       setError(true);
       return;
@@ -142,7 +142,10 @@ function LearningModule() {
             <LearningContent
               contentTitleString={selectedSubmoduleName}
               contentParagraphs={data.paragraphs}
-              codeDisplay={<CodeDisplay language={language} codeData={data.codeChunks} selectedLine={trueSelectedLineMap[selectedLine]} />}
+              codeDisplay={<CodeDisplay
+                              language={language}
+                              codeData={data.codeChunks}
+                              selectedLine={trueSelectedLineMap[selectedLine]} />}
             />
           }
           secondComponent={
