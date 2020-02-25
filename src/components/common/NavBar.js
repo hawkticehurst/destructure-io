@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 
 /**
  * Required Props:
+ * toggleSideBar {function} - Callback for toggling the sidebar
+ * SubModuleTitle {String} - Title of current submodule
  * navBarType {String} - String representing which version of the navbar to render
  *    Nav Bar Types: 'module', 'homepage', 'catalog'
- *
- * TODO: Include props for other nav bar information/links
  */
 function NavBar(props) {
-  const { navBarType } = props;
+  const { toggleSideBar, SubModuleTitle, navBarType } = props;
 
   let containerClass = "nav-bar-container";
   const navBarLinks = [];
@@ -28,11 +28,11 @@ function NavBar(props) {
   }
 
   const backBtn = navBarType === "module" ? (
-    <div className="nav-back-btn">
+    <div className="nav-back-btn" onClick={toggleSideBar}>
       <svg className="hamburger-icon">
         <use xlinkHref="/website-icons.svg#hamburger-icon"></use>
       </svg>
-      <a href="/">3. Linked List Insertion</a>
+      <p>{SubModuleTitle}</p>
     </div>
   ) : null;
 

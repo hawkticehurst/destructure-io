@@ -1,16 +1,11 @@
 import React from 'react';
-import CatalogCard from './common/CatalogCard';
+import CatalogCard from './CatalogCard';
+import NavBar from '../common/NavBar';
 
-/**
- * Required Props:
- * navBar {React Component} – Component representing the page nav bar
- */
 function Catalog(props) {
-  const { navBar } = props;
-
   return (
     <div>
-      {navBar}
+      <NavBar navBarType="catalog" />
       <div className="catalog-hero-container">
         <h1>Content Catalog</h1>
         <p>Discover a whole new way of approaching data structures.</p>
