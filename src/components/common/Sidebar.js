@@ -29,13 +29,13 @@ function SideBar(props) {
     event.stopPropagation();
   };
 
+  const animationClass = sideBarShown ? 'sidebar-fade-in' : 'sidebar-fade-out';
   return (
     render ? (
       <Fragment>
         <PageTint clickedTint={() => setSideBarShown(false)} tintShown={sideBarShown} />
         <div
-          className="sidebar"
-          style={{ animation: `${sideBarShown ? "sidebarFadeIn" : "sidebarFadeOut"} .5s` }}
+          className={'sidebar ' + animationClass}
           onClick={stopPropagation}
           onAnimationEnd={onAnimationEnd}>
           <h1 className="sidebar-header">{headerText}</h1>

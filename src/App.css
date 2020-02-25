@@ -237,6 +237,14 @@ a:hover {
   width: 80%;
   height: 48px;
   padding: 5px;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.sub-module-title-container a {
+  color: white
 }
 
 .progress-circle-filled {
@@ -261,15 +269,25 @@ a:hover {
   -ms-user-select: none;
 }
 
+.sidebar-fade-in {
+  animation: sidebarFadeIn ease-in-out .4s;
+}
+
+.sidebar-fade-out {
+  animation: sidebarFadeOut ease-in-out .4s;
+  animation-delay: .2s;
+}
 
 @keyframes sidebarFadeIn {
   0% {
     min-width: 0;
     width: 0;
-    padding: 0;
+    padding-left: 0;
+    padding-right: 0;
   }
   100% {
-    padding: var(--sidebar-padding);
+    padding-left: var(--sidebar-padding);
+    padding-right: var(--sidebar-padding);
     min-width: var(--sidebar-min-width);
     width: var(--sidebar-width);
   }
@@ -279,12 +297,14 @@ a:hover {
   0% {
     min-width: var(--sidebar-min-width);
     width: var(--sidebar-width);
-    padding: var(--sidebar-padding);
+    padding-left: var(--sidebar-padding);
+    padding-right: var(--sidebar-padding);
   }
   100% {
     min-width: 0;
     width: 0;
-    padding: 0;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
@@ -297,6 +317,15 @@ a:hover {
   right: 0;
   bottom: 0;
   left: 0;
+}
+
+.tint-fade-in {
+  animation: tintFadeIn ease-in-out .4s;
+}
+
+.tint-fade-out {
+  animation: tintFadeOut ease-in-out .4s;
+  animation-delay: .2s;
 }
 
 @keyframes tintFadeIn {

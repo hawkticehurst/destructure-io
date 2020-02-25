@@ -16,8 +16,10 @@ function App() {
           <Route path="/signup">
             <SignUp />
           </Route>
+          <Route path={['/learn/:module/:submodule', '/learn/:module']}>
+            <LearningModule />
+          </Route>
           <Route path="/">
-            {/* TODO going to put some form of routing here eventually */}
             <LearningModule />
           </Route>
         </Switch>

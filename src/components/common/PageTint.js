@@ -28,10 +28,10 @@ function PageTint(props) {
     }
   };
 
+  const animationClass = tintShown ? 'tint-fade-in' : 'tint-fade-out';
   return render ? (
       <div
-        className="page-tint"
-        style={{ animation: `${tintShown ? "tintFadeIn" : "tintFadeOut"} .5s` }}
+        className={'page-tint ' + animationClass}
         onAnimationEnd={onAnimationEnd}
         onClick={onClick} />
     ) : null
