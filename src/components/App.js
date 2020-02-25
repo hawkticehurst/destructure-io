@@ -1,6 +1,5 @@
 import React from 'react';
 import LearningModule from './LearningModule';
-import HomePage from './HomePage';
 import Catalog from './Catalog';
 import SignIn from './auth/SignIn';
 import SignUp from './auth/SignUp';
@@ -30,9 +29,7 @@ function App() {
             />
           </Route>
           <Route path="/">
-            <HomePage
-              navBar={<NavBar navBarType="homepage" />}
-            />
+            <div>TODO Landing Page</div>
           </Route>
         </Switch>
       </div>

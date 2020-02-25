@@ -232,7 +232,7 @@ code {
   height: 140px;
   border-top: 8px solid var(--hero-purple);
   border-radius: 5px;
-	transform: scale(1);
+  transform: scale(1);
   transition: all 0.3s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
