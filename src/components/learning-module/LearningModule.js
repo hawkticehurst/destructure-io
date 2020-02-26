@@ -33,6 +33,7 @@ function LearningModule() {
 
   useEffect(() => {
     let tempData;
+    console.log(module)
     const moduleData = contentOutline.modules.find(moduleObj => moduleObj.directory === module);
     if (moduleData == null) {
       setError(true);
@@ -45,6 +46,7 @@ function LearningModule() {
     })
     if (subModuleData == null) {
       subModuleData = moduleData.submodules[0];
+      tempSelectedSubModuleIndex = 1;
     }
     try {
       tempData = require('../../lesson-content/' + module + '/' + subModuleData.filename);

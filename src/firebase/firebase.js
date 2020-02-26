@@ -7,10 +7,8 @@ export const doCreateUserWithEmailAndPassword = (email, password) => {
     firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
     const {code, message} = error;
     if (code === 'auth/weak-password') {
-      alert('The password is too weak.');
-      reject("The password is too weak.")
+      reject("Password is too weak, please use a stronger password.")
     } else {
-      alert(message);
       reject(message);
     }
     }).then(() => {
@@ -28,10 +26,8 @@ export const doSignInWithEmailAndPassword = (email, password) => {
   firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
     const {code, message} = error;
     if (code === 'auth/wrong-password') {
-      alert('Wrong password.');
-      errorMsg = "Wrong password";
+      errorMsg = "Incorrect password. Please try again.";
     } else {
-      alert(message);
       errorMsg = message;
     }
     reject(errorMsg);
