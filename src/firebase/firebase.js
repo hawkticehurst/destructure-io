@@ -45,10 +45,6 @@ export const doSignOut = () => {
   return firebase.auth().signOut();
 }
 
-export const isSignedIn = () => {
-  return firebase.auth().currentUser !== null;
-}
-
 export const deleteUser = () => {
   let user = firebase.auth().currentUser;
   if (user) {
