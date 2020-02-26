@@ -3,6 +3,7 @@ import LearningModule from './learning-module/LearningModule';
 import Catalog from './catalog/Catalog';
 import SignIn from './auth/SignIn';
 import SignUp from './auth/SignUp';
+import HomePage from './home/HomePage';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {useAuth, UserContext} from '../hooks/user';
 import '../App.css';
@@ -17,7 +18,7 @@ function App() {
   return (
     <UserContext.Provider value={{ user }}>
       <Router>
-        <div className="App">
+        <div className="app">
           <Switch>
             <Route path="/signin">
               <SignIn />
@@ -32,7 +33,7 @@ function App() {
               <Catalog />
             </Route>
             <Route path="/">
-              <div>TODO Landing Page</div>
+              <HomePage />
             </Route>
           </Switch>
         </div>

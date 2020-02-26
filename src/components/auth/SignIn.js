@@ -24,7 +24,7 @@ function SignIn(props) {
       doSignInWithEmailAndPassword(email, password)
         .then(authUser => {
           // redirect to home
-          history.push('/')
+          history.push('/');
       	})
         .catch(error => {
           setError(error);

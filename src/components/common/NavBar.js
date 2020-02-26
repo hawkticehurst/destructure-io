@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { doSignOut } from '../../firebase/firebase';
 import { useFirebaseUser } from '../../hooks/user';
@@ -15,11 +15,8 @@ function NavBar(props) {
   const user = useFirebaseUser();
 
   let containerClass = "nav-bar-container";
-  const navBarLinks = [];
-
   if (navBarType === "homepage") {
     containerClass += " homepage-nav-bar";
-    navBarLinks.push("Get Started");
   } else if (navBarType === "module") {
     containerClass += " module-nav-bar";
   } else if (navBarType === "catalog") {
@@ -40,15 +37,15 @@ function NavBar(props) {
     <Link to={window.location.pathname} onClick={doSignOut}>Log Out</Link>
   ) : null;
 
-  const signInUpLinks = user == null ? (
-    <Fragment>
-      <Link to="/signin">Log In</Link>
-      <Link to="/signup">Sign Up</Link>
-    </Fragment>
+  const signInLink = user == null ? (
+    <Link to="/signin">Log In</Link>
   ) : null;
 
-  // TODO not sure where getStarted should link to
-  const getStartedLink = navBarType === 'homepage' ? (
+  const signUpLink= user == null && navBarType === 'module' ? (
+    <Link to="/signup">Sign Up</Link>
+  ) : null;
+
+  const getStartedLink = user == null && navBarType === 'homepage' ? (
     <Link to="/signup">Get Started</Link>
   ) : null;
 
@@ -63,7 +60,8 @@ function NavBar(props) {
       <div className="nav-links-container">
         {getStartedLink}
         {catalogLink}
-        {signInUpLinks}
+        {signInLink}
+        {signUpLink}
         {signOutLink}
       </div>
     </div>
