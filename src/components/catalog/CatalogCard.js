@@ -1,17 +1,30 @@
 import React from 'react';
+import {useHistory} from "react-router-dom";
 
 /**
  * Required Props:
- * cardTitle {String} – String representing the card title
- * cardDescription {String} – String representing the card description
+ * title {String} – String representing the card title
+ * description {String} – String representing the card description
+ *
+ * Optional Props:
+ * link {String} - link to module
  */
 function CatalogCard(props) {
-  const { cardTitle, cardDescription } = props;
+  const { link, title, description } = props;
+  const history = useHistory();
+
+  const onClick = () => {
+    if (link) {
+      history.push(link);
+    }
+  };
+
+  const className = link == null ? 'catalog-card coming-soon' : 'catalog-card';
 
   return (
-    <div className="catalog-card">
-      <h2>{cardTitle}</h2>
-      <p>{cardDescription}</p>
+    <div className={className} onClick={onClick}>
+      <h2>{title}</h2>
+      <p>{link != null ? description : 'Coming Soon'}</p>
     </div>
   );
 }

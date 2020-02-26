@@ -25,11 +25,11 @@ function App() {
             <Route path="/signup">
               <SignUp />
             </Route>
-            <Route path="/catalog">
-              <Catalog />
-            </Route>
             <Route path={['/learn/:module/:submodule', '/learn/:module']}>
               <LearningModule />
+            </Route>
+            <Route path={['/learn', '/catalog']}>
+              <Catalog />
             </Route>
             <Route path="/">
               <div>TODO Landing Page</div>

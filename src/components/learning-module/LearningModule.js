@@ -33,6 +33,7 @@ function LearningModule() {
 
   useEffect(() => {
     let tempData;
+    console.log(module)
     const moduleData = contentOutline.modules.find(moduleObj => moduleObj.directory === module);
     if (moduleData == null) {
       setError(true);

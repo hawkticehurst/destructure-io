@@ -47,9 +47,14 @@ function NavBar(props) {
     </Fragment>
   ) : null;
 
+  // TODO not sure where getStarted should link to
   const getStartedLink = navBarType === 'homepage' ? (
-    <Link to="/learn">Get Started</Link>
-  ) : null
+    <Link to="/signup">Get Started</Link>
+  ) : null;
+
+  const catalogLink = ['homepage', 'module'].includes(navBarType) ? (
+    <Link to="/learn">Catalog</Link>
+  ) : null;
 
   return (
     <div className={containerClass}>
@@ -57,6 +62,7 @@ function NavBar(props) {
       <h1><Link to="/">Node Warrior</Link></h1>
       <div className="nav-links-container">
         {getStartedLink}
+        {catalogLink}
         {signInUpLinks}
         {signOutLink}
       </div>

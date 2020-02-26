@@ -394,7 +394,7 @@ code {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-.catalog-card:hover {
+.catalog-card:not(.coming-soon):hover {
   cursor: pointer;
   transform: scale(1.01);
   box-shadow: 0 1px 11px rgba(0,0,0,0.3);
@@ -407,6 +407,10 @@ code {
 
 .catalog-card p {
   font-size: 16px;
+}
+
+.coming-soon {
+  background-color: lightgray;
 }
 
 /********* LEARNING MODULE *********/

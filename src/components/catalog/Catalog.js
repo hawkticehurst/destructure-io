@@ -12,15 +12,14 @@ function Catalog(props) {
         <hr />
       </div>
       <div className="catalog-card-container">
-        <CatalogCard cardTitle="Learn Nodes" cardDescription="Learn one of the most fundamental data structures in computer science." />
-        <CatalogCard cardTitle="Learn Linked Lists" cardDescription="Learn one of the most fundamental data structures in computer science." />
-        <CatalogCard cardTitle="Learn Arrays" cardDescription="Learn one of the most fundamental data structures in computer science." />
-        <CatalogCard cardTitle="Learn Stacks" cardDescription="Learn one of the most fundamental data structures in computer science." />
-        <CatalogCard cardTitle="Learn Queues" cardDescription="Learn one of the most fundamental data structures in computer science." />
-        <CatalogCard cardTitle="Learn Hash-Maps" cardDescription="Learn one of the most fundamental data structures in computer science." />
-        <CatalogCard cardTitle="Learn Trees" cardDescription="Learn one of the most fundamental data structures in computer science." />
-        <CatalogCard cardTitle="Learn Graphs" cardDescription="Learn one of the most fundamental data structures in computer science." />
-        <CatalogCard cardTitle="Learn Heaps" cardDescription="Learn one of the most fundamental data structures in computer science." />
+        <CatalogCard title="Learn Arrays" description="Learn one of the most fundamental data structures in computer science." />
+        <CatalogCard title="Learn Nodes" description="Learn one of the most fundamental data structures in computer science." />
+        <CatalogCard link="/learn/linked-list" title="Learn Linked Lists" description="Learn one of the most fundamental data structures in computer science." />
+        <CatalogCard title="Learn Stacks" description="Learn one of the most fundamental data structures in computer science." />
+        <CatalogCard title="Learn Queues" description="Learn one of the most fundamental data structures in computer science." />
+        <CatalogCard title="Learn Maps" description="Learn one of the most fundamental data structures in computer science." />
+        <CatalogCard title="Learn Trees" description="Learn one of the most fundamental data structures in computer science." />
+        <CatalogCard title="Learn Graphs" description="Learn one of the most fundamental data structures in computer science." />
       </div>
     </div>
   );
