@@ -44,6 +44,7 @@ function LearningModule() {
     })
     if (subModuleData == null) {
       subModuleData = moduleData.submodules[0];
+      tempSelectedSubModuleIndex = 1;
     }
     try {
       tempData = require('../../lesson-content/' + module + '/' + subModuleData.filename);
