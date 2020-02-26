@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { doSignOut } from '../../firebase/firebase';
 import { useFirebaseUser } from '../../hooks/user';
@@ -19,15 +19,11 @@ function NavBar(props) {
 
   if (navBarType === "homepage") {
     containerClass += " homepage-nav-bar";
-    navBarLinks.push("Log In");
     navBarLinks.push("Get Started");
   } else if (navBarType === "module") {
     containerClass += " module-nav-bar";
-    navBarLinks.push("Account");
   } else if (navBarType === "catalog") {
     containerClass += " homepage-nav-bar";
-    navBarLinks.push("Catalog");
-    navBarLinks.push("Account");
   }
 
   const backBtn = navBarType === "module" ? (
@@ -41,16 +37,27 @@ function NavBar(props) {
 
   // Using a link here is a bit hacky but makes sure we don't have different styles compared to actual links
   const signOutLink = user != null ? (
-    <Link to={window.location.pathname} onClick={doSignOut}>Sign Out</Link>
+    <Link to={window.location.pathname} onClick={doSignOut}>Log Out</Link>
   ) : null;
+
+  const signInUpLinks = user == null ? (
+    <Fragment>
+      <Link to="/signin">Log In</Link>
+      <Link to="/signup">Sign Up</Link>
+    </Fragment>
+  ) : null;
+
+  const getStartedLink = navBarType === 'homepage' ? (
+    <Link to="/learn">Get Started</Link>
+  ) : null
 
   return (
     <div className={containerClass}>
       {backBtn}
       <h1><Link to="/">Node Warrior</Link></h1>
       <div className="nav-links-container">
-        {/* TODO: How to dynamically set href? */}
-        {navBarLinks.map((link, index) => <Link key={index} to="/">{link}</Link>)}
+        {getStartedLink}
+        {signInUpLinks}
         {signOutLink}
       </div>
     </div>
