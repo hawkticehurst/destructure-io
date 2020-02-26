@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { doSignOut } from '../../firebase/firebase';
+import { useFirebaseUser } from '../../hooks/user';
 
 /**
  * Required Props:
@@ -10,6 +12,7 @@ import { Link } from 'react-router-dom';
  */
 function NavBar(props) {
   const { toggleSideBar, SubModuleTitle, navBarType } = props;
+  const user = useFirebaseUser();
 
   let containerClass = "nav-bar-container";
   const navBarLinks = [];
@@ -36,6 +39,11 @@ function NavBar(props) {
     </div>
   ) : null;
 
+  // Using a link here is a bit hacky but makes sure we don't have different styles compared to actual links
+  const signOutLink = user != null ? (
+    <Link to={window.location.pathname} onClick={doSignOut}>Sign Out</Link>
+  ) : null;
+
   return (
     <div className={containerClass}>
       {backBtn}
@@ -43,6 +51,7 @@ function NavBar(props) {
       <div className="nav-links-container">
         {/* TODO: How to dynamically set href? */}
         {navBarLinks.map((link, index) => <Link key={index} to="/">{link}</Link>)}
+        {signOutLink}
       </div>
     </div>
   );
