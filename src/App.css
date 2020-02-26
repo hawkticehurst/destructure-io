@@ -714,7 +714,6 @@ button, input {
   background-color: lightgray;
 }
 
-/********* LEARNING MODULE *********/
 .learning-module-container {
   border-radius: 5px;
   margin: 0;
@@ -801,6 +800,43 @@ button, input {
 
 .text-content-container h2 {
   font-size: 18px;
+}
+
+/********* Sign In / Up *********/
+.sign-in-up-container {
+  width: 30%;
+  text-align: center;
+  margin: auto;
+}
+
+/* autofill to prevent chrome from autofilling with small fonts */
+.sign-in-up-input, .sign-in-up-input:-webkit-autofill::first-line {
+  padding: 0.5em;
+  border: 2px solid var(--hero-purple);
+  border-radius: 5px;
+  font-size: 25px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  /* 100% - the extra space created by padding / border */
+  width: calc(100% - 1em - 4px);
+}
+
+.sign-in-up-button {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.sign-in-up-error {
+  padding: 10px;
+  width: 75%;
+  margin: auto;
+  border-radius: 5px;
+  text-align: center;
+  background-color: var(--hero-yellow);
+}
+
+.password {
+  margin-top: 20px;
 }
 
 /********* CODE DISPLAY *********/
