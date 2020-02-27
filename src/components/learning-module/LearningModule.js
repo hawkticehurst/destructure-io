@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import TwoPaneResizable from '../common/TwoPaneResizable';
 import CodeDisplay from '../code-display/CodeDisplay';
 import NavBar from '../common/NavBar';
+import PageNotFound from '../common/PageNotFound';
 import SideBar from './SideBar';
 import SubModuleProgressRow from './SubModuleProgressRow';
 import LearningContent from './LearningContent';
@@ -102,21 +103,27 @@ function LearningModule() {
   }, [module, user]);
 
   useEffect(() => {
-    window.localStorage.setItem(module, JSON.stringify(completionState));
-    if (user != null && Object.keys(completionState).length > 0) {
+    if (completionState == null || Object.keys(completionState).length === 0) {
+      return;
+    }
+    if (user == null) {
+      window.localStorage.setItem(module, JSON.stringify(completionState));
+    } else {
       updateUserModule(module, completionState);
     }
-  }, [module, user, completionState]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [completionState]);
 
   // Prevent showing errors while files are loaded in
   if (loading) {
-    // TODO loading indicator
-    return null;
+    if (module in contentOutline.modules) {
+      return null;
+    }
+    return <PageNotFound />
   }
 
   if (error) {
-    /* TODO 404 Page ? */
-    return <div>Sorry, something went wrong. Please try again later</div>;
+    return <PageNotFound />
   }
 
   const setNextLine = () => {
@@ -168,6 +175,13 @@ function LearningModule() {
     setCompletionState(tempCompletionState);
   };
 
+  const getCompletionState = filename => {
+    const key = filenameToSubModuleKey(filename);
+    if (completionState != null && key in completionState) {
+      return completionState[key];
+    } return 'incomplete';
+  };
+
   return (
     <div>
       <SideBar headerText={moduleName + ' Lessons'} setSideBarShown={setSideBarShown} sideBarShown={sideBarShown}>
@@ -178,7 +192,7 @@ function LearningModule() {
                 onClickLink={() => setSideBarShown(false)}
                 link={filenameToPath(subModule.filename)}
                 moduleTitle={index + 1 + '. ' + subModule.name}
-                completionState={completionState[filenameToSubModuleKey(subModule.filename)]}
+                completionState={getCompletionState(subModule.filename)}
                 completionStateChanged={(state) => completionStateChanged(subModule.filename, state)}
                 selected={index + 1 === selectedSubModuleIndex}
                 key={index} />

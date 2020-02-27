@@ -3,6 +3,8 @@
 
 /********* VARIABLES *********/
 :root {
+  scroll-behavior: smooth;
+
   /* Fonts */
   --font-family: 'Poppins';
 
@@ -180,7 +182,7 @@ button, input {
   background-color: var(--hero-purple-highlighted);
 }
 
-.hero-circle {
+.hero-circle, .hero-circle:hover {
   min-width: 80px;
   min-height: 80px;
   border-radius: 50%;
@@ -193,11 +195,14 @@ button, input {
   color: white;
 }
 
-.hero-circle:hover {
-  cursor: default;
+/********* LINKED LIST ILLUSTRATION HOMEPAGE *********/
+#linked-list {
+  /* This Creates 10em of top margin like the other sections, but the padding
+     allows auto scroll to leave some space at the top when it scrolls */
+  padding-top: 2em;
+  margin-top: 8em;
 }
 
-/********* LINKED LIST ILLUSTRATION HOMEPAGE *********/
 .linked-list-illustration-container {
   display: flex;
   align-items: center;
@@ -824,6 +829,10 @@ button, input {
   margin: auto;
 }
 
+.sign-in-dropdown  .sign-in-up-container {
+  width: 80%;
+}
+
 .sign-in-up-input {
   padding: 0.5em;
   border: 2px solid var(--hero-purple);
@@ -856,6 +865,22 @@ button, input {
 
 .password {
   margin-top: 20px;
+}
+
+.sign-in-dropdown {
+  z-index: 1;
+  background-color: lightgray;
+  border-radius: 5px;
+  position: fixed;
+  transform: scale(0.7);
+  top: 4em;
+  right: 7em;
+  transform-origin: top right;
+}
+
+/********* 404 Page *********/
+.page-not-found {
+  text-align: center;
 }
 
 /********* CODE DISPLAY *********/
