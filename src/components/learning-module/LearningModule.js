@@ -8,6 +8,8 @@ import LearningContent from './LearningContent';
 import useInterval from '../../hooks/useInterval';
 import contentOutline from '../../lesson-content/contentOutline.json';
 import {useParams, useHistory} from "react-router-dom";
+import {updateUserModule, getUserModule} from '../../firebase/firebase';
+import {useFirebaseUser} from '../../hooks/user';
 
 const language = "java"; // TODO make this selectable
 
@@ -24,9 +26,11 @@ function LearningModule() {
   const [selectedSubModuleIndex, setSelectedSubModuleIndex] = useState(0);
   const [subModuleList, setSubModuleList] = useState([]);
   const [moduleName, setModuleName] = useState('');
+  const [completionState, setCompletionState] = useState({});
   const learningContentPaneRef = useRef(null);
   const {module, submodule} = useParams();
   const history = useHistory();
+  const user = useFirebaseUser();
 
   useInterval(() => {
     setNextLine();
@@ -89,6 +93,21 @@ function LearningModule() {
     setSelectedLine(-1);
   }, [module, submodule]); // Only run this function when the module or submodule changes
 
+  useEffect(() => {
+    if (user == null) {
+      setCompletionState(JSON.parse(window.localStorage.getItem(module)));
+    } else {
+      getUserModule(module).then(setCompletionState);
+    }
+  }, [module, user]);
+
+  useEffect(() => {
+    window.localStorage.setItem(module, JSON.stringify(completionState));
+    if (user != null && Object.keys(completionState).length > 0) {
+      updateUserModule(module, completionState);
+    }
+  }, [module, user, completionState]);
+
   // Prevent showing errors while files are loaded in
   if (loading) {
     // TODO loading indicator
@@ -143,6 +162,12 @@ function LearningModule() {
     history.push(filenameToPath(subModuleList[selectedSubModuleIndex].filename));
   };
 
+  const completionStateChanged = (submodule, state) => {
+    const tempCompletionState = {...completionState};
+    tempCompletionState[filenameToSubModuleKey(submodule)] = state;
+    setCompletionState(tempCompletionState);
+  };
+
   return (
     <div>
       <SideBar headerText={moduleName + ' Lessons'} setSideBarShown={setSideBarShown} sideBarShown={sideBarShown}>
@@ -153,7 +178,8 @@ function LearningModule() {
                 onClickLink={() => setSideBarShown(false)}
                 link={filenameToPath(subModule.filename)}
                 moduleTitle={index + 1 + '. ' + subModule.name}
-                completionState="completed"
+                completionState={completionState[filenameToSubModuleKey(subModule.filename)]}
+                completionStateChanged={(state) => completionStateChanged(subModule.filename, state)}
                 selected={index + 1 === selectedSubModuleIndex}
                 key={index} />
             );

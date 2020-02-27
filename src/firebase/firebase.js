@@ -63,12 +63,8 @@ export const addModule = (moduleJson) => {
   return newModuleKey;
 }
 
-export const updateUserModule = (moduleKey) => {
-  let uid = firebase.auth().currentUser;
-
-  let moduleData = {
-    attempted: true
-  };
+export const updateUserModule = (moduleKey, moduleData) => {
+  const uid = firebase.auth().currentUser.uid;
 
   let updates = {};
 
@@ -81,3 +77,10 @@ export const updateUserModule = (moduleKey) => {
 
   return moduleData;
 }
+
+export const getUserModule = moduleKey => {
+  const uid = firebase.auth().currentUser.uid;
+  return firebase.database().ref('/user-modules/' + uid + '/' + moduleKey).once('value').then(function(snapshot) {
+    return snapshot.val();
+  });
+};

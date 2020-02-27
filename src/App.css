@@ -769,6 +769,7 @@ button, input {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .animate-btn-container button, .module-btn-container button {
