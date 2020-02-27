@@ -28,7 +28,7 @@ function LinkedList() {
             [...Array(NUM_NODES)].map((_, i) =>  {
               const nodeClass = i === highlightIndex ? 'linked-list-node linked-list-highlight' : 'linked-list-node';
               return (
-                <Fragment>
+                <Fragment key={i}>
                   <div className={nodeClass}>{i + 1}</div>
                   {i < NUM_NODES -1 ? <div className="linked-list-pointer" /> : null}
                 </Fragment>

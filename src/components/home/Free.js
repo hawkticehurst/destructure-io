@@ -1,6 +1,19 @@
 import React, { Fragment } from 'react';
+import { useHistory } from "react-router-dom";
+import { useFirebaseUser } from '../../hooks/user';
 
 function Free() {
+  const user = useFirebaseUser();
+  const history = useHistory();
+
+  const getStarted = () => {
+    if (user == null) {
+      history.push('/signup');
+    } else {
+      history.push('/learn');
+    }
+  };
+
   return (
     <Fragment>
       <div className="text-container">
@@ -12,7 +25,7 @@ function Free() {
         </p>
       </div>
       <div className="img-container right-image">
-        <button id="cta-btn" className="hero-btn">
+        <button onClick={getStarted} className="hero-btn">
           <span className="bold">Get Started</span>
         </button>
       </div>

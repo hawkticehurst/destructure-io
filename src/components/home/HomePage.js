@@ -13,7 +13,7 @@ function HomePage(props) {
       <NavBar navBarType="homepage" />
       <main>
         <Hero />
-        <div className="content-container">
+        <div id="linked-list" className="content-container">
           <LinkedList />
         </div>
         <div className="content-container">

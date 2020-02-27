@@ -3,6 +3,8 @@
 
 /********* VARIABLES *********/
 :root {
+  scroll-behavior: smooth;
+
   /* Fonts */
   --font-family: 'Poppins';
 
@@ -180,7 +182,7 @@ button, input {
   background-color: var(--hero-purple-highlighted);
 }
 
-.hero-circle {
+.hero-circle, .hero-circle:hover {
   min-width: 80px;
   min-height: 80px;
   border-radius: 50%;
@@ -193,11 +195,14 @@ button, input {
   color: white;
 }
 
-.hero-circle:hover {
-  cursor: default;
+/********* LINKED LIST ILLUSTRATION HOMEPAGE *********/
+#linked-list {
+  /* This Creates 10em of top margin like the other sections, but the padding
+     allows auto scroll to leave some space at the top when it scrolls */
+  padding-top: 2em;
+  margin-top: 8em;
 }
 
-/********* LINKED LIST ILLUSTRATION HOMEPAGE *********/
 .linked-list-illustration-container {
   display: flex;
   align-items: center;
@@ -662,7 +667,7 @@ button, input {
 
 /********* LEARNING MODULE *********/
 .catalog-hero-container {
-  padding: 1em 1.5em;
+  padding: 0 1.5em 1em;
 }
 
 .catalog-hero-container p {
@@ -769,17 +774,10 @@ button, input {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  width: 100%;
-  margin: 0;
-  bottom: 0;
-  margin: 0;
-  left: 0;
-  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-  height: 3em;
+  flex-shrink: 0;
 }
 
-.animate-btn-container button {
+.animate-btn-container button, .module-btn-container button {
   background-color: var(--hero-purple);
   color: white;
   border-style: none;
@@ -787,6 +785,28 @@ button, input {
   padding: 1em;
   font-weight: bold;
   margin: 0 0.5em 0em 0.5em;
+}
+
+.module-btn-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  bottom: 0;
+  margin: 0;
+  left: 0;
+  height: 3em;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.back-next-container {
+  /* Keep the width even when the button is hidden to keep flex spacing the same */
+  width: 150px;
+}
+
+.next-btn {
+  display: flex;
+  justify-content: flex-end;
 }
 
 /********* TEXT CONTENT COMPONENT *********/
@@ -809,8 +829,11 @@ button, input {
   margin: auto;
 }
 
-/* autofill to prevent chrome from autofilling with small fonts */
-.sign-in-up-input, .sign-in-up-input:-webkit-autofill::first-line {
+.sign-in-dropdown  .sign-in-up-container {
+  width: 80%;
+}
+
+.sign-in-up-input {
   padding: 0.5em;
   border: 2px solid var(--hero-purple);
   border-radius: 5px;
@@ -818,6 +841,11 @@ button, input {
   box-shadow: 0 1px 4px rgba(0,0,0,0.2);
   /* 100% - the extra space created by padding / border */
   width: calc(100% - 1em - 4px);
+}
+
+/* autofill to prevent chrome from autofilling with small fonts */
+.sign-in-up-input:-webkit-autofill::first-line {
+  font-size: 25px;
 }
 
 .sign-in-up-button {
@@ -837,6 +865,22 @@ button, input {
 
 .password {
   margin-top: 20px;
+}
+
+.sign-in-dropdown {
+  z-index: 1;
+  background-color: lightgray;
+  border-radius: 5px;
+  position: fixed;
+  transform: scale(0.7);
+  top: 4em;
+  right: 7em;
+  transform-origin: top right;
+}
+
+/********* 404 Page *********/
+.page-not-found {
+  text-align: center;
 }
 
 /********* CODE DISPLAY *********/

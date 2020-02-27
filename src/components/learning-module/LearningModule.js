@@ -2,16 +2,19 @@ import React, { useState, useEffect, useRef } from 'react';
 import TwoPaneResizable from '../common/TwoPaneResizable';
 import CodeDisplay from '../code-display/CodeDisplay';
 import NavBar from '../common/NavBar';
+import PageNotFound from '../common/PageNotFound';
 import SideBar from './SideBar';
 import SubModuleProgressRow from './SubModuleProgressRow';
 import LearningContent from './LearningContent';
 import useInterval from '../../hooks/useInterval';
 import contentOutline from '../../lesson-content/contentOutline.json';
-import {useParams} from "react-router-dom";
+import {useParams, useHistory} from "react-router-dom";
+import {updateUserModule, getUserModule} from '../../firebase/firebase';
+import {useFirebaseUser} from '../../hooks/user';
 
 const language = "java"; // TODO make this selectable
 
-// TODO this component is getting way too big. It really should be broken down more
+// TODO this component is getting way too big. It really should be broken down more and some of the state doesn't need to be state
 function LearningModule() {
   const [selectedLine, setSelectedLine] = useState(-1);
   const [speed, setSpeed] = useState(null);
@@ -24,8 +27,11 @@ function LearningModule() {
   const [selectedSubModuleIndex, setSelectedSubModuleIndex] = useState(0);
   const [subModuleList, setSubModuleList] = useState([]);
   const [moduleName, setModuleName] = useState('');
+  const [completionState, setCompletionState] = useState({});
   const learningContentPaneRef = useRef(null);
   const {module, submodule} = useParams();
+  const history = useHistory();
+  const user = useFirebaseUser();
 
   useInterval(() => {
     setNextLine();
@@ -33,7 +39,6 @@ function LearningModule() {
 
   useEffect(() => {
     let tempData;
-    console.log(module)
     const moduleData = contentOutline.modules.find(moduleObj => moduleObj.directory === module);
     if (moduleData == null) {
       setError(true);
@@ -89,15 +94,36 @@ function LearningModule() {
     setSelectedLine(-1);
   }, [module, submodule]); // Only run this function when the module or submodule changes
 
+  useEffect(() => {
+    if (user == null) {
+      setCompletionState(JSON.parse(window.localStorage.getItem(module)));
+    } else {
+      getUserModule(module).then(setCompletionState);
+    }
+  }, [module, user]);
+
+  useEffect(() => {
+    if (completionState == null || Object.keys(completionState).length === 0) {
+      return;
+    }
+    if (user == null) {
+      window.localStorage.setItem(module, JSON.stringify(completionState));
+    } else {
+      updateUserModule(module, completionState);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [completionState]);
+
   // Prevent showing errors while files are loaded in
   if (loading) {
-    // TODO loading indicator
-    return null;
+    if (module in contentOutline.modules) {
+      return null;
+    }
+    return <PageNotFound />
   }
 
   if (error) {
-    /* TODO 404 Page ? */
-    return <div>Sorry, something went wrong. Please try again later</div>;
+    return <PageNotFound />
   }
 
   const setNextLine = () => {
@@ -127,6 +153,35 @@ function LearningModule() {
     setSpeed(null);
   };
 
+  const filenameToSubModuleKey = filename => {
+    return filename.substring(0, filename.length - '.json'.length);
+  };
+
+  const filenameToPath = filename => {
+    return '/learn/' + module + '/' + filenameToSubModuleKey(filename);
+  };
+
+  const onClickBack = () => {
+    history.push(filenameToPath(subModuleList[selectedSubModuleIndex - 2].filename));
+  };
+
+  const onClickNext = () => {
+    history.push(filenameToPath(subModuleList[selectedSubModuleIndex].filename));
+  };
+
+  const completionStateChanged = (submodule, state) => {
+    const tempCompletionState = {...completionState};
+    tempCompletionState[filenameToSubModuleKey(submodule)] = state;
+    setCompletionState(tempCompletionState);
+  };
+
+  const getCompletionState = filename => {
+    const key = filenameToSubModuleKey(filename);
+    if (completionState != null && key in completionState) {
+      return completionState[key];
+    } return 'incomplete';
+  };
+
   return (
     <div>
       <SideBar headerText={moduleName + ' Lessons'} setSideBarShown={setSideBarShown} sideBarShown={sideBarShown}>
@@ -135,9 +190,10 @@ function LearningModule() {
             return (
               <SubModuleProgressRow
                 onClickLink={() => setSideBarShown(false)}
-                link={'/learn/' + module + '/' + subModule.filename.substring(0, subModule.filename.length - '.json'.length)}
+                link={filenameToPath(subModule.filename)}
                 moduleTitle={index + 1 + '. ' + subModule.name}
-                completionState="completed"
+                completionState={getCompletionState(subModule.filename)}
+                completionStateChanged={(state) => completionStateChanged(subModule.filename, state)}
                 selected={index + 1 === selectedSubModuleIndex}
                 key={index} />
             );
@@ -169,11 +225,23 @@ function LearningModule() {
           initialStartSize={40}
         />
       </div>
-      <div className="animate-btn-container">
-        <button onClick={startAnimation} disabled={speed != null}>Play Animation</button>
-        <button onClick={stopAnimation} disabled={speed == null}>Pause Animation</button>
-        <button onClick={setPreviousLine} disabled={selectedLine <= 0}>Previous Line</button>
-        <button onClick={setNextLine}>Next Line</button>
+      <div className="module-btn-container">
+        <div className="back-next-container">
+          {
+            selectedSubModuleIndex > 1 ? <button className="secondary-btn" onClick={onClickBack}>Back</button> : null
+          }
+        </div>
+        <div className="animate-btn-container">
+          <button onClick={startAnimation} disabled={speed != null}>Play Animation</button>
+          <button onClick={stopAnimation} disabled={speed == null}>Pause Animation</button>
+          <button onClick={setPreviousLine} disabled={selectedLine <= 0}>Previous Line</button>
+          <button onClick={setNextLine}>Next Line</button>
+        </div>
+        <div className="back-next-container next-btn">
+          {
+            selectedSubModuleIndex < subModuleList.length ? <button onClick={onClickNext}>Next</button> : null
+          }
+        </div>
       </div>
     </div>
   );

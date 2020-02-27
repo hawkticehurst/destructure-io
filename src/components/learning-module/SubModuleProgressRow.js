@@ -10,18 +10,21 @@ import {Link} from 'react-router-dom';
  * completionState {String} - One of "completed", "flagged" or "incomplete". Defaults "incomplete"
  * selected {boolean} - Defaults false. True if is current sub-module
  * onClickLink {Function} - Function to be called when the link is clicked
+ * completionStateChanged {Function} - Function called when completion state is changed
  */
 function SubModuleProgressRow(props) {
-  const {completionState, link, moduleTitle, selected, onClickLink} = props;
+  const {completionState, completionStateChanged, link, moduleTitle, selected, onClickLink} = props;
   const [isCompleted, setIsCompleted] = useState(completionState);
 
-  // TODO this needs to also toggle in Firebase or somewhere we store completion state
   const toggleCompletionState = () => {
     if (isCompleted === 'flagged') {
+      completionStateChanged('completed');
       setIsCompleted('completed');
-    } else if (isCompleted === 'incomplete') {
+    } else if (isCompleted == null || isCompleted === 'incomplete') {
+      completionStateChanged('flagged');
       setIsCompleted('flagged');
     } else {
+      completionStateChanged('incomplete');
       setIsCompleted('incomplete');
     }
   };
