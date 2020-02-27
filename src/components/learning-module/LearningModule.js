@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import TwoPaneResizable from '../common/TwoPaneResizable';
 import CodeDisplay from '../code-display/CodeDisplay';
 import NavBar from '../common/NavBar';
@@ -24,6 +24,7 @@ function LearningModule() {
   const [selectedSubModuleIndex, setSelectedSubModuleIndex] = useState(0);
   const [subModuleList, setSubModuleList] = useState([]);
   const [moduleName, setModuleName] = useState('');
+  const learningContentPaneRef = useRef(null);
   const {module, submodule} = useParams();
 
   useInterval(() => {
@@ -32,6 +33,7 @@ function LearningModule() {
 
   useEffect(() => {
     let tempData;
+    console.log(module)
     const moduleData = contentOutline.modules.find(moduleObj => moduleObj.directory === module);
     if (moduleData == null) {
       setError(true);
@@ -44,6 +46,7 @@ function LearningModule() {
     })
     if (subModuleData == null) {
       subModuleData = moduleData.submodules[0];
+      tempSelectedSubModuleIndex = 1;
     }
     try {
       tempData = require('../../lesson-content/' + module + '/' + subModuleData.filename);
@@ -69,6 +72,12 @@ function LearningModule() {
       }
       startingLine += code[language].length;
     });
+
+    if (learningContentPaneRef.current != null) {
+      learningContentPaneRef.current.scrollTop = 0;
+      learningContentPaneRef.current.scrollLeft = 0;
+    }
+
     setModuleName(moduleData.name);
     setLoading(false);
     setSubModuleList(moduleData.submodules);
@@ -141,6 +150,7 @@ function LearningModule() {
         SubModuleTitle={selectedSubModuleIndex + '. ' + selectedSubmoduleName} />
       <div className="learning-module-container">
         <TwoPaneResizable
+          firstComponentRef={learningContentPaneRef}
           firstComponent={
             <LearningContent
               contentTitleString={selectedSubmoduleName}
