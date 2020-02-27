@@ -7,11 +7,11 @@ import SubModuleProgressRow from './SubModuleProgressRow';
 import LearningContent from './LearningContent';
 import useInterval from '../../hooks/useInterval';
 import contentOutline from '../../lesson-content/contentOutline.json';
-import {useParams} from "react-router-dom";
+import {useParams, useHistory} from "react-router-dom";
 
 const language = "java"; // TODO make this selectable
 
-// TODO this component is getting way too big. It really should be broken down more
+// TODO this component is getting way too big. It really should be broken down more and some of the state doesn't need to be state
 function LearningModule() {
   const [selectedLine, setSelectedLine] = useState(-1);
   const [speed, setSpeed] = useState(null);
@@ -26,6 +26,7 @@ function LearningModule() {
   const [moduleName, setModuleName] = useState('');
   const learningContentPaneRef = useRef(null);
   const {module, submodule} = useParams();
+  const history = useHistory();
 
   useInterval(() => {
     setNextLine();
@@ -33,7 +34,6 @@ function LearningModule() {
 
   useEffect(() => {
     let tempData;
-    console.log(module)
     const moduleData = contentOutline.modules.find(moduleObj => moduleObj.directory === module);
     if (moduleData == null) {
       setError(true);
@@ -127,6 +127,22 @@ function LearningModule() {
     setSpeed(null);
   };
 
+  const filenameToSubModuleKey = filename => {
+    return filename.substring(0, filename.length - '.json'.length);
+  };
+
+  const filenameToPath = filename => {
+    return '/learn/' + module + '/' + filenameToSubModuleKey(filename);
+  };
+
+  const onClickBack = () => {
+    history.push(filenameToPath(subModuleList[selectedSubModuleIndex - 2].filename));
+  };
+
+  const onClickNext = () => {
+    history.push(filenameToPath(subModuleList[selectedSubModuleIndex].filename));
+  };
+
   return (
     <div>
       <SideBar headerText={moduleName + ' Lessons'} setSideBarShown={setSideBarShown} sideBarShown={sideBarShown}>
@@ -135,7 +151,7 @@ function LearningModule() {
             return (
               <SubModuleProgressRow
                 onClickLink={() => setSideBarShown(false)}
-                link={'/learn/' + module + '/' + subModule.filename.substring(0, subModule.filename.length - '.json'.length)}
+                link={filenameToPath(subModule.filename)}
                 moduleTitle={index + 1 + '. ' + subModule.name}
                 completionState="completed"
                 selected={index + 1 === selectedSubModuleIndex}
@@ -169,11 +185,23 @@ function LearningModule() {
           initialStartSize={40}
         />
       </div>
-      <div className="animate-btn-container">
-        <button onClick={startAnimation} disabled={speed != null}>Play Animation</button>
-        <button onClick={stopAnimation} disabled={speed == null}>Pause Animation</button>
-        <button onClick={setPreviousLine} disabled={selectedLine <= 0}>Previous Line</button>
-        <button onClick={setNextLine}>Next Line</button>
+      <div className="module-btn-container">
+        <div className="back-next-container">
+          {
+            selectedSubModuleIndex > 1 ? <button className="secondary-btn" onClick={onClickBack}>Back</button> : null
+          }
+        </div>
+        <div className="animate-btn-container">
+          <button onClick={startAnimation} disabled={speed != null}>Play Animation</button>
+          <button onClick={stopAnimation} disabled={speed == null}>Pause Animation</button>
+          <button onClick={setPreviousLine} disabled={selectedLine <= 0}>Previous Line</button>
+          <button onClick={setNextLine}>Next Line</button>
+        </div>
+        <div className="back-next-container next-btn">
+          {
+            selectedSubModuleIndex < subModuleList.length ? <button onClick={onClickNext}>Next</button> : null
+          }
+        </div>
       </div>
     </div>
   );

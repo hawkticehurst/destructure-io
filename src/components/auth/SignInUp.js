@@ -48,7 +48,7 @@ function SignInUp(props) {
       .catch(setError);
   };
 
-  const headerText = isSignIn ? 'Sign In' : 'Sign Up';
+  const headerText = isSignIn ? 'Log In' : 'Sign Up';
 
   const footerPrompt = isSignIn ? (
     <p>
