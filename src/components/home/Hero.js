@@ -23,9 +23,9 @@ function Hero() {
       <button onClick={onClickHeroBtn} className="hero-btn">
         <span className="bold">Get Started</span> – It's free!
       </button>
-      <div id="chevron" className="hero-circle">
-        <span className="bold">&#8675;</span>
-      </div>
+        <a id="chevron" className="hero-circle" href="#linked-list">
+          <span className="bold">&#8675;</span>
+        </a>
     </div>
   );
 }

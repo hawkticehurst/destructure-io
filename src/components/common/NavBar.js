@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 import { doSignOut } from '../../firebase/firebase';
 import { useFirebaseUser } from '../../hooks/user';
+import SignInUpInputs from '../auth/SignInUpInputs';
 
 /**
  * Required Props:
@@ -12,7 +13,10 @@ import { useFirebaseUser } from '../../hooks/user';
  */
 function NavBar(props) {
   const { toggleSideBar, SubModuleTitle, navBarType } = props;
+  const [showLoginDropdown, setShowLoginDropdown] = useState(false);
   const user = useFirebaseUser();
+
+  const onModulePage = window.location.pathname.startsWith('/learn') && window.location.pathname.length > '/learn/'.length;
 
   let containerClass = "nav-bar-container";
   if (navBarType === "homepage" || navBarType === "catalog" || navBarType === "sign-in-up") {
@@ -35,11 +39,11 @@ function NavBar(props) {
     <Link to={window.location.pathname} onClick={doSignOut}>Log Out</Link>
   ) : null;
 
-  const signInLink = user == null && navBarType !== "sign-in-up" ? (
-    <Link to="/signin">Log In</Link>
-  ) : null;
+  const signInLink = user == null && navBarType !== "sign-in-up" ? onModulePage ? (
+    <Link to={window.location.pathname} onClick={() => setShowLoginDropdown(!showLoginDropdown)}>Log In</Link>
+  ) : <Link to="/signin">Log In</Link> : null;
 
-  const signUpLink= user == null && navBarType === 'module' ? (
+  const signUpLink= user == null && ['module', 'catalog'].includes(navBarType) ? (
     <Link to="/signup">Sign Up</Link>
   ) : null;
 
@@ -53,6 +57,11 @@ function NavBar(props) {
 
   return (
     <div className={containerClass}>
+      {showLoginDropdown ? (
+        <div className="sign-in-dropdown">
+          <SignInUpInputs isSignIn={true} onSignIn={() => setShowLoginDropdown(false)} />
+        </div>
+      ) : null}
       {backBtn}
       <h1><Link to="/">Node Warrior</Link></h1>
       <div className="nav-links-container">
