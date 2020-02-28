@@ -1013,6 +1013,7 @@ button, input {
    color: #FFFFFF;
    background: #000000;
    border-radius: 8px;
+   box-shadow: 0 1px 4px rgba(0,0,0,0.2);
  }
 
  .tooltip:not(.invisible) {
