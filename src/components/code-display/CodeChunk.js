@@ -25,6 +25,7 @@ function CodeChunk(props) {
             isCollapsed={isCollapsed}
             isHidden={isHidden}
             isSelected={selectedLine === lineNumber}
+            tooltip={lineData.tooltip}
             key={index} />
   });
 

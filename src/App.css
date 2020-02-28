@@ -71,7 +71,12 @@ button, input {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+.invisible {
+  opacity: 0;
+  z-index: -2;
 }
 
 .bold {
@@ -916,7 +921,6 @@ button, input {
 
 .chunk-open {
   max-height: 1000px;
-  /* overflow-y: hidden; */
   transition: 1s;
   animation: 1s delay-overflow;
 }
@@ -938,17 +942,18 @@ button, input {
 .code-line {
   min-width: 100%;
   display: flex;
+  align-items: center;
   font-size: 15px;
   font-family: monospace;
 }
 
 .code-content {
   width: 100%;
-  margin-left: 10px;
+  margin-left: 18px;
 }
 
 .line-number {
-  min-width: 15px;
+  min-width: 20px;
   text-align: right;
   padding-left: 5px;
   padding-right: 5px;
@@ -989,4 +994,60 @@ button, input {
 
 .chevron.bottom:before {
   transform: rotate(135deg);
+}
+
+.chevron-container {
+  align-self: flex-start;
+}
+
+.chevron-offset {
+  margin-right: -30px; /*arbitrarily larger number than space it takes */
+}
+
+/********* CODE DISPLAY TOOLTIPS *********/
+ .tooltip {
+   padding: 10px;
+   display: block;
+   position: fixed;
+   max-width: 300px;
+   color: #FFFFFF;
+   background: #000000;
+   border-radius: 8px;
+ }
+
+ .tooltip:not(.invisible) {
+   opacity: .9;
+ }
+
+ .tooltip:after {
+   content: '';
+   position: absolute;
+   top: 100%;
+   left: 20px;
+   width: 0;
+   height: 0;
+   border-top: 8px solid #000000;
+   border-left: 8px solid transparent;
+   border-right: 8px solid transparent;
+ }
+
+.tooltip-indicator {
+  margin-right: -30px; /*arbitrarily larger number than space it takes */
+}
+ .tooltip-indicator:before {
+  cursor: default;
+  content: '?';
+  display: inline-block;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: center;
+  width: 13px;
+  height: 13px;
+  font-size: 13px;
+  line-height: 13px;
+  border-radius: 13px;
+  padding: 1px;
+  background: white;
+  border: 1px solid black;
+  text-decoration: none;
 }
