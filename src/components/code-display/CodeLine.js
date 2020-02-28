@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import CodeHighlight from './CodeHighlight';
+import TooltipContainer from '../common/TooltipContainer';
 
 /**
  * Required Props:
@@ -12,9 +13,10 @@ import CodeHighlight from './CodeHighlight';
  * isCollapsed {Boolean} - Defaults to false
  * isHidden {Boolean} - Defaults to false, if true it shows as "grayed out". Must be true for chevron
  * isSelected {Boolean} - defaults to false, true to show code as selected
+ * tooltip {String} - String to show as a tooltip with the line.
  */
 function CodeLine(props) {
-  const {code, language, lineNumber, isCollapsed, onChevronClick, isHidden, isSelected} = props;
+  const {code, language, lineNumber, isCollapsed, onChevronClick, isHidden, isSelected, tooltip} = props;
   const [codeEllipses, setCodeEllipses] = useState(onChevronClick != null && isHidden && isCollapsed ? '...}' : '');
 
   const clickChevron = () => {
@@ -26,7 +28,8 @@ function CodeLine(props) {
     onChevronClick();
   };
 
-  const chevron = onChevronClick != null && isHidden ?
+  const hasChevron = onChevronClick != null && isHidden;
+  const chevron = hasChevron ?
   <span
     className={isCollapsed ? "chevron right" : "chevron bottom"}
     onClick={clickChevron} />
@@ -39,7 +42,18 @@ function CodeLine(props) {
       <div className="line-number">
         {lineNumber}
       </div>
-      {chevron}
+      <div className={hasChevron ? 'chevron-container' : ''}>
+        <div className="chevron-offset">
+          {chevron}
+        </div>
+      </div>
+      {
+        tooltip != null ? (
+          <TooltipContainer>
+            <span>{tooltip}</span>
+          </TooltipContainer>
+        ) : null
+      }
       <div className="code-content">
         <CodeHighlight isHidden={isHidden} isSelected={isSelected} language={language}>
           {code + codeEllipses}

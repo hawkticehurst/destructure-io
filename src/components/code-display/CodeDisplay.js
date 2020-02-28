@@ -14,6 +14,7 @@ import CodeChunk from './CodeChunk';
         java: [ // Array of objects, each representing 1 line of code.
           {
             given: "code as string",
+            tooltip: string // optional string of text to show as a tooltip with the code
             dropdownOptions: ["option 1", "option 2"] // optional, default [],
             dropdownLocation: number // optional index in line to put dropdown, defaults to -1 (end of line),
             fillInBlankLocation: number // optional index of fill in blank. -1 = end of line, unspecified = none,
