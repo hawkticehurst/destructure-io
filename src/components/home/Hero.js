@@ -16,16 +16,13 @@ function Hero() {
 
   return (
     <div className="landing-hero-container">
-      <h1>Node Warrior</h1>
-      <p>
-        An interactive visualization platform for learning data structures.
-      </p>
+      <h1>An interactive visualization platform for learning data structures.</h1>
       <button onClick={onClickHeroBtn} className="hero-btn">
         <span className="bold">Get Started</span> – It's free!
       </button>
-        <a id="chevron" className="hero-circle" href="#linked-list">
-          <span className="bold">&#8675;</span>
-        </a>
+      <a id="chevron" className="hero-circle" href="#linked-list">
+        <span className="bold">&#8675;</span>
+      </a>
     </div>
   );
 }

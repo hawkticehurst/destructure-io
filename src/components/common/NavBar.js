@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { doSignOut } from '../../firebase/firebase';
 import { useFirebaseUser } from '../../hooks/user';
@@ -43,7 +43,7 @@ function NavBar(props) {
     <Link to={window.location.pathname} onClick={() => setShowLoginDropdown(!showLoginDropdown)}>Log In</Link>
   ) : <Link to="/signin">Log In</Link> : null;
 
-  const signUpLink= user == null && ['module', 'catalog'].includes(navBarType) ? (
+  const signUpLink = user == null && ['module', 'catalog'].includes(navBarType) ? (
     <Link to="/signup">Sign Up</Link>
   ) : null;
 
@@ -63,7 +63,7 @@ function NavBar(props) {
         </div>
       ) : null}
       {backBtn}
-      <h1><Link to="/">Node Warrior</Link></h1>
+      <h1><Link to="/">destructure.io</Link></h1>
       <div className="nav-links-container">
         {getStartedLink}
         {catalogLink}
