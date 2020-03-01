@@ -4,16 +4,23 @@ import LinkedListNode from './LinkedListNode';
 import LinkedListPointer from './LinkedListPointer';
 
 /*
-TODOS:
-- Height is set ot 80vh -  this is a random number I came up with...
-- createNewPointer should be able to create curr/temp pointers on other nodes. Right now head-pointer is only one that exists
-- Reverse doesn't work
-- Pause works, but we should make it finish the current line
-- line numbers can get off if play/pause and next line a lot
+MVP TODOS:
+- Height is set ot 80vh -  this is a random number basically, don't think its actually vertically centered
 - Data in linkedListNode is not centered if only 1 character
 - pointer names are not always centered
+- setPointerToNext uses 90px, it was 100px before but that made it too big. It looks right, but should probably figure out the exact right length
+
+HOPEFUL MVP TODOS:
 - How to handle two pointers on the same node at once (see insert at tail). Worst case we can just ignore these
+- Make next Pointers arrows instead of lines
+- Make LinkedListPointers (these are like "head" and "curr") arrows instead of lines
+- Make pointers point to the "Node" part instead of just somewhere random on the box
+     - We might want to move the head/curr pointers to the top (and maybe have new nodes come from bottom?)
 - Firefox and Safari are completely broken spacing - Maybe issue with how we use vh?
+
+LATER TODOS:
+- Insert Node in Middle of List, see insertNodeAtIndex()
+- Reverse doesn't work. Spent a long time on this one, probably not worth the effort right now.
 */
 
 /**
@@ -64,13 +71,18 @@ TODOS:
   */
 function VisualizationComponent(props, ref) {
   const { animations, updateLine } = props;
-
   const ANIME_DURATION = 1000;
-  const tl = useRef(null);
-  const line = useRef(1);
-  const prevAnimationFinished = useRef(true);
-  const isPlayingFullAnimation = useRef(false);
-  const [rendered, setRendered] = useState(false);
+  
+  // Line number in the code we are currently on, starting at 1.
+  // Starting at 0 will force animations to be off a bit from lines,
+  // so easy solution is to just not select the function declaration.
+  // Note Line numbers are not including the hidden code at the top.
+  const selectedLineNumber = useRef(1);
+
+  const tl = useRef(null); // Anime.js timeline object, instatiated in useEffect after rendered = true
+  const hasPrevAnimationFinished = useRef(true); // Keeps track if we are in the middle of an animation or not
+  const isPlayingFullAnimation = useRef(false); // True if clicked Play all instead of next line
+  const [rendered, setRendered] = useState(false); // Flips to true when all the SVGs we need are created
 
   let allNodes = useRef([]); // Every node the animation will need, this gets filled on mount
   let nodesToBeInserted = useRef([]); // Nodes that are visible but above the list
@@ -109,8 +121,8 @@ function VisualizationComponent(props, ref) {
   // Reset everything when the submodule changes
   useEffect(() => {
     tl.current = null;
-    line.current = 1;
-    prevAnimationFinished.current = true;
+    selectedLineNumber.current = 1;
+    hasPrevAnimationFinished.current = true;
     isPlayingFullAnimation.current = false;
     allNodes.current = [];
     nodesToBeInserted.current = [];
@@ -119,15 +131,18 @@ function VisualizationComponent(props, ref) {
     setRendered(false);
   }, [animations]);
 
+  // This callback gets called when rendered changes
+  // If rendered is true -> Setup the timeline
+  // If rendered is false -> Create the SVGs that the timeline will need, set renered true
   useEffect(() => {
     if (rendered) {
       animations.forEach(animationStringArray => {
         // Add a callback so we know when the animation started
         tl.current.add({
           begin: () => {
-            prevAnimationFinished.current = false;
-            line.current++;
-            updateLine(line.current);
+            hasPrevAnimationFinished.current = false;
+            selectedLineNumber.current++;
+            updateLine(selectedLineNumber.current);
           }
         });
 
@@ -142,7 +157,7 @@ function VisualizationComponent(props, ref) {
         tl.current.add({
           duration: 0,
           complete: () => {
-            prevAnimationFinished.current = true;
+            hasPrevAnimationFinished.current = true;
             if (!isPlayingFullAnimation.current) {
               pauseAnimation();
             }
@@ -158,11 +173,12 @@ function VisualizationComponent(props, ref) {
         easing: 'easeOutExpo',
         duration: ANIME_DURATION,
         complete: () => {
-          line.current = 1;
-          prevAnimationFinished.current = true;
+          selectedLineNumber.current = 1;
+          hasPrevAnimationFinished.current = true;
           isPlayingFullAnimation.current = false;
         }
       });
+      // Determine all of the nodes and pointers we will create
       animations.forEach(animationStringArray => {
         if (animationStringArray !== null) {
           animationStringArray.forEach(animationString => {
@@ -208,13 +224,13 @@ function VisualizationComponent(props, ref) {
 
   // TODO this doesn't work
   const previousLine = () => {
-    if (prevAnimationFinished.current) {
-      prevAnimationFinished.current = false;
-      line.current--;
-      updateLine(line.current);
-      tl.current.reverse();
-      tl.current.play();
-    }
+    // if (hasPrevAnimationFinished.current) {
+    //   hasPrevAnimationFinished.current = false;
+    //   selectedLineNumber.current--;
+    //   updateLine(selectedLineNumber.current);
+    //   tl.current.reverse();
+    //   tl.current.play();
+    // }
   };
 
   useImperativeHandle(ref, () => ({
@@ -372,7 +388,7 @@ function VisualizationComponent(props, ref) {
   const setPointerToNext = pointer => {
     tl.current.add({
       targets: pointer,
-      width: '+=100px'
+      width: '+=90px'
     });
   }
 
@@ -420,6 +436,8 @@ function shouldPreventRerender (prevProps, nextProps) {
   return nextProps.animations === null || prevProps.animations === nextProps.animations;
 };
 
+// ForwardRef to Allow the parent to access functions made public above
+// Memo so we can prevent the component from rerendering with  shouldPreventRerender
 const Visualization = memo(forwardRef(VisualizationComponent), shouldPreventRerender);
 
 export default Visualization;

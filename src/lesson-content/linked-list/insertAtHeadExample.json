@@ -62,6 +62,12 @@
             "createNewNode,#node1",
             "createNewPointer,#head-pointer,head"
           ]
+        },
+        {
+          "given": "  head.data = 10;",
+          "animations": [
+            "setNodeData,#node1, 10"
+          ]
         }
       ]
       }
