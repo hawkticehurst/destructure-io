@@ -1,6 +1,6 @@
 {
   "paragraphs": [
-    "Follow along with this visualization to create your first linked list.",
+    "Insert At Head Example",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis et dapibus massa. Donec laoreet sollicitudin velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce quis auctor risus. Nulla vitae magna nunc. Nulla ullamcorper pretium neque quis rhoncus. Integer ornare sagittis tellus eu posuere. Nunc luctus mattis semper.",
     "Vestibulum finibus pretium convallis. Sed varius hendrerit posuere. Nam tincidunt elit neque, id luctus leo elementum vel. Cras euismod sem nec enim vehicula, id malesuada augue vehicula. Phasellus sit amet odio felis. Vivamus non nulla in augue vulputate ullamcorper sed quis nulla. Proin vel dui pulvinar, vestibulum augue ac, sodales nibh."
   ],
@@ -60,13 +60,13 @@
           "given": "  Node head = new Node(0);",
           "animations": [
             "createNewNode,#node1",
-            "createNewPointer,#head-pointer"
+            "createNewPointer,#head-pointer,head"
           ]
         },
         {
-          "given": "  Node curr = head;",
+          "given": "  head.data = 10;",
           "animations": [
-
+            "setNodeData,#node1, 10"
           ]
         }
       ]
@@ -77,22 +77,24 @@
       "loopCounter": [3],
       "code": {
         "java": [{
-          "given": "  for (int i = 0; i < 3; i++) {",
-          "tooltip": "Iteratively creates 3 new nodes after the head node",
+          "given": "  for (int i = 1; i < 4; i++) {"
+        },
+        {
+          "given": "    Node temp = new Node(i);",
           "animations": [
-
+            "createNewNode"
           ]
         },
         {
-          "given": "    curr.next = new Node(i);",
+          "given": "    temp.next = head;",
           "animations": [
-
+            "insertNodeAtIndex,0"
           ]
         },
         {
-          "given": "    curr = curr.next;",
+          "given": "    head = temp;",
           "animations": [
-
+            "movePointer,#head-pointer,-1"
           ]
         },
         {

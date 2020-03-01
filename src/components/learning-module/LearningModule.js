@@ -6,7 +6,7 @@ import PageNotFound from '../common/PageNotFound';
 import SideBar from './SideBar';
 import SubModuleProgressRow from './SubModuleProgressRow';
 import LearningContent from './LearningContent';
-import useInterval from '../../hooks/useInterval';
+import Visualization from '../visualization/Visualization';
 import contentOutline from '../../lesson-content/contentOutline.json';
 import {useParams, useHistory} from "react-router-dom";
 import {updateUserModule, getUserModule} from '../../firebase/firebase';
@@ -17,7 +17,6 @@ const language = "java"; // TODO make this selectable
 // TODO this component is getting way too big. It really should be broken down more and some of the state doesn't need to be state
 function LearningModule() {
   const [selectedLine, setSelectedLine] = useState(-1);
-  const [speed, setSpeed] = useState(null);
   const [sideBarShown, setSideBarShown] = useState(false);
   const [data, setData] = useState(null);
   const [trueSelectedLineMap, setTrueSelectedLineMap] = useState(null);
@@ -28,14 +27,12 @@ function LearningModule() {
   const [subModuleList, setSubModuleList] = useState([]);
   const [moduleName, setModuleName] = useState('');
   const [completionState, setCompletionState] = useState({});
+  const [animationStrings, setAnimationStrings] = useState([]);
   const learningContentPaneRef = useRef(null);
+  const visualizationRef = useRef(null);
   const {module, submodule} = useParams();
   const history = useHistory();
   const user = useFirebaseUser();
-
-  useInterval(() => {
-    setNextLine();
-  }, speed);
 
   useEffect(() => {
     let tempData;
@@ -62,6 +59,7 @@ function LearningModule() {
     const tempTrueSelectedLineMap = [null]; // 0th line is null, lines start at 1, prevent a bunch of +-1
     let iterationNumber = 1;
     let startingLine = 1;
+    let tempAnimationStrings = [];
     tempData.codeChunks.forEach(chunkObj => {
       const { code, type, loopCounter } = chunkObj;
       if (type !== 'hidden' && type !== 'skipped') {
@@ -70,6 +68,11 @@ function LearningModule() {
         while (remainingLoops > 0) {
           for (let i = 0; i < code[language].length; i++) {
             tempTrueSelectedLineMap[iterationNumber] = startingLine + i;
+            if (code[language][i].animations != null && code[language][i].animations.length > 0) {
+              tempAnimationStrings = [...tempAnimationStrings, code[language][i].animations];
+            } else {
+              tempAnimationStrings.push(null);
+            }
             iterationNumber++;
           }
           remainingLoops--;
@@ -89,8 +92,8 @@ function LearningModule() {
     setSelectedSubModuleIndex(tempSelectedSubModuleIndex);
     setSelectedSubModuleName(subModuleData.name)
     setTrueSelectedLineMap(tempTrueSelectedLineMap);
+    setAnimationStrings(tempAnimationStrings);
     setData(tempData);
-    setSpeed(null);
     setSelectedLine(-1);
   }, [module, submodule]); // Only run this function when the module or submodule changes
 
@@ -127,30 +130,19 @@ function LearningModule() {
   }
 
   const setNextLine = () => {
-    if (selectedLine === -1) {
-      setSelectedLine(1);
-    } else if (selectedLine === trueSelectedLineMap.length) {
-      setSelectedLine(-1);
-      stopAnimation();
-    } else {
-      setSelectedLine(selectedLine + 1);
-    }
+    visualizationRef.current.nextLine();
   };
 
-  const setPreviousLine = () => {
-    if (selectedLine <= 1) {
-      setSelectedLine(-1);
-    } else {
-      setSelectedLine(selectedLine - 1);
-    }
-  };
+  // const setPreviousLine = () => {
+  //   visualizationRef.current.previousLine();
+  // };
 
   const startAnimation = () => {
-    setSpeed(500);
+    visualizationRef.current.playFullAnimation();
   };
 
   const stopAnimation = () => {
-    setSpeed(null);
+    visualizationRef.current.pauseAnimation();
   };
 
   const filenameToSubModuleKey = filename => {
@@ -218,9 +210,7 @@ function LearningModule() {
             />
           }
           secondComponent={
-            <div className="filler-text">
-              Visualization Here
-            </div>
+            <Visualization animations={animationStrings} updateLine={(line) => setSelectedLine(line)} ref={visualizationRef} />
           }
           initialStartSize={40}
         />
@@ -228,14 +218,14 @@ function LearningModule() {
       <div className="module-btn-container">
         <div className="back-next-container">
           {
-            selectedSubModuleIndex > 1 ? <button className="secondary-btn" onClick={onClickBack}>Back</button> : null
+            selectedSubModuleIndex > 1 ? <button onClick={onClickBack}>Back</button> : null
           }
         </div>
         <div className="animate-btn-container">
-          <button onClick={startAnimation} disabled={speed != null}>Play Animation</button>
-          <button onClick={stopAnimation} disabled={speed == null}>Pause Animation</button>
-          <button onClick={setPreviousLine} disabled={selectedLine <= 0}>Previous Line</button>
-          <button onClick={setNextLine}>Next Line</button>
+          <button onClick={startAnimation}>Play Whole Animation</button>
+          <button onClick={stopAnimation}>Pause Animation</button>
+          {/*<button onClick={setPreviousLine}>Previous Line BROKEN</button> */}
+          <button onClick={setNextLine}>Play Current Line</button>
         </div>
         <div className="back-next-container next-btn">
           {

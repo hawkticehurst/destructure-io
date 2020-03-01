@@ -14,6 +14,8 @@
   --hero-green: #4FD362;
   --hero-red: #D3624F;
   --hero-yellow: #ffc300;
+  --hero-black: #000;
+  --hero-white: #fff;
 
   /* Common */
   --two-pane-divider-size: 5px;
@@ -68,10 +70,6 @@ code {
 
 button, input {
   outline: none;
-}
-
-.hidden {
-  display: none !important;
 }
 
 .invisible {
@@ -1014,6 +1012,12 @@ button, input {
    background: #000000;
    border-radius: 8px;
    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+
+   /* Prevent highlighting tooltips, so users can copy and paste code from the website */
+   user-select: none;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
  }
 
  .tooltip:not(.invisible) {
@@ -1051,4 +1055,51 @@ button, input {
   background: white;
   border: 1px solid black;
   text-decoration: none;
+}
+
+/********* Visualizations *********/
+
+text {
+  font-weight: 700;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+#head-pointer {
+  fill: var(--hero-red);
+}
+
+.node circle {
+  fill: var(--hero-black);
+}
+
+.node > rect {
+  fill: var(--hero-purple);
+  width: 150px;
+  height: 100px;
+}
+
+.node-header rect {
+  width: 150px;
+  height: 2px;
+}
+
+.node-data-field rect, .node-next-field > rect {
+  width: 50px;
+  height: 20px;
+}
+
+.node-header, .node-data-field, .node-next-field {
+  fill: var(--hero-white);
+}
+
+.node-data-field > text:nth-child(4) {
+  fill: var(--hero-black);
+}
+
+.node-pointer rect {
+  fill: var(--hero-black);
+  height: 4px;
 }
