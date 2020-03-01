@@ -1,5 +1,7 @@
-import React, { useEffect, memo, forwardRef, useImperativeHandle, useRef } from "react";
+import React, { useEffect, memo, forwardRef, useImperativeHandle, useRef, useState } from "react";
 import anime from 'animejs';
+import LinkedListNode from './LinkedListNode';
+import LinkedListPointer from './LinkedListPointer';
 
 /*
 TODOS:
@@ -8,6 +10,10 @@ TODOS:
 - Reverse doesn't work
 - Pause works, but we should make it finish the current line
 - line numbers can get off if play/pause and next line a lot
+- Data in linkedListNode is not centered if only 1 character
+- pointer names are not always centered
+- How to handle two pointers on the same node at once (see insert at tail). Worst case we can just ignore these
+- Firefox and Safari are completely broken spacing - Maybe issue with how we use vh?
 */
 
 /**
@@ -21,11 +27,13 @@ TODOS:
   *
   *  createNewNode:
   *           parameter1 OPTIONAL: Node ID - defaults to next available
-  *           Example: "createNewNode,#node3"
+  *           parameter2 OPTIONAL: data - defaults its node number
+  *           Example: "createNewNode,#node3,4"
   *
   *  createNewPointer:
   *           parameter1: Pointer ID
-  *           Example: "createNewPointer,#head-pointer"
+  *           parameter2: Display name
+  *           Example: "createNewPointer,#head-pointer,head"
   *
   *  deleteNode:
   *           parameter1: Node ID
@@ -37,15 +45,14 @@ TODOS:
   *           Example: "setNodeData,#node3,5"
   *
   *  insertNodeAtIndex:
-  *           parameter1: index to insert the node
+  *           parameter1: index to insert the node. Optionally pass "tail" to set as tail node. (We need this, because loops tail is ambiguous)
   *           parameter2 OPTIONAL: Node ID - if ommitted goes not last created node
-  *           parameter3 OPTIONAL: Pointer ID for the node - if ommitted goes to last created node
-  *           Example: "insertNodeAtIndex,#node3,#node3-pointer,1"
+  *           Example: "insertNodeAtIndex,#node3,1"
   *
   *  movePointer:
-  *           parameter1: Node ID
+  *           parameter1: Pointer ID
   *           parameter2: Number of nodes to move it over, negative to move left
-  *           Example: "movePointer,#node3,-1"
+  *           Example: "movePointer,#head-pointer,-1"
   *
   *  setPointerNull:
   *           parameter1: Pointer ID
@@ -57,33 +64,29 @@ TODOS:
   */
 function VisualizationComponent(props, ref) {
   const { animations, updateLine } = props;
-  const ANIME_DURATION = 700;
+
+  const ANIME_DURATION = 1000;
   const tl = useRef(null);
-  const line = useRef(0);
-  const nextLineEnabled = useRef(true);
+  const line = useRef(1);
+  const prevAnimationFinished = useRef(true);
   const isPlayingFullAnimation = useRef(false);
+  const [rendered, setRendered] = useState(false);
 
-  let invisibleNodes = ["#node1", "#node2", "#node3", "#node4", "#node5"]; // Nodes not on screen
-  let nodesToBeInserted = []; // Nodes that are visible but above the list
-  const insertedNodes = []; // Nodes in the list
+  let allNodes = useRef([]); // Every node the animation will need, this gets filled on mount
+  let nodesToBeInserted = useRef([]); // Nodes that are visible but above the list
+  const insertedNodes = useRef([]); // Nodes in the list
+  let allPointers = useRef([]); // Every pointer the animation will need, this gets filled on mount
 
-  useImperativeHandle(ref, () => ({
-    nextLine,
-    playFullAnimation,
-    pauseAnimation,
-    previousLine
-  }));
-
+  // Converts an animation string to funciton calls based on the rules listed
+  // in component header comment
   const parseAndCallAnimation = animationString => {
-    const parameters = animationString.split(',');
+    const parameters = animationString.replace(/\s/g, '').split(',');
     const functionName = parameters[0];
     if (functionName === 'createNewNode') {
-      // If no parameters, use first node in invisibleNodes. Update it
-      const nodeToCreate = parameters.length > 1 ? parameters[1] : invisibleNodes.shift();
-      if (parameters.length > 1) {
-        invisibleNodes = invisibleNodes.filter(node => node !== nodeToCreate);
-      }
-      createNewNode(nodeToCreate);
+      const nodeNumber = insertedNodes.current.length + nodesToBeInserted.current.length + 1;
+      const nodeID = parameters.length > 1 ? parameters[1] : '#node' + nodeNumber;
+      const data = parameters.length > 2 ? parameters[2] : nodeNumber;
+      createNewNode(nodeID, data);
     } else if (functionName === 'createNewPointer') {
       createNewPointer(parameters[1]);
     } else if (functionName === 'deleteNode') {
@@ -91,12 +94,9 @@ function VisualizationComponent(props, ref) {
     } else if (functionName === 'setNodeData') {
       setNodeData(parameters[1], parameters[2]);
     } else if(functionName === 'insertNodeAtIndex') {
-      if (parameters.length === 2) {
-        const node = nodesToBeInserted[0];
-        insertNodeAtIndex(parameters[1], node, node + '-pointer');
-      } else {
-        insertNodeAtIndex(parameters[1], parameters[2], parameters[3]);
-      }
+      const index = parameters[1] === 'tail' ? insertedNodes.current.length : parameters[1];
+      const node = parameters.length === 2 ? nodesToBeInserted.current[0] : parameters[2];
+      insertNodeAtIndex(index, node);
     } else if (functionName === 'movePointer') {
       movePointer(parameters[1], parameters[2]);
     } else if (functionName === 'setPointerNull') {
@@ -106,53 +106,97 @@ function VisualizationComponent(props, ref) {
     }
   };
 
+  // Reset everything when the submodule changes
   useEffect(() => {
-    tl.current = anime.timeline({
-      // Delay is needed, because pause does not happen immediately. This should prevent that race condition.
-      delay: 100,
-      autoplay: false,
-      easing: 'easeOutExpo',
-      duration: ANIME_DURATION,
-      complete: () => {
-        line.current = 0;
-        nextLineEnabled.current = true;
-        isPlayingFullAnimation.current = false;
-      }
-    });
-    animations.forEach(animationStringArray => {
-      if (animationStringArray !== null) {
-        animationStringArray.forEach(animationString => {
-          parseAndCallAnimation(animationString);
-        });
-      }
-      tl.current.add({
-        complete: () => {
-          nextLineEnabled.current = true;
-          if (!isPlayingFullAnimation.current) {
-            pauseAnimation();
-          } else {
+    tl.current = null;
+    line.current = 1;
+    prevAnimationFinished.current = true;
+    isPlayingFullAnimation.current = false;
+    allNodes.current = [];
+    nodesToBeInserted.current = [];
+    insertedNodes.current = [];
+    allPointers.current = [];
+    setRendered(false);
+  }, [animations]);
+
+  useEffect(() => {
+    if (rendered) {
+      animations.forEach(animationStringArray => {
+        // Add a callback so we know when the animation started
+        tl.current.add({
+          begin: () => {
+            prevAnimationFinished.current = false;
             line.current++;
             updateLine(line.current);
           }
+        });
+
+        // Add all of our animations to the timeline
+        if (animationStringArray !== null) {
+          animationStringArray.forEach(animationString => {
+            parseAndCallAnimation(animationString);
+          });
+        }
+
+        // Add a callback so we know when the animation ended
+        tl.current.add({
+          duration: 0,
+          complete: () => {
+            prevAnimationFinished.current = true;
+            if (!isPlayingFullAnimation.current) {
+              pauseAnimation();
+            }
+          }
+        });
+      });
+    } else {
+      // Create the timeline and add all of the SVGs that we will need to the DOM
+      tl.current = anime.timeline({
+        // Delay is needed, because pause does not happen immediately. This should prevent that race condition.
+        delay: 100,
+        autoplay: false,
+        easing: 'easeOutExpo',
+        duration: ANIME_DURATION,
+        complete: () => {
+          line.current = 1;
+          prevAnimationFinished.current = true;
+          isPlayingFullAnimation.current = false;
         }
       });
-    });
-  });
+      animations.forEach(animationStringArray => {
+        if (animationStringArray !== null) {
+          animationStringArray.forEach(animationString => {
+            const parameters = animationString.split(',');
+            const functionName = parameters[0];
+            if (functionName === 'createNewNode') {
+              const nodeNumber = allNodes.current.length + 1;
+              const nodeID = parameters.length > 1 ? parameters[1] : '#node' + nodeNumber;
+              const data = parameters.length > 2 ? parameters[2] : nodeNumber;
+              allNodes.current.push({
+                id: nodeID,
+                data
+              });
+            } else if (functionName === 'createNewPointer') {
+              allPointers.current.push({
+                id: parameters[1],
+                name: parameters[2]
+              });
+            }
+          });
+        }
+      });
+      setRendered(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rendered]);
+
+  /********* Functions Accessable By Parent *********/
 
   const nextLine = () => {
-    if (nextLineEnabled.current) {
-      if (!isPlayingFullAnimation.current) {
-        line.current++;
-      }
-      updateLine(line.current);
-      nextLineEnabled.current = false;
-      tl.current.play();
-    }
+    tl.current.play();
   };
 
   const playFullAnimation = () => {
-    line.current++;
-    updateLine(line.current);
     isPlayingFullAnimation.current = true;
     nextLine();
   };
@@ -164,8 +208,8 @@ function VisualizationComponent(props, ref) {
 
   // TODO this doesn't work
   const previousLine = () => {
-    if (nextLineEnabled.current) {
-      nextLineEnabled.current = false;
+    if (prevAnimationFinished.current) {
+      prevAnimationFinished.current = false;
       line.current--;
       updateLine(line.current);
       tl.current.reverse();
@@ -173,26 +217,34 @@ function VisualizationComponent(props, ref) {
     }
   };
 
+  useImperativeHandle(ref, () => ({
+    nextLine,
+    playFullAnimation,
+    pauseAnimation,
+    previousLine
+  }));
+
   /********* Public Animations *********/
 
   /**
    * Animation that changes the opacity of the given node to 100%, giving the impression of creating a
    * node.
-   * @param {String or DOM Element} node A CSS Selector or DOM Element representing a linked list node
+   * @param {String or DOM Element} nodeID ID to give the new node
+   * @param {String} data string to place in the data field for the new node
    */
-  const createNewNode = node => {
+  const createNewNode = (nodeID, data) => {
     // If we create the first node, always just insert it
-    if (insertedNodes.length === 0) {
-      insertedNodes.push(node);
+    if (insertedNodes.current.length === 0) {
+      insertedNodes.current.push(nodeID);
       tl.current.add({
-        targets: node,
+        targets: nodeID,
         translateY: '+=150px',
       }, '-=' + ANIME_DURATION);
     } else {
-      nodesToBeInserted.push(node);
+      nodesToBeInserted.current.push(nodeID);
     }
     tl.current.add({
-      targets: node,
+      targets: nodeID,
       opacity: '1'
     });
   };
@@ -203,7 +255,6 @@ function VisualizationComponent(props, ref) {
       opacity: '1'
     });
   };
-
 
   /**
    * Animation that changes the opacity of the given node to 0%, giving the impression of deleting a
@@ -247,29 +298,45 @@ function VisualizationComponent(props, ref) {
     }, '-=' + ANIME_DURATION); // Offset ensures that both animations happen at the same time
   };
 
-  const insertNodeAtIndex = (index, node, pointer) => {
-    // TODO can we remove the pointer parameter and just do const pointer = node + "-pointer";
-    // TODO: insertAtHead, insertMiddle, insertAtTail internal functions
+  /*
+   * Insert a node that was already rendered and set as visible in nodesToBeInserted.
+   * Note this cannot be used to move a node that is already inserted.
+   */
+  const insertNodeAtIndex = (index, node) => {
+    // TODO: insertMiddle
 
-    // Make room in Linked List for new node
-    tl.current.add({
-      targets: ['#head-pointer'].concat(insertedNodes),
-      translateX: '+=200px'
-    });
+    // insert at head
+    if (index < 1) {
+      // Make room in Linked List for new node
+      tl.current.add({
+        targets: ['#head-pointer'].concat(insertedNodes.current),
+        translateX: '+=200px'
+      });
 
-    // Move new node inline with list
-    tl.current.add({
-      targets: node,
-      translateY: '+=150px'
-    });
+      // Move new node inline with list
+      moveNodeInline(node);
 
-    // Set new node pointer to head node
-    tl.current.add({
-      targets: pointer,
-      width: '+=100px'
-    });
-    nodesToBeInserted = nodesToBeInserted.filter(oldNode => oldNode !== node);
-    insertedNodes.push(node);
+      // Set nodes next to point to the old head
+      setPointerToNext(node + '-pointer');
+    } else if (index >= insertedNodes.current.length) { // insert at tail
+      // move the node over
+      const distance = insertedNodes.current.length * 200;
+      tl.current.add({
+        targets: node,
+        translateX: '+=' + distance + 'px'
+      });
+
+      // Move new node inline with list
+      moveNodeInline(node);
+
+      // Set old tail node pointer to new node
+      setPointerToNext(insertedNodes.current[insertedNodes.current.length - 1] + '-pointer');
+    } else { // insert in middle
+      //TODO
+    }
+
+    nodesToBeInserted.current = nodesToBeInserted.current.filter(oldNode => oldNode !== node);
+    insertedNodes.current.push(node);
   };
 
   /**
@@ -301,196 +368,42 @@ function VisualizationComponent(props, ref) {
     });
   };
 
-  /********* Example Combined Animations (TODO DELETE THESE) *********/
+  /********* Internal Only Animations *********/
+  const setPointerToNext = pointer => {
+    tl.current.add({
+      targets: pointer,
+      width: '+=100px'
+    });
+  }
 
-  // const setFirstNodeData = () => {
-  //   setNodeData("#node1", 34);
-  // };
-  //
-  // const insertNodesAtHead = () => {
-  //   for (let node of invisibleNodes) {
-  //     const pointer = node + "-pointer";
-  //
-  //     // Create new node
-  //     createNewNode(node);
-  //
-  //     // Insert new node at head
-  //     insertNodeAtIndex(0, node, pointer);
-  //
-  //     // Set head pointer to new node
-  //     movePointer('#head-pointer' , -1);
-  //
-  //     // Add new node to inserted nodes list
-  //     insertedNodes.push(node);
-  //   }
-  // };
+  const moveNodeInline = node => {
+    tl.current.add({
+      targets: node,
+      translateY: '+=150px'
+    });
+  };
+
+  if (!rendered) {
+    return null;
+  }
 
   return (
     <div>
       <svg width="100%" height="80vh">
-        <svg x="50px" y="calc(80vh / 2 - 200px)">
-          <g id="node6" className="node hidden">
-            <rect x="0" y="0" rx="12px" />
-            <g className="node-header">
-              <text x="50px" y="20px">Node</text>
-              <rect x="0px" y="28px"/ >
-            </g>
-            <g className="node-data-field">
-              <text x="10px" y="55px">data</text>
-              <text x="60px" y="55px">=</text>
-              <rect x="85px" y="39px"/ >
-              <text id="node6-data" x="101px" y="55px">23</text>
-            </g>
-            <g className="node-next-field">
-              <text x="10px" y="82px">next</text>
-              <text x="60px" y="82px">=</text>
-              <rect x="85px" y="66px"/ >
-              <g className="node-pointer">
-                <circle r="7px" cx="110px" cy="76px"/ >
-                <rect id="node6-pointer" width="0px" x="110px" y="74px"/ >
-              </g>
-            </g>
-          </g>
-        </svg>
+        {
+          allNodes.current.map(node => {
+            const id = node.id.substring(1); // Remove the #
+            return <LinkedListNode key={id} nodeID={id} data={node.data} />
+          })
+        }
 
-        <svg x="50px" y="calc(80vh / 2 - 200px)">
-          <g id="node5" className="node hidden">
-            <rect x="0" y="0" rx="12px"/ >
-            <g className="node-header">
-              <text x="50px" y="20px">Node</text>
-              <rect x="0px" y="28px"/ >
-            </g>
-            <g className="node-data-field">
-              <text x="10px" y="55px">data</text>
-              <text x="60px" y="55px">=</text>
-              <rect x="85px" y="39px"/ >
-              <text id="node5-data" x="101px" y="55px">20</text>
-            </g>
-            <g className="node-next-field">
-              <text x="10px" y="82px">next</text>
-              <text x="60px" y="82px">=</text>
-              <rect x="85px" y="66px"/ >
-              <g className="node-pointer">
-                <circle r="7px" cx="110px" cy="76px"/ >
-                <rect id="node5-pointer" width="0px" x="110px" y="74px"/ >
-              </g>
-            </g>
-          </g>
-        </svg>
+        {
+          allPointers.current.map(pointer => {
+            const id = pointer.id.substring(1); // Remove the #
+            return <LinkedListPointer key={id} pointerID={id} name={pointer.name} />
+          })
+        }
 
-        <svg x="50px" y="calc(80vh / 2 - 200px)">
-          <g id="node4" className="node hidden">
-            <rect x="0" y="0" rx="12px"/ >
-            <g className="node-header">
-              <text x="50px" y="20px">Node</text>
-              <rect x="0px" y="28px"/ >
-            </g>
-            <g className="node-data-field">
-              <text x="10px" y="55px">data</text>
-              <text x="60px" y="55px">=</text>
-              <rect x="85px" y="39px"/ >
-              <text id="node4-data" x="101px" y="55px">90</text>
-            </g>
-            <g className="node-next-field">
-              <text x="10px" y="82px">next</text>
-              <text x="60px" y="82px">=</text>
-              <rect x="85px" y="66px"/ >
-              <g className="node-pointer">
-                <circle r="7px" cx="110px" cy="76px"/ >
-                <rect id="node4-pointer" width="0px" x="110px" y="74px"/ >
-              </g>
-            </g>
-          </g>
-        </svg>
-
-        <svg x="50px" y="calc(80vh / 2 - 200px)">
-          <g id="node3" className="node hidden">
-            <rect x="0" y="0" rx="12px"/ >
-            <g className="node-header">
-              <text x="50px" y="20px">Node</text>
-              <rect x="0px" y="28px"/ >
-            </g>
-            <g className="node-data-field">
-              <text x="10px" y="55px">data</text>
-              <text x="60px" y="55px">=</text>
-              <rect x="85px" y="39px"/ >
-              <text id="node3-data" x="101px" y="55px">88</text>
-            </g>
-            <g className="node-next-field">
-              <text x="10px" y="82px">next</text>
-              <text x="60px" y="82px">=</text>
-              <rect x="85px" y="66px"/ >
-              <g className="node-pointer">
-                <circle r="7px" cx="110px" cy="76px"/ >
-                <rect id="node3-pointer" width="0px" x="110px" y="74px"/ >
-              </g>
-            </g>
-          </g>
-        </svg>
-
-        <svg x="50px" y="calc(80vh / 2 - 200px)">
-          <g id="node2" className="node hidden">
-            <rect x="0" y="0" rx="12px"/ >
-            <g className="node-header">
-              <text x="50px" y="20px">Node
-              </text>
-              <rect x="0px" y="28px"/ >
-            </g>
-            <g className="node-data-field">
-              <text x="10px" y="55px">data
-              </text>
-              <text x="60px" y="55px">=</text>
-              <rect x="85px" y="39px"/ >
-              <text id="node2-data" x="101px" y="55px">72</text>
-            </g>
-            <g className="node-next-field">
-              <text x="10px" y="82px">next</text>
-              <text x="60px" y="82px">=</text>
-              <rect x="85px" y="66px"/ >
-              <g className="node-pointer">
-                <circle r="7px" cx="110px" cy="76px"/ >
-                <rect id="node2-pointer" width="0px" x="110px" y="74px"/ >
-              </g>
-            </g>
-          </g>
-        </svg>
-
-        <svg x="50px" y="calc(80vh / 2 - 200px)">
-          <g id="node1" className="node hidden">
-            <rect x="0" y="0" rx="12px"/ >
-            <g className="node-header">
-              <text x="50px" y="20px">Node</text>
-              <rect x="0px" y="28px"/ >
-            </g>
-            <g className="node-data-field">
-              <text x="10px" y="55px">data</text>
-              <text x="60px" y="55px">=</text>
-              <rect x="85px" y="39px"/ >
-              <text id="node1-data" width="0px" x="101px" y="55px">56</text>
-            </g>
-            <g className="node-next-field">
-              <text x="10px" y="82px">next</text>
-              <text x="60px" y="82px">=</text>
-              <rect x="85px" y="66px"/ >
-              <g className="node-pointer">
-                <circle r="7px" cx="110px" cy="76px"/ >
-                <rect width="0px" x="110px" y="74px"/ >
-              </g>
-            </g>
-          </g>
-        </svg>
-
-        <svg x="100px" y="calc(80vh / 2 + 60px)">
-          <g id="head-pointer" className="hidden">
-            <rect
-              id="head-pointer-tip"
-              width="4px"
-              height="75px"
-              x="20px" / >
-            <circle r="4px" cx="22px" cy="75px"/ >
-            <text x="0px" y="100px">head</text>
-          </g>
-        </svg>
       </svg>
     </div>
   );

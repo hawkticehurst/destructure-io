@@ -222,10 +222,10 @@ function LearningModule() {
           }
         </div>
         <div className="animate-btn-container">
-          <button onClick={startAnimation}>Play Animation</button>
+          <button onClick={startAnimation}>Play Whole Animation</button>
           <button onClick={stopAnimation}>Pause Animation</button>
           <button onClick={setPreviousLine}>Previous Line BROKEN</button>
-          <button onClick={setNextLine}>Next Line</button>
+          <button onClick={setNextLine}>Play Current Line</button>
         </div>
         <div className="back-next-container next-btn">
           {

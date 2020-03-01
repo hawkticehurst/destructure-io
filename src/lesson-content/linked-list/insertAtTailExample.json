@@ -1,6 +1,6 @@
 {
   "paragraphs": [
-    "Insert At Head Example",
+    "Insert At Tail Example",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis et dapibus massa. Donec laoreet sollicitudin velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce quis auctor risus. Nulla vitae magna nunc. Nulla ullamcorper pretium neque quis rhoncus. Integer ornare sagittis tellus eu posuere. Nunc luctus mattis semper.",
     "Vestibulum finibus pretium convallis. Sed varius hendrerit posuere. Nam tincidunt elit neque, id luctus leo elementum vel. Cras euismod sem nec enim vehicula, id malesuada augue vehicula. Phasellus sit amet odio felis. Vivamus non nulla in augue vulputate ullamcorper sed quis nulla. Proin vel dui pulvinar, vestibulum augue ac, sodales nibh."
   ],
@@ -56,11 +56,18 @@
           "animations": [
 
           ]
-        },{
+        },
+        {
           "given": "  Node head = new Node(0);",
           "animations": [
             "createNewNode,#node1",
             "createNewPointer,#head-pointer,head"
+          ]
+        },
+        {
+          "given": "  Node curr = head;",
+          "animations": [
+            "createNewPointer,#curr-pointer,curr"
           ]
         }
       ]
@@ -74,21 +81,16 @@
           "given": "  for (int i = 1; i < 4; i++) {"
         },
         {
-          "given": "    Node temp = new Node(i);",
+          "given": "    curr.next = new Node(i);",
           "animations": [
-            "createNewNode"
+            "createNewNode",
+            "insertNodeAtIndex,tail"
           ]
         },
         {
-          "given": "    temp.next = head;",
+          "given": "    curr = curr.next;",
           "animations": [
-            "insertNodeAtIndex,0"
-          ]
-        },
-        {
-          "given": "    head = temp;",
-          "animations": [
-            "movePointer,#head-pointer,-1"
+            "movePointer,#curr-pointer,1"
           ]
         },
         {
