@@ -81,6 +81,14 @@ button, input {
   font-weight: 700;
 }
 
+.italic {
+  font-style: italic;
+}
+
+.inline, .inline code {
+  display: inline !important; /* override highlightJS */
+}
+
 .app {
   height: 100vh;
 }

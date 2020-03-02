@@ -11,6 +11,7 @@ import './highlight-styles/hidden.scss';
  * Optional Props:
  * isHidden {Boolean} - defaults to false, true to "gray" out code
  * isSelected {Boolean} - defaults to false, true to show code as selected
+ * useSpan {Boolean} - defaults to false, true to make the code inline
  *
  * Children:
  * Any text to be highlighted should be a child.
@@ -19,7 +20,7 @@ import './highlight-styles/hidden.scss';
  * <CodeHighlight language="java">int x = 5;</CodeHighlight>
  */
 function CodeHighlight(props) {
-  const {language, children, isHidden, isSelected} = props;
+  const {language, children, isHidden, isSelected, useSpan} = props;
   const codeRef = useRef(null);
 
   useEffect(() => {
@@ -27,13 +28,21 @@ function CodeHighlight(props) {
   });
 
   return (
-    <div className={isHidden ? "hidden-code" : isSelected ? "selected-code" : "standard-code"}>
-      <pre className="code-format">
-        <code className={language} ref={codeRef}>
-          {children}
-        </code>
-      </pre>
-    </div>
+    <span className={isHidden ? "hidden-code" : isSelected ? "selected-code" : "standard-code"}>
+      {
+        useSpan ? (
+            <span className={language + 'code-format inline'} ref={codeRef}>
+              {children}
+            </span>
+        ) : (
+          <pre className="code-format">
+            <code className={language} ref={codeRef}>
+              {children}
+            </code>
+          </pre>
+        )
+      }
+    </span>
   );
 }
 
