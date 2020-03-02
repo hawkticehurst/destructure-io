@@ -16,13 +16,13 @@ function HomePage(props) {
         <div id="linked-list" className="content-container">
           <LinkedList />
         </div>
-        <div className="content-container">
+        <div id="guided-container" className="content-container">
           <GuidedLearning />
         </div>
-        <div className="content-container">
+        <div id="catalog-container" className="content-container">
           <Catalog />
         </div>
-        <div className="content-container">
+        <div id="free-container" className="content-container">
           <Free />
         </div>
         <div className="team-container">
@@ -33,7 +33,7 @@ function HomePage(props) {
         <p>
           This project is a part of the 2020{" "}
           <a target="_blank" rel="noopener noreferrer" href="https://ischool.uw.edu/capstone">
-            Capstone Project
+            Capstone Project{' '}
           </a>
           course at the University of Washington Information School.
         </p>

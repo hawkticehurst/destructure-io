@@ -2,6 +2,7 @@
   "modules": [
     {
       "name": "Linked List",
+      "descriptionParagraphs": ["TODO this is just a placeholder.... A linked list is a linear collection of elements where each element points to the next. These elements, called nodes, contain two things: data, and a link (reference) to the next node. Linked lists are unique because they are represented in the code by a reference to the head (the first node), and not the whole list; any individual element is only accessible by iterating starting from the head through to the tail (the last node), where the last reference will point to nothing, or null, signifying the end of the list. Singly linked lists can only be iterated from the head to the tail, they can not be iterated backwards."],
       "directory": "linked-list",
       "submodules": [
         {

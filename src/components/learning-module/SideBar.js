@@ -1,15 +1,18 @@
 import React, {useEffect, useState, Fragment} from 'react';
 import PageTint from '../common/PageTint';
+import { useHistory } from "react-router-dom";
 
 /**
  * Required Props:
  * children {React Node} - Content to be contained in the sideBar
  * headerText {String} - Heading to display for the sidebar
+ * headerLink {String} - Link for clicking header text. i.e. /learn/linked-list
  * setSideBarShown {function} - set if the sideBar should be shown
  * sideBarShown {boolean} - true if sideBar is showing, else false
  */
 function SideBar(props) {
-  const {children, headerText, setSideBarShown, sideBarShown} = props;
+  const { children, headerText, headerLink, setSideBarShown, sideBarShown } = props;
+  const history = useHistory();
   const [render, setRender] = useState(sideBarShown);
 
   useEffect(() => {
@@ -29,6 +32,10 @@ function SideBar(props) {
     event.stopPropagation();
   };
 
+  const onClickHeader = () => {
+    history.push(headerLink)
+  };
+
   const animationClass = sideBarShown ? 'sidebar-fade-in' : 'sidebar-fade-out';
   return (
     render ? (
@@ -38,7 +45,7 @@ function SideBar(props) {
           className={'sidebar ' + animationClass}
           onClick={stopPropagation}
           onAnimationEnd={onAnimationEnd}>
-          <h1 className="sidebar-header">{headerText}</h1>
+          <h1 className="sidebar-header" onClick={onClickHeader}>{headerText}</h1>
           {children}
         </div>
       </Fragment>
