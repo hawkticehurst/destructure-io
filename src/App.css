@@ -871,14 +871,16 @@ button, input {
 }
 
 .sign-in-dropdown {
-  z-index: 1;
-  background-color: lightgray;
+  z-index: 2;
+  background-color: white;
   border-radius: 5px;
   position: fixed;
   transform: scale(0.7);
   top: 4em;
   right: 7em;
   transform-origin: top right;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  border-top: 8px solid var(--hero-purple);
 }
 
 /********* Error Pages Page *********/

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { doSignOut } from '../../firebase/firebase';
 import { useFirebaseUser } from '../../hooks/user';
@@ -15,6 +15,21 @@ function NavBar(props) {
   const { toggleSideBar, SubModuleTitle, navBarType } = props;
   const [showLoginDropdown, setShowLoginDropdown] = useState(false);
   const user = useFirebaseUser();
+
+  useEffect(() => {
+    const onClickPageShouldCloseLogin = (event) => {
+      if (showLoginDropdown &&
+          event.path.find(el => el.classList != null &&
+          el.classList.contains('sign-in-dropdown')) == null) {
+          setShowLoginDropdown(false);
+      }
+    };
+
+    if (showLoginDropdown) {
+      document.addEventListener('click', onClickPageShouldCloseLogin);
+    }
+    return () => document.removeEventListener('click', onClickPageShouldCloseLogin);
+  }, [showLoginDropdown]);
 
   const onModulePage = window.location.pathname.startsWith('/learn') && window.location.pathname.length > '/learn/'.length;
 
