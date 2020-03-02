@@ -51,7 +51,7 @@ function NavBar(props) {
     <Link to="/signup">Get Started</Link>
   ) : null;
 
-  const catalogLink = ['homepage', 'module', 'sign-in-up'].includes(navBarType) ? (
+  const catalogLink = ['catalog', 'homepage', 'module', 'sign-in-up'].includes(navBarType) ? (
     <Link to="/learn">Catalog</Link>
   ) : null;
 

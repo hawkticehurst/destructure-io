@@ -160,7 +160,6 @@ button, input {
 
 .landing-hero-container h1 {
   font-size: 60px;
-  margin: 0.1em;
 }
 
 .landing-hero-container p {
@@ -537,11 +536,12 @@ button, input {
   border-bottom: 1px solid white;
   margin-bottom: 5px;
   font-size: 24px;
+  cursor: pointer;
 }
 
 .sub-module-progress-row-container {
   cursor: pointer;
-  /* border-bottom: 1px solid white; */
+  border-bottom: 1px solid white;
   padding: 5px;
   color: white;
   display: flex;
@@ -1110,13 +1110,37 @@ text {
 }
 
 /********* Summary Page *********/
-.summary-page {
-  width: 90%;
+.summary-hero-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 4em 4em 2em 4em;
+}
+
+.summary-hero-container h1 {
+  font-size: 60px;
+}
+
+.summary-page-description {
+  font-size: 20px;
+}
+
+.summary-page-content {
+  padding: 0 4em 2em 4em;
   margin: auto;
+}
+
+.summary-page-content h2 {
+  font-size: 35px;
 }
 
 .summary-get-started-container {
   text-align: center;
+}
+
+.summary-modules-container {
+  margin-top: 4em;
 }
 
 .syllabus-row {
@@ -1166,7 +1190,6 @@ text {
 
   .landing-hero-container .hero-btn {
     margin: 2em 0;
-
   }
 
   #linked-list {
@@ -1251,5 +1274,22 @@ text {
 
   .sign-in-up-container {
     width: 90%;
+  }
+
+  .summary-hero-container {
+    text-align: center;
+    padding: 1em;
+  }
+
+  .summary-hero-container .hero-btn {
+    margin: 1em auto 1em auto;
+  }
+
+  .summary-hero-container h1 {
+    font-size: 48px;
+  }
+
+  .summary-page-content {
+    padding: 1em 2em 1em 2em;
   }
 }

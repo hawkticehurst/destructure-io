@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import {Link} from 'react-router-dom';
 
 /**
@@ -7,15 +7,27 @@ import {Link} from 'react-router-dom';
  * link {String} - Path to the module. Example: /linked-list/reverse-list
  * completionState {String} - One of "completed", "flagged" or "incomplete". Defaults "incomplete"
  * selected {boolean} - Defaults false. True if is current sub-module
- * onClickLink {Function} - Function to be called when the link is clicked
  * completionStateChanged {Function} - Function called when completion state is changed
  *
  * Optional Props:
+ * onClickLink {Function} - Function to be called when the link is clicked
  * rowClass - {String} - CSS class for the container
  */
 function SubModuleProgressRow(props) {
-  const {completionState, completionStateChanged, link, moduleTitle, selected, onClickLink, rowClass} = props;
+  const {
+    completionState,
+    completionStateChanged,
+    link,
+    moduleTitle,
+    selected,
+    onClickLink,
+    rowClass
+  } = props;
   const [isCompleted, setIsCompleted] = useState(completionState);
+
+  useEffect(() => {
+    setIsCompleted(completionState);
+  }, [completionState]);
 
   const toggleCompletionState = () => {
     if (isCompleted === 'flagged') {
