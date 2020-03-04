@@ -314,7 +314,7 @@ button, input {
   margin-bottom: 1em;
 }
 
-.progress-circle {
+.progress-circle-home {
   border: 2px solid var(--hero-purple);
   border-radius: 50%;
   min-width: 48px;
@@ -327,7 +327,7 @@ button, input {
   color: white;
 }
 
-.progress-circle-filled {
+.progress-circle-filled-home {
   border: 2px solid var(--hero-purple);
   background-color: var(--hero-purple);
   border-radius: 50%;
