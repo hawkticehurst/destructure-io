@@ -9,7 +9,7 @@ function LinkedListNode(props) {
   const { nodeID, data } = props;
 
   return (
-    <svg x="50px" y="calc(80vh / 2 - 200px)">
+    <svg x="50px" y="calc((100vh - 6.5em) / 2 - 200px)">
       <g id={nodeID} className="node hidden">
         <rect x="0" y="0" rx="12px" />
         <g className="node-header">

@@ -59,7 +59,7 @@
         },{
           "given": "  Node head = new Node(0);",
           "animations": [
-            "createNewNode,#node1",
+            "createNewNode,0,#node1",
             "createNewPointer,#head-pointer,head"
           ]
         },
@@ -77,18 +77,34 @@
       "loopCounter": [3],
       "code": {
         "java": [{
-          "given": "  for (int i = 1; i < 4; i++) {"
+          "given": "  for (int i = 0; i < 3; i++) {"
         },
         {
           "given": "    Node temp = new Node(i);",
           "animations": [
-            "createNewNode"
+            [
+              "createNewNode,0,#node2"
+            ],
+            [
+              "createNewNode,1,#node3"
+            ],
+            [
+              "createNewNode,2,#node4"
+            ]
           ]
         },
         {
           "given": "    temp.next = head;",
           "animations": [
-            "insertNodeAtIndex,0"
+            [
+              "insertNodeAtIndex,0,#node2"
+            ],
+            [
+              "insertNodeAtIndex,0,#node3"
+            ],
+            [
+              "insertNodeAtIndex,0,#node4"
+            ]
           ]
         },
         {
@@ -99,9 +115,7 @@
         },
         {
           "given": "  }",
-          "animations": [
-
-          ]
+          "animations": []
         }
       ]
     }

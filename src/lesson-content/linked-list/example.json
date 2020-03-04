@@ -59,7 +59,7 @@
         },{
           "given": "  Node head = new Node(0);",
           "animations": [
-            "createNewNode,#node1",
+            "createNewNode,0,#node1",
             "createNewPointer,#head-pointer"
           ]
         },

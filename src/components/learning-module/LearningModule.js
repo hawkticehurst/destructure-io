@@ -16,6 +16,7 @@ const language = "java"; // TODO make this selectable
 // TODO this component is getting way too big. It really should be broken down more and some of the state doesn't need to be state
 function LearningModule() {
   const [selectedLine, setSelectedLine] = useState(-1);
+  const [playDisabled, setPlayDisabled] = useState(false);
   const [sideBarShown, setSideBarShown] = useState(false);
   const [data, setData] = useState(null);
   const [trueSelectedLineMap, setTrueSelectedLineMap] = useState(null);
@@ -65,18 +66,23 @@ function LearningModule() {
       const { code, type, loopCounter } = chunkObj;
       if (type !== 'hidden' && type !== 'skipped') {
         // TODO use loopCounter of selected input box
-        let remainingLoops = loopCounter != null ? loopCounter[0] : 1;
-        while (remainingLoops > 0) {
+        let loopIteration = 0;
+        let maxLoops = loopCounter != null ? loopCounter[0] : 1;
+        while (loopIteration < maxLoops) {
           for (let i = 0; i < code[language].length; i++) {
             tempTrueSelectedLineMap[iterationNumber] = startingLine + i;
             if (code[language][i].animations != null && code[language][i].animations.length > 0) {
-              tempAnimationStrings = [...tempAnimationStrings, code[language][i].animations];
+              if (Array.isArray(code[language][i].animations[0])) {
+                tempAnimationStrings = [...tempAnimationStrings, code[language][i].animations[loopIteration]];
+              } else {
+                tempAnimationStrings = [...tempAnimationStrings, code[language][i].animations];
+              }
             } else {
               tempAnimationStrings.push(null);
             }
             iterationNumber++;
           }
-          remainingLoops--;
+          loopIteration++;
         }
       }
       startingLine += code[language].length;
@@ -179,7 +185,7 @@ function LearningModule() {
             />
           }
           secondComponent={
-            <Visualization animations={animationStrings} updateLine={(line) => setSelectedLine(line)} ref={visualizationRef} />
+            <Visualization animations={animationStrings} updateLine={setSelectedLine} setPlayDisabled={setPlayDisabled} ref={visualizationRef} />
           }
           initialStartSize={40}
         />
@@ -191,10 +197,10 @@ function LearningModule() {
           }
         </div>
         <div className="animate-btn-container">
-          <button onClick={startAnimation}>Play Whole Animation</button>
-          <button onClick={stopAnimation}>Pause Animation</button>
+          <button onClick={startAnimation} disabled={playDisabled}>Play Whole Animation</button>
+          <button onClick={stopAnimation} disabled={!playDisabled}>Pause Animation</button>
           {/*<button onClick={setPreviousLine}>Previous Line BROKEN</button> */}
-          <button onClick={setNextLine}>Play Current Line</button>
+          <button onClick={setNextLine} disabled={playDisabled}>Next Line</button>
         </div>
         <div className="back-next-container next-btn">
           {

@@ -9,7 +9,7 @@ function LinkedListPointer(props) {
   const { pointerID, name } = props;
 
   return (
-    <svg x="100px" y="calc(80vh / 2 + 60px)">
+    <svg x="100px" y="calc((100vh - 6.5em) / 2 + 60px)">
       <g id={pointerID} className="hidden">
         <rect
           id={pointerID + '-tip'}

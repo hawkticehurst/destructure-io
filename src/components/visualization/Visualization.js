@@ -5,18 +5,21 @@ import LinkedListPointer from './LinkedListPointer';
 
 /*
 MVP TODOS:
-- Height is set ot 80vh -  this is a random number basically, don't think its actually vertically centered
 - Data in linkedListNode is not centered if only 1 character
 - pointer names are not always centered
 - setPointerToNext uses 90px, it was 100px before but that made it too big. It looks right, but should probably figure out the exact right length
 
 HOPEFUL MVP TODOS:
 - How to handle two pointers on the same node at once (see insert at tail). Worst case we can just ignore these
+- Add "highlight" animation that can highlight certain things by following a path.
+    - Parameters: Array (of any size) of highlightables (nodeID, nextPointerID, dataID, pointerID(such as curr/head))
 - Make next Pointers arrows instead of lines
 - Make LinkedListPointers (these are like "head" and "curr") arrows instead of lines
 - Make pointers point to the "Node" part instead of just somewhere random on the box
      - We might want to move the head/curr pointers to the top (and maybe have new nodes come from bottom?)
 - Firefox and Safari are completely broken spacing - Maybe issue with how we use vh?
+- We need a way to have a pointer point to a non-inserted node.
+      - Example: Node temp = new Node(1); This calls NewNode then we need to point temp to it, but its not inserted yet
 
 LATER TODOS:
 - Insert Node in Middle of List, see insertNodeAtIndex()
@@ -33,9 +36,9 @@ LATER TODOS:
   * Below is a list of all possible animation string function names and their parameters.
   *
   *  createNewNode:
-  *           parameter1 OPTIONAL: Node ID - defaults to next available
-  *           parameter2 OPTIONAL: data - defaults its node number
-  *           Example: "createNewNode,#node3,4"
+  *           parameter1 OPTIONAL: data - defaults its node number
+  *           parameter2 OPTIONAL: Node ID - defaults to next available
+  *           Example: "createNewNode,4,#node3"
   *
   *  createNewPointer:
   *           parameter1: Pointer ID
@@ -70,24 +73,22 @@ LATER TODOS:
   *           Example: "elongatePointer,#node3-pointer"
   */
 function VisualizationComponent(props, ref) {
-  const { animations, updateLine } = props;
+  const { animations, updateLine, setPlayDisabled } = props;
   const ANIME_DURATION = 1000;
-  
-  // Line number in the code we are currently on, starting at 1.
-  // Starting at 0 will force animations to be off a bit from lines,
-  // so easy solution is to just not select the function declaration.
+
+  // Line number in the code we are currently on, starting at 0.
   // Note Line numbers are not including the hidden code at the top.
-  const selectedLineNumber = useRef(1);
+  const selectedLineNumber = useRef(0);
 
   const tl = useRef(null); // Anime.js timeline object, instatiated in useEffect after rendered = true
-  const hasPrevAnimationFinished = useRef(true); // Keeps track if we are in the middle of an animation or not
+  const isCurrentlyPaused = useRef(true); // Keeps track if we are in the middle of an animation or not
   const isPlayingFullAnimation = useRef(false); // True if clicked Play all instead of next line
   const [rendered, setRendered] = useState(false); // Flips to true when all the SVGs we need are created
 
-  let allNodes = useRef([]); // Every node the animation will need, this gets filled on mount
-  let nodesToBeInserted = useRef([]); // Nodes that are visible but above the list
+  const allNodes = useRef([]); // Every node the animation will need, this gets filled on mount
+  const nodesToBeInserted = useRef([]); // Nodes that are visible but above the list
   const insertedNodes = useRef([]); // Nodes in the list
-  let allPointers = useRef([]); // Every pointer the animation will need, this gets filled on mount
+  const allPointers = useRef([]); // Every pointer the animation will need, this gets filled on mount
 
   // Converts an animation string to funciton calls based on the rules listed
   // in component header comment
@@ -96,8 +97,8 @@ function VisualizationComponent(props, ref) {
     const functionName = parameters[0];
     if (functionName === 'createNewNode') {
       const nodeNumber = insertedNodes.current.length + nodesToBeInserted.current.length + 1;
-      const nodeID = parameters.length > 1 ? parameters[1] : '#node' + nodeNumber;
-      const data = parameters.length > 2 ? parameters[2] : nodeNumber;
+      const data = parameters.length > 1 ? parameters[1] : nodeNumber;
+      const nodeID = parameters.length > 2 ? parameters[2] : '#node' + nodeNumber;
       createNewNode(nodeID, data);
     } else if (functionName === 'createNewPointer') {
       createNewPointer(parameters[1]);
@@ -120,15 +121,20 @@ function VisualizationComponent(props, ref) {
 
   // Reset everything when the submodule changes
   useEffect(() => {
-    tl.current = null;
-    selectedLineNumber.current = 1;
-    hasPrevAnimationFinished.current = true;
+    if (tl.current != null) {
+      tl.current.pause();
+      tl.current = null;
+    }
+    selectedLineNumber.current = 0;
+    isCurrentlyPaused.current = true;
     isPlayingFullAnimation.current = false;
     allNodes.current = [];
     nodesToBeInserted.current = [];
     insertedNodes.current = [];
     allPointers.current = [];
     setRendered(false);
+    setPlayDisabled(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [animations]);
 
   // This callback gets called when rendered changes
@@ -139,10 +145,12 @@ function VisualizationComponent(props, ref) {
       animations.forEach(animationStringArray => {
         // Add a callback so we know when the animation started
         tl.current.add({
+          duration: 100, // Anime.js issue - begin doesn't always get called when this is 0
           begin: () => {
-            hasPrevAnimationFinished.current = false;
+            isCurrentlyPaused.current = false;
             selectedLineNumber.current++;
             updateLine(selectedLineNumber.current);
+            setPlayDisabled(true);
           }
         });
 
@@ -157,8 +165,8 @@ function VisualizationComponent(props, ref) {
         tl.current.add({
           duration: 0,
           complete: () => {
-            hasPrevAnimationFinished.current = true;
-            if (!isPlayingFullAnimation.current) {
+            isCurrentlyPaused.current = true;
+            if (!isPlayingFullAnimation.current && animationStringArray !== null && animationStringArray.length > 0) {
               pauseAnimation();
             }
           }
@@ -173,9 +181,11 @@ function VisualizationComponent(props, ref) {
         easing: 'easeOutExpo',
         duration: ANIME_DURATION,
         complete: () => {
-          selectedLineNumber.current = 1;
-          hasPrevAnimationFinished.current = true;
+          selectedLineNumber.current = 0;
+          isCurrentlyPaused.current = true;
           isPlayingFullAnimation.current = false;
+          setPlayDisabled(false);
+          updateLine(selectedLineNumber.current);
         }
       });
       // Determine all of the nodes and pointers we will create
@@ -186,8 +196,8 @@ function VisualizationComponent(props, ref) {
             const functionName = parameters[0];
             if (functionName === 'createNewNode') {
               const nodeNumber = allNodes.current.length + 1;
-              const nodeID = parameters.length > 1 ? parameters[1] : '#node' + nodeNumber;
-              const data = parameters.length > 2 ? parameters[2] : nodeNumber;
+              const data = parameters.length > 1 ? parameters[1] : nodeNumber;
+              const nodeID = parameters.length > 2 ? parameters[2] : '#node' + nodeNumber;
               allNodes.current.push({
                 id: nodeID,
                 data
@@ -220,12 +230,13 @@ function VisualizationComponent(props, ref) {
   const pauseAnimation = () => {
     isPlayingFullAnimation.current = false;
     tl.current.pause();
+    setPlayDisabled(false);
   };
 
   // TODO this doesn't work
   const previousLine = () => {
-    // if (hasPrevAnimationFinished.current) {
-    //   hasPrevAnimationFinished.current = false;
+    // if (isCurrentlyPaused.current) {
+    //   isCurrentlyPaused.current = false;
     //   selectedLineNumber.current--;
     //   updateLine(selectedLineNumber.current);
     //   tl.current.reverse();
@@ -253,6 +264,7 @@ function VisualizationComponent(props, ref) {
     if (insertedNodes.current.length === 0) {
       insertedNodes.current.push(nodeID);
       tl.current.add({
+        duration: 0,
         targets: nodeID,
         translateY: '+=150px',
       }, '-=' + ANIME_DURATION);
@@ -319,8 +331,6 @@ function VisualizationComponent(props, ref) {
    * Note this cannot be used to move a node that is already inserted.
    */
   const insertNodeAtIndex = (index, node) => {
-    // TODO: insertMiddle
-
     // insert at head
     if (index < 1) {
       // Make room in Linked List for new node
@@ -334,6 +344,8 @@ function VisualizationComponent(props, ref) {
 
       // Set nodes next to point to the old head
       setPointerToNext(node + '-pointer');
+      insertedNodes.current.push(node);
+      insertedNodes.current = [node, ...insertedNodes.current]
     } else if (index >= insertedNodes.current.length) { // insert at tail
       // move the node over
       const distance = insertedNodes.current.length * 200;
@@ -347,12 +359,13 @@ function VisualizationComponent(props, ref) {
 
       // Set old tail node pointer to new node
       setPointerToNext(insertedNodes.current[insertedNodes.current.length - 1] + '-pointer');
-    } else { // insert in middle
+      insertedNodes.current.push(node);
+    } else { // TODO insert in middle
       //TODO
+      insertedNodes.current = [...insertedNodes.current.slice(0, index), node, ...insertedNodes.current.slice(index)]
     }
 
     nodesToBeInserted.current = nodesToBeInserted.current.filter(oldNode => oldNode !== node);
-    insertedNodes.current.push(node);
   };
 
   /**
@@ -405,21 +418,20 @@ function VisualizationComponent(props, ref) {
 
   return (
     <div>
-      <svg width="100%" height="80vh">
+      <svg width="100%" height="calc(100vh - 6.5em)">
         {
-          allNodes.current.map(node => {
+          allNodes.current.map((node, i) => {
             const id = node.id.substring(1); // Remove the #
-            return <LinkedListNode key={id} nodeID={id} data={node.data} />
+            return <LinkedListNode key={id + i} nodeID={id} data={node.data} />
           })
         }
 
         {
-          allPointers.current.map(pointer => {
+          allPointers.current.map((pointer, i) => {
             const id = pointer.id.substring(1); // Remove the #
-            return <LinkedListPointer key={id} pointerID={id} name={pointer.name} />
+            return <LinkedListPointer key={id + i} pointerID={id} name={pointer.name} />
           })
         }
-
       </svg>
     </div>
   );

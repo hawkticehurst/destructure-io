@@ -163,7 +163,7 @@ button, input {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  padding: 10em 4em 2em 4em;
+  padding: 8em 4em 2em 4em;
 }
 
 .landing-hero-container h1 {
@@ -798,6 +798,10 @@ button, input {
   margin: 0 0.5em 0em 0.5em;
 }
 
+.animate-btn-container button:disabled {
+  background-color: gray;
+}
+
 .module-btn-container {
   display: flex;
   justify-content: space-between;
@@ -833,6 +837,12 @@ button, input {
   font-size: 18px;
 }
 
+.text-content-container .standard-code {
+  background-color: rgba(30, 30, 30, .1);
+  border-radius: 3px;
+  padding: .1em .2em .1em .2em;
+}
+
 /********* Sign In / Up *********/
 .sign-in-up-container {
   width: 30%;
@@ -842,6 +852,14 @@ button, input {
 
 .sign-in-dropdown  .sign-in-up-container {
   width: 80%;
+}
+
+.sign-in-dropdown {
+  padding: 12px;
+}
+
+.sign-in-dropdown h1 {
+  padding-bottom: 12px;
 }
 
 .sign-in-up-input {

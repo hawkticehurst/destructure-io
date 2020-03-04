@@ -40,7 +40,7 @@ function LearningContent(props) {
         if (isInCode) {
           isInCode = false;
           return (
-            <CodeHighlight key={index * characterIndex} language="java" useSpan={true}>
+            <CodeHighlight key={index * characterIndex} language="java" isInline={true}>
               {paragraph.substring(characterIndex, endBoldIndex)}
             </CodeHighlight>
           )

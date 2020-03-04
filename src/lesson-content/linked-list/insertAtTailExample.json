@@ -58,9 +58,9 @@
           ]
         },
         {
-          "given": "  Node head = new Node(0);",
+          "given": "  Node head = new Node(10);",
           "animations": [
-            "createNewNode,#node1",
+            "createNewNode,10",
             "createNewPointer,#head-pointer,head"
           ]
         },
@@ -78,13 +78,23 @@
       "loopCounter": [3],
       "code": {
         "java": [{
-          "given": "  for (int i = 1; i < 4; i++) {"
+          "given": "  for (int i = 0; i < 3; i++) {"
         },
         {
           "given": "    curr.next = new Node(i);",
           "animations": [
-            "createNewNode",
-            "insertNodeAtIndex,tail"
+            [
+              "createNewNode,0",
+              "insertNodeAtIndex,tail"
+            ],
+            [
+              "createNewNode,1",
+              "insertNodeAtIndex,tail"
+            ],
+            [
+              "createNewNode,2",
+              "insertNodeAtIndex,tail"
+            ]
           ]
         },
         {
