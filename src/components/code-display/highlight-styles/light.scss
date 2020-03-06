@@ -4,6 +4,14 @@
   }
 }
 
+.inline {
+  color: black !important;
+
+  .hljs {
+    color: black !important;
+  }
+}
+
 .selected-code, .standard-code {
   .hljs {
     display: block;

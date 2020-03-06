@@ -85,7 +85,9 @@ function LearningContent(props) {
   return (
     <div className="text-content-container">
       <h1>{contentTitleString}</h1>
-      {paragraphs}
+      <div className="text-content-paragraphs">
+        {paragraphs}
+      </div>
       <h2>{contentTitleString} Code</h2>
       {codeDisplay}
     </div>
