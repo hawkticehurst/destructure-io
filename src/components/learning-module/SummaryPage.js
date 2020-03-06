@@ -42,8 +42,8 @@ function SummaryPage() {
       </div>
 
       <div className="summary-page-content">
-      <div>
-        <h2>{name} Overview:</h2>
+        <div className="summary-overview-container">
+          <h2>{name} Overview:</h2>
           {
             descriptionParagraphs.map((paragraph, i) => {
               return <p className="summary-page-description" key={i}>{paragraph}</p>
@@ -51,21 +51,22 @@ function SummaryPage() {
           }
         </div>
         <div className="summary-modules-container">
-          <h2>Modules:</h2>
-          {
-            submodules.map((submodule, i) => {
-              const link = moduleLink + '/' + filenameToSubModuleKey(submodule.filename);
-              return <SubModuleProgressRow
-                        key={i}
-                        moduleTitle={submodule.name}
-                        link={link}
-                        completionState={getCompletionState(submodule.filename)}
-                        selected={false}
-                        completionStateChanged={(state) => updateCompletionState(submodule.filename, state)}
-                        rowClass="syllabus-row"
-                        />
-            })
-          }
+          <div className="summary-modules">
+            {
+              submodules.map((submodule, i) => {
+                const link = moduleLink + '/' + filenameToSubModuleKey(submodule.filename);
+                return <SubModuleProgressRow
+                  key={i}
+                  moduleTitle={submodule.name}
+                  link={link}
+                  completionState={getCompletionState(submodule.filename)}
+                  selected={false}
+                  completionStateChanged={(state) => updateCompletionState(submodule.filename, state)}
+                  rowClass="syllabus-row"
+                />
+              })
+            }
+          </div>
         </div>
       </div>
     </div>
