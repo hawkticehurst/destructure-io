@@ -864,7 +864,7 @@ button, input {
 .text-content-paragraphs .standard-code {
   background-color: rgba(30, 30, 30, .1);
   border-radius: 3px;
-  padding: 0.2em;
+  padding: 0 0.2em;
 }
 
 /********* Sign In / Up *********/
@@ -1179,7 +1179,6 @@ text {
 .summary-hero-container h1 {
   font-size: 60px;
   color: var(--hero-white);
-  
 }
 
 .summary-hero-container button {
@@ -1208,7 +1207,6 @@ text {
 }
 
 .summary-page-content {
-  padding: 0;
   margin: auto;
 }
 
@@ -1226,10 +1224,8 @@ text {
 }
 
 .summary-modules-container {
-  padding: 0;
   margin-top: 4em;
   width: 100%;
-  /* height: 25em; */
   background-color: var(--hero-grey);
   position: relative;
 }
@@ -1265,7 +1261,7 @@ text {
 
 .syllabus-row h3 {
   color: var(--hero-black);
-  font-size: 18pt;
+  font-size: 22px;
 }
 
 /********* Mobile *********/

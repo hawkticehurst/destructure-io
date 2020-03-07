@@ -50,7 +50,7 @@ function SummaryPage() {
           </button>
         </div>
         <div className="summary-hero-illustration-container">
-          <div className="summary-hero-circle"></div>
+          <div className="summary-hero-circle" />
         </div>
       </div>
 
