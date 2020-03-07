@@ -564,7 +564,11 @@ button, input {
   align-items: center;
 }
 
-.progress-row-selected {
+.sidebar h3 {
+  font-weight: normal;
+}
+
+.progress-row-selected h3 {
   font-weight: bold;
 }
 
