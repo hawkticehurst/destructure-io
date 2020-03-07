@@ -82,6 +82,7 @@ function SummaryPage() {
                   selected={false}
                   completionStateChanged={(state) => updateCompletionState(submodule.filename, state)}
                   rowClass="syllabus-row"
+                  shouldShowStartBtn={true}
                 />
               })
             }

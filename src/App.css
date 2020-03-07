@@ -1197,7 +1197,7 @@ text {
 
 .summary-hero-circle {
   margin-left: calc(100vw - 45em);
-  border-radius: 25% 75% 52% 48% / 61% 44% 56% 39%;
+  border-radius: 25% 75% 52% 48% / 69% 44% 56% 31%;
   background: linear-gradient(to right, var(--hero-yellow), rgba(0,0,0,0.2));
   min-height: 40em;
   min-width: 40em;
