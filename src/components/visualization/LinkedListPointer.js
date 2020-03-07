@@ -8,6 +8,8 @@ import React from 'react';
 function LinkedListPointer(props) {
   const { pointerID, name } = props;
 
+  // TODO this is a hack, because "curr" takes less space than "head", find a way to calc this
+  const textOffset = name === 'curr' ? '5px' : '0px';
   return (
     <svg x="100px" y="calc((100vh - 6.5em) / 2 + 60px)">
       <g id={pointerID} className="hidden">
@@ -17,7 +19,7 @@ function LinkedListPointer(props) {
           height="75px"
           x="20px" / >
         <circle r="4px" cx="22px" cy="75px"/ >
-        <text x="0px" y="100px">{name}</text>
+        <text x={textOffset} y="100px">{name}</text>
       </g>
     </svg>
   );

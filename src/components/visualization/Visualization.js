@@ -143,13 +143,17 @@ function VisualizationComponent(props, ref) {
   useEffect(() => {
     if (rendered) {
       animations.forEach(animationStringArray => {
+
         // Add a callback so we know when the animation started
         tl.current.add({
           duration: 100, // Anime.js issue - begin doesn't always get called when this is 0
           begin: () => {
             isCurrentlyPaused.current = false;
             selectedLineNumber.current++;
-            updateLine(selectedLineNumber.current);
+            // Don't show the updated line if there are no animations on it
+            if (animationStringArray != null && animationStringArray.length > 0) {
+              updateLine(selectedLineNumber.current);
+            }
             setPlayDisabled(true);
           }
         });
