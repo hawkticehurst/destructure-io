@@ -2,24 +2,29 @@
   "modules": [
     {
       "name": "Linked List",
-      "descriptionParagraphs": ["TODO this is just a placeholder.... A linked list is a linear collection of elements where each element points to the next. These elements, called nodes, contain two things: data, and a link (reference) to the next node. Linked lists are unique because they are represented in the code by a reference to the head (the first node), and not the whole list; any individual element is only accessible by iterating starting from the head through to the tail (the last node), where the last reference will point to nothing, or null, signifying the end of the list. Singly linked lists can only be iterated from the head to the tail, they can not be iterated backwards."],
+      "descriptionParagraphs": [
+        "A linked list is a linear collection of elements where each element points to the next. These elements, called nodes, contain two things: data, and a link (reference) to the next node. Linked lists are unique because they are represented in the code by a reference to the head (the first node), and not the whole list; any individual element is only accessible by iterating starting from the head through to the tail (the last node), where the last reference will point to nothing, or null, signifying the end of the list. Singly linked lists can only be iterated from the head to the tail, they can not be iterated backwards."
+      ],
+      "whatYouWillLearnParagraphs": [
+        "In this module you will be exposed to the fundamentals of Linked Lists. You will start by learning about the fundamental unit of a Linked List (a node) and how these units can be chained together to create a list. From there you will learn how to manipulate these lists to your advantage."
+      ],
       "directory": "linked-list",
       "submodules": [
         {
-          "name": "Insert At Head TEST",
+          "name": "Insert at Head",
           "filename": "insertAtHeadExample.json"
         },
         {
-          "name": "Insert At Tail TEST",
+          "name": "Insert at Tail",
           "filename": "insertAtTailExample.json"
         },
         {
           "name": "Creating Your First List",
-          "filename" : "example.json"
+          "filename": "example.json"
         },
         {
           "name": "Adding To List",
-          "filename" : "example2.json"
+          "filename": "example2.json"
         }
       ]
     }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 /**
  * Required Props:
@@ -8,6 +8,7 @@ import {Link} from 'react-router-dom';
  * completionState {String} - One of "completed", "flagged" or "incomplete". Defaults "incomplete"
  * selected {boolean} - Defaults false. True if is current sub-module
  * completionStateChanged {Function} - Function called when completion state is changed
+ * shouldShowStartBtn {Boolean} - Defaults false. True should be used when on summary page.
  *
  * Optional Props:
  * onClickLink {Function} - Function to be called when the link is clicked
@@ -21,7 +22,8 @@ function SubModuleProgressRow(props) {
     moduleTitle,
     selected,
     onClickLink,
-    rowClass
+    rowClass,
+    shouldShowStartBtn
   } = props;
   const [isCompleted, setIsCompleted] = useState(completionState);
 
@@ -49,9 +51,16 @@ function SubModuleProgressRow(props) {
       <div className="progress-circle-filled" onClick={toggleCompletionState}>{progressIcon}</div>
       <div className="sub-module-title-container">
         <Link to={link} onClick={onClickLink}>
-          <p>{moduleTitle}</p>
+          <h3>{moduleTitle}</h3>
         </Link>
       </div>
+      {
+        shouldShowStartBtn ? (
+          <Link to={link} onClick={onClickLink}>
+            <button className="summary-module-btn">Start</button>
+          </Link>
+        ) : null
+      }
     </div>
   );
 }
