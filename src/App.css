@@ -1175,14 +1175,14 @@ text {
 
 .summary-overview-container {
   padding: 0 4em 2em 4em;
-  margin-bottom: 4em;
+  margin-bottom: 6em;
 }
 
 .summary-modules-container {
   padding: 0;
   margin-top: 4em;
   width: 100%;
-  height: 24em;
+  height: 36em;
   background-color: #eeeeee;
   position: relative;
 }
@@ -1218,6 +1218,7 @@ text {
 
 .syllabus-row h3 {
   color: var(--hero-black);
+  font-size: 18pt;
 }
 
 /********* Mobile *********/

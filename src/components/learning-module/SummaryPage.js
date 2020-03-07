@@ -22,7 +22,7 @@ function SummaryPage() {
     return <PageNotFound />
   }
 
-  const { name, descriptionParagraphs, submodules } = moduleObj;
+  const { name, descriptionParagraphs, whatYouWillLearnParagraphs, submodules } = moduleObj;
   const moduleLink = '/learn/' + module;
   const getStartedLink = moduleLink + '/' + getCurrentSubmodule(submodules);
 
@@ -46,6 +46,12 @@ function SummaryPage() {
           <h2>Module Overview</h2>
           {
             descriptionParagraphs.map((paragraph, i) => {
+              return <p className="summary-page-description" key={i}>{paragraph}</p>
+            })
+          }
+          <h2>What You'll Learn</h2>
+          {
+            whatYouWillLearnParagraphs.map((paragraph, i) => {
               return <p className="summary-page-description" key={i}>{paragraph}</p>
             })
           }
