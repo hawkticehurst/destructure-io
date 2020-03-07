@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import NavBar from '../common/NavBar';
 import PageNotFound from '../common/PageNotFound';
 import SubModuleProgressRow from './SubModuleProgressRow';
@@ -10,12 +10,20 @@ import useModuleCompletionState, { filenameToSubModuleKey } from '../../hooks/us
 function SummaryPage() {
   const history = useHistory();
   const { module } = useParams();
+  const [summaryHeightCalcString, setSummaryHeightCalcString] = useState("")
   const {
     completionState,
     getCompletionState,
     updateCompletionState,
     getCurrentSubmodule
   } = useModuleCompletionState(module);
+
+  useEffect(() => {
+    // Calculate the height of the summary-modules-container based on summary-modules
+    const summaryModules = document.querySelector(".summary-modules");
+    const summaryModulesHeight = summaryModules.offsetHeight;
+    setSummaryHeightCalcString("calc(" + summaryModulesHeight + " + 4em);")
+  }, []);
 
   const moduleObj = contentOutline.modules.find(moduleObj => moduleObj.directory === module);
   if (moduleObj == null) {
@@ -56,7 +64,7 @@ function SummaryPage() {
             })
           }
         </div>
-        <div className="summary-modules-container">
+        <div className="summary-modules-container" style={{ "height": summaryHeightCalcString }}>
           <div className="summary-modules">
             {
               submodules.map((submodule, i) => {

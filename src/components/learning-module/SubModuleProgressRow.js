@@ -52,6 +52,9 @@ function SubModuleProgressRow(props) {
           <h3>{moduleTitle}</h3>
         </Link>
       </div>
+      <Link to={link} onClick={onClickLink}>
+        <button className="summary-module-btn">Start</button>
+      </Link>
     </div>
   );
 }
