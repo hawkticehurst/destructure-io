@@ -14,6 +14,7 @@
   --hero-green: #4FD362;
   --hero-red: #D3624F;
   --hero-yellow: #ffc300;
+  --hero-yellow-highlighted: #ffd23e;
   --hero-black: #000;
   --hero-white: #fff;
   --hero-grey: #f3f7f9;
@@ -1163,16 +1164,43 @@ text {
 /********* Summary Page *********/
 .summary-hero-container {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  background-color: var(--hero-purple);
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to right, rgba(4, 27, 199, 0.7), rgba(4, 27, 199, 0.8));
   padding: 4em 4em 4em 4em;
+  clip-path: inset(0% 0%);
+}
+
+.summary-hero-content {
+  z-index: 2;
 }
 
 .summary-hero-container h1 {
   font-size: 60px;
   color: var(--hero-white);
+  
+}
+
+.summary-hero-container button {
+  background-color: var(--hero-yellow);
+  color: var(--hero-black);
+}
+
+.summary-hero-container button:hover {
+  background-color: var(--hero-yellow-highlighted);
+}
+
+.summary-hero-illustration-container {
+  position: absolute;
+}
+
+.summary-hero-circle {
+  margin-left: calc(100vw - 45em);
+  border-radius: 25% 75% 52% 48% / 61% 44% 56% 39%;
+  background: linear-gradient(to right, var(--hero-yellow), rgba(0,0,0,0.2));
+  min-height: 40em;
+  min-width: 40em;
 }
 
 .summary-page-description {
@@ -1201,7 +1229,7 @@ text {
   padding: 0;
   margin-top: 4em;
   width: 100%;
-  height: 25em;
+  /* height: 25em; */
   background-color: var(--hero-grey);
   position: relative;
 }

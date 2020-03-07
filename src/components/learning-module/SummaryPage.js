@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import NavBar from '../common/NavBar';
 import PageNotFound from '../common/PageNotFound';
 import SubModuleProgressRow from './SubModuleProgressRow';
@@ -11,6 +11,7 @@ function SummaryPage() {
   const history = useHistory();
   const { module } = useParams();
   const [summaryHeightCalcString, setSummaryHeightCalcString] = useState("")
+  const containerRef = useRef(null);
   const {
     completionState,
     getCompletionState,
@@ -20,9 +21,8 @@ function SummaryPage() {
 
   useEffect(() => {
     // Calculate the height of the summary-modules-container based on summary-modules
-    const summaryModules = document.querySelector(".summary-modules");
-    const summaryModulesHeight = summaryModules.offsetHeight;
-    setSummaryHeightCalcString("calc(" + summaryModulesHeight + " + 4em);")
+    const summaryModulesHeight = containerRef.current.getBoundingClientRect().height;
+    setSummaryHeightCalcString(summaryModulesHeight + 20);
   }, []);
 
   const moduleObj = contentOutline.modules.find(moduleObj => moduleObj.directory === module);
@@ -43,10 +43,15 @@ function SummaryPage() {
       <NavBar navBarType="homepage" />
 
       <div className="summary-hero-container">
-        <h1>Learn {name}s</h1>
-        <button onClick={onClickHeroBtn} className="hero-btn">
-          <span className="bold">{completionState != null ? 'Continue Module' : 'Get Started'}</span>
-        </button>
+        <div className="summary-hero-content">
+          <h1>Learn {name}s</h1>
+          <button onClick={onClickHeroBtn} className="hero-btn">
+            <span className="bold">{completionState != null ? 'Continue Module' : 'Get Started'}</span>
+          </button>
+        </div>
+        <div className="summary-hero-illustration-container">
+          <div className="summary-hero-circle"></div>
+        </div>
       </div>
 
       <div className="summary-page-content">
@@ -65,7 +70,7 @@ function SummaryPage() {
           }
         </div>
         <div className="summary-modules-container" style={{ "height": summaryHeightCalcString }}>
-          <div className="summary-modules">
+          <div className="summary-modules" ref={containerRef}>
             {
               submodules.map((submodule, i) => {
                 const link = moduleLink + '/' + filenameToSubModuleKey(submodule.filename);

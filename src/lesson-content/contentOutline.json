@@ -19,14 +19,6 @@
           "filename": "insertAtTailExample.json"
         },
         {
-          "name": "Insert at Head",
-          "filename": "insertAtHeadExample.json"
-        },
-        {
-          "name": "Insert at Tail",
-          "filename": "insertAtTailExample.json"
-        },
-        {
           "name": "Creating Your First List",
           "filename": "example.json"
         },
