@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 /**
  * Required Props:
@@ -49,7 +49,7 @@ function SubModuleProgressRow(props) {
       <div className="progress-circle-filled" onClick={toggleCompletionState}>{progressIcon}</div>
       <div className="sub-module-title-container">
         <Link to={link} onClick={onClickLink}>
-          <p>{moduleTitle}</p>
+          <h3>{moduleTitle}</h3>
         </Link>
       </div>
     </div>

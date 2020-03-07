@@ -43,7 +43,7 @@ function SummaryPage() {
 
       <div className="summary-page-content">
         <div className="summary-overview-container">
-          <h2>{name} Overview:</h2>
+          <h2>{name} Overview</h2>
           {
             descriptionParagraphs.map((paragraph, i) => {
               return <p className="summary-page-description" key={i}>{paragraph}</p>
