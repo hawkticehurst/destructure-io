@@ -1189,9 +1189,9 @@ text {
 
 .summary-modules {
   position: absolute;
-  top: -3em;
-  width: 100%;
-  margin: 0 4em;
+  top: -2.5em;
+  width: calc(100% - 8em);
+  margin: 0 4em 0 4em;
   border-radius: 5px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   border-left: 6px solid var(--hero-purple);
