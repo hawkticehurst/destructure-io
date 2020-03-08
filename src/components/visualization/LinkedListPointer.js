@@ -11,7 +11,7 @@ function LinkedListPointer(props) {
   // TODO this is a hack, because "curr" takes less space than "head", find a way to calc this
   const textOffset = name === 'curr' ? '5px' : '0px';
   return (
-    <svg x="100px" y="calc((100vh - 6.5em) / 2 + 60px)">
+    <svg id={pointerID + '-container'} x="100px" y="calc((100vh - 6.5em) / 2 + 60px)">
       <g id={pointerID} className="hidden">
         <rect
           id={pointerID + '-tip'}
