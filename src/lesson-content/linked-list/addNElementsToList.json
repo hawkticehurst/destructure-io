@@ -1,0 +1,146 @@
+{
+  "paragraphs": [
+    "We’ve seen how to create a linked list and add an element to the list, but what if we want to add more elements? For example, what if we wanted to create a third node with the value 3?",
+    "We could try $code(head.next.next = new Node(3)), but this is very cumbersome and error prone. If $code(head) or $code(head.next) is null, this will throw a $italic(nullPointerException), because we can’t get the $code(next) value of null. We could use $italic(if statements) to help solve this, but it will get very confusing and repetitive.",
+    "Instead, it is helpful to make a second pointer to iterate with. By convention, this second pointer is often called $code(curr), as it stands for the current element you are looking at. To move the $code(curr) pointer, we can write $code(curr = curr.next). This works because of the rule that we evaluate code on the right side of the $italic(assignment statement) first. $code(curr.next) evaluates to the node that is after $code(curr) in the list. Next, the left side of the equals sign reassigns the $code(curr) variable to that node. Again, this does not change the nodes, just the pointer to the node.",
+    "Now we can iterate through a list by repeatedly moving a $code(curr) pointer forward. For example, the code below uses a $italic(for loop) to iterate 3 times and create a new node at the end of the list (called the $italic(tail)) each time."
+  ],
+  "codeChunks": [
+    {
+      "type": "hidden",
+      "code": {
+        "java": [
+          {
+            "given": "class Node {"
+          },
+          {
+            "given": "  int data;"
+          },
+          {
+            "given": "  Node next;",
+            "tooltip": "Reference to the next node in the list. If this is the tail node, next will be set to null"
+          },
+          {
+            "given": ""
+          },
+          {
+            "given": "  public Node(int data) {"
+          },
+          {
+            "given": "    this.data = data;"
+          },
+          {
+            "given": "    this.next = null;"
+          },
+          {
+            "given": "  }"
+          },
+          {
+            "given": "}"
+          },
+          {
+            "given": ""
+          }
+        ]
+      }
+    },
+    {
+      "type": "skipped",
+      "code": {
+        "java": [
+          {
+            "given": "class Example {"
+          },
+          {
+            "given": "  public static void main(string[] args) {"
+          },
+          {
+            "given": "    createListSizeN(4);"
+          },
+          {
+            "given": "  }"
+          }
+        ]
+      }
+    },
+    {
+      "type": "skipped",
+      "code": {
+        "java": [{
+          "given": ""
+        }]
+      }
+    },
+    {
+      "type": "auto",
+      "code": {
+        "java": [{
+          "given": "  public void createListSizeN(int size) {",
+          "animations": [
+
+          ]
+        },{
+          "given": "    Node head = new Node(0);",
+          "animations": [
+            "createNewNode,0,#node1",
+            "createNewPointer,#head-pointer,head"
+          ]
+        },
+        {
+          "given": "    Node curr = head;",
+          "animations": [
+            "createNewPointer,#curr-pointer,curr"
+          ]
+        }
+      ]
+      }
+    },
+    {
+      "type": "loop",
+      "loopCounter": [3],
+      "code": {
+        "java": [{
+          "given": "    for (int i = 0; i < size - 1; i++) {",
+          "animations": [
+
+          ]
+        },
+        {
+          "given": "      curr.next = new Node(i);",
+          "animations": [
+
+          ]
+        },
+        {
+          "given": "      curr = curr.next;",
+          "animations": [
+
+          ]
+        },
+        {
+          "given": "    }",
+          "animations": [
+
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "auto",
+    "code": {
+      "java": [{
+        "given": "  }"
+      }]
+    }
+  },
+  {
+    "type": "auto",
+    "code": {
+      "java": [{
+        "given": "}"
+      }]
+    }
+  }
+  ]
+}

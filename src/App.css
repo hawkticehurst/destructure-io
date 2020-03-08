@@ -556,7 +556,6 @@ button, input {
 }
 
 .sub-module-progress-row-container {
-  cursor: pointer;
   border-bottom: 1px solid white;
   padding: 5px;
   color: white;
@@ -564,7 +563,15 @@ button, input {
   align-items: center;
 }
 
-.progress-row-selected {
+.sub-module-progress-row-container:not(.syllabus-row) {
+  cursor: pointer;
+}
+
+.sidebar h3 {
+  font-weight: normal;
+}
+
+.progress-row-selected h3 {
   font-weight: bold;
 }
 
@@ -601,6 +608,7 @@ button, input {
 }
 
 .progress-circle-filled {
+  cursor: pointer;
   border: 2px solid white;
   background-color: white;
   border-radius: 50%;
@@ -1259,7 +1267,7 @@ text {
   border-bottom-right-radius: 5px;
 }
 
-.syllabus-row h3 {
+.syllabus-row a {
   color: var(--hero-black);
   font-size: 22px;
 }

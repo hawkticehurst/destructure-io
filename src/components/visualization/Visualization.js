@@ -143,13 +143,17 @@ function VisualizationComponent(props, ref) {
   useEffect(() => {
     if (rendered) {
       animations.forEach(animationStringArray => {
+
         // Add a callback so we know when the animation started
         tl.current.add({
           duration: 100, // Anime.js issue - begin doesn't always get called when this is 0
           begin: () => {
             isCurrentlyPaused.current = false;
             selectedLineNumber.current++;
-            updateLine(selectedLineNumber.current);
+            // Don't show the updated line if there are no animations on it
+            if (animationStringArray != null && animationStringArray.length > 0) {
+              updateLine(selectedLineNumber.current);
+            }
             setPlayDisabled(true);
           }
         });
@@ -205,7 +209,10 @@ function VisualizationComponent(props, ref) {
             } else if (functionName === 'createNewPointer') {
               allPointers.current.push({
                 id: parameters[1],
-                name: parameters[2]
+                name: parameters[2],
+                location: 0,
+                offset: 0,
+                inserted: false
               });
             }
           });
@@ -278,10 +285,31 @@ function VisualizationComponent(props, ref) {
   };
 
   const createNewPointer = pointer => {
+    const newPointerObj = allPointers.current.find(pointerObj => pointerObj.id === pointer);
+    const newPointerLocation = newPointerObj.location != null ? newPointerObj.location : 0;
+    const otherPointerAtLocation = allPointers.current.find(pointerObj => {
+      return pointerObj.location === newPointerLocation && pointerObj.inserted;
+    });
+    if (otherPointerAtLocation != null) {
+      tl.current.add({
+        duration: 500,
+        targets: otherPointerAtLocation.id + '-container',
+        x: '-=30px'
+      });
+      tl.current.add({
+        duration: 0,
+        targets: pointer + '-container',
+        x: '+=30px'
+      });
+      otherPointerAtLocation.offest = -30;
+      newPointerObj.offset = 30;
+    }
+
     tl.current.add({
       targets: pointer,
       opacity: '1'
-    });
+    }, otherPointerAtLocation != null ? '-=500' : '-=0');
+    newPointerObj.inserted = true;
   };
 
   /**
@@ -373,12 +401,56 @@ function VisualizationComponent(props, ref) {
    * @param numNodes {Number} Number of nodes to move the pointer. Negative to move left
    */
   const movePointer = (pointer, numNodes) => {
-    const distance = Math.abs(200 * numNodes);
-    const direction = numNodes < 0 ? '-=' : '+=';
-    tl.current.add({
-      targets: pointer,
-      translateX: direction + distance + 'px',
+
+    const movePointerObj = allPointers.current.find(pointerObj => pointerObj.id === pointer);
+    const oldLocation = movePointerObj.location != null ? movePointerObj.location : 0;
+
+    const pointerAtPrevSpot = allPointers.current.find(pointerObj => {
+      return pointerObj.location === oldLocation && pointerObj.inserted && pointerObj.id !== pointer;
     });
+    const pointerAtNextSpot = allPointers.current.find(pointerObj => {
+      return pointerObj.location === (oldLocation + numNodes) && pointerObj.inserted && pointerObj.id !== pointer;
+    });
+    let timelineOffset = 0; // Allows us to show multiple animations at once
+
+    // Move the pointer at the next spot over
+    if (pointerAtNextSpot != null) {
+      tl.current.add({
+        duration: 500,
+        targets: pointerAtNextSpot.id + '-container',
+        x: numNodes > 0 ? '+=30px' : '-=30px'
+      });
+      timelineOffset += 500;
+      pointerAtNextSpot.offset = numNodes > 0 ? 30 : -30;
+    }
+
+    // Calculate the distance that the pointer needs to travel and which direction to travel in
+    const distanceBetweenNodes = Math.abs(200 * numNodes);
+    const distanceToCurrentMiddle = movePointerObj.offset * (numNodes > 0 ? -1 : 1);
+    const distanceFromNextOffset = pointerAtNextSpot == null ? 0 : -30;
+    const finalDistance = distanceBetweenNodes + distanceToCurrentMiddle + distanceFromNextOffset;
+    const direction = numNodes < 0 ? '-=' : '+=';
+
+    // Move the pointer to the desired distance in the correct direction
+    tl.current.add({
+      duration: 500,
+      targets: pointer + '-container',
+      x: direction + finalDistance + 'px',
+    }, '-=' + timelineOffset);
+    timelineOffset += 500;
+
+    // Move the pointer on the previous node back to the center of its node
+    if (pointerAtPrevSpot != null) {
+      tl.current.add({
+        duration: 500,
+        targets: pointerAtPrevSpot.id + '-container',
+        x: pointerAtPrevSpot.offset > 0 ? '-=30px' : '+=30px'
+      }, '-=' + timelineOffset);
+      pointerAtPrevSpot.offset = 0;
+    }
+
+    movePointerObj.location += numNodes;
+    movePointerObj.offset = pointerAtNextSpot != null ? numNodes > 0 ? -30 : 30 : 0;
   };
 
   const setPointerNull = pointer => {
