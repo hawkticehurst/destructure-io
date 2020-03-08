@@ -8,7 +8,7 @@ import SubModuleProgressRow from './SubModuleProgressRow';
 import LearningContent from './LearningContent';
 import Visualization from '../visualization/Visualization';
 import contentOutline from '../../lesson-content/contentOutline.json';
-import {useParams, useHistory} from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import useModuleCompletionState, { filenameToSubModuleKey } from '../../hooks/useModuleCompletionState';
 
 const language = "java"; // TODO make this selectable
@@ -29,7 +29,7 @@ function LearningModule() {
   const [animationStrings, setAnimationStrings] = useState([]);
   const learningContentPaneRef = useRef(null);
   const visualizationRef = useRef(null);
-  const {module, submodule} = useParams();
+  const { module, submodule } = useParams();
   const history = useHistory();
   const {
     getCompletionState,
@@ -94,7 +94,7 @@ function LearningModule() {
     }
 
     // Keep track of which module the resume button on summary page should go to
-    window.localStorage.setItem('last-viewed-' + module , submodule);
+    window.localStorage.setItem('last-viewed-' + module, submodule);
 
     setModuleName(moduleData.name);
     setSubModuleList(moduleData.submodules);
@@ -179,9 +179,9 @@ function LearningModule() {
               contentTitleString={selectedSubmoduleName}
               contentParagraphs={data.paragraphs}
               codeDisplay={<CodeDisplay
-                              language={language}
-                              codeData={data.codeChunks}
-                              selectedLine={trueSelectedLineMap[selectedLine]} />}
+                language={language}
+                codeData={data.codeChunks}
+                selectedLine={trueSelectedLineMap[selectedLine]} />}
             />
           }
           secondComponent={
@@ -197,10 +197,10 @@ function LearningModule() {
           }
         </div>
         <div className="animate-btn-container">
-          <button onClick={startAnimation} disabled={playDisabled}>Play Whole Animation</button>
-          <button onClick={stopAnimation} disabled={!playDisabled}>Pause Animation</button>
+          <button onClick={startAnimation} disabled={playDisabled}>Play</button>
+          <button onClick={stopAnimation} disabled={!playDisabled}>Pause</button>
           {/*<button onClick={setPreviousLine}>Previous Line BROKEN</button> */}
-          <button onClick={setNextLine} disabled={playDisabled}>Next Line</button>
+          <button onClick={setNextLine} disabled={playDisabled}>Step</button>
         </div>
         <div className="back-next-container next-btn">
           {

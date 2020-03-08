@@ -817,12 +817,23 @@ button, input {
   color: white;
   border-style: none;
   border-radius: 5px;
-  padding: 1em;
+  padding: 1em 2em;
   font-weight: bold;
-  margin: 0 0.5em 0em 0.5em;
+  margin: 0 0.5em;
+  box-shadow: 0 2px 2px rgba(0,0,0,0.2);
+}
+
+.animate-btn-container button {
+  border-radius: 30px;
+}
+
+.animate-btn-container button:hover, .module-btn-container button:hover {
+  background-color: var(--hero-purple-highlighted);
+  cursor: pointer;
 }
 
 .animate-btn-container button:disabled {
+  cursor: default;
   background-color: gray;
 }
 
