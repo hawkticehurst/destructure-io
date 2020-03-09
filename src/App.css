@@ -17,7 +17,7 @@
   --hero-yellow-highlighted: #ffd23e;
   --hero-black: #000;
   --hero-white: #fff;
-  --hero-grey: #f3f7f9;
+  --hero-grey: rgb(251, 251, 251);
 
   /* Common */
   --two-pane-divider-size: 5px;
@@ -132,7 +132,7 @@ button, input {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10em 0;
+  padding: 12em 0;
 }
 
 .img-container {
@@ -162,6 +162,38 @@ button, input {
 .text-container p {
   font-size: 20px;
   margin-bottom: 0;
+}
+
+#linked-list {
+  background-color: var(--hero-grey);
+}
+
+#catalog-container:before, #catalog-container:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  left: 0px;
+  height: 38.5em;
+  z-index: 40;
+}
+
+#catalog-container {
+  background-color: var(--hero-grey);
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 16px -6px inset;
+}
+
+#catalog-container:after {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px -6px 16px -6px inset;
+}
+
+#free-container {
+  color: white;
+  background: linear-gradient(90deg, rgb(0, 85, 255), rgb(0, 153, 255));
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+  width: 80%;
+  margin: 12em auto;
+  padding: 2em;
 }
 
 
@@ -214,13 +246,6 @@ button, input {
 }
 
 /********* LINKED LIST ILLUSTRATION HOMEPAGE *********/
-#linked-list {
-  /* This Creates 10em of top margin like the other sections, but the padding
-     allows auto scroll to leave some space at the top when it scrolls */
-  padding-top: 2em;
-  margin-top: 8em;
-}
-
 .linked-list-illustration-container {
   display: flex;
   align-items: center;
@@ -367,6 +392,7 @@ button, input {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 10em;
 }
 
 .team-card-container {

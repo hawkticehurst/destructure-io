@@ -23,11 +23,17 @@ function Free() {
           engineers who believe that quality computer science resources
           should be available to all.
         </p>
+        <p onClick={getStarted} className="bold">
+          Get Started &#10142;
+        </p>
+        {/* <button onClick={getStarted} className="hero-btn">
+          <span className="bold">Get Started</span>
+        </button> */}
       </div>
       <div className="img-container right-image">
-        <button onClick={getStarted} className="hero-btn">
+        {/* <button onClick={getStarted} className="hero-btn">
           <span className="bold">Get Started</span>
-        </button>
+        </button> */}
       </div>
     </Fragment>
   );
