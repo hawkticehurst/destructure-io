@@ -53,34 +53,10 @@
       }
     },
     {
-      "type": "hidden",
-      "code": {
-        "java": [
-          {
-            "given": "  public static void main(string[] args) {"
-          },
-          {
-            "given": "    Node head = createNewLinkedList(1);"
-          },
-          {
-            "given": "  }"
-          }
-        ]
-      }
-    },
-    {
-      "type": "skipped",
-      "code": {
-        "java": [{
-          "given": ""
-        }]
-      }
-    },
-    {
       "type": "auto",
       "code": {
         "java": [{
-          "given": "  public Node createNewLinkedList(int data) {",
+          "given": "  public static void main(string[] args) {",
           "animations": [
 
           ]
@@ -90,11 +66,6 @@
           "animations": [
             "createNewNode,1,#node1",
             "createNewPointer,#head-pointer,head"
-          ]
-        },
-        {
-          "given": "    return head;",
-          "animations": [
           ]
         },
         {

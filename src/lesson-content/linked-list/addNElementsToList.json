@@ -66,16 +66,11 @@
           },
           {
             "given": "  }"
+          },
+          {
+            "given": ""
           }
         ]
-      }
-    },
-    {
-      "type": "skipped",
-      "code": {
-        "java": [{
-          "given": ""
-        }]
       }
     },
     {
@@ -138,6 +133,12 @@
         },
         {
           "given": "    }",
+          "animations": [
+
+          ]
+        },
+        {
+          "given": "    return head;",
           "animations": [
 
           ]

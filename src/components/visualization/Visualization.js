@@ -30,6 +30,7 @@ LATER TODOS:
   * Required Props:
   * animations {String[]} – Array of Animation strings as defined below
   * updateLine {Function} - Callback run to update the line number of parent
+  * setAnimationComplete {Function} - Callback run when the animation finishes
   * preStartAnimations {String[]} – Array of Animation strings as defined below to have complete before the animation starts
   *
   * Animation strings are comma seperated values. The first value is the name of the function to be called.
@@ -74,7 +75,7 @@ LATER TODOS:
   *           Example: "elongatePointer,#node3-pointer"
   */
 function VisualizationComponent(props, ref) {
-  const { animations, preStartAnimations, updateLine, setPlayDisabled } = props;
+  const { animations, preStartAnimations, updateLine, setPlayDisabled, setAnimationComplete } = props;
   const ANIME_DURATION = 1000;
 
   // Line number in the code we are currently on, starting at 0.
@@ -90,6 +91,21 @@ function VisualizationComponent(props, ref) {
   const nodesToBeInserted = useRef([]); // Nodes that are visible but above the list
   const insertedNodes = useRef([]); // Nodes in the list
   const allPointers = useRef([]); // Every pointer the animation will need, this gets filled on mount
+
+  // Helper function to remove nulls, only from end of array
+  const removeTrailingNull = (arr) => {
+    const newArray = [...arr];
+    for (let i = newArray.length - 1; i >= 0; i--) {
+      if (newArray[i] == null) {
+        newArray.pop();
+      } else {
+        break;
+      }
+    }
+    return newArray;
+  };
+
+  const [animationsArray, setAnimationsArray] = useState(removeTrailingNull(animations));
 
   // Converts an animation string to funciton calls based on the rules listed
   // in component header comment
@@ -135,6 +151,7 @@ function VisualizationComponent(props, ref) {
     allPointers.current = [];
     setRendered(false);
     setPlayDisabled(false);
+    setAnimationsArray(removeTrailingNull(animations));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [animations, preStartAnimations]);
 
@@ -148,7 +165,7 @@ function VisualizationComponent(props, ref) {
       });
 
 
-      animations.forEach(animationStringArray => {
+      animationsArray.forEach(animationStringArray => {
         // Add a callback so we know when the animation started
         tl.current.add({
           duration: 100, // Anime.js issue - begin doesn't always get called when this is 0
@@ -195,6 +212,7 @@ function VisualizationComponent(props, ref) {
           isPlayingFullAnimation.current = false;
           setPlayDisabled(false);
           updateLine(selectedLineNumber.current);
+          setAnimationComplete(true);
 
           // TODO This is a hack to "reset" the preStartAnimations
           allNodes.current = [];
@@ -205,7 +223,7 @@ function VisualizationComponent(props, ref) {
         }
       });
       // Determine all of the nodes and pointers we will create
-      [[...preStartAnimations], ...animations].forEach(animationStringArray => {
+      [[...preStartAnimations], ...animationsArray].forEach(animationStringArray => {
         if (animationStringArray !== null) {
           animationStringArray.forEach(animationString => {
             const parameters = animationString.split(',');

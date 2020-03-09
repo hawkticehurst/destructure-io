@@ -90,16 +90,11 @@
           },
           {
             "given": "  }"
+          },
+          {
+            "given": ""
           }
         ]
-      }
-    },
-    {
-      "type": "skipped",
-      "code": {
-        "java": [{
-          "given": ""
-        }]
       }
     },
     {
@@ -142,7 +137,7 @@
               "movePointer,#curr-pointer,1"
             ],
             [
-              "movePointer,#curr-pointer,1"              
+              "movePointer,#curr-pointer,1"
             ]
 
           ]

@@ -90,16 +90,11 @@
           },
           {
             "given": "  }"
+          },
+          {
+            "given": ""
           }
         ]
-      }
-    },
-    {
-      "type": "skipped",
-      "code": {
-        "java": [{
-          "given": ""
-        }]
       }
     },
     {

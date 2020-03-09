@@ -552,7 +552,16 @@ button, input {
   border-bottom: 1px solid white;
   margin-bottom: 5px;
   font-size: 24px;
+}
+
+.sidebar-header span {
   cursor: pointer;
+}
+
+.go-back-summary {
+  cursor: pointer;
+  color: white;
+  font-size: 14px;
 }
 
 .sub-module-progress-row-container {

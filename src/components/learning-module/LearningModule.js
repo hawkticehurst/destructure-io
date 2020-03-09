@@ -17,6 +17,8 @@ const language = "java"; // TODO make this selectable
 function LearningModule() {
   const [selectedLine, setSelectedLine] = useState(-1);
   const [playDisabled, setPlayDisabled] = useState(false);
+  const [animationComplete, setAnimationComplete] = useState(false);
+  const [hasFinishedAnimation, setHasFinishedAnimation] = useState(false); // have they finished it at least once
   const [sideBarShown, setSideBarShown] = useState(false);
   const [data, setData] = useState(null);
   const [trueSelectedLineMap, setTrueSelectedLineMap] = useState(null);
@@ -26,6 +28,7 @@ function LearningModule() {
   const [selectedSubModuleIndex, setSelectedSubModuleIndex] = useState(0);
   const [subModuleList, setSubModuleList] = useState([]);
   const [moduleName, setModuleName] = useState('');
+  const [subModuleFilename, setSubmoduleFilename] = useState('');
   const [animationStrings, setAnimationStrings] = useState([]);
   const [preStartAnimations, setPreStartAnimations] = useState([]);
   const learningContentPaneRef = useRef(null);
@@ -100,13 +103,16 @@ function LearningModule() {
     setModuleName(moduleData.name);
     setSubModuleList(moduleData.submodules);
     setSelectedSubModuleIndex(tempSelectedSubModuleIndex);
-    setSelectedSubModuleName(subModuleData.name)
+    setSelectedSubModuleName(subModuleData.name);
+    setSubmoduleFilename(subModuleData.filename);
     setTrueSelectedLineMap(tempTrueSelectedLineMap);
     setAnimationStrings(tempAnimationStrings);
     setPreStartAnimations(tempData.preStartAnimations);
     setData(tempData);
     setSelectedLine(-1);
     setLoading(false);
+    setAnimationComplete(false);
+    setHasFinishedAnimation(false);
   }, [module, submodule]); // Only run this function when the module or submodule changes
 
   // Prevent showing errors while files are loaded in
@@ -124,6 +130,9 @@ function LearningModule() {
   }
 
   const setNextLine = () => {
+    if (animationComplete) {
+      setAnimationComplete(false);
+    }
     visualizationRef.current.nextLine();
   };
 
@@ -148,12 +157,16 @@ function LearningModule() {
   };
 
   const onClickNext = () => {
+    const currCompletionState = getCompletionState(subModuleFilename);
+    if (hasFinishedAnimation && (currCompletionState == null || currCompletionState === 'incomplete')) {
+      updateCompletionState(subModuleFilename, 'completed');
+    }
     history.push(filenameToPath(subModuleList[selectedSubModuleIndex].filename));
   };
 
   return (
     <div>
-      <SideBar headerText={moduleName + ' Lessons'} headerLink={'/learn/' + module} setSideBarShown={setSideBarShown} sideBarShown={sideBarShown}>
+      <SideBar headerText={moduleName + ' Lessons'} summaryLink={'/learn/' + module} setSideBarShown={setSideBarShown} sideBarShown={sideBarShown}>
         {
           subModuleList.map((subModule, index) => {
             return (
@@ -193,6 +206,12 @@ function LearningModule() {
               preStartAnimations={preStartAnimations != null ? preStartAnimations : []}
               updateLine={setSelectedLine}
               setPlayDisabled={setPlayDisabled}
+              setAnimationComplete={(isComplete) => {
+                setAnimationComplete(isComplete);
+                if (isComplete) {
+                  setHasFinishedAnimation(true);
+                }
+              }}
               ref={visualizationRef} />
           }
           initialStartSize={45}
@@ -207,10 +226,10 @@ function LearningModule() {
         {
           data.noAnimations ? null : (
             <div className="animate-btn-container">
-              <button onClick={startAnimation} disabled={playDisabled}>Play</button>
+              <button onClick={startAnimation} disabled={playDisabled || animationComplete}>Play</button>
               <button onClick={stopAnimation} disabled={!playDisabled}>Pause</button>
               {/*<button onClick={setPreviousLine}>Previous Line BROKEN</button> */}
-              <button onClick={setNextLine} disabled={playDisabled}>Step</button>
+              <button onClick={setNextLine} disabled={playDisabled}>{animationComplete ? 'reset' : 'Step'}</button>
             </div>
           )
         }
