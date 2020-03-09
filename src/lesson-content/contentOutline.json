@@ -3,28 +3,44 @@
     {
       "name": "Linked List",
       "descriptionParagraphs": [
-        "A linked list is a linear collection of elements where each element points to the next. These elements, called nodes, contain two things: data, and a link (reference) to the next node. Linked lists are unique because they are represented in the code by a reference to the head (the first node), and not the whole list; any individual element is only accessible by iterating starting from the head through to the tail (the last node), where the last reference will point to nothing, or null, signifying the end of the list. Singly linked lists can only be iterated from the head to the tail, they can not be iterated backwards."
+        "Linked lists are a very commonly used data structure for representing ordered data. Each piece of data is held inside its own node object, with a reference to where the next node is located. This creates a chain-like structure where each node is only referenced by the previous node in the list."
       ],
       "whatYouWillLearnParagraphs": [
-        "In this module you will be exposed to the fundamentals of Linked Lists. You will start by learning about the fundamental unit of a Linked List (a node) and how these units can be chained together to create a list. From there you will learn how to manipulate these lists to your advantage."
+        "In this module you will be exposed to the fundamentals of Linked Lists. You will start by learning about the fundamental unit of a Linked List (a node) and how these units can be chained together to create a list. From there you will learn how to manipulate these lists to your advantage in your code."
       ],
       "directory": "linked-list",
       "submodules": [
         {
-          "name": "Insert at Head",
-          "filename": "insertAtHeadExample.json"
+          "name": "What is a Linked List?",
+          "filename": "whatIsALinkedList.json"
         },
         {
-          "name": "Insert at Tail",
-          "filename": "insertAtTailExample.json"
+          "name": "Creating a Linked List",
+          "filename": "creatingALinkedList.json"
         },
         {
-          "name": "Creating Your First List",
-          "filename": "example.json"
+          "name": "Changing Data in a Node",
+          "filename": "changingDataInANode.json"
         },
         {
-          "name": "Adding To List",
-          "filename": "example2.json"
+          "name": "Adding Another Element",
+          "filename": "addingAnotherElement.json"
+        },
+        {
+          "name": "Adding “N” Elements",
+          "filename": "addNElementsToList.json"
+        },
+        {
+          "name": "Iterating Through A List",
+          "filename": "iteratingThroughAList.json"
+        },
+        {
+          "name": "Changing Data At Position \"N\"",
+          "filename": "changingDataAtPositionN.json"
+        },
+        {
+          "name": "Inserting Nodes At The Head",
+          "filename": "insertingNodesAtTheHead.json"
         }
       ]
     }

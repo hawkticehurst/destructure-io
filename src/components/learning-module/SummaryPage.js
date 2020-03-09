@@ -20,9 +20,11 @@ function SummaryPage() {
   } = useModuleCompletionState(module);
 
   useEffect(() => {
-    // Calculate the height of the summary-modules-container based on summary-modules
-    const summaryModulesHeight = containerRef.current.getBoundingClientRect().height;
-    setSummaryHeightCalcString(summaryModulesHeight + 20);
+    if (containerRef.current != null) {
+      // Calculate the height of the summary-modules-container based on summary-modules
+      const summaryModulesHeight = containerRef.current.getBoundingClientRect().height;
+      setSummaryHeightCalcString(summaryModulesHeight + 20);
+    }
   }, []);
 
   const moduleObj = contentOutline.modules.find(moduleObj => moduleObj.directory === module);
@@ -33,6 +35,7 @@ function SummaryPage() {
   const { name, descriptionParagraphs, whatYouWillLearnParagraphs, submodules } = moduleObj;
   const moduleLink = '/learn/' + module;
   const getStartedLink = moduleLink + '/' + getCurrentSubmodule(submodules);
+  const title = 'Learn ' + name + (name.endsWith('s') ? '' : 's');
 
   const onClickHeroBtn = () => {
     history.push(getStartedLink);
@@ -44,7 +47,7 @@ function SummaryPage() {
 
       <div className="summary-hero-container">
         <div className="summary-hero-content">
-          <h1>Learn {name}s</h1>
+          <h1>{title}</h1>
           <button onClick={onClickHeroBtn} className="hero-btn">
             <span className="bold">{completionState != null ? 'Continue Module' : 'Get Started'}</span>
           </button>

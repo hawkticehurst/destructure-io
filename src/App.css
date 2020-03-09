@@ -556,7 +556,6 @@ button, input {
 }
 
 .sub-module-progress-row-container {
-  cursor: pointer;
   border-bottom: 1px solid white;
   padding: 5px;
   color: white;
@@ -564,8 +563,16 @@ button, input {
   align-items: center;
 }
 
-.progress-row-selected {
+.sidebar h3 {
+  font-weight: normal;
+}
+
+.progress-row-selected h3 {
   font-weight: bold;
+}
+
+.sub-module-progress-row-container:not(.syllabus-row) .sub-module-title-container {
+  cursor: pointer;
 }
 
 .sub-module-title-container {
@@ -601,6 +608,7 @@ button, input {
 }
 
 .progress-circle-filled {
+  cursor: pointer;
   border: 2px solid white;
   background-color: white;
   border-radius: 50%;
@@ -974,9 +982,7 @@ button, input {
 
 .hljs {
   /* highlight JS created class */
-  padding: var(
-    --code-padding-vertical
-  ) !important; /* important to override any of the highlight styles */
+  padding: var(--code-padding-vertical) !important; /* important to override any of the highlight styles */
 }
 
 @keyframes delay-overflow {
@@ -990,13 +996,13 @@ button, input {
 }
 
 .chunk-open {
-  max-height: 1000px;
-  transition: 1s;
-  animation: 1s delay-overflow;
+  max-height: 1000px; /* Note: this is a default, but it gets overridden by JS on resize */
+  transition: 0.5s;
+  animation: 1.5s delay-overflow;
 }
 
 .chunk-collapsed {
-  max-height: 20px; /* TODO this should probably be calculated somehow */
+  max-height: 20px; /* Note: this is a default, but it gets overridden by JS on resize */
   overflow-y: hidden;
   transition: 0.5s;
 }
@@ -1030,6 +1036,9 @@ button, input {
   padding-top: var(--code-padding-vertical);
   padding-bottom: var(--code-padding-vertical);
   user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 /* Chevrons based on https://codepen.io/egf/pen/jzylw */
@@ -1274,7 +1283,7 @@ text {
   border-bottom-right-radius: 5px;
 }
 
-.syllabus-row h3 {
+.syllabus-row a {
   color: var(--hero-black);
   font-size: 22px;
 }

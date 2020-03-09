@@ -5,6 +5,7 @@ import CodeChunk from './CodeChunk';
  * Required Props:
  * language {String} - "java", "javascript", etc
  * selectedLine {number} - line number to highlight, -1 to highlight nothing
+ * codeChunkKeyOffset {String/Number} - Any key that will be unique to this module, such as subModuleName
  * codeData {Array<Obj>} - Code data as a JS object in format:
  [
     {
@@ -15,18 +16,15 @@ import CodeChunk from './CodeChunk';
           {
             given: "code as string",
             tooltip: string // optional string of text to show as a tooltip with the code
-            dropdownOptions: ["option 1", "option 2"] // optional, default [],
-            dropdownLocation: number // optional index in line to put dropdown, defaults to -1 (end of line),
-            fillInBlankLocation: number // optional index of fill in blank. -1 = end of line, unspecified = none,
           },
         ]
       },
-      animations: [] // array of animations to play for line
+      animations: [] // array of animation strings to play for line
     },
   ]
  */
 function CodeDisplay(props) {
-  const { codeData, language, selectedLine } = props;
+  const { codeData, language, selectedLine, codeChunkKeyOffset } = props;
 
   // This is a bit hacky, but it listens for horizontal scrolls on the code display
   // If any happen, it makes sure all lines stay the full width of the container,
@@ -56,7 +54,7 @@ function CodeDisplay(props) {
         lineNumberStart={currLineNumber}
         isHidden={type === "hidden"}
         selectedLine={selectedLine}
-        key={index} />
+        key={index + codeChunkKeyOffset} />
     );
     currLineNumber += code[language].length;
     return codeChunk;

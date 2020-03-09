@@ -9,7 +9,7 @@ import SignInUpInputs from '../auth/SignInUpInputs';
  * toggleSideBar {function} - Callback for toggling the sidebar
  * SubModuleTitle {String} - Title of current submodule
  * navBarType {String} - String representing which version of the navbar to render
- *    Nav Bar Types: 'module', 'homepage', 'catalog', 'sign-in-up'
+ *    Nav Bar Types: 'summary', 'module', 'homepage', 'catalog', 'sign-in', 'sign-up'
  */
 function NavBar(props) {
   const { toggleSideBar, SubModuleTitle, navBarType } = props;
@@ -31,10 +31,8 @@ function NavBar(props) {
     return () => document.removeEventListener('click', onClickPageShouldCloseLogin);
   }, [showLoginDropdown]);
 
-  const onModulePage = window.location.pathname.startsWith('/learn') && window.location.pathname.length > '/learn/'.length;
-
   let containerClass = "nav-bar-container";
-  if (navBarType === "homepage" || navBarType === "catalog" || navBarType === "sign-in-up") {
+  if (['homepage', 'catalog', 'sign-in', 'sign-up'].includes(navBarType)) {
     containerClass += " homepage-nav-bar";
   } else if (navBarType === "module") {
     containerClass += " module-nav-bar";
@@ -50,25 +48,19 @@ function NavBar(props) {
   ) : null;
 
   // Using a link here is a bit hacky but makes sure we don't have different styles compared to actual links
-  const signOutLink = user != null && navBarType !== "sign-in-up" ? (
+  const signOutLink = user != null ? (
     <Link to={window.location.pathname} onClick={doSignOut}>Log Out</Link>
   ) : null;
 
-  const signInLink = user == null && navBarType !== "sign-in-up" ? onModulePage ? (
+  const signInLink = user == null ? navBarType === 'module' ? (
     <Link to={window.location.pathname} onClick={() => setShowLoginDropdown(!showLoginDropdown)}>Log In</Link>
   ) : <Link to="/signin">Log In</Link> : null;
 
-  const signUpLink = user == null && ['module', 'catalog'].includes(navBarType) ? (
+  const signUpLink = user == null ? (
     <Link to="/signup">Sign Up</Link>
   ) : null;
 
-  const getStartedLink = user == null && navBarType === 'homepage' ? (
-    <Link to="/signup">Get Started</Link>
-  ) : null;
-
-  const catalogLink = ['catalog', 'homepage', 'module', 'sign-in-up'].includes(navBarType) ? (
-    <Link to="/learn">Catalog</Link>
-  ) : null;
+  const catalogLink = <Link to="/learn">Catalog</Link>;
 
   return (
     <div className={containerClass}>
@@ -80,7 +72,6 @@ function NavBar(props) {
       {backBtn}
       <h1><Link to="/">destructure.io</Link></h1>
       <div className="nav-links-container">
-        {getStartedLink}
         {catalogLink}
         {signInLink}
         {signUpLink}

@@ -7,9 +7,10 @@ import SignInUpInputs from './SignInUpInputs';
  * isSignIn: {boolean} - Defaults false, true to show sign in instead of sign up
  */
 function SignInUp(props) {
+  const navBarType = props.isSignIn ? 'sign-in' : 'sign-up';
   return (
     <div>
-      <NavBar navBarType="sign-in-up" />
+      <NavBar navBarType={navBarType}/>
       <SignInUpInputs {...props} />
     </div>
   );

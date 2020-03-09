@@ -1,0 +1,169 @@
+{
+  "paragraphs": [
+    "While we usually add nodes to the end of a list, there are occasionally times when we want to insert at the $italic(head) of the list instead.",
+    "As with inserting at the $italic(tail), to insert at the $italic(head) of the list we must first create a new $code(Node) object to hold our new data. However, since our new node is going to be the first node in our list, there is not a node whose $code(next) field will point to it. Instead, we create a temporary pointer, typically called $code(temp), to keep track of this new node while we are completing the insertion.",
+    "Since we are inserting at the start of the list, the node currently pointed to by $code(head) will be becoming our second node. This means that the $code(next) field of the new node (which will become the first node) should contain a reference to the original $code(head). We can achieve this by simply setting $code(temp.next = head).",
+    "Finally, we must always reset our head pointer to point to the first node in our list, which currently is called temp. We can do this with $code(head = temp). This line of code first evaluates the temp pointer, finding our new node then sets head to point to it.",
+    "In the example below, we utilize this process in a for loop, allowing us to place three new nodes at the beginning of the list."
+  ],
+  "preStartAnimations": [
+    "createNewNode,10,#node0",
+    "createNewPointer,#head-pointer,head",
+    "createNewNode,20,#node1",
+    "insertNodeAtIndex,tail,#node1"
+  ],
+  "codeChunks": [
+    {
+      "type": "skipped",
+      "code": {
+        "java": [
+          {
+            "given": "class LinkedListExample {"
+          }
+        ]
+      }
+    },
+    {
+      "type": "hidden",
+      "code": {
+        "java": [
+          {
+            "given": "  class Node {"
+          },
+          {
+            "given": "    int data;"
+          },
+          {
+            "given": "    Node next;",
+            "tooltip": "Reference to the next node in the list. If this is the tail node, next will be set to null."
+          },
+          {
+            "given": ""
+          },
+          {
+            "given": "    public Node(int data) {"
+          },
+          {
+            "given": "      this.data = data;"
+          },
+          {
+            "given": "      this.next = null;"
+          },
+          {
+            "given": "    }"
+          },
+          {
+            "given": "  }"
+          },
+          {
+            "given": ""
+          }
+        ]
+      }
+    },
+    {
+      "type": "hidden",
+      "code": {
+        "java": [
+          {
+            "given": "  public static void main(string[] args) {"
+          },
+          {
+            "given": "    Node head = New Node(10);"
+          },
+          {
+            "given": "    head.next = new Node(20);"
+          },
+          {
+            "given": "    insertNodesAtHead(head, 2);"
+          },
+          {
+            "given": "  }"
+          }
+        ]
+      }
+    },
+    {
+      "type": "skipped",
+      "code": {
+        "java": [{
+          "given": ""
+        }]
+      }
+    },
+    {
+      "type": "auto",
+      "code": {
+        "java": [{
+          "given": "  public void insertNodesAtHead(Node head, int numNodes) {",
+          "animations": [
+
+          ]
+        }
+      ]
+      }
+    },
+    {
+      "type": "loop",
+      "loopCounter": [2],
+      "code": {
+        "java": [{
+          "given": "    for (int i = 0; i < numNodes; i++) {",
+          "animations": [
+
+          ]
+        },
+        {
+          "given": "      Node temp = new Node(i);",
+          "animations": [
+            [
+              "createNewNode,0,#node3"
+            ],
+            [
+              "createNewNode,1,#node4"
+            ]
+          ]
+        },
+        {
+          "given": "      temp.next = head;",
+          "animations": [
+            [
+              "insertNodeAtIndex,0,#node3"
+            ],
+            [
+              "insertNodeAtIndex,0,#node4"
+            ]
+          ]
+        },
+        {
+          "given": "      head = temp;",
+          "animations": [
+            "movePointer,#head-pointer,-1"
+          ]
+        },
+        {
+          "given": "    }",
+          "animations": [
+
+          ]
+        }]
+      }
+    },
+  {
+    "type": "auto",
+    "code": {
+      "java": [{
+        "given": "  }"
+      }]
+    }
+  },
+  {
+    "type": "auto",
+    "code": {
+      "java": [{
+        "given": "}"
+      }]
+    }
+  }
+  ]
+}
