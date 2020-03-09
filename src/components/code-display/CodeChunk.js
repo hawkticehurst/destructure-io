@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import CodeLine from './CodeLine';
 
 /**
@@ -12,8 +12,31 @@ import CodeLine from './CodeLine';
  * selectedLine {number} - Number of selected line. If undefined or -1 is passed, no lines are selected
  */
 function CodeChunk(props) {
-  const {code, language, lineNumberStart, isHidden, selectedLine} = props;
+  const { code, language, lineNumberStart, isHidden, selectedLine } = props;
   const [isCollapsed, setIsCollapsed] = useState(isHidden);
+  const [maxHeight, setMaxHeight] = useState(null);
+
+  useEffect(() => {
+    const calcHeight = () => {
+      return document.querySelector('.code-content').offsetHeight;
+    };
+
+    const setMaxHeightOneLine = () => {
+      setMaxHeight(calcHeight());
+    };
+
+    if (isCollapsed) {
+      setMaxHeightOneLine();
+      window.addEventListener("resize", setMaxHeightOneLine);
+    } else if (code.length > 1) {
+      window.removeEventListener("resize", setMaxHeightOneLine);
+      setMaxHeight(calcHeight() * code.length);
+    }
+
+    return () => {
+      window.removeEventListener("resize", setMaxHeightOneLine);
+    };
+  }, [isCollapsed, code.length]);
 
   const codeLines = code.map((lineData, index) => {
     const lineNumber = index + lineNumberStart;
@@ -39,8 +62,11 @@ function CodeChunk(props) {
     className += " hidden-chunk";
   }
 
+  const style = maxHeight != null ? {
+    maxHeight
+  } : null;
   return (
-    <div className={className}>
+    <div className={className} style={style}>
       {codeLines}
     </div>
   );

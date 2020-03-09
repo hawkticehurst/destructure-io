@@ -40,7 +40,7 @@ function LearningContent(props) {
         if (isInCode) {
           isInCode = false;
           return (
-            <CodeHighlight key={index * characterIndex} language="java" isInline={true}>
+            <CodeHighlight key={(index + 1) * (characterIndex + 1)} language="java" isInline={true}>
               {paragraph.substring(characterIndex, endBoldIndex)}
             </CodeHighlight>
           )
@@ -73,7 +73,6 @@ function LearningContent(props) {
       return paragraph.substring(characterIndex, endNormalIndex);
     }).filter(Boolean);
 
-
     return (
       <p key={index}>
         {text}
@@ -88,7 +87,7 @@ function LearningContent(props) {
       <div className="text-content-paragraphs">
         {paragraphs}
       </div>
-      <h2>{contentTitleString} Code</h2>
+      <h2>Example Code</h2>
       {codeDisplay}
     </div>
   );

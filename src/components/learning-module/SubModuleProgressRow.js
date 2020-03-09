@@ -55,9 +55,9 @@ function SubModuleProgressRow(props) {
   const containerClass = selected ? 'sub-module-progress-row-container progress-row-selected' : 'sub-module-progress-row-container';
   const progressIcon = isCompleted === 'flagged' ? '!' : isCompleted === 'completed' ? '✔' : '';
   return (
-    <div className={containerClass + (rowClass != null ? (' ' + rowClass) : '')} onClick={onClickContainer}>
+    <div className={containerClass + (rowClass != null ? (' ' + rowClass) : '')}>
       <div className="progress-circle-filled" onClick={toggleCompletionState}>{progressIcon}</div>
-      <div className="sub-module-title-container">
+      <div className="sub-module-title-container" onClick={onClickContainer}>
         <h3>
           <Link to={link} onClick={onClickLink}>{moduleTitle}</Link>
         </h3>

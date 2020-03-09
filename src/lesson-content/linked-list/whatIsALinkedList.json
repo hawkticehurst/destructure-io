@@ -1,0 +1,48 @@
+{
+  "paragraphs": [
+    "Linked Lists are one of the most common and useful data structures in computer science. They contain a $italic(linear) set of ordered elements called $italic(nodes), where each node represents one piece of data in our list, similar to an index of an array.",
+    "However, these nodes cannot be explicitly referenced by index (i.e. there is no equivalent to the $code(array[index]) seen with arrays). Instead each node keeps a reference to the next element in the list, allowing us to follow the chain of nodes all the way to the end of the list. We will see this process in more detail throughout the module, but you can think of it as similar to following clues in a scavenger hunt. Each clue gives directions to the next clue until reaching the end location.",
+    "Below is the implementation of a $code(Node) that we will be using and exploring more deeply throughout the module. Each element, called a $code(Node), contains two fields: their $code(data), and a link (reference) to the $code(next) node in the list. "
+  ],
+  "noAnimations": true,
+  "codeChunks": [
+    {
+      "type": "skipped",
+      "code": {
+        "java": [
+          {
+            "given": "class Node {"
+          },
+          {
+            "given": "  int data;"
+          },
+          {
+            "given": "  Node next;",
+            "tooltip": "Reference to the next node in the list. If this is the tail node, next will be set to null."
+          },
+          {
+            "given": ""
+          },
+          {
+            "given": "  public Node(int data) {"
+          },
+          {
+            "given": "    this.data = data;"
+          },
+          {
+            "given": "    this.next = null;"
+          },
+          {
+            "given": "  }"
+          },
+          {
+            "given": "}"
+          },
+          {
+            "given": ""
+          }
+        ]
+      }
+    }
+  ]
+}

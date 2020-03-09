@@ -27,6 +27,7 @@ function LearningModule() {
   const [subModuleList, setSubModuleList] = useState([]);
   const [moduleName, setModuleName] = useState('');
   const [animationStrings, setAnimationStrings] = useState([]);
+  const [preStartAnimations, setPreStartAnimations] = useState([]);
   const learningContentPaneRef = useRef(null);
   const visualizationRef = useRef(null);
   const {module, submodule} = useParams();
@@ -102,6 +103,7 @@ function LearningModule() {
     setSelectedSubModuleName(subModuleData.name)
     setTrueSelectedLineMap(tempTrueSelectedLineMap);
     setAnimationStrings(tempAnimationStrings);
+    setPreStartAnimations(tempData.preStartAnimations);
     setData(tempData);
     setSelectedLine(-1);
     setLoading(false);
@@ -181,13 +183,19 @@ function LearningModule() {
               codeDisplay={<CodeDisplay
                               language={language}
                               codeData={data.codeChunks}
-                              selectedLine={trueSelectedLineMap[selectedLine]} />}
+                              selectedLine={trueSelectedLineMap[selectedLine]}
+                              codeChunkKeyOffset={selectedSubmoduleName} />}
             />
           }
           secondComponent={
-            <Visualization animations={animationStrings} updateLine={setSelectedLine} setPlayDisabled={setPlayDisabled} ref={visualizationRef} />
+            <Visualization
+              animations={animationStrings}
+              preStartAnimations={preStartAnimations != null ? preStartAnimations : []}
+              updateLine={setSelectedLine}
+              setPlayDisabled={setPlayDisabled}
+              ref={visualizationRef} />
           }
-          initialStartSize={40}
+          initialStartSize={45}
         />
       </div>
       <div className="module-btn-container">
@@ -196,12 +204,16 @@ function LearningModule() {
             selectedSubModuleIndex > 1 ? <button onClick={onClickBack}>Back</button> : null
           }
         </div>
-        <div className="animate-btn-container">
-          <button onClick={startAnimation} disabled={playDisabled}>Play Whole Animation</button>
-          <button onClick={stopAnimation} disabled={!playDisabled}>Pause Animation</button>
-          {/*<button onClick={setPreviousLine}>Previous Line BROKEN</button> */}
-          <button onClick={setNextLine} disabled={playDisabled}>Next Line</button>
-        </div>
+          {
+            data.noAnimations ? null : (
+              <div className="animate-btn-container">
+                <button onClick={startAnimation} disabled={playDisabled}>Play Whole Animation</button>
+                <button onClick={stopAnimation} disabled={!playDisabled}>Pause Animation</button>
+                {/*<button onClick={setPreviousLine}>Previous Line BROKEN</button> */}
+                <button onClick={setNextLine} disabled={playDisabled}>Next Line</button>
+              </div>
+            )
+          }
         <div className="back-next-container next-btn">
           {
             selectedSubModuleIndex < subModuleList.length ? <button onClick={onClickNext}>Next</button> : null
