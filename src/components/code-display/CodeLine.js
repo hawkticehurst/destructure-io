@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import CodeHighlight from './CodeHighlight';
 import TooltipContainer from '../common/TooltipContainer';
 
@@ -16,23 +16,22 @@ import TooltipContainer from '../common/TooltipContainer';
  * tooltip {String} - String to show as a tooltip with the line.
  */
 function CodeLine(props) {
-  const {code, language, lineNumber, isCollapsed, onChevronClick, isHidden, isSelected, tooltip} = props;
-  const [codeEllipses, setCodeEllipses] = useState(onChevronClick != null && isHidden && isCollapsed ? '...}' : '');
-
-  const clickChevron = () => {
-    if (codeEllipses === '') {
-      setTimeout(() => setCodeEllipses('...}'), 500);
-    } else {
-      setCodeEllipses('');
-    }
-    onChevronClick();
-  };
+  const {
+    code,
+    language,
+    lineNumber,
+    isCollapsed,
+    onChevronClick,
+    isHidden,
+    isSelected,
+    tooltip
+  } = props;
 
   const hasChevron = onChevronClick != null && isHidden;
   const chevron = hasChevron ?
   <span
     className={isCollapsed ? "chevron right" : "chevron bottom"}
-    onClick={clickChevron} />
+    onClick={onChevronClick} />
   : null;
 
   const lineClass = isSelected ? "code-line selected-line" : "code-line";
@@ -56,7 +55,7 @@ function CodeLine(props) {
       }
       <div className="code-content">
         <CodeHighlight isHidden={isHidden} isSelected={isSelected} language={language}>
-          {code + codeEllipses}
+          {code + (onChevronClick != null && isHidden && isCollapsed ? '...}' : '')}
         </CodeHighlight>
       </div>
     </div>

@@ -1,0 +1,199 @@
+{
+  "paragraphs": [
+    "While linked lists nodes don’t use the same $italic(indexing) that arrays do, we sometimes want to make a similar operation. For example, you might say $code(arr[2] = 0) to set the 3rd value in an array to 0. However, with a linked list this syntax won’t work, because we don’t immediately know what node is at position 2.",
+    "Therefore, to change a $code(data) field at a later position in the list, we must again iterate through the list to find the node that we want to change. To do this, we once again create a $code(curr) pointer and set it to the $code(head) node. Next, we move $code(curr) forward one node at a time until we find our target node. Once the $code(curr) pointer refers to our target node, we can change its data by reassigning $code(curr.data) to be our desired value.",
+    "In the example below, we are setting the value of the third node to 0. Note that our $italic(while loop) still requires the $code(curr != null) check, because there is a chance that the linked list does not have a third element. In this case, we would just end the while loop without updating any values. If we find a target node, then $code(curr) is not null when the loop ends and we enter the $italic(if block), updating the data at curr to 0."
+  ],
+  "preStartAnimations": [
+    "createNewNode,0,#node0",
+    "createNewPointer,#head-pointer,head",
+    "createNewNode,1,#node1",
+    "insertNodeAtIndex,tail,#node1",
+    "createNewNode,2,#node2",
+    "insertNodeAtIndex,tail,#node2",
+    "createNewNode,3,#node3",
+    "insertNodeAtIndex,tail,#node3"
+  ],
+  "codeChunks": [
+    {
+      "type": "skipped",
+      "code": {
+        "java": [
+          {
+            "given": "class LinkedListExample {"
+          }
+        ]
+      }
+    },
+    {
+      "type": "hidden",
+      "code": {
+        "java": [
+          {
+            "given": "  class Node {"
+          },
+          {
+            "given": "    int data;"
+          },
+          {
+            "given": "    Node next;",
+            "tooltip": "Reference to the next node in the list. If this is the tail node, next will be set to null."
+          },
+          {
+            "given": ""
+          },
+          {
+            "given": "    public Node(int data) {"
+          },
+          {
+            "given": "      this.data = data;"
+          },
+          {
+            "given": "      this.next = null;"
+          },
+          {
+            "given": "    }"
+          },
+          {
+            "given": "  }"
+          },
+          {
+            "given": ""
+          }
+        ]
+      }
+    },
+    {
+      "type": "hidden",
+      "code": {
+        "java": [
+          {
+            "given": "  public static void main(string[] args) {"
+          },
+          {
+            "given": "    Node head = new Node(0);"
+          },
+          {
+            "given": "    Node curr = head;"
+          },
+          {
+            "given": "    for (int i = 1; i < size; i++) {"
+          },
+          {
+            "given": "      curr.next = new Node(i);"
+          },
+          {
+            "given": "    }"
+          },
+          {
+            "given": "    setNodeAtIndex(head, 2, 10);"
+          },
+          {
+            "given": "  }"
+          }
+        ]
+      }
+    },
+    {
+      "type": "skipped",
+      "code": {
+        "java": [{
+          "given": ""
+        }]
+      }
+    },
+    {
+      "type": "auto",
+      "code": {
+        "java": [{
+          "given": "  public void setNodeAtIndex(Node head, int index, int newData) {",
+          "animations": [
+
+          ]
+        },
+        {
+          "given": "    Node curr = head;",
+          "animations": [
+            "createNewPointer,#curr-pointer,curr"
+          ]
+        },
+        {
+          "given": "    int i = 0;",
+          "animations": [
+          ]
+        }
+      ]
+      }
+    },
+    {
+      "type": "loop",
+      "loopCounter": [2],
+      "code": {
+        "java": [{
+          "given": "    while(curr != null && i < index) {",
+          "animations": [
+
+          ]
+        },
+        {
+          "given": "      curr = curr.next;",
+          "animations": [
+            [
+              "movePointer,#curr-pointer,1"
+            ],
+            [
+              "movePointer,#curr-pointer,1"              
+            ]
+
+          ]
+        },
+        {
+          "given": "      i++;",
+          "animations": [
+          ]
+        },
+        {
+          "given": "    }",
+          "animations": [
+
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "auto",
+    "code": {
+      "java": [{
+        "given": "    if (curr != null)"
+      },
+      {
+        "given": "      curr.data = newData;",
+        "animations": [
+          "setNodeData,#node2,10"
+        ]
+      },
+      {
+        "given": "    }"
+      }
+    ]
+    }
+  },
+  {
+    "type": "auto",
+    "code": {
+      "java": [{
+        "given": "  }"
+      }]
+    }
+  },
+  {
+    "type": "auto",
+    "code": {
+      "java": [{
+        "given": "}"
+      }]
+    }
+  }
+  ]
+}
