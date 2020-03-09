@@ -181,10 +181,10 @@ function LearningModule() {
               contentTitleString={selectedSubmoduleName}
               contentParagraphs={data.paragraphs}
               codeDisplay={<CodeDisplay
-                              language={language}
-                              codeData={data.codeChunks}
-                              selectedLine={trueSelectedLineMap[selectedLine]}
-                              codeChunkKeyOffset={selectedSubmoduleName} />}
+                language={language}
+                codeData={data.codeChunks}
+                selectedLine={trueSelectedLineMap[selectedLine]}
+                codeChunkKeyOffset={selectedSubmoduleName} />}
             />
           }
           secondComponent={
@@ -204,16 +204,16 @@ function LearningModule() {
             selectedSubModuleIndex > 1 ? <button onClick={onClickBack}>Back</button> : null
           }
         </div>
-          {
-            data.noAnimations ? null : (
-              <div className="animate-btn-container">
-                <button onClick={startAnimation} disabled={playDisabled}>Play Whole Animation</button>
-                <button onClick={stopAnimation} disabled={!playDisabled}>Pause Animation</button>
-                {/*<button onClick={setPreviousLine}>Previous Line BROKEN</button> */}
-                <button onClick={setNextLine} disabled={playDisabled}>Next Line</button>
-              </div>
-            )
-          }
+        {
+          data.noAnimations ? null : (
+            <div className="animate-btn-container">
+              <button onClick={startAnimation} disabled={playDisabled}>Play</button>
+              <button onClick={stopAnimation} disabled={!playDisabled}>Pause</button>
+              {/*<button onClick={setPreviousLine}>Previous Line BROKEN</button> */}
+              <button onClick={setNextLine} disabled={playDisabled}>Step</button>
+            </div>
+          )
+        }
         <div className="back-next-container next-btn">
           {
             selectedSubModuleIndex < subModuleList.length ? <button onClick={onClickNext}>Next</button> : null
