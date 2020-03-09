@@ -8,7 +8,7 @@ import SubModuleProgressRow from './SubModuleProgressRow';
 import LearningContent from './LearningContent';
 import Visualization from '../visualization/Visualization';
 import contentOutline from '../../lesson-content/contentOutline.json';
-import {useParams, useHistory} from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import useModuleCompletionState, { filenameToSubModuleKey } from '../../hooks/useModuleCompletionState';
 
 const language = "java"; // TODO make this selectable
@@ -30,7 +30,7 @@ function LearningModule() {
   const [preStartAnimations, setPreStartAnimations] = useState([]);
   const learningContentPaneRef = useRef(null);
   const visualizationRef = useRef(null);
-  const {module, submodule} = useParams();
+  const { module, submodule } = useParams();
   const history = useHistory();
   const {
     getCompletionState,
@@ -95,7 +95,7 @@ function LearningModule() {
     }
 
     // Keep track of which module the resume button on summary page should go to
-    window.localStorage.setItem('last-viewed-' + module , submodule);
+    window.localStorage.setItem('last-viewed-' + module, submodule);
 
     setModuleName(moduleData.name);
     setSubModuleList(moduleData.submodules);

@@ -813,27 +813,6 @@ button, input {
 }
 
 /********* ANIMATION BUTTONS *********/
-.animate-btn-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.animate-btn-container button, .module-btn-container button {
-  background-color: var(--hero-purple);
-  color: white;
-  border-style: none;
-  border-radius: 5px;
-  padding: 1em;
-  font-weight: bold;
-  margin: 0 0.5em 0em 0.5em;
-}
-
-.animate-btn-container button:disabled {
-  background-color: gray;
-}
-
 .module-btn-container {
   display: flex;
   justify-content: space-between;
@@ -846,9 +825,45 @@ button, input {
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.module-btn-container button {
+  background-color: var(--hero-purple);
+  color: white;
+  border-style: none;
+  border-radius: 5px;
+  padding: 1em 2em;
+  font-weight: bold;
+  box-shadow: 0 2px 2px rgba(0,0,0,0.2);
+}
+
+.module-btn-container button:hover {
+  background-color: var(--hero-purple-highlighted);
+  cursor: pointer;
+}
+
+.animate-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.animate-btn-container button {
+  margin: 0 0.5em;
+  border-radius: 30px;
+}
+
+.animate-btn-container button:disabled {
+  cursor: default;
+  background-color: gray;
+}
+
 .back-next-container {
   /* Keep the width even when the button is hidden to keep flex spacing the same */
   width: 150px;
+}
+
+.back-next-container button {
+  margin: 0 1.25em;
 }
 
 .next-btn {
