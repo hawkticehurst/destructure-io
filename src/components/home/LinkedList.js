@@ -25,12 +25,12 @@ function LinkedList() {
       <div className="img-container left-image">
         <div className="linked-list-illustration-container">
           {
-            [...Array(NUM_NODES)].map((_, i) =>  {
+            [...Array(NUM_NODES)].map((_, i) => {
               const nodeClass = i === highlightIndex ? 'linked-list-node linked-list-highlight' : 'linked-list-node';
               return (
                 <Fragment key={i}>
                   <div className={nodeClass}>{i + 1}</div>
-                  {i < NUM_NODES -1 ? <div className="linked-list-pointer" /> : null}
+                  {i < NUM_NODES - 1 ? <div className="linked-list-pointer" /> : null}
                 </Fragment>
               );
             })
@@ -50,7 +50,7 @@ function LinkedList() {
         </div>
       </div>
       <div className="text-container">
-        <h1>Data structures visualized.</h1>
+        <h1>Data structures, visualized.</h1>
         <p>
           Develop clear mental models of common computer science data
           structures using intuitive animations and visualizations.

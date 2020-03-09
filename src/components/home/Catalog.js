@@ -14,6 +14,14 @@ function Catalog() {
         </div>
         <div className="catalog-card-homepage">
           <div className="card-circle" />
+          <h2>Stacks</h2>
+        </div>
+        <div className="catalog-card-homepage">
+          <div className="card-circle" />
+          <h2>Queues</h2>
+        </div>
+        <div className="catalog-card-homepage">
+          <div className="card-circle" />
           <h2>Trees</h2>
         </div>
         <div className="catalog-card-homepage">

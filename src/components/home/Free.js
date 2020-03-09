@@ -17,15 +17,14 @@ function Free() {
   return (
     <Fragment>
       <div className="text-container">
-        <h1>Free. &nbsp;For anyone and everyone.</h1>
+        <h1>Free. &nbsp;For everyone.</h1>
         <p>
-          Node Warrior is developed by a group of passionate software
-          engineers who believe that quality computer science resources
+          Destructure.io is created by people who believe that quality programming resources
           should be available to all.
         </p>
-        <p onClick={getStarted} className="bold">
-          Get Started &#10142;
-        </p>
+        <h2 onClick={getStarted} className="bold">
+          Get Started &#10141;
+        </h2>
         {/* <button onClick={getStarted} className="hero-btn">
           <span className="bold">Get Started</span>
         </button> */}

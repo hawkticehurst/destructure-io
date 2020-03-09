@@ -152,10 +152,11 @@ button, input {
 }
 
 .text-container {
-  width: 40%;
+  width: 30%;
 }
 
 .text-container h1 {
+  font-size: 45px;
   margin-top: 0;
 }
 
@@ -168,22 +169,12 @@ button, input {
   background-color: var(--hero-grey);
 }
 
-#catalog-container:before, #catalog-container:after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  left: 0px;
-  height: 38.5em;
-  z-index: 40;
+#guided-container {
+  box-shadow: 0 0 16px rgba(0,0,0,0.1);
 }
 
 #catalog-container {
-  background-color: var(--hero-grey);
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 16px -6px inset;
-}
-
-#catalog-container:after {
-  box-shadow: rgba(0, 0, 0, 0.3) 0px -6px 16px -6px inset;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
 #free-container {
@@ -193,7 +184,27 @@ button, input {
   box-shadow: 0 2px 4px rgba(0,0,0,0.4);
   width: 80%;
   margin: 12em auto;
-  padding: 2em;
+  padding: 3em 4em;
+  justify-content: flex-start;
+}
+
+#free-container .img-container {
+  width: 100px;
+}
+
+#free-container .text-container {
+  width: 40%;
+}
+
+#free-container h2 {
+  margin-bottom: 0;
+  transition: all 0.3s ease;
+  transform: translateX(0px);
+}
+
+#free-container h2:hover {
+  cursor: pointer;
+  transform: translateX(10px);
 }
 
 
