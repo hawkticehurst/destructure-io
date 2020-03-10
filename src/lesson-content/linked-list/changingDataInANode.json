@@ -1,0 +1,88 @@
+{
+  "paragraphs": [
+    "A common operation in linked lists, as with arrays, is to update data within the list. For example, if we were holding a queue of orders to prepare at a restaurant in a linked list, we might need to update a node if a customer changes their order.",
+    "Updating values in a node is actually very straightforward. With our implementation of the $code(Node) class, you can simply reassign the data field within the desired node by writing $code(node.data = newData). For example, to change the $code(head) data to 5, you can write $code(head.data = 5).",
+    "In the $code(setHeadToZero) function below, we simply reassign the data value of the passed in head node to 0. One thing to note here is that we are not creating any new nodes. We simply update the $(data) field of the existing node."
+  ],
+  "codeChunks": [
+    {
+      "type": "skipped",
+      "code": {
+        "java": [
+          {
+            "given": "class LinkedListExample {"
+          }
+        ]
+      }
+    },
+    {
+      "type": "hidden",
+      "code": {
+        "java": [
+          {
+            "given": "  class Node {"
+          },
+          {
+            "given": "    int data;"
+          },
+          {
+            "given": "    Node next;",
+            "tooltip": "Reference to the next node in the list. If this is the tail node, next will be set to null."
+          },
+          {
+            "given": ""
+          },
+          {
+            "given": "    public Node(int data) {"
+          },
+          {
+            "given": "      this.data = data;"
+          },
+          {
+            "given": "      this.next = null;"
+          },
+          {
+            "given": "    }"
+          },
+          {
+            "given": "  }"
+          },
+          {
+            "given": ""
+          }
+        ]
+      }
+    },
+    {
+      "type": "auto",
+      "code": {
+        "java": [{
+          "given": "  public static void main(string[] args) {",
+          "animations": [
+
+          ]
+        },
+        {
+          "given": "    Node head = new Node(0);",
+          "animations": [
+            "createNewNode,0,#node1",
+            "createNewPointer,#head-pointer,head"
+          ]
+        },
+        {
+          "given": "    head.data = newData;",
+          "animations": [
+            "setNodeData,#node1,10"
+          ]
+        },
+        {
+          "given": "  }"
+        },
+        {
+          "given": "}"
+        }
+      ]
+      }
+    }
+  ]
+}

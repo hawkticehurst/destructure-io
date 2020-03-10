@@ -1,10 +1,11 @@
 import React from 'react';
 import CatalogCard from './CatalogCard';
 import NavBar from '../common/NavBar';
+import Footer from '../common/Footer';
 
 function Catalog(props) {
   return (
-    <div>
+    <div className="catalog-page">
       <NavBar navBarType="catalog" />
       <div className="catalog-hero-container">
         <h1>Content Catalog</h1>
@@ -21,6 +22,8 @@ function Catalog(props) {
         <CatalogCard title="Learn Trees" description="Learn one of the most fundamental data structures in computer science." />
         <CatalogCard title="Learn Graphs" description="Learn one of the most fundamental data structures in computer science." />
       </div>
+      <hr />
+      <Footer />
     </div>
   );
 }

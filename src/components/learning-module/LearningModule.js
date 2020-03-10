@@ -8,7 +8,7 @@ import SubModuleProgressRow from './SubModuleProgressRow';
 import LearningContent from './LearningContent';
 import Visualization from '../visualization/Visualization';
 import contentOutline from '../../lesson-content/contentOutline.json';
-import {useParams, useHistory} from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import useModuleCompletionState, { filenameToSubModuleKey } from '../../hooks/useModuleCompletionState';
 
 const language = "java"; // TODO make this selectable
@@ -17,6 +17,8 @@ const language = "java"; // TODO make this selectable
 function LearningModule() {
   const [selectedLine, setSelectedLine] = useState(-1);
   const [playDisabled, setPlayDisabled] = useState(false);
+  const [animationComplete, setAnimationComplete] = useState(false);
+  const [hasFinishedAnimation, setHasFinishedAnimation] = useState(false); // have they finished it at least once
   const [sideBarShown, setSideBarShown] = useState(false);
   const [data, setData] = useState(null);
   const [trueSelectedLineMap, setTrueSelectedLineMap] = useState(null);
@@ -26,10 +28,12 @@ function LearningModule() {
   const [selectedSubModuleIndex, setSelectedSubModuleIndex] = useState(0);
   const [subModuleList, setSubModuleList] = useState([]);
   const [moduleName, setModuleName] = useState('');
+  const [subModuleFilename, setSubmoduleFilename] = useState('');
   const [animationStrings, setAnimationStrings] = useState([]);
+  const [preStartAnimations, setPreStartAnimations] = useState([]);
   const learningContentPaneRef = useRef(null);
   const visualizationRef = useRef(null);
-  const {module, submodule} = useParams();
+  const { module, submodule } = useParams();
   const history = useHistory();
   const {
     getCompletionState,
@@ -94,17 +98,21 @@ function LearningModule() {
     }
 
     // Keep track of which module the resume button on summary page should go to
-    window.localStorage.setItem('last-viewed-' + module , submodule);
+    window.localStorage.setItem('last-viewed-' + module, submodule);
 
     setModuleName(moduleData.name);
     setSubModuleList(moduleData.submodules);
     setSelectedSubModuleIndex(tempSelectedSubModuleIndex);
-    setSelectedSubModuleName(subModuleData.name)
+    setSelectedSubModuleName(subModuleData.name);
+    setSubmoduleFilename(subModuleData.filename);
     setTrueSelectedLineMap(tempTrueSelectedLineMap);
     setAnimationStrings(tempAnimationStrings);
+    setPreStartAnimations(tempData.preStartAnimations);
     setData(tempData);
     setSelectedLine(-1);
     setLoading(false);
+    setAnimationComplete(false);
+    setHasFinishedAnimation(false);
   }, [module, submodule]); // Only run this function when the module or submodule changes
 
   // Prevent showing errors while files are loaded in
@@ -122,6 +130,9 @@ function LearningModule() {
   }
 
   const setNextLine = () => {
+    if (animationComplete) {
+      setAnimationComplete(false);
+    }
     visualizationRef.current.nextLine();
   };
 
@@ -146,12 +157,16 @@ function LearningModule() {
   };
 
   const onClickNext = () => {
+    const currCompletionState = getCompletionState(subModuleFilename);
+    if (hasFinishedAnimation && (currCompletionState == null || currCompletionState === 'incomplete')) {
+      updateCompletionState(subModuleFilename, 'completed');
+    }
     history.push(filenameToPath(subModuleList[selectedSubModuleIndex].filename));
   };
 
   return (
     <div>
-      <SideBar headerText={moduleName + ' Lessons'} headerLink={'/learn/' + module} setSideBarShown={setSideBarShown} sideBarShown={sideBarShown}>
+      <SideBar headerText={moduleName + ' Lessons'} summaryLink={'/learn/' + module} setSideBarShown={setSideBarShown} sideBarShown={sideBarShown}>
         {
           subModuleList.map((subModule, index) => {
             return (
@@ -179,15 +194,27 @@ function LearningModule() {
               contentTitleString={selectedSubmoduleName}
               contentParagraphs={data.paragraphs}
               codeDisplay={<CodeDisplay
-                              language={language}
-                              codeData={data.codeChunks}
-                              selectedLine={trueSelectedLineMap[selectedLine]} />}
+                language={language}
+                codeData={data.codeChunks}
+                selectedLine={trueSelectedLineMap[selectedLine]}
+                codeChunkKeyOffset={selectedSubmoduleName} />}
             />
           }
           secondComponent={
-            <Visualization animations={animationStrings} updateLine={setSelectedLine} setPlayDisabled={setPlayDisabled} ref={visualizationRef} />
+            <Visualization
+              animations={animationStrings}
+              preStartAnimations={preStartAnimations != null ? preStartAnimations : []}
+              updateLine={setSelectedLine}
+              setPlayDisabled={setPlayDisabled}
+              setAnimationComplete={(isComplete) => {
+                setAnimationComplete(isComplete);
+                if (isComplete) {
+                  setHasFinishedAnimation(true);
+                }
+              }}
+              ref={visualizationRef} />
           }
-          initialStartSize={40}
+          initialStartSize={45}
         />
       </div>
       <div className="module-btn-container">
@@ -196,12 +223,16 @@ function LearningModule() {
             selectedSubModuleIndex > 1 ? <button onClick={onClickBack}>Back</button> : null
           }
         </div>
-        <div className="animate-btn-container">
-          <button onClick={startAnimation} disabled={playDisabled}>Play Whole Animation</button>
-          <button onClick={stopAnimation} disabled={!playDisabled}>Pause Animation</button>
-          {/*<button onClick={setPreviousLine}>Previous Line BROKEN</button> */}
-          <button onClick={setNextLine} disabled={playDisabled}>Next Line</button>
-        </div>
+        {
+          data.noAnimations ? null : (
+            <div className="animate-btn-container">
+              <button onClick={startAnimation} disabled={playDisabled || animationComplete}>Play</button>
+              <button onClick={stopAnimation} disabled={!playDisabled}>Pause</button>
+              {/*<button onClick={setPreviousLine}>Previous Line BROKEN</button> */}
+              <button onClick={setNextLine} disabled={playDisabled}>{animationComplete ? 'reset' : 'Step'}</button>
+            </div>
+          )
+        }
         <div className="back-next-container next-btn">
           {
             selectedSubModuleIndex < subModuleList.length ? <button onClick={onClickNext}>Next</button> : null

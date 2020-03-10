@@ -1,0 +1,177 @@
+{
+  "paragraphs": [
+    "Iterating with a $code(curr) pointer isn’t just useful for adding elements to the linked list. We can also use this iteration style to view existing elements of a list or even update the values.",
+    "To iterate through an existing list, we will create a $code(curr) pointer just as before and initially point it to the $code(head) node. However, this time we do not know how many iterations we will be making, because we do not know how long the list is. To solve this, we can simply continue updating $code(curr) until it becomes $code(null). Once that happens, we know we have reached the end of the list, because the $code(next) field of the $italic(tail) node is always null.",
+    "We can use a $italic(while loop) to accomplish this. In each iteration of our loop, we want to move the $code(curr) pointer forward once. Then, before reentering the loop, we check that $code(curr) has not become null yet. In this example, we increment the value of the $code(data) field of each node as we iterate by one."
+  ],
+  "preStartAnimations": [
+    "createNewNode,0,#node0",
+    "createNewPointer,#head-pointer,head",
+    "createNewNode,1,#node1",
+    "insertNodeAtIndex,tail,#node1",
+    "createNewNode,2,#node2",
+    "insertNodeAtIndex,tail,#node2",
+    "createNewNode,3,#node3",
+    "insertNodeAtIndex,tail,#node3"
+  ],
+  "codeChunks": [
+    {
+      "type": "skipped",
+      "code": {
+        "java": [
+          {
+            "given": "class LinkedListExample {"
+          }
+        ]
+      }
+    },
+    {
+      "type": "hidden",
+      "code": {
+        "java": [
+          {
+            "given": "  class Node {"
+          },
+          {
+            "given": "    int data;"
+          },
+          {
+            "given": "    Node next;",
+            "tooltip": "Reference to the next node in the list. If this is the tail node, next will be set to null."
+          },
+          {
+            "given": ""
+          },
+          {
+            "given": "    public Node(int data) {"
+          },
+          {
+            "given": "      this.data = data;"
+          },
+          {
+            "given": "      this.next = null;"
+          },
+          {
+            "given": "    }"
+          },
+          {
+            "given": "  }"
+          },
+          {
+            "given": ""
+          }
+        ]
+      }
+    },
+    {
+      "type": "hidden",
+      "code": {
+        "java": [
+          {
+            "given": "  public static void main(string[] args) {"
+          },
+          {
+            "given": "    Node head = new Node(0);"
+          },
+          {
+            "given": "    Node curr = head;"
+          },
+          {
+            "given": "    for (int i = 1; i < size; i++) {"
+          },
+          {
+            "given": "      curr.next = new Node(i);"
+          },
+          {
+            "given": "    }"
+          },
+          {
+            "given": "    incrementList(head);"
+          },
+          {
+            "given": "  }"
+          },
+          {
+            "given": ""
+          }
+        ]
+      }
+    },
+    {
+      "type": "auto",
+      "code": {
+        "java": [{
+          "given": "  public void incrementList(Node head) {",
+          "animations": [
+
+          ]
+        },
+        {
+          "given": "    Node curr = head;",
+          "animations": [
+            "createNewPointer,#curr-pointer,curr"
+          ]
+        }
+      ]
+      }
+    },
+    {
+      "type": "loop",
+      "loopCounter": [4],
+      "code": {
+        "java": [{
+          "given": "    while(curr != null) {",
+          "animations": [
+
+          ]
+        },
+        {
+          "given": "      curr.data++;",
+          "animations": [
+              [
+                "setNodeData,#node0,1"
+              ],
+              [
+                "setNodeData,#node1,2"
+              ],
+              [
+                "setNodeData,#node2,3"
+              ],
+              [
+                "setNodeData,#node3,4"
+              ]
+          ]
+        },
+        {
+          "given": "      curr = curr.next;",
+          "animations": [
+            "movePointer,#curr-pointer,1"
+          ]
+        },
+        {
+          "given": "    }",
+          "animations": [
+
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "auto",
+    "code": {
+      "java": [{
+        "given": "  }"
+      }]
+    }
+  },
+  {
+    "type": "auto",
+    "code": {
+      "java": [{
+        "given": "}"
+      }]
+    }
+  }
+  ]
+}

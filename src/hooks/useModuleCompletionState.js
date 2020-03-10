@@ -32,6 +32,9 @@ function useModuleCompletionState(module) {
   }, [completionState]);
 
   const updateCompletionState = (submodule, state) => {
+    if (state === 'complete') {
+      state = 'completed';
+    }
     const tempCompletionState = {...completionState};
     tempCompletionState[filenameToSubModuleKey(submodule)] = state;
     setCompletionState(tempCompletionState);

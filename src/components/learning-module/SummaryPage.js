@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import NavBar from '../common/NavBar';
+import Footer from '../common/Footer';
 import PageNotFound from '../common/PageNotFound';
 import SubModuleProgressRow from './SubModuleProgressRow';
 import { useParams } from 'react-router-dom';
@@ -79,7 +80,7 @@ function SummaryPage() {
                 const link = moduleLink + '/' + filenameToSubModuleKey(submodule.filename);
                 return <SubModuleProgressRow
                   key={i}
-                  moduleTitle={submodule.name}
+                  moduleTitle={(i + 1) + '. ' + submodule.name}
                   link={link}
                   completionState={getCompletionState(submodule.filename)}
                   selected={false}
@@ -92,6 +93,8 @@ function SummaryPage() {
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }

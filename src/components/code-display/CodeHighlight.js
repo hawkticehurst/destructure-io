@@ -1,5 +1,5 @@
-import React, {useEffect, useRef} from 'react';
-import {findDOMNode} from 'react-dom';
+import React, { useEffect, useRef } from 'react';
+import { findDOMNode }  from 'react-dom';
 import hljs from 'highlight.js';
 import './highlight-styles/light.scss'; // examples of options, most need to be downloaded: https://highlightjs.org/static/demo/
 import './highlight-styles/hidden.scss';
@@ -20,7 +20,7 @@ import './highlight-styles/hidden.scss';
  * <CodeHighlight language="java">int x = 5;</CodeHighlight>
  */
 function CodeHighlight(props) {
-  const {language, children, isHidden, isSelected, isInline} = props;
+  const { language, children, isHidden, isSelected, isInline } = props;
   const codeRef = useRef(null);
 
   useEffect(() => {

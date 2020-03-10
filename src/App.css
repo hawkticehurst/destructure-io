@@ -66,6 +66,12 @@ a:hover {
   color: var(--hero-purple-highlighted);
 }
 
+hr {
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
 code {
   font-family: Menlo, Monaco, 'Courier New', monospace, sans-serif;
 }
@@ -569,6 +575,72 @@ button, input {
   height: var(--hamburger-icon-height);
 }
 
+/********* FOOTER COMPONENT *********/
+.footer-container {
+  padding: 2em 4em;
+}
+
+.footer-container img {
+  display: block;
+  width: 35px;
+  height: 35px;
+  margin-bottom: 2em;
+}
+
+.footer-container hr {
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.footer-container a:hover {
+  text-decoration: underline;
+}
+
+.footer-link-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 2em;
+}
+
+.footer-link-container h2 {
+  font-size: 20px;
+}
+
+.footer-link-container a {
+  line-height: 2em;
+}
+
+.footer-company-column, .footer-catalog-column {
+  display: flex;
+  flex-flow: column nowrap;
+  margin-right: 8em;
+}
+
+.footer-catalog-links {
+  display: grid;
+  grid-template-rows: repeat(4,2em);
+  grid-column-gap: 4em;
+  grid-auto-flow: column;
+}
+
+.footer-copyright-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-legal-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}
+
+.footer-legal-container a {
+  margin: 0 1em;
+}
+
+
 /********* Sidebar *********/
 .sidebar {
   z-index: 2;
@@ -589,7 +661,16 @@ button, input {
   border-bottom: 1px solid white;
   margin-bottom: 5px;
   font-size: 24px;
+}
+
+.sidebar-header span {
   cursor: pointer;
+}
+
+.go-back-summary {
+  cursor: pointer;
+  color: white;
+  font-size: 14px;
 }
 
 .sub-module-progress-row-container {
@@ -600,16 +681,16 @@ button, input {
   align-items: center;
 }
 
-.sub-module-progress-row-container:not(.syllabus-row) {
-  cursor: pointer;
-}
-
 .sidebar h3 {
   font-weight: normal;
 }
 
 .progress-row-selected h3 {
   font-weight: bold;
+}
+
+.sub-module-progress-row-container:not(.syllabus-row) .sub-module-title-container {
+  cursor: pointer;
 }
 
 .sub-module-title-container {
@@ -747,16 +828,16 @@ button, input {
 
 /********* LEARNING MODULE *********/
 .catalog-hero-container {
-  padding: 0 1.5em 1em;
+  padding: 0 1.5em;
 }
 
 .catalog-hero-container p {
   margin-bottom: 1.5em;
 }
 
-.catalog-hero-container hr {
+.catalog-page hr {
   height: 1px;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.1);
   border-style: none;
 }
 
@@ -766,6 +847,7 @@ button, input {
   grid-gap: 2em;
   justify-items: center;
   padding: 1em 1.5em 2em 1.5em;
+  margin: 3em 0;
 }
 
 .catalog-card {
@@ -796,7 +878,7 @@ button, input {
 }
 
 .coming-soon {
-  background-color: lightgray;
+  background-color: var(--hero-grey);
 }
 
 .learning-module-container {
@@ -850,27 +932,6 @@ button, input {
 }
 
 /********* ANIMATION BUTTONS *********/
-.animate-btn-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.animate-btn-container button, .module-btn-container button {
-  background-color: var(--hero-purple);
-  color: white;
-  border-style: none;
-  border-radius: 5px;
-  padding: 1em;
-  font-weight: bold;
-  margin: 0 0.5em 0em 0.5em;
-}
-
-.animate-btn-container button:disabled {
-  background-color: gray;
-}
-
 .module-btn-container {
   display: flex;
   justify-content: space-between;
@@ -883,9 +944,45 @@ button, input {
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.module-btn-container button {
+  background-color: var(--hero-purple);
+  color: white;
+  border-style: none;
+  border-radius: 5px;
+  padding: 1em 2em;
+  font-weight: bold;
+  box-shadow: 0 2px 2px rgba(0,0,0,0.2);
+}
+
+.module-btn-container button:hover {
+  background-color: var(--hero-purple-highlighted);
+  cursor: pointer;
+}
+
+.animate-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.animate-btn-container button {
+  margin: 0 0.5em;
+  border-radius: 30px;
+}
+
+.animate-btn-container button:disabled {
+  cursor: default;
+  background-color: gray;
+}
+
 .back-next-container {
   /* Keep the width even when the button is hidden to keep flex spacing the same */
   width: 150px;
+}
+
+.back-next-container button {
+  margin: 0 1.25em;
 }
 
 .next-btn {
@@ -913,6 +1010,14 @@ button, input {
 }
 
 /********* Sign In / Up *********/
+.sign-in-up-flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 4em);
+  overflow: hidden;
+}
+
 .sign-in-up-container {
   width: 30%;
   text-align: center;
@@ -978,14 +1083,56 @@ button, input {
   border-top: 8px solid var(--hero-purple);
 }
 
+.sign-in-dropdown .sign-in-up-flex-container {
+  display: block;
+  height: auto;
+}
+
+.sign-in-up-circle-lg {
+  position: absolute;
+  margin-left: calc(50vw - 50%);
+  border-radius: 25% 75% 52% 48% / 69% 44% 56% 31%;
+  background: linear-gradient(to right, var(--hero-yellow), rgba(0,0,0,0.2));
+  min-height: 35em;
+  min-width: 35em;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.sign-in-up-circle-md {
+  position: absolute;
+  margin-left: calc(50vw - 50%);
+  border-radius: 25% 75% 52% 48% / 69% 44% 56% 31%;
+  background: linear-gradient(to right, var(--hero-yellow), rgba(0,0,0,0.2));
+  min-height: 25em;
+  min-width: 25em;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.sign-in-up-circle-sm {
+  position: absolute;
+  margin-left: calc(50vw - 50%);
+  border-radius: 25% 75% 52% 48% / 69% 44% 56% 31%;
+  background: linear-gradient(to right, var(--hero-yellow), rgba(0,0,0,0.2));
+  min-height: 15em;
+  min-width: 15em;
+  z-index: -1;
+  overflow: hidden;
+}
+
 /********* Error Pages Page *********/
 .page-not-found {
   text-align: center;
 }
 
 .device-too-small {
-  margin: .5em;
+  margin: 5em 1.5em;
   text-align: center;
+}
+
+.device-too-small h1 {
+  font-size: 29px;
 }
 
 /********* CODE DISPLAY *********/
@@ -1004,9 +1151,7 @@ button, input {
 
 .hljs {
   /* highlight JS created class */
-  padding: var(
-    --code-padding-vertical
-  ) !important; /* important to override any of the highlight styles */
+  padding: var(--code-padding-vertical) !important; /* important to override any of the highlight styles */
 }
 
 @keyframes delay-overflow {
@@ -1020,13 +1165,13 @@ button, input {
 }
 
 .chunk-open {
-  max-height: 1000px;
-  transition: 1s;
-  animation: 1s delay-overflow;
+  max-height: 1000px; /* Note: this is a default, but it gets overridden by JS on resize */
+  transition: 0.5s;
+  animation: 1.5s delay-overflow;
 }
 
 .chunk-collapsed {
-  max-height: 20px; /* TODO this should probably be calculated somehow */
+  max-height: 20px; /* Note: this is a default, but it gets overridden by JS on resize */
   overflow-y: hidden;
   transition: 0.5s;
 }
@@ -1060,6 +1205,9 @@ button, input {
   padding-top: var(--code-padding-vertical);
   padding-bottom: var(--code-padding-vertical);
   user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 /* Chevrons based on https://codepen.io/egf/pen/jzylw */

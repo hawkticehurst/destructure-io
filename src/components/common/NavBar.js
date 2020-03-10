@@ -9,7 +9,7 @@ import SignInUpInputs from '../auth/SignInUpInputs';
  * toggleSideBar {function} - Callback for toggling the sidebar
  * SubModuleTitle {String} - Title of current submodule
  * navBarType {String} - String representing which version of the navbar to render
- *    Nav Bar Types: 'module', 'homepage', 'catalog', 'sign-in', 'sign-up'
+ *    Nav Bar Types: 'summary', 'module', 'homepage', 'catalog', 'sign-in', 'sign-up'
  */
 function NavBar(props) {
   const { toggleSideBar, SubModuleTitle, navBarType } = props;
@@ -30,8 +30,6 @@ function NavBar(props) {
     }
     return () => document.removeEventListener('click', onClickPageShouldCloseLogin);
   }, [showLoginDropdown]);
-
-  const onModulePage = window.location.pathname.startsWith('/learn') && window.location.pathname.length > '/learn/'.length;
 
   let containerClass = "nav-bar-container";
   if (['homepage', 'catalog', 'sign-in', 'sign-up'].includes(navBarType)) {
@@ -54,7 +52,7 @@ function NavBar(props) {
     <Link to={window.location.pathname} onClick={doSignOut}>Log Out</Link>
   ) : null;
 
-  const signInLink = user == null ? onModulePage ? (
+  const signInLink = user == null ? navBarType === 'module' ? (
     <Link to={window.location.pathname} onClick={() => setShowLoginDropdown(!showLoginDropdown)}>Log In</Link>
   ) : <Link to="/signin">Log In</Link> : null;
 
