@@ -123,7 +123,7 @@ function VisualizationComponent(props, ref) {
       deleteNode(parameters[1], shouldRunImmediately);
     } else if (functionName === 'setNodeData') {
       setNodeData(parameters[1], parameters[2], shouldRunImmediately);
-    } else if(functionName === 'insertNodeAtIndex') {
+    } else if (functionName === 'insertNodeAtIndex') {
       const index = parameters[1] === 'tail' ? insertedNodes.current.length : parameters[1];
       const node = parameters.length === 2 ? nodesToBeInserted.current[0] : parameters[2];
       insertNodeAtIndex(index, node, shouldRunImmediately);
@@ -303,7 +303,7 @@ function VisualizationComponent(props, ref) {
    * @param {String} data string to place in the data field for the new node
    * @param {boolean} shouldRunImmediately if the animation should run with 0 duration
    */
-  const createNewNode = (nodeID, data, shouldRunImmediately=false) => {
+  const createNewNode = (nodeID, data, shouldRunImmediately = false) => {
     // If we create the first node, always just insert it
     if (insertedNodes.current.length === 0) {
       insertedNodes.current.push(nodeID);
@@ -321,7 +321,7 @@ function VisualizationComponent(props, ref) {
     }, shouldRunImmediately);
   };
 
-  const createNewPointer = (pointer, shouldRunImmediately=false) => {
+  const createNewPointer = (pointer, shouldRunImmediately = false) => {
     const newPointerObj = allPointers.current.find(pointerObj => pointerObj.id === pointer);
     const newPointerLocation = newPointerObj.location != null ? newPointerObj.location : 0;
     const otherPointerAtLocation = allPointers.current.find(pointerObj => {
@@ -355,14 +355,14 @@ function VisualizationComponent(props, ref) {
    * @param {String or DOM Element} node A CSS Selector or DOM Element representing a linked list node
    * @param {boolean} shouldRunImmediately if the animation should run with 0 duration
    */
-  const deleteNode = (node, shouldRunImmediately=false) => {
+  const deleteNode = (node, shouldRunImmediately = false) => {
     animate({
       targets: node,
       opacity: '0'
     }, shouldRunImmediately);
   };
 
-  const setNodeData = (node, data, shouldRunImmediately=false) => {
+  const setNodeData = (node, data, shouldRunImmediately = false) => {
     const nodeDataId = node + '-data';
     const dataFieldContainer = document.querySelector(node + " > .node-data-field");
     const currData = document.getElementById(nodeDataId.substr(1));
@@ -370,8 +370,10 @@ function VisualizationComponent(props, ref) {
     // Create new data text element to replace old data text element
     const newData = document.createElementNS("http://www.w3.org/2000/svg", "text");
     newData.classList.add("text");
-    newData.setAttribute("x", "101px");
-    newData.setAttribute("y", "70px");
+    newData.setAttribute("x", "110px");
+    newData.setAttribute("y", "66px");
+    newData.setAttribute("dominant-baseline", "middle");
+    newData.setAttribute("text-anchor", "middle");
     newData.setAttribute("fill", "#000");
     newData.setAttribute("opacity", "0");
     newData.textContent = data;
@@ -396,7 +398,7 @@ function VisualizationComponent(props, ref) {
    * Insert a node that was already rendered and set as visible in nodesToBeInserted.
    * Note this cannot be used to move a node that is already inserted.
    */
-  const insertNodeAtIndex = (index, node, shouldRunImmediately=false) => {
+  const insertNodeAtIndex = (index, node, shouldRunImmediately = false) => {
     // insert at head
     if (index < 1) {
       // Make room in Linked List for new node
@@ -438,7 +440,7 @@ function VisualizationComponent(props, ref) {
    * Moves a pointer some number of nodes over from its current position
    * @param numNodes {Number} Number of nodes to move the pointer. Negative to move left
    */
-  const movePointer = (pointer, numNodes, shouldRunImmediately=false) => {
+  const movePointer = (pointer, numNodes, shouldRunImmediately = false) => {
 
     const movePointerObj = allPointers.current.find(pointerObj => pointerObj.id === pointer);
     const oldLocation = movePointerObj.location != null ? movePointerObj.location : 0;
@@ -491,7 +493,7 @@ function VisualizationComponent(props, ref) {
     movePointerObj.offset = pointerAtNextSpot != null ? numNodes > 0 ? -30 : 30 : 0;
   };
 
-  const setPointerNull = (pointer, shouldRunImmediately=false) => {
+  const setPointerNull = (pointer, shouldRunImmediately = false) => {
     animate({
       targets: pointer + '-tip',
       translateY: '+=75px',
@@ -499,7 +501,7 @@ function VisualizationComponent(props, ref) {
     }, shouldRunImmediately);
   };
 
-  const elongatePointer = (pointer, shouldRunImmediately=false) => {
+  const elongatePointer = (pointer, shouldRunImmediately = false) => {
     animate({
       targets: pointer + '-tip',
       translateY: '-=75px',
@@ -508,14 +510,14 @@ function VisualizationComponent(props, ref) {
   };
 
   /********* Internal Only Animations *********/
-  const setPointerToNext = (pointer, shouldRunImmediately=false) => {
+  const setPointerToNext = (pointer, shouldRunImmediately = false) => {
     animate({
       targets: pointer,
       width: '+=90px'
     }, shouldRunImmediately);
   }
 
-  const moveNodeInline = (node, shouldRunImmediately=false) => {
+  const moveNodeInline = (node, shouldRunImmediately = false) => {
     animate({
       targets: node,
       translateY: '+=150px'
@@ -523,7 +525,7 @@ function VisualizationComponent(props, ref) {
   };
 
   // Helper function to replace calls to tl.current.add and anime()
-  const animate = (options, shouldRunImmediately=false, timelineOffset=undefined) => {
+  const animate = (options, shouldRunImmediately = false, timelineOffset = undefined) => {
     if (shouldRunImmediately) {
       options.duration = 0;
       anime(options);
@@ -566,7 +568,7 @@ function VisualizationComponent(props, ref) {
  *
  * If returns true, don't rerender. Else rerender as usual
  */
-function shouldPreventRerender (prevProps, nextProps) {
+function shouldPreventRerender(prevProps, nextProps) {
   return nextProps.animations === null || prevProps.animations === nextProps.animations;
 };
 
