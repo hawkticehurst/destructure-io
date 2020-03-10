@@ -900,6 +900,14 @@ button, input {
 }
 
 /********* Sign In / Up *********/
+.sign-in-up-flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 4em);
+  overflow: hidden;
+}
+
 .sign-in-up-container {
   width: 30%;
   text-align: center;
@@ -963,6 +971,44 @@ button, input {
   transform-origin: top right;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   border-top: 8px solid var(--hero-purple);
+}
+
+.sign-in-dropdown .sign-in-up-flex-container {
+  display: block;
+  height: auto;
+}
+
+.sign-in-up-circle-lg {
+  position: absolute;
+  margin-left: calc(50vw - 50%);
+  border-radius: 25% 75% 52% 48% / 69% 44% 56% 31%;
+  background: linear-gradient(to right, var(--hero-yellow), rgba(0,0,0,0.2));
+  min-height: 35em;
+  min-width: 35em;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.sign-in-up-circle-md {
+  position: absolute;
+  margin-left: calc(50vw - 50%);
+  border-radius: 25% 75% 52% 48% / 69% 44% 56% 31%;
+  background: linear-gradient(to right, var(--hero-yellow), rgba(0,0,0,0.2));
+  min-height: 25em;
+  min-width: 25em;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.sign-in-up-circle-sm {
+  position: absolute;
+  margin-left: calc(50vw - 50%);
+  border-radius: 25% 75% 52% 48% / 69% 44% 56% 31%;
+  background: linear-gradient(to right, var(--hero-yellow), rgba(0,0,0,0.2));
+  min-height: 15em;
+  min-width: 15em;
+  z-index: -1;
+  overflow: hidden;
 }
 
 /********* Error Pages Page *********/
