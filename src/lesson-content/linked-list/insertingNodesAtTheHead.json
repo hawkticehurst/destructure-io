@@ -1,6 +1,6 @@
 {
   "paragraphs": [
-    "$bold(NOTE: ANIMATIONS FOR THIS MODULE ARE STILL A TODO POST MVP)",
+    "$bold(NOTE: ANIMATIONS FOR THIS MODULE ARE STILL PARTIALLY A TODO POST MVP)",
     "While we usually add nodes to the end of a list, there are occasionally times when we want to insert at the $italic(head) of the list instead.",
     "As with inserting at the $italic(tail), to insert at the $italic(head) of the list we must first create a new $code(Node) object to hold our new data. However, since our new node is going to be the first node in our list, there is not a node whose $code(next) field will point to it. Instead, we create a temporary pointer, typically called $code(temp), to keep track of this new node while we are completing the insertion.",
     "Since we are inserting at the start of the list, the node currently pointed to by $code(head) will be becoming our second node. This means that the $code(next) field of the new node (which will become the first node) should contain a reference to the original $code(head). We can achieve this by simply setting $code(temp.next = head).",
@@ -91,9 +91,9 @@
       "type": "auto",
       "code": {
         "java": [{
-          "given": "  public void insertNodesAtHead(Node head, int numNodes) {",
+          "given": "  public void insertNodesAtHead(Node head, int num) {",
           "animations": [
-
+            "createVarTable,num,2"
           ]
         }
       ]
@@ -104,9 +104,9 @@
       "loopCounter": [2],
       "code": {
         "java": [{
-          "given": "    for (int i = 0; i < numNodes; i++) {",
+          "given": "    for (int i = 0; i < num; i++) {",
           "animations": [
-
+            ["addVarTableRow,i,0"], []
           ]
         },
         {
@@ -140,7 +140,12 @@
         {
           "given": "    }",
           "animations": [
-
+            [
+              "setRowData,i,1"
+            ],
+            [
+              "setRowData,i,2"
+            ]
           ]
         }]
       }

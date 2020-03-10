@@ -1194,6 +1194,24 @@ text {
   height: 4px;
 }
 
+/********* VARIABLE TABLE VISUALIZATIONS *********/
+
+.row-bg {
+  width: 200px;
+  height: 30px;
+  fill: var(--hero-purple);
+}
+
+.row-cell {
+  width: 94px;
+  height: 22px;
+  fill: var(--hero-white);
+}
+
+#var-table-title-row .row-cell {
+  fill: var(--hero-purple);
+}
+
 /********* Summary Page *********/
 .summary-hero-container {
   display: flex;
