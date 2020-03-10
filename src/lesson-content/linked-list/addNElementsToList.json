@@ -77,9 +77,9 @@
       "type": "auto",
       "code": {
         "java": [{
-          "given": "  public void createListSizeN(int size) {",
+          "given": "  public Node createListSizeN(int size) {",
           "animations": [
-
+              "createVarTable,size,4"
           ]
         },{
           "given": "    Node head = new Node(0);",
@@ -104,8 +104,11 @@
       "code": {
         "java": [{
           "given": "    for (int i = 1; i < size; i++) {",
-          "animations": [
 
+          "animations": [
+            [
+              "addVarTableRow,i,1"
+            ], [], []
           ]
         },
         {
@@ -134,7 +137,15 @@
         {
           "given": "    }",
           "animations": [
-
+            [
+              "setRowData,i,2"
+            ],
+            [
+              "setRowData,i,3"
+            ],
+            [
+              "setRowData,i,4"
+            ]
           ]
         },
         {

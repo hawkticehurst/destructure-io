@@ -1,7 +1,7 @@
 {
   "paragraphs": [
     "Typically we store a linked list as a single reference to the first node in the list, called the $code(head) node. Our $code(Node) constructor takes $code(data) as a parameter, which will act as the initial value of our new node. When a node is created, its $code(next) field always points to $code(null), meaning it has no value (this is often called a null reference/pointer).",
-    "Putting this all together, we can create a new linked list with the line $code(Node head = new Node(0)). Note that this is creating a new $code(Node) object and setting its $code(data) field to $italic(0). We also set its $code(next) field to $code(null) in the constructor, meaning that there is no next node in the list, therefore giving our list a length of 1."
+    "Putting this all together, we can create a new linked list with the line $code(Node head = new Node(0)). Note that this is creating a new $code(Node) object and setting its $code(data) field to 0. We also set its $code(next) field to $code(null) in the constructor, meaning that there is no next node in the list, therefore giving our list a length of 1."
   ],
   "codeChunks": [
     {
@@ -61,7 +61,7 @@
 
           ]
         },{
-          "given": "    Node head = new Node(data);",
+          "given": "    Node head = new Node(1);",
           "tooltip": "Note: if we want to create an empty list, we could simply set Node head = null instead of creating our first node.",
           "animations": [
             "createNewNode,1,#node1",
