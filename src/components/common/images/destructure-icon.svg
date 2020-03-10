@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 300 300" style="enable-background:new 0 0 300 300;" xml:space="preserve">
+  <style type="text/css">
+    .st0{fill:#5D42FF;}
+    .st1{fill:#FFFFFF;}
+    .st2{font-family:'MyriadPro-Bold';}
+    .st3{font-size:272px;}
+  </style>
+  <g id="bg">
+    <path class="st0" d="M259.82,300H40.18C17.99,300,0,282.01,0,259.82V40.18C0,17.99,17.99,0,40.18,0h219.64
+      C282.01,0,300,17.99,300,40.18v219.64C300,282.01,282.01,300,259.82,300z"/>
+  </g>
+  <g id="_x7B___x7D_">
+    <text transform="matrix(1 0 0 1 37.1218 227.6924)" class="st1 st2 st3">{ }</text>
+  </g>
+</svg>
