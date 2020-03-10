@@ -1,5 +1,6 @@
 import React from 'react';
 import NavBar from '../common/NavBar';
+import Footer from '../common/Footer';
 import LinkedList from './LinkedList';
 import GuidedLearning from './GuidedLearning';
 import Catalog from './Catalog';
@@ -38,6 +39,8 @@ function HomePage(props) {
           course at the University of Washington Information School.
         </p>
       </footer>
+      <hr />
+      <Footer />
     </div>
   );
 }

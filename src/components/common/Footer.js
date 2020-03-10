@@ -1,0 +1,47 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+/**
+ * Required Props:
+ * toggleSideBar {function} - Callback for toggling the sidebar
+ * SubModuleTitle {String} - Title of current submodule
+ * navBarType {String} - String representing which version of the navbar to render
+ *    Nav Bar Types: 'summary', 'module', 'homepage', 'catalog', 'sign-in', 'sign-up'
+ */
+function Footer() {
+  return (
+    <div className="footer-container">
+      <img src={require('./images/destructure-icon.svg')} alt="Destructure.io Logo" />
+      <div className="footer-link-container">
+        <div className="footer-company-column">
+          <h2>destructure.io</h2>
+          <Link to="/">About</Link>
+          <Link to="/">Contact Us</Link>
+        </div>
+        <div className="footer-catalog-column">
+          <h2>Catalog</h2>
+          <div className="footer-catalog-links">
+            <Link to="/learn">Arrays</Link>
+            <Link to="/learn">Nodes</Link>
+            <Link to="/learn/linked-list">Linked Lists</Link>
+            <Link to="/learn">Stacks</Link>
+            <Link to="/learn">Queues</Link>
+            <Link to="/learn">Maps</Link>
+            <Link to="/learn">Trees</Link>
+            <Link to="/learn">Graphs</Link>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div className="footer-copyright-container">
+        <p>Copyright © 2020 destructure.io</p>
+        <div className="footer-legal-container">
+          <Link to="/">Terms of Service</Link>
+          <Link to="/">Privacy Policy</Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Footer;
