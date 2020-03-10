@@ -1017,8 +1017,12 @@ button, input {
 }
 
 .device-too-small {
-  margin: .5em;
+  margin: 5em 1.5em;
   text-align: center;
+}
+
+.device-too-small h1 {
+  font-size: 29px;
 }
 
 /********* CODE DISPLAY *********/
