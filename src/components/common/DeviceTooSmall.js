@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from './NavBar';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function DeviceTooSmall() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -24,14 +24,13 @@ function DeviceTooSmall() {
     <div>
       <NavBar navBarType="homepage" />
       <div className="device-too-small">
-        <h1>destructure.io Requires A Computer</h1>
+        <h1>Sorry, destructure.io requires a computer.</h1>
         <p>
-          In order to properly visualize data structures, we need a larger screen
-          than available on mobile devices. To use the product, please visit the
-          application from a computer.
+          To properly visualize data structures, we need a larger screen
+          than available on mobile devices. Please visit the application from a computer.
         </p>
         <p>
-          <Link to="/">Click here to go back home.</Link>
+          <Link to="/">Back to home.</Link>
         </p>
       </div>
     </div>
