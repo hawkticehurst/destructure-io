@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory, Link } from "react-router-dom";
 import { doSignInWithEmailAndPassword, doCreateUserWithEmailAndPassword } from '../../firebase/firebase';
 import contentOutline from '../../lesson-content/contentOutline.json';
-import {updateUserModule} from '../../firebase/firebase';
+import { updateUserModule } from '../../firebase/firebase';
 
 /**
  * Optional props:
@@ -68,13 +68,13 @@ function SignInUpInputs(props) {
       Not a member? <Link to="/signup">Sign up for free!</Link>
     </p>
   ) : (
-    <p>
-      Not ready to sign up yet? <Link to="/learn">Continue as guest</Link>
-    </p>
-  );
+      <p>
+        Not ready to sign up yet? <Link to="/learn">Continue as guest</Link>
+      </p>
+    );
 
   return (
-    <div>
+    <div className="sign-in-up-flex-container">
       {
         error != null ? (
           <div className="sign-in-up-error">{error}</div>
@@ -107,6 +107,10 @@ function SignInUpInputs(props) {
         </button>
         {footerPrompt}
       </div>
+      {/* Festive background that may be used later. */}
+      {/* <div className="sign-in-up-circle-lg"></div>
+      <div className="sign-in-up-circle-sm"></div>
+      <div className="sign-in-up-circle-md"></div> */}
     </div>
   );
 }
