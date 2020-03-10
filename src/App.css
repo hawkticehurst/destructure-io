@@ -66,6 +66,12 @@ a:hover {
   color: var(--hero-purple-highlighted);
 }
 
+hr {
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
 code {
   font-family: Menlo, Monaco, 'Courier New', monospace, sans-serif;
 }
@@ -532,6 +538,72 @@ button, input {
   height: var(--hamburger-icon-height);
 }
 
+/********* FOOTER COMPONENT *********/
+.footer-container {
+  padding: 2em 4em;
+}
+
+.footer-container img {
+  display: block;
+  width: 35px;
+  height: 35px;
+  margin-bottom: 2em;
+}
+
+.footer-container hr {
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.footer-container a:hover {
+  text-decoration: underline;
+}
+
+.footer-link-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 2em;
+}
+
+.footer-link-container h2 {
+  font-size: 20px;
+}
+
+.footer-link-container a {
+  line-height: 2em;
+}
+
+.footer-company-column, .footer-catalog-column {
+  display: flex;
+  flex-flow: column nowrap;
+  margin-right: 8em;
+}
+
+.footer-catalog-links {
+  display: grid;
+  grid-template-rows: repeat(4,2em);
+  grid-column-gap: 4em;
+  grid-auto-flow: column;
+}
+
+.footer-copyright-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-legal-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}
+
+.footer-legal-container a {
+  margin: 0 1em;
+}
+
+
 /********* Sidebar *********/
 .sidebar {
   z-index: 2;
@@ -719,16 +791,16 @@ button, input {
 
 /********* LEARNING MODULE *********/
 .catalog-hero-container {
-  padding: 0 1.5em 1em;
+  padding: 0 1.5em;
 }
 
 .catalog-hero-container p {
   margin-bottom: 1.5em;
 }
 
-.catalog-hero-container hr {
+.catalog-page hr {
   height: 1px;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.1);
   border-style: none;
 }
 
@@ -738,6 +810,7 @@ button, input {
   grid-gap: 2em;
   justify-items: center;
   padding: 1em 1.5em 2em 1.5em;
+  margin: 3em 0;
 }
 
 .catalog-card {
@@ -768,7 +841,7 @@ button, input {
 }
 
 .coming-soon {
-  background-color: lightgray;
+  background-color: var(--hero-grey);
 }
 
 .learning-module-container {
@@ -900,6 +973,14 @@ button, input {
 }
 
 /********* Sign In / Up *********/
+.sign-in-up-flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 4em);
+  overflow: hidden;
+}
+
 .sign-in-up-container {
   width: 30%;
   text-align: center;
@@ -965,14 +1046,56 @@ button, input {
   border-top: 8px solid var(--hero-purple);
 }
 
+.sign-in-dropdown .sign-in-up-flex-container {
+  display: block;
+  height: auto;
+}
+
+.sign-in-up-circle-lg {
+  position: absolute;
+  margin-left: calc(50vw - 50%);
+  border-radius: 25% 75% 52% 48% / 69% 44% 56% 31%;
+  background: linear-gradient(to right, var(--hero-yellow), rgba(0,0,0,0.2));
+  min-height: 35em;
+  min-width: 35em;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.sign-in-up-circle-md {
+  position: absolute;
+  margin-left: calc(50vw - 50%);
+  border-radius: 25% 75% 52% 48% / 69% 44% 56% 31%;
+  background: linear-gradient(to right, var(--hero-yellow), rgba(0,0,0,0.2));
+  min-height: 25em;
+  min-width: 25em;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.sign-in-up-circle-sm {
+  position: absolute;
+  margin-left: calc(50vw - 50%);
+  border-radius: 25% 75% 52% 48% / 69% 44% 56% 31%;
+  background: linear-gradient(to right, var(--hero-yellow), rgba(0,0,0,0.2));
+  min-height: 15em;
+  min-width: 15em;
+  z-index: -1;
+  overflow: hidden;
+}
+
 /********* Error Pages Page *********/
 .page-not-found {
   text-align: center;
 }
 
 .device-too-small {
-  margin: .5em;
+  margin: 5em 1.5em;
   text-align: center;
+}
+
+.device-too-small h1 {
+  font-size: 29px;
 }
 
 /********* CODE DISPLAY *********/
