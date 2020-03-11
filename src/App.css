@@ -1452,7 +1452,7 @@ text {
   align-items: center;
   z-index: 2;
   position: fixed;
-  padding: 10px;
+  padding: 1em;
   border-radius: 10px;
   background-color: var(--hero-black);
   color: white;
@@ -1462,7 +1462,7 @@ text {
 }
 
 .cookie-consent-banner-loaded {
-  bottom: 20px;
+  bottom: 2em;
 }
 
 .cookie-consent-banner p {
@@ -1502,7 +1502,7 @@ text {
   left: 25%;
   background-color: var(--hero-white);
   border-radius: 8px;
-  padding: 20px;
+  padding: 2em;
   color: black;
 }
 
@@ -1542,10 +1542,10 @@ text {
   align-items: center;
   background-color: var(--hero-grey);
   border-radius: 5px;
-  padding: 20px;
+  padding: 0 2em;
   width: 70%;
   margin: auto;
-  margin: 10px auto;
+  margin: 1em auto;
 }
 
 .privacy-policy-allow-cookies p {

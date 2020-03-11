@@ -27,7 +27,7 @@ function PrivacyPolicy() {
           !hasApprovedCookies ? (
             <div className="privacy-policy-allow-cookies">
               <p>
-                You Have Chosen To Opt-Out of Non-Essential Cookies And Local Storage. This will
+                You have not chosen to opt-in to cookies and local storage. This will
                 prevent the site from saving your state when you change pages. Would you like to
                 instead opt-in to cookies and local storage?
               </p>

@@ -32,7 +32,7 @@ function CookieConsentBanner() {
       {
         showModal ? (
           <div>
-            <PageTint tintShown={true} />
+            <PageTint tintShown={true} clickedTint={() => setShowModal(false)} />
             <div className="cookie-deny-modal">
               <h2>Opt Out of Cookies?</h2>
               <p>
@@ -41,7 +41,7 @@ function CookieConsentBanner() {
                 our learning modules.
               </p>
               <p>
-                Read more about how we use cookies on our <Link to="/privacy">Privacy Policy</Link>.
+                Read more about how we use cookies on our <Link to="/privacy" onClick={() => setShowModal(false)}>Privacy Policy</Link>.
               </p>
               <div className="cookie-deny-buttons">
                 <button className="hero-btn" onClick={() => setApproveCookie("false")}>
@@ -59,7 +59,7 @@ function CookieConsentBanner() {
         !showModal && showBanner ? (
           <div className="cookie-consent-banner" style={{bottom: bannerBottom}}>
             <p>
-              This site uses cookies and local storage to save your progress in our learning
+              This site uses cookies and local web storage to save your progress in our learning
               modules. You can read more about our specific usage in our{' '}
               <Link to="/privacy">Privacy Policy</Link>. Do you agree to these terms?
             </p>
