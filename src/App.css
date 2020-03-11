@@ -987,6 +987,10 @@ button, input {
   margin: auto;
 }
 
+.sign-in-up-container.cookies-required {
+  width: 70%;
+}
+
 .sign-in-dropdown  .sign-in-up-container {
   width: 80%;
 }
@@ -1437,6 +1441,118 @@ text {
   color: var(--hero-black);
   font-size: 22px;
 }
+
+
+/********* COOKIE CONSENT BANNER *********/
+
+.cookie-consent-banner {
+  bottom: -100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+  position: fixed;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: var(--hero-black);
+  color: white;
+  width: 90%;
+  left: 5%;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.cookie-consent-banner-loaded {
+  bottom: 20px;
+}
+
+.cookie-consent-banner p {
+  max-width: 80%;
+  margin: 0;
+  padding: 0;
+}
+
+.cookie-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cookie-buttons button {
+  padding: 0.5em;
+  width: 5em;
+  margin: 0 0.5em;
+}
+
+.reject-btn {
+  background-color: var(--hero-grey);
+  color: var(--hero-black);
+}
+
+.reject-btn:hover {
+  background-color: var(--hero-white);
+}
+
+.cookie-deny-modal {
+  z-index: 2;
+  position: fixed;
+  top: 10%;
+  width: 50%;
+  max-height: 75%;
+  overflow: scroll;
+  left: 25%;
+  background-color: var(--hero-white);
+  border-radius: 8px;
+  padding: 20px;
+  color: black;
+}
+
+.cookie-deny-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.cookie-deny-buttons button {
+  margin-top: 0;
+  width: 40%;
+  color: var(--hero-white);
+}
+
+
+/********* Privacy Policy *********/
+
+.privacy-policy {
+  width: 80%;
+  margin: auto;
+}
+
+.privacy-policy header {
+  text-align: center;
+}
+
+.privacy-section {
+  margin-bottom: 40px;
+}
+
+.privacy-section h2 {
+  margin: 0;
+}
+
+.privacy-policy-allow-cookies {
+  display: flex;
+  align-items: center;
+  background-color: var(--hero-grey);
+  border-radius: 5px;
+  padding: 20px;
+  width: 70%;
+  margin: auto;
+  margin: 10px auto;
+}
+
+.privacy-policy-allow-cookies p {
+  max-width: 70%;
+  margin-right: 20px;
+}
+
 
 /********* Mobile *********/
 @media only screen and (max-width: 768px) {

@@ -3,6 +3,7 @@ import { useHistory, Link } from "react-router-dom";
 import { doSignInWithEmailAndPassword, doCreateUserWithEmailAndPassword } from '../../firebase/firebase';
 import contentOutline from '../../lesson-content/contentOutline.json';
 import { updateUserModule } from '../../firebase/firebase';
+import { getApproveCookie } from '../../hooks/useModuleCompletionState';
 
 /**
  * Optional props:
@@ -15,6 +16,18 @@ function SignInUpInputs(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+
+  if (getApproveCookie() !== 'true') {
+    return (
+      <div className="sign-in-up-container cookies-required">
+        <h1>Cookies Required</h1>
+        <p>
+          Cookies are required for authentication. Please review our{' '}
+          <Link to="/privacy">Privacy Policy</Link> and consider opting in.
+        </p>
+      </div>
+    );
+  }
 
   const isValidEmail = email => {
     // eslint-disable-next-line
