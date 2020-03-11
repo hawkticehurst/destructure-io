@@ -26,11 +26,11 @@ function HomePage(props) {
         <div id="free-container" className="content-container">
           <Free />
         </div>
-        <div className="team-container">
+        {/* <div className="team-container">
           <Team />
-        </div>
+        </div> */}
       </main>
-      <footer>
+      {/* <footer>
         <p>
           This project is a part of the 2020{" "}
           <a target="_blank" rel="noopener noreferrer" href="https://ischool.uw.edu/capstone">
@@ -38,7 +38,7 @@ function HomePage(props) {
           </a>
           course at the University of Washington Information School.
         </p>
-      </footer>
+      </footer> */}
       <hr />
       <Footer />
     </div>
