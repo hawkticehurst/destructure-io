@@ -11,8 +11,7 @@ import { Link } from 'react-router-dom';
 function Footer() {
   return (
     <div className="footer-container">
-      <img src={require('./images/destructure-icon.svg')} alt="Destructure.io Logo" />
-      <div className="footer-link-container">
+      {/* <div className="footer-link-container">
         <div className="footer-company-column">
           <h2>destructure.io</h2>
           <Link to="/">About</Link>
@@ -31,13 +30,13 @@ function Footer() {
             <Link to="/learn">Graphs</Link>
           </div>
         </div>
-      </div>
-      <hr />
+      </div> */}
+      {/* <hr /> */}
       <div className="footer-copyright-container">
+        <img src={require('./images/destructure-icon.svg')} alt="Destructure.io Logo" />
         <p>Copyright © 2020 destructure.io</p>
         <div className="footer-legal-container">
-          <Link to="/">Terms of Service</Link>
-          <Link to="/">Privacy Policy</Link>
+          <Link to="/privacy">Privacy Policy</Link>
         </div>
       </div>
     </div>
