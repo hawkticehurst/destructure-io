@@ -30,6 +30,7 @@ function Free() {
         </button> */}
       </div>
       <div className="img-container right-image">
+        <div className="free-hero-circle" />
         {/* <button onClick={getStarted} className="hero-btn">
           <span className="bold">Get Started</span>
         </button> */}

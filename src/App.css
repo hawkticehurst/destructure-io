@@ -138,7 +138,7 @@ button, input {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 12em 0;
+  padding: 8em 0;
 }
 
 .img-container {
@@ -185,7 +185,7 @@ button, input {
 
 #free-container {
   color: white;
-  background: linear-gradient(90deg, rgb(0, 85, 255), rgb(0, 153, 255));
+  background: linear-gradient(to right, var(--hero-purple), rgba(196, 59, 255, 0.6));
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.4);
   width: 80%;
@@ -220,7 +220,7 @@ button, input {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  padding: 8em 4em 2em 4em;
+  padding: 6em 4em 2em 4em;
 }
 
 .landing-hero-container h1 {
@@ -235,7 +235,7 @@ button, input {
 
 .hero-btn {
   padding: 1.1em;
-  margin: 3em 0;
+  margin: 1em 0;
   border: none;
   border-radius: 5px;
   color: white;
@@ -399,6 +399,7 @@ button, input {
 
 .progress-line-filled {
   background-color: var(--hero-purple);
+  border: 2px solid var(--hero-purple);
   border-radius: 5px;
   width: 80%;
 }
