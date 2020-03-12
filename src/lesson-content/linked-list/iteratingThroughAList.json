@@ -1,6 +1,6 @@
 {
   "paragraphs": [
-    "Iterating with a $code(curr) pointer isn’t just useful for adding elements to the linked list. We can also use this iteration style to view existing elements of a list or even update the values.",
+    "Iterating with a $code(curr) pointer isn’t just useful for adding elements to the linked list. We can also use this iteration style to view existing elements of a list or even update their $code(data).",
     "To iterate through an existing list, we will create a $code(curr) pointer just as before and initially point it to the $code(head) node. However, this time we do not know how many iterations we will be making, because we do not know how long the list is. To solve this, we can simply continue updating $code(curr) until it becomes $code(null). Once that happens, we know we have reached the end of the list, because the $code(next) field of the $italic(tail) node is always null.",
     "We can use a $italic(while loop) to accomplish this. In each iteration of our loop, we want to move the $code(curr) pointer forward once. Then, before reentering the loop, we check that $code(curr) has not become null yet. In this example, we increment the value of the $code(data) field of each node as we iterate by one."
   ],

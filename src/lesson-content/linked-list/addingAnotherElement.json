@@ -1,8 +1,8 @@
 {
   "paragraphs": [
     "Now that we can create a linked list with a head Node, let’s try adding some more elements to the list. The $code(next) field of each node should point to the next node in the list. For example, the $code(next) field of the $code(head) node should point to the second element of the list.",
-    "In Java, we can access and update the next field using $italic(dot notation). For example, we can set the $code(next) field of the $code(head) node to a new node with data 1 by using $code(head.next = new Node(1)).",
-    "Note that most modern languages such as Java $bold(evaluate the right side of the equals sign first) (these are called $italic(assignment) statements). This means that our code above first creates a new $code(Node) object with data set to 1. Once that Node is created it reassigns the $code(next) field of the $code(head) to that new node"
+    "In Java, we can access and update the next field using $italic(dot notation). For example, we can set the $code(next) field of the $code(head) node to a new node with a $code(data) value of 1 by using $code(head.next = new Node(1)).",
+    "Note that most modern languages such as Java $bold(evaluate the right side of the equals sign first) (these are called $italic(assignment) statements). This means that our code above first creates a new $code(Node) object with data set to 1. Once that Node is created it reassigns the $code(next) field of the $code(head) to that new node."
   ],
   "codeChunks": [
     {

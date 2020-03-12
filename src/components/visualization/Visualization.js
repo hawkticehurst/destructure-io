@@ -2,6 +2,7 @@ import React, { useEffect, memo, forwardRef, useImperativeHandle, useRef, useSta
 import anime from 'animejs';
 import LinkedListNode from './LinkedListNode';
 import LinkedListPointer from './LinkedListPointer';
+import VariableTableRow from './VariableTableRow';
 
 /*
 MVP TODOS:
@@ -73,6 +74,24 @@ LATER TODOS:
   *  elongatePointer:
   *           parameter1: Pointer ID
   *           Example: "elongatePointer,#node3-pointer"
+  *
+  *  createVarTable:
+  *           Example: "createVarTable"
+  *           Parameters: name,value,name,value,etc for rows to start as inserted
+  *
+  *  addVarTableRow:
+  *           parameter1: variable name
+  *           parameter2: starting value
+  *           Example: "addVarTableRow,i,0"
+  *
+  * removeVarTableRow:
+  *           parameter1: variable name
+  *           Example: "removeVarTableRow,i"
+  *
+  * setRowData:
+  *           parameter1: variable name
+  *           parameter2: data
+  *           Example: "setRowData,i,25"
   */
 function VisualizationComponent(props, ref) {
   const { animations, preStartAnimations, updateLine, setPlayDisabled, setAnimationComplete } = props;
@@ -85,12 +104,15 @@ function VisualizationComponent(props, ref) {
   const tl = useRef(null); // Anime.js timeline object, instatiated in useEffect after rendered = true
   const isCurrentlyPaused = useRef(true); // Keeps track if we are in the middle of an animation or not
   const isPlayingFullAnimation = useRef(false); // True if clicked Play all instead of next line
+  const hasVariableTable = useRef(false); // True if createVarTable is in animations
   const [rendered, setRendered] = useState(false); // Flips to true when all the SVGs we need are created
 
   const allNodes = useRef([]); // Every node the animation will need, this gets filled on mount
   const nodesToBeInserted = useRef([]); // Nodes that are visible but above the list
   const insertedNodes = useRef([]); // Nodes in the list
   const allPointers = useRef([]); // Every pointer the animation will need, this gets filled on mount
+  const allVariableRows = useRef([]); // All of the rows to insert, have name, value and selectedValueIndex
+  const insertedRows = useRef([]); // Row IDs inserted in variable table
 
   // Helper function to remove nulls, only from end of array
   const removeTrailingNull = (arr) => {
@@ -133,6 +155,18 @@ function VisualizationComponent(props, ref) {
       setPointerNull(parameters[1], shouldRunImmediately);
     } else if (functionName === 'elongatePointer') {
       elongatePointer(parameters[1], shouldRunImmediately);
+    } else if (functionName === 'createVarTable') {
+      let rows = [];
+      for (let i = 1; i < parameters.length; i+=2) {
+        rows.push(parameters[i]);
+      }
+      createVarTable(rows, shouldRunImmediately);
+    } else if (functionName === 'addVarTableRow') {
+      addVarTableRow(parameters[1], parameters[2], shouldRunImmediately);
+    } else if (functionName === 'removeVarTableRow') {
+      removeVarTableRow(parameters[1], shouldRunImmediately);
+    } else if (functionName === 'setRowData') {
+      setRowData(parameters[1], parameters[2], shouldRunImmediately);
     }
   };
 
@@ -149,6 +183,9 @@ function VisualizationComponent(props, ref) {
     nodesToBeInserted.current = [];
     insertedNodes.current = [];
     allPointers.current = [];
+    allVariableRows.current = [];
+    insertedRows.current = [];
+    hasVariableTable.current = false;
     setRendered(false);
     setPlayDisabled(false);
     setAnimationsArray(removeTrailingNull(animations));
@@ -219,7 +256,10 @@ function VisualizationComponent(props, ref) {
           nodesToBeInserted.current = [];
           insertedNodes.current = [];
           allPointers.current = [];
+          allVariableRows.current = [];
+          insertedRows.current = [];
           tl.current = null;
+          hasVariableTable.current = false;
         }
       });
       // Determine all of the nodes and pointers we will create
@@ -234,7 +274,8 @@ function VisualizationComponent(props, ref) {
               const nodeID = parameters.length > 2 ? parameters[2] : '#node' + nodeNumber;
               allNodes.current.push({
                 id: nodeID,
-                data
+                data,
+                selectedDataIndex: 0
               });
             } else if (functionName === 'createNewPointer') {
               allPointers.current.push({
@@ -244,6 +285,21 @@ function VisualizationComponent(props, ref) {
                 offset: 0,
                 inserted: false
               });
+            } else if (functionName === 'addVarTableRow') {
+              allVariableRows.current.push({
+                name: parameters[1],
+                value: parameters[2],
+                selectedValueIndex: 0
+              });
+            } else if (functionName === 'createVarTable') {
+              hasVariableTable.current = true;
+              for (let i = 1; i < parameters.length; i+=2) {
+                allVariableRows.current.push({
+                  name: parameters[i],
+                  value: parameters[i + 1],
+                  selectedValueIndex: 0
+                });
+              }
             }
           });
         }
@@ -362,10 +418,11 @@ function VisualizationComponent(props, ref) {
     }, shouldRunImmediately);
   };
 
-  const setNodeData = (node, data, shouldRunImmediately = false) => {
-    const nodeDataId = node + '-data';
+  const setNodeData = (node, data, shouldRunImmediately=false) => {
+    const nodeObj = allNodes.current.find(currNode => currNode.id === node);
+    const currDataIndex = nodeObj.selectedDataIndex;
     const dataFieldContainer = document.querySelector(node + " > .node-data-field");
-    const currData = document.getElementById(nodeDataId.substr(1));
+    const currData = document.querySelectorAll(node + " > .node-data-field .node-data-text")[currDataIndex];
 
     // Create new data text element to replace old data text element
     const newData = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -392,6 +449,8 @@ function VisualizationComponent(props, ref) {
       translateY: '-=15px',
       opacity: '1'
     }, shouldRunImmediately, '-=' + ANIME_DURATION); // Offset ensures that both animations happen at the same time
+
+    nodeObj.selectedDataIndex++;
   };
 
   /*
@@ -440,8 +499,7 @@ function VisualizationComponent(props, ref) {
    * Moves a pointer some number of nodes over from its current position
    * @param numNodes {Number} Number of nodes to move the pointer. Negative to move left
    */
-  const movePointer = (pointer, numNodes, shouldRunImmediately = false) => {
-
+  const movePointer = (pointer, numNodes, shouldRunImmediately=false) => {
     const movePointerObj = allPointers.current.find(pointerObj => pointerObj.id === pointer);
     const oldLocation = movePointerObj.location != null ? movePointerObj.location : 0;
 
@@ -509,13 +567,116 @@ function VisualizationComponent(props, ref) {
     }, shouldRunImmediately);
   };
 
+  /**
+   * create a new var table
+   * @param rows {Array[id]} Array of row ids to create
+   */
+   const createVarTable = (rows=[], shouldRunImmediately=false) => {
+    animate({
+      targets: '#var-table',
+      opacity: '1'
+    }, shouldRunImmediately);
+
+    if (rows != null) {
+      for (let row of rows) {
+        const rowID = '#var-table-row-' + row;
+        insertedRows.current.push(rowID);
+        const rowNum = insertedRows.current.indexOf(rowID) + 1;
+        animate({
+          targets: rowID,
+          translateY: rowNum * 26 + "px"
+        }, shouldRunImmediately, '-=' + ANIME_DURATION)
+      }
+    }
+  };
+
+  // Add row to table
+  const addVarTableRow = (name, value, shouldRunImmediately=false) => {
+    const id = '#var-table-row-' + name;
+    insertedRows.current.push(id);
+    const rowNum = insertedRows.current.indexOf(id) + 1;
+    animate({
+      targets: id,
+      translateY: rowNum * 26 + "px"
+    }, shouldRunImmediately)
+  };
+
+  // Remove given row from table
+  const removeVarTableRow = (variableName, shouldRunImmediately=false) => {
+    const row = '#var-table-row-' + variableName;
+    const rowNum = insertedRows.indexOf(row) + 1;
+    const isLastRow = rowNum === insertedRows.current.length - 2;
+
+    animate({
+      targets: row,
+      translateY: "-=" + rowNum * 26 + "px"
+    }, shouldRunImmediately)
+
+    if (rowNum > 0) {
+      insertedRows.current.splice(rowNum - 1, 1);
+    }
+
+    if (insertedRows.current.length > 0) {
+      if (!isLastRow) {
+        for (let insertedRow of insertedRows) {
+          animate({
+            targets: insertedRow,
+            translateY: "-=26px"
+          }, shouldRunImmediately, '-=' + ANIME_DURATION)
+        }
+      }
+    } else {
+      animate({
+        targets: '#var-table',
+        opacity: '0'
+      }, shouldRunImmediately, '-=' + ANIME_DURATION)
+    }
+  };
+
+  // Update row data
+  const setRowData = (variableName, data, shouldRunImmediately=false) => {
+    const row = '#var-table-row-' + variableName;
+    const variableRow = allVariableRows.current.find(row => row.name === variableName);
+    const currDataIndex = variableRow.selectedValueIndex;
+    const currData = document.querySelectorAll(row + " > .data-value")[currDataIndex];
+    const rowContainer = document.querySelector(row);
+
+    // Create new data text element to replace old data text element
+    const newData = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    newData.classList.add("data-value");
+    newData.setAttribute("x", "149px");
+    newData.setAttribute("y", "32px");
+    newData.setAttribute("dominant-baseline", "middle");
+    newData.setAttribute("text-anchor", "middle");
+    newData.setAttribute("fill", "#000");
+    newData.setAttribute("opacity", "0");
+    newData.textContent = data;
+    rowContainer.appendChild(newData);
+
+    // Fade out old data
+    animate({
+      targets: currData,
+      translateY: '-=15px',
+      opacity: '0'
+    }, shouldRunImmediately);
+
+    // Fade in new data
+    animate({
+      targets: newData,
+      translateY: '-=15px',
+      opacity: '1'
+    }, shouldRunImmediately, '-=' + ANIME_DURATION); // Offset ensures that both animations happen at the same time
+
+    variableRow.selectedValueIndex++;
+  };
+
   /********* Internal Only Animations *********/
-  const setPointerToNext = (pointer, shouldRunImmediately = false) => {
+  const setPointerToNext = (pointer, shouldRunImmediately=false) => {
     animate({
       targets: pointer,
       width: '+=90px'
     }, shouldRunImmediately);
-  }
+  };
 
   const moveNodeInline = (node, shouldRunImmediately = false) => {
     animate({
@@ -546,16 +707,39 @@ function VisualizationComponent(props, ref) {
         {
           allNodes.current.map((node, i) => {
             const id = node.id.substring(1); // Remove the #
-            return <LinkedListNode key={id + i} nodeID={id} data={node.data} />
+            return <LinkedListNode key={id + i} nodeID={id} data={node.data} hasVariableTable={hasVariableTable.current} />
           })
         }
 
         {
           allPointers.current.map((pointer, i) => {
             const id = pointer.id.substring(1); // Remove the #
-            return <LinkedListPointer key={id + i} pointerID={id} name={pointer.name} />
+            return <LinkedListPointer key={id + i} pointerID={id} name={pointer.name} hasVariableTable={hasVariableTable.current} />
           })
         }
+
+        <svg x="50px" y="10px">
+          <g id="var-table" className="hidden">
+            {
+              allVariableRows.current.map((variable, i) => {
+                const id = 'var-table-row-' + variable.name;
+                return <VariableTableRow
+                          key={id + i}
+                          rowID={id}
+                          variable={variable.name}
+                          value={variable.value} />
+              })
+            }
+            {/* Table Title */}
+            <g className="var-table-row" id="var-table-title-row">
+              <rect className="row-bg"></rect>
+              <rect className="row-cell" x="4px" y="4px" rx="2px"></rect>
+              <rect className="row-cell" x="102px" y="4px" rx="2px"></rect>
+              <text x="49px" y="17px" fill="#fff" dominantBaseline="middle" textAnchor="middle">Variable</text>
+              <text x="149px" y="17px" fill="#fff" dominantBaseline="middle" textAnchor="middle">Value</text>
+            </g>
+          </g>
+        </svg>
       </svg>
     </div>
   );

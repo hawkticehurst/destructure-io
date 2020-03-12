@@ -6,12 +6,13 @@ import CodeHighlight from '../code-display/CodeHighlight';
  * contentTitleString {String} – String representing the title a sub module
  * contentParagraphs {Array} – An array of strings representing paragraphs
  *  of content of a sub module
+ *  codeChunkKeyOffset {String} - unique key used tell which module we are on
  *
  * Optional props:
  * codeDisplay {React Component} - Component for displaying code
  */
 function LearningContent(props) {
-  const { contentTitleString, contentParagraphs, codeDisplay } = props;
+  const { contentTitleString, contentParagraphs, codeDisplay, codeChunkKeyOffset } = props;
 
   // Memoize the paragraphs split into spans, because its pretty expensive
   const paragraphs = useMemo(() => contentParagraphs.map((paragraph, index) => {
@@ -48,7 +49,7 @@ function LearningContent(props) {
         const className = isInBold ? 'bold' : isInItalic ? 'italic' : '';
         isInBold = false;
         isInItalic = false;
-        return <span key={index * characterIndex} className={className}>{paragraph.substring(characterIndex, endBoldIndex)}</span>
+        return <span key={(index + 1) * characterIndex} className={className}>{paragraph.substring(characterIndex, endBoldIndex)}</span>
       } else if (character === '$' && paragraph.substring(characterIndex, characterIndex + '$bold('.length) === '$bold(') {
         isInBold = true;
         remainingNulls = 'bold('.length;
@@ -74,11 +75,11 @@ function LearningContent(props) {
     }).filter(Boolean);
 
     return (
-      <p key={index}>
+      <p key={index + codeChunkKeyOffset}>
         {text}
       </p>
     );
-  }), [contentParagraphs]);
+  }), [contentParagraphs, codeChunkKeyOffset]);
 
 
   return (

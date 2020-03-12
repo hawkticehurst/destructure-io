@@ -158,11 +158,24 @@ function LearningModule() {
 
   const onClickNext = () => {
     const currCompletionState = getCompletionState(subModuleFilename);
-    if (hasFinishedAnimation && (currCompletionState == null || currCompletionState === 'incomplete')) {
+    const animComplete = hasFinishedAnimation || animationStrings.length === 0;
+    if (animComplete && (currCompletionState == null || currCompletionState === 'incomplete')) {
       updateCompletionState(subModuleFilename, 'completed');
     }
-    history.push(filenameToPath(subModuleList[selectedSubModuleIndex].filename));
+    if (selectedSubModuleIndex < subModuleList.length) {
+      history.push(filenameToPath(subModuleList[selectedSubModuleIndex].filename));
+    } else {
+      history.push('/learn');
+    }
   };
+
+  const codeDisplay = (
+    <CodeDisplay
+      language={language}
+      codeData={data.codeChunks}
+      selectedLine={trueSelectedLineMap[selectedLine]}
+      codeChunkKeyOffset={selectedSubmoduleName} />
+  );
 
   return (
     <div>
@@ -193,11 +206,8 @@ function LearningModule() {
             <LearningContent
               contentTitleString={selectedSubmoduleName}
               contentParagraphs={data.paragraphs}
-              codeDisplay={<CodeDisplay
-                language={language}
-                codeData={data.codeChunks}
-                selectedLine={trueSelectedLineMap[selectedLine]}
-                codeChunkKeyOffset={selectedSubmoduleName} />}
+              codeChunkKeyOffset={selectedSubmoduleName}
+              codeDisplay={codeDisplay}
             />
           }
           secondComponent={
@@ -229,14 +239,16 @@ function LearningModule() {
               <button onClick={startAnimation} disabled={playDisabled || animationComplete}>Play</button>
               <button onClick={stopAnimation} disabled={!playDisabled}>Pause</button>
               {/*<button onClick={setPreviousLine}>Previous Line BROKEN</button> */}
-              <button onClick={setNextLine} disabled={playDisabled}>{animationComplete ? 'reset' : 'Step'}</button>
+              <button onClick={setNextLine} disabled={playDisabled}>{animationComplete ? 'Reset' : 'Step'}</button>
             </div>
           )
         }
         <div className="back-next-container next-btn">
-          {
-            selectedSubModuleIndex < subModuleList.length ? <button onClick={onClickNext}>Next</button> : null
-          }
+          <button onClick={onClickNext}>
+             {
+               selectedSubModuleIndex < subModuleList.length ? 'Next' : 'Finish'
+             }
+          </button>
         </div>
       </div>
     </div>
