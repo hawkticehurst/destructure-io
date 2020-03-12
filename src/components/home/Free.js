@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { useHistory } from "react-router-dom";
 import { useFirebaseUser } from '../../hooks/user';
 
@@ -28,10 +28,7 @@ function Free() {
         </div>
       </div>
       <div className="img-container right-image">
-        <div className="free-hero-circle" />
-        {/* <button onClick={getStarted} className="hero-btn">
-          <span className="bold">Get Started</span>
-        </button> */}
+        <img src={require('./images/node.svg')} alt="Node Illustration" />
       </div>
     </div>
   );

@@ -185,6 +185,9 @@ button, input {
 }
 
 #free-card-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   color: white;
   background: linear-gradient(to right, var(--hero-purple), rgba(196, 59, 255, 0.6));
   border-radius: 10px;
@@ -192,7 +195,6 @@ button, input {
   width: 80%;
   margin: 12em auto;
   padding: 3em 4em;
-  justify-content: flex-start;
 }
 
 #free-get-started-container {
