@@ -19,11 +19,11 @@ function Free() {
       <div className="text-container">
         <h1>Free. &nbsp;For everyone.</h1>
         <p>
-          Destructure.io is created by people who believe that quality programming resources
+          Destructure.io is created by a group of software engineers who believe that quality programming resources
           should be available to all.
         </p>
-        <div onClick={getStarted} id="free-get-started-container">
-          <h2 className="bold">Get Started</h2>
+        <div id="free-get-started-container">
+          <h2 onClick={getStarted} className="bold">Get Started</h2>
           <img src={require('./images/arrow-right.svg')} alt="Arrow Right Icon" />
         </div>
       </div>

@@ -295,6 +295,7 @@ button, input {
 
 .hero-circle:hover {
   cursor: pointer;
+  background-color: var(--hero-purple-highlighted);
 }
 
 /********* LINKED LIST ILLUSTRATION HOMEPAGE *********/
