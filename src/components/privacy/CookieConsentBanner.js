@@ -27,7 +27,7 @@ function CookieConsentBanner() {
   }, [pathname]);
 
   useEffect(() => {
-    setRender(!pathname.startsWith('/signup') && !pathname.startsWith('/signin'));
+    setRender(!pathname.startsWith('/signup') && !pathname.startsWith('/signin') && !pathname.startsWith('/privacy'));
   }, [pathname]);
 
   const setApproveCookie = (value) => {

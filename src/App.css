@@ -547,7 +547,6 @@ button, input {
   display: block;
   width: 35px;
   height: 35px;
-  /* margin-bottom: 2em; */
 }
 
 .footer-container hr {
@@ -593,10 +592,16 @@ button, input {
   align-items: center;
 }
 
+.footer-copyright-container p {
+  text-align: center;
+}
+
+.footer-copyright-container > * {
+  flex: 1;
+}
+
 .footer-legal-container {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
+  text-align: right;
 }
 
 .footer-legal-container a {
@@ -1521,7 +1526,7 @@ text {
   border-radius: 10px;
   background-color: var(--hero-black);
   color: white;
-  width: 90%;
+  width: calc(90% - 2em);
   left: 5%;
   box-shadow: 0 1px 4px rgba(0,0,0,0.2);
 }
@@ -1748,6 +1753,7 @@ text {
 
   .sign-in-up-flex-container {
     margin-top: 0;
+    height: auto;
   }
 
   .summary-hero-container {
@@ -1764,6 +1770,90 @@ text {
   }
 
   .summary-page-content {
-    padding: 1em 2em 1em 2em;
+    padding: 1em;
+  }
+
+  .summary-overview-container {
+    padding: 0;
+    margin: 0;
+  }
+
+  .summary-overview-container h2 {
+    font-size: 30px;
+  }
+
+  .summary-modules {
+    position: inherit;
+    top: 0;
+    width: calc(100% - 6px);
+    margin: 0;
+  }
+
+  .syllabus-row {
+    padding: 0.5em;
+  }
+
+  .syllabus-row a {
+    font-size: 14px;
+  }
+
+  .summary-module-btn {
+    padding: 0.5em 1em;
+    font-size: 12px;
+  }
+
+  .summary-modules-container {
+    background-color: inherit;
+    height: auto !important;
+    margin: 0;
+  }
+
+  .progress-circle-filled {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    font-size: 18px;
+  }
+
+  .footer-container {
+    padding: 1em;
+  }
+
+  .footer-legal-container a {
+    margin-left: 1em;
+    margin-right: 0;
+  }
+
+  .catalog-card-container {
+    grid-template-columns: none;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .catalog-card {
+    width: 100%;
+  }
+
+  .cookie-consent-banner {
+    flex-direction: column;
+  }
+
+  .cookie-buttons {
+    margin: 5px;
+  }
+
+  .privacy-policy-allow-cookies {
+    display: block;
+    padding-top: 1em;
+  }
+
+  .privacy-policy-allow-cookies p {
+    margin: 0;
+    max-width: none;
+  }
+
+  .privacy-policy-allow-cookies .hero-btn {
+    margin: 1em;
   }
 }

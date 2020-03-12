@@ -33,7 +33,9 @@ function Footer() {
       </div> */}
       {/* <hr /> */}
       <div className="footer-copyright-container">
-        <img src={require('./images/destructure-icon.svg')} alt="Destructure.io Logo" />
+        <div>
+          <img src={require('./images/destructure-icon.svg')} alt="Destructure.io Logo" />
+        </div>
         <p>Copyright © 2020 destructure.io</p>
         <div className="footer-legal-container">
           <Link to="/privacy">Privacy Policy</Link>
