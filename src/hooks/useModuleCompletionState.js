@@ -6,41 +6,56 @@ export const filenameToSubModuleKey = filename => {
   return filename.substring(0, filename.length - '.json'.length);
 };
 
+export const getApproveCookie = () => {
+  const cookies = "; " + document.cookie;
+  const parts = cookies.split("; destructure-cookie-approve=");
+  if (parts.length === 2) {
+    return parts.pop().split(";").shift();
+  } return false;
+};
+
 // Custom hook for handling completion state of submodules
 function useModuleCompletionState(module) {
   const [completionState, setCompletionState] = useState({});
   const user = useFirebaseUser();
+  const hasApprovedCookies = getApproveCookie() === 'true';
 
   useEffect(() => {
+    if (!hasApprovedCookies) {
+      return;
+    }
+
     if (user == null) {
       setCompletionState(JSON.parse(window.localStorage.getItem(module)));
     } else {
       getUserModule(module).then(setCompletionState);
     }
-  }, [module, user]);
-
-  useEffect(() => {
-    if (completionState == null || Object.keys(completionState).length === 0) {
-      return;
-    }
-    if (user == null) {
-      window.localStorage.setItem(module, JSON.stringify(completionState));
-    } else {
-      updateUserModule(module, completionState);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [completionState]);
+  }, [module, user, hasApprovedCookies]);
 
   const updateCompletionState = (submodule, state) => {
+    if (!hasApprovedCookies) {
+      return;
+    }
+
     if (state === 'complete') {
       state = 'completed';
     }
     const tempCompletionState = {...completionState};
     tempCompletionState[filenameToSubModuleKey(submodule)] = state;
     setCompletionState(tempCompletionState);
+
+    if (user == null) {
+      window.localStorage.setItem(module, JSON.stringify(tempCompletionState));
+    } else {
+      updateUserModule(module, completionState);
+    }
   };
 
   const getCompletionState = filename => {
+    if (!hasApprovedCookies) {
+      return 'incomplete';
+    }
+
     const key = filenameToSubModuleKey(filename);
     if (completionState != null && key in completionState) {
       return completionState[key];
@@ -48,6 +63,10 @@ function useModuleCompletionState(module) {
   };
 
   const getCurrentSubmodule = submodules => {
+    if (!hasApprovedCookies) {
+      return filenameToSubModuleKey(submodules[0].filename);
+    };
+
     const lastViewed = window.localStorage.getItem('last-viewed-' + module);
     if (lastViewed != null) {
       return lastViewed;

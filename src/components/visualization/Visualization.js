@@ -440,7 +440,7 @@ function VisualizationComponent(props, ref) {
     animate({
       targets: currData,
       translateY: '-=15px',
-      opacity: '0',
+      opacity: '0'
     }, shouldRunImmediately);
 
     // Fade in new data

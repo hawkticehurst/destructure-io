@@ -22,7 +22,6 @@ function LinkedListNode(props) {
           <text x="10px" y="55px">data</text>
           <text x="60px" y="55px">=</text>
           <rect x="85px" y="39px"/ >
-          <text className="node-data-text" id={nodeID + '-data'} x="101px" y="55px">{data}</text>
           <rect x="85px" y="39px" />
           <text className="node-data-text" id={nodeID + '-data'} x="110px" y="51px" dominantBaseline="middle" textAnchor="middle">{data}</text>
         </g>

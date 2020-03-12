@@ -5,8 +5,11 @@ import Catalog from './catalog/Catalog';
 import SignInUp from './auth/SignInUp';
 import HomePage from './home/HomePage';
 import DeviceTooSmall from './common/DeviceTooSmall';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import {useAuth, UserContext} from '../hooks/user';
+import CookieConsentBanner from './privacy/CookieConsentBanner';
+import PrivacyPolicy from './privacy/PrivacyPolicy';
+import ScrollToTop from './common/ScrollToTop';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { useAuth, UserContext } from '../hooks/user';
 import '../App.css';
 
 function App() {
@@ -20,6 +23,8 @@ function App() {
     <UserContext.Provider value={{ user }}>
       <Router>
         <div className="app">
+          <CookieConsentBanner />
+          <ScrollToTop />
           <Switch>
             <Route path="/signin">
               <SignInUp isSignIn={true} />
@@ -33,12 +38,13 @@ function App() {
               }
             </Route>
             <Route path={'/learn/:module'}>
-              {
-                <SummaryPage />
-              }
+              <SummaryPage />
             </Route>
             <Route path={['/learn', '/catalog']}>
               <Catalog />
+            </Route>
+            <Route path={'/privacy'}>
+              <PrivacyPolicy />
             </Route>
             <Route path="/">
               <HomePage />

@@ -158,14 +158,14 @@ function LearningModule() {
 
   const onClickNext = () => {
     const currCompletionState = getCompletionState(subModuleFilename);
-    const animComplete = hasFinishedAnimation || animationStrings.length === 0;
+    const animComplete = hasFinishedAnimation || animationStrings.length === 0 || selectedSubModuleIndex === subModuleList.length;
     if (animComplete && (currCompletionState == null || currCompletionState === 'incomplete')) {
       updateCompletionState(subModuleFilename, 'completed');
     }
     if (selectedSubModuleIndex < subModuleList.length) {
       history.push(filenameToPath(subModuleList[selectedSubModuleIndex].filename));
     } else {
-      history.push('/learn');
+      history.push('/learn/' + module);
     }
   };
 

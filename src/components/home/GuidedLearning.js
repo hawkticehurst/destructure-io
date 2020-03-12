@@ -12,11 +12,15 @@ function GuidedLearning() {
       </div>
       <div className="img-container right-image">
         <div className="progress-row-container">
-          <div className="progress-circle-filled-home">&#10004;</div>
+          <div className="progress-circle-filled-home">
+            <img src={require('./images/checkmark.svg')} alt="Checkmark Icon" />
+          </div>
           <div className="progress-line-filled" />
         </div>
         <div className="progress-row-container">
-          <div className="progress-circle-filled-home">&#10004;</div>
+          <div className="progress-circle-filled-home">
+            <img src={require('./images/checkmark.svg')} alt="Checkmark Icon" />
+          </div>
           <div className="progress-line-filled" />
         </div>
         <div className="progress-row-container">
