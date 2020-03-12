@@ -978,7 +978,7 @@ button, input {
   justify-content: center;
   align-items: center;
   height: calc(100vh - 4em);
-  overflow: hidden;
+  margin-top: -5em;
 }
 
 .sign-in-up-container {
@@ -993,6 +993,10 @@ button, input {
 
 .sign-in-dropdown  .sign-in-up-container {
   width: 80%;
+}
+
+.sign-in-dropdown  .sign-in-up-flex-container {
+  margin-top: 0;
 }
 
 .sign-in-dropdown {
@@ -1740,6 +1744,10 @@ text {
 
   .sign-in-up-container {
     width: 90%;
+  }
+
+  .sign-in-up-flex-container {
+    margin-top: 0;
   }
 
   .summary-hero-container {

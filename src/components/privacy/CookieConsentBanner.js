@@ -1,8 +1,9 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PageTint from '../common/PageTint';
 import useInterval from '../../hooks/useInterval';
 import { getApproveCookie } from '../../hooks/useModuleCompletionState';
+import { useLocation } from 'react-router-dom';
 
 function CookieConsentBanner() {
   const cookieApprovalStatus = getApproveCookie();
@@ -11,6 +12,8 @@ function CookieConsentBanner() {
   const [showBanner, setShowBanner] = useState(!hasApprovedCookies && cookieApprovalStatus !== 'false');
   const [bannerBottom, setBannerBottom] = useState(-150);
   const [speed, setSpeed] = useState(!hasApprovedCookies ? 10 : null);
+  const { pathname } = useLocation();
+  const [render, setRender] = useState(!pathname.startsWith('/signup') && pathname.startsWith('/signin'));
 
   useInterval(() => {
     setBannerBottom(bannerBottom + 2);
@@ -18,6 +21,14 @@ function CookieConsentBanner() {
       setSpeed(null);
     }
   }, speed);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  useEffect(() => {
+    setRender(!pathname.startsWith('/signup') && !pathname.startsWith('/signin'));
+  }, [pathname]);
 
   const setApproveCookie = (value) => {
     const date = new Date();
@@ -28,7 +39,7 @@ function CookieConsentBanner() {
   };
 
   // sign in / sign up have their own way to enforce cookies
-  if (window.location.pathname.startsWith('/signup') || window.location.pathname.startsWith('/signin')) {
+  if (!render) {
     return null;
   }
 
