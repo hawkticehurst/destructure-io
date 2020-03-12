@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-labelledby="title"
+aria-describedby="desc" role="img" xmlns:xlink="http://www.w3.org/1999/xlink"
+width="64" height="64">
+  <title>Rewind</title>
+  <desc>A line styled icon from Orion Icon Library.</desc>
+  <path data-name="layer2"
+  d="M29 45h24.75A8.25 8.25 0 0 0 62 36.75v-9.5a8.251 8.251 0 0 0-8-8.247L41.086 19H10.25A8.25 8.25 0 0 0 2 27.25v9.5a8.25 8.25 0 0 0 7.998 8.246H18"
+  fill="none" stroke="#202020" stroke-miterlimit="10" stroke-width="2" stroke-linejoin="round"
+  stroke-linecap="round"></path>
+  <path data-name="layer1" fill="none" stroke="#202020" stroke-miterlimit="10"
+  stroke-width="2" d="M39 34.989L29 45l10 9.989" stroke-linejoin="round"
+  stroke-linecap="round"></path>
+</svg>
