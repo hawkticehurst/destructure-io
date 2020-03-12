@@ -23,10 +23,6 @@ function CookieConsentBanner() {
   }, speed);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
-  useEffect(() => {
     setRender(!pathname.startsWith('/signup') && !pathname.startsWith('/signin') && !pathname.startsWith('/privacy'));
   }, [pathname]);
 
