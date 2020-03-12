@@ -547,7 +547,7 @@ button, input {
   display: block;
   width: 35px;
   height: 35px;
-  margin-bottom: 2em;
+  /* margin-bottom: 2em; */
 }
 
 .footer-container hr {
