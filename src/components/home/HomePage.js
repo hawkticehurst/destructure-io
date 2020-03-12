@@ -23,7 +23,9 @@ function HomePage(props) {
           <Catalog />
         </div>
         <div id="free-container" className="content-container">
-          <Free />
+          <span id="free-card-container-wrap">
+            <Free />
+          </span>
         </div>
       </main>
       <Footer />

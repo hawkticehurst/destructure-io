@@ -191,10 +191,16 @@ button, input {
   color: white;
   background: linear-gradient(to right, var(--hero-purple), rgba(196, 59, 255, 0.6));
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
-  width: 80%;
-  margin: 12em auto;
+  margin: 0 auto;
   padding: 3em 4em;
+  clip-path: inset(0% 0% round 10px);
+}
+
+#free-card-container-wrap {
+  width: 88%;
+  margin: 12em 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
 }
 
 #free-get-started-container {
@@ -218,6 +224,15 @@ button, input {
 
 #free-card-container .img-container {
   width: 100px;
+  margin: auto auto;
+}
+
+#free-node-1 {
+  transform: scale(5) translateX(0.5em) translateY(-1.1em);
+}
+
+#free-node-2 {
+  transform: scale(5) translateX(0.5em) translateY(2.7em);
 }
 
 #free-card-container .text-container {
@@ -265,7 +280,7 @@ button, input {
   background-color: var(--hero-purple-highlighted);
 }
 
-.hero-circle, .hero-circle:hover {
+.hero-circle {
   min-width: 80px;
   min-height: 80px;
   border-radius: 50%;
@@ -276,6 +291,10 @@ button, input {
   align-items: center;
   font-size: 35px;
   color: white;
+}
+
+.hero-circle:hover {
+  cursor: pointer;
 }
 
 /********* LINKED LIST ILLUSTRATION HOMEPAGE *********/
