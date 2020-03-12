@@ -39,7 +39,6 @@ function HomePage(props) {
           course at the University of Washington Information School.
         </p>
       </footer> */}
-      <hr />
       <Footer />
     </div>
   );

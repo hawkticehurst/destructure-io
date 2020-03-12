@@ -15,7 +15,7 @@ function Free() {
   };
 
   return (
-    <Fragment>
+    <div id="free-card-container">
       <div className="text-container">
         <h1>Free. &nbsp;For everyone.</h1>
         <p>
@@ -33,7 +33,7 @@ function Free() {
           <span className="bold">Get Started</span>
         </button> */}
       </div>
-    </Fragment>
+    </div>
   );
 }
 
