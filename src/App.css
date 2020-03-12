@@ -1377,7 +1377,7 @@ text {
   fill: var(--hero-white);
 }
 
-.node-data-field > text:nth-child(4) {
+.node-data-text {
   fill: var(--hero-black);
 }
 

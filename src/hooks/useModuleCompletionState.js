@@ -32,18 +32,6 @@ function useModuleCompletionState(module) {
     }
   }, [module, user, hasApprovedCookies]);
 
-  useEffect(() => {
-    if (completionState == null || Object.keys(completionState).length === 0 || !hasApprovedCookies) {
-      return;
-    }
-    if (user == null) {
-      window.localStorage.setItem(module, JSON.stringify(completionState));
-    } else {
-      updateUserModule(module, completionState);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [completionState]);
-
   const updateCompletionState = (submodule, state) => {
     if (!hasApprovedCookies) {
       return;
@@ -55,6 +43,12 @@ function useModuleCompletionState(module) {
     const tempCompletionState = {...completionState};
     tempCompletionState[filenameToSubModuleKey(submodule)] = state;
     setCompletionState(tempCompletionState);
+
+    if (user == null) {
+      window.localStorage.setItem(module, JSON.stringify(tempCompletionState));
+    } else {
+      updateUserModule(module, completionState);
+    }
   };
 
   const getCompletionState = filename => {
