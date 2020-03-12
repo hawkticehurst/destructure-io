@@ -164,11 +164,13 @@ button, input {
 .text-container h1 {
   font-size: 45px;
   margin-top: 0;
+  margin-bottom: 0.25em;
 }
 
 .text-container p {
   font-size: 20px;
   margin-bottom: 0;
+  margin-top: 0.5em;
 }
 
 #linked-list {
@@ -194,6 +196,25 @@ button, input {
   justify-content: flex-start;
 }
 
+#free-get-started-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 1em;
+  transition: all 0.3s ease;
+  transform: translateX(0px);
+}
+
+#free-get-started-container:hover {
+  cursor: pointer;
+  transform: translateX(10px);
+}
+
+#free-get-started-container h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
 #free-container .img-container {
   width: 100px;
 }
@@ -204,13 +225,6 @@ button, input {
 
 #free-container h2 {
   margin-bottom: 0;
-  transition: all 0.3s ease;
-  transform: translateX(0px);
-}
-
-#free-container h2:hover {
-  cursor: pointer;
-  transform: translateX(10px);
 }
 
 

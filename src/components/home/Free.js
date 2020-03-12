@@ -22,12 +22,10 @@ function Free() {
           Destructure.io is created by people who believe that quality programming resources
           should be available to all.
         </p>
-        <h2 onClick={getStarted} className="bold">
-          Get Started &#10141;
-        </h2>
-        {/* <button onClick={getStarted} className="hero-btn">
-          <span className="bold">Get Started</span>
-        </button> */}
+        <div onClick={getStarted} id="free-get-started-container">
+          <h2 className="bold">Get Started</h2>
+          <img src={require('./images/arrow-right.svg')} alt="Arrow Right Icon" />
+        </div>
       </div>
       <div className="img-container right-image">
         <div className="free-hero-circle" />
