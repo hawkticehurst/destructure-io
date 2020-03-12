@@ -53,7 +53,9 @@ function SubModuleProgressRow(props) {
   };
 
   const containerClass = selected ? 'sub-module-progress-row-container progress-row-selected' : 'sub-module-progress-row-container';
-  const progressIcon = isCompleted === 'flagged' ? '!' : isCompleted === 'completed' ? '✔' : '';
+  const exclamationIcon = <img src={require('./images/exclamation.svg')} alt="Exclamation Icon" />;
+  const checkmarkIcon = <img src={require('./images/checkmark.svg')} alt="Checkmark Icon" />;
+  const progressIcon = isCompleted === 'flagged' ? exclamationIcon : isCompleted === 'completed' ? checkmarkIcon : '';
   return (
     <div className={containerClass + (rowClass != null ? (' ' + rowClass) : '')}>
       <div className="progress-circle-filled" onClick={toggleCompletionState}>{progressIcon}</div>

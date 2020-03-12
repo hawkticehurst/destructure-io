@@ -1,4 +1,4 @@
-import React, {useEffect, useState, Fragment} from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import PageTint from '../common/PageTint';
 import { useHistory } from "react-router-dom";
 
@@ -45,7 +45,10 @@ function SideBar(props) {
           className={'sidebar ' + animationClass}
           onClick={stopPropagation}
           onAnimationEnd={onAnimationEnd}>
-          <p className="go-back-summary" onClick={onClickGoBackSummary}>{'<-- Back To Summary'}</p>
+          <div className="go-back-summary" onClick={onClickGoBackSummary}>
+            <img src={require('./images/arrow-left.svg')} alt="Arrow Left Icon" />
+            <p>{'Back To Summary'}</p>
+          </div>
           <h1 className="sidebar-header">{headerText}</h1>
           {children}
         </div>

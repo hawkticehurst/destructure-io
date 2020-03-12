@@ -21,7 +21,7 @@ function Hero() {
         <span className="bold">Get Started</span> – It's free!
       </button>
       <a id="chevron" className="hero-circle" href="#linked-list">
-        <span className="bold">&#8675;</span>
+        <img src={require('./images/arrow-down.svg')} alt="Arrow Down Icon" />
       </a>
     </div>
   );

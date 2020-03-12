@@ -631,9 +631,23 @@ button, input {
 }
 
 .go-back-summary {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   cursor: pointer;
   color: white;
   font-size: 14px;
+  margin: 0.5em 0 0.5em -0.32em;
+  transition: transform 0.3s;
+  transform: translateX(0);
+}
+
+.go-back-summary:hover {
+  transform: translateX(0.5em);
+}
+
+.go-back-summary p {
+  margin: 0;
 }
 
 .sub-module-progress-row-container {
