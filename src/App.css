@@ -179,14 +179,9 @@ button, input {
   box-shadow: 0 0 16px rgba(0,0,0,0.1);
 }
 
-#catalog-container {
-  /* border-bottom: 1px solid rgba(0,0,0,0.1); */
-}
-
 #free-container {
   background-color: var(--hero-grey);
   padding: 0;
-  /* border-bottom: 1px solid rgba(0,0,0,0.1); */
 }
 
 #free-card-container {
