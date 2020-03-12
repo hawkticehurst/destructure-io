@@ -14,15 +14,22 @@ function Hero() {
     }
   };
 
+  const onClickHeroChevron = () => {
+    const linkedList = document.getElementById('linked-list');
+    if (linkedList != null) {
+      document.getElementById('linked-list').scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="landing-hero-container">
       <h1>An interactive visualization platform for learning data structures.</h1>
       <button onClick={onClickHeroBtn} className="hero-btn">
         <span className="bold">Get Started</span> – It's free!
       </button>
-      <a id="chevron" className="hero-circle" href="#linked-list">
+      <span id="chevron" className="hero-circle" onClick={onClickHeroChevron}>
         <img src={require('./images/arrow-down.svg')} alt="Arrow Down Icon" />
-      </a>
+      </span>
     </div>
   );
 }
