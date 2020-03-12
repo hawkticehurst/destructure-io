@@ -36,6 +36,7 @@ function Footer() {
       <div className="footer-copyright-container">
         <p>Copyright © 2020 destructure.io</p>
         <div className="footer-legal-container">
+          <Link to="/">Terms of Service</Link>
           <Link to="/privacy">Privacy Policy</Link>
         </div>
       </div>

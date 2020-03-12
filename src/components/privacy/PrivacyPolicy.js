@@ -63,13 +63,15 @@ function PrivacyPolicy() {
         <PrivacySection
           title="How We Use And Store Your Information"
           text={
-          [`
-          All of our authentication and database services are run using Google Firebase,
-          a highly trusted third party platform. When you sign up for an account, we store your email
-          and an encrypted password on Firebase. Additionally, we store your current completion
-          state of every module on the site. This allows us to retain this information when you
-          leave the website.
-          `,
+          [
+            <span>
+              All of our authentication and database services are run using{' '}
+              <a target="__blank" rel="noopener noreferrer" href="https://policies.google.com/technologies/partner-sites">Google Firebase</a>,
+              a highly trusted third party platform. When you sign up for an account, we store your email
+              and an encrypted password on Firebase. Additionally, we store your current completion
+              state of every module on the site. This allows us to retain this information when you
+              leave the website.
+            </span>,
           `
           We will never sell this information or any other information to any third parties.
           `
@@ -99,7 +101,7 @@ function PrivacyPolicy() {
             `
             All of the cookies we use are classified as "essential cookies". These are used to keep a
             user signed in even after the page reloads. Since our authentication is handled by Google Firebase,
-            all of our authentiation related cookies are third party cookies required for their platform to function.
+            all of our authentication related cookies are third party cookies required for their platform to function.
             We also use a single cookie to check if the user has opted out of non-essential storage. If you opt-out,
             we will not share any information with Firebase and will not use local storage.
             `,
@@ -126,11 +128,16 @@ function PrivacyPolicy() {
         <PrivacySection
           title="Changes To This Policy"
           text={
-          `
-          We will ocassionally update this policy statement to include information about new features
+          [`
+          We will occasionally update this policy statement to include information about new features
           of the site or to further clarify how we handle data privacy. We encourage you to periodically
           review this page for our latest policies.
+          `,
           `
+          Regardless of these changes, our philosophy on privacy will never change, and we will never
+          sell any of your data.
+          `
+          ]
           } />
       </div>
       <hr />

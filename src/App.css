@@ -1013,6 +1013,67 @@ button, input {
   width: calc(100% - 1em - 4px);
 }
 
+.accept-cookie-label {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  text-align: left;
+  margin-top: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.accept-cookie-label input {
+  position: absolute;
+  cursor: pointer;
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: calc(50% - 13px);
+  left: 0;
+  height: 26px;
+  width: 26px;
+  background-color: #eee;
+  border-radius: 8px;
+}
+
+.checkmark:hover {
+  background-color: #ccc;
+}
+
+.accept-cookie-label input:checked ~ .checkmark {
+  background-color: var(--hero-purple);
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.accept-cookie-label input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.accept-cookie-label .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
 /* autofill to prevent chrome from autofilling with small fonts */
 .sign-in-up-input:-webkit-autofill::first-line {
   font-size: 25px;

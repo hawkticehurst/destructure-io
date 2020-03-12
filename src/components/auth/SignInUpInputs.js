@@ -16,18 +16,8 @@ function SignInUpInputs(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-
-  if (getApproveCookie() !== 'true') {
-    return (
-      <div className="sign-in-up-container cookies-required">
-        <h1>Cookies Required</h1>
-        <p>
-          Cookies are required for authentication. Please review our{' '}
-          <Link to="/privacy">Privacy Policy</Link> and consider opting in.
-        </p>
-      </div>
-    );
-  }
+  const [labelChecked, setLabelChecked] = useState(false);
+  const [hasApprovedCookies, setHasApprovedCookies] = useState(getApproveCookie() === 'true');
 
   const isValidEmail = email => {
     // eslint-disable-next-line
@@ -37,8 +27,19 @@ function SignInUpInputs(props) {
 
   const onSubmit = event => {
     event.preventDefault();
+    if (!hasApprovedCookies) {
+      if (!labelChecked) {
+        setError('Please accept the privacy policy before continuing');
+        return;
+      }
+      const date = new Date();
+      date.setTime(date.getTime() + (6*30*24*60*60*1000)); // Expires in 6 months
+      document.cookie = "destructure-cookie-approve=true;expires=" + date.toUTCString() + ";path=/";
+      setHasApprovedCookies(true);
+    }
+
     if (!isValidEmail(email)) {
-      setError("Invalid email address");
+      setError("Please enter a valid email address");
       return;
     } else if (isSignIn) {
       signIn();
@@ -114,6 +115,19 @@ function SignInUpInputs(props) {
             type="password"
             placeholder="Password"
           />
+        {
+          !hasApprovedCookies ? (
+            <label className="accept-cookie-label">
+              I accept the <Link to="/privacy">Privacy Policy</Link> and opt-in to cookies.
+              <input
+                name="accept-cookie"
+                type="checkbox"
+                checked={labelChecked}
+                onChange={() => setLabelChecked(!labelChecked)} />
+              <span className="checkmark" />
+            </label>
+          ) : null
+        }
         </div>
         <button onClick={onSubmit} className="hero-btn sign-in-up-button">
           <span className="bold">{headerText}</span>

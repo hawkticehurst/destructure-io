@@ -27,6 +27,11 @@ function CookieConsentBanner() {
     setShowBanner(false);
   };
 
+  // sign in / sign up have their own way to enforce cookies
+  if (window.location.pathname.startsWith('/signup') || window.location.pathname.startsWith('/signin')) {
+    return null;
+  }
+
   return (
     <Fragment>
       {
