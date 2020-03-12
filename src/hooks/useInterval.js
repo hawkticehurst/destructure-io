@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 
 // delay = null to end the callback, similar to setTimeout
-// Example usage in LearningModule.js
 // Based on https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 function useInterval(callback, delay) {
   const savedCallback = useRef();

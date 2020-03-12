@@ -978,7 +978,7 @@ button, input {
   justify-content: center;
   align-items: center;
   height: calc(100vh - 4em);
-  overflow: hidden;
+  margin-top: -5em;
 }
 
 .sign-in-up-container {
@@ -987,8 +987,16 @@ button, input {
   margin: auto;
 }
 
+.sign-in-up-container.cookies-required {
+  width: 70%;
+}
+
 .sign-in-dropdown  .sign-in-up-container {
   width: 80%;
+}
+
+.sign-in-dropdown  .sign-in-up-flex-container {
+  margin-top: 0;
 }
 
 .sign-in-dropdown {
@@ -1007,6 +1015,67 @@ button, input {
   box-shadow: 0 1px 4px rgba(0,0,0,0.2);
   /* 100% - the extra space created by padding / border */
   width: calc(100% - 1em - 4px);
+}
+
+.accept-cookie-label {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  text-align: left;
+  margin-top: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.accept-cookie-label input {
+  position: absolute;
+  cursor: pointer;
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: calc(50% - 13px);
+  left: 0;
+  height: 26px;
+  width: 26px;
+  background-color: #eee;
+  border-radius: 8px;
+}
+
+.checkmark:hover {
+  background-color: #ccc;
+}
+
+.accept-cookie-label input:checked ~ .checkmark {
+  background-color: var(--hero-purple);
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.accept-cookie-label input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.accept-cookie-label .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
 /* autofill to prevent chrome from autofilling with small fonts */
@@ -1438,6 +1507,118 @@ text {
   font-size: 22px;
 }
 
+
+/********* COOKIE CONSENT BANNER *********/
+
+.cookie-consent-banner {
+  bottom: -100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+  position: fixed;
+  padding: 1em;
+  border-radius: 10px;
+  background-color: var(--hero-black);
+  color: white;
+  width: 90%;
+  left: 5%;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.cookie-consent-banner-loaded {
+  bottom: 2em;
+}
+
+.cookie-consent-banner p {
+  max-width: 80%;
+  margin: 0;
+  padding: 0;
+}
+
+.cookie-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cookie-buttons button {
+  padding: 0.5em;
+  width: 5em;
+  margin: 0 0.5em;
+}
+
+.reject-btn {
+  background-color: var(--hero-grey);
+  color: var(--hero-black);
+}
+
+.reject-btn:hover {
+  background-color: var(--hero-white);
+}
+
+.cookie-deny-modal {
+  z-index: 2;
+  position: fixed;
+  top: 10%;
+  width: 50%;
+  max-height: 75%;
+  overflow: scroll;
+  left: 25%;
+  background-color: var(--hero-white);
+  border-radius: 8px;
+  padding: 2em;
+  color: black;
+}
+
+.cookie-deny-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.cookie-deny-buttons button {
+  margin-top: 0;
+  width: 40%;
+  color: var(--hero-white);
+}
+
+
+/********* Privacy Policy *********/
+
+.privacy-policy {
+  width: 80%;
+  margin: auto;
+}
+
+.privacy-policy header {
+  text-align: center;
+}
+
+.privacy-section {
+  margin-bottom: 40px;
+}
+
+.privacy-section h2 {
+  margin: 0;
+}
+
+.privacy-policy-allow-cookies {
+  display: flex;
+  align-items: center;
+  background-color: var(--hero-grey);
+  border-radius: 5px;
+  padding: 0 2em;
+  width: 70%;
+  margin: auto;
+  margin: 1em auto;
+}
+
+.privacy-policy-allow-cookies p {
+  max-width: 70%;
+  margin-right: 20px;
+}
+
+
 /********* Mobile *********/
 @media only screen and (max-width: 768px) {
   body {
@@ -1563,6 +1744,10 @@ text {
 
   .sign-in-up-container {
     width: 90%;
+  }
+
+  .sign-in-up-flex-container {
+    margin-top: 0;
   }
 
   .summary-hero-container {
