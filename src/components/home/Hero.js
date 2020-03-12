@@ -17,7 +17,7 @@ function Hero() {
   const onClickHeroChevron = () => {
     const linkedList = document.getElementById('linked-list');
     if (linkedList != null) {
-      document.getElementById('linked-list').scrollIntoView({ behavior: 'smooth' });
+      linkedList.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
