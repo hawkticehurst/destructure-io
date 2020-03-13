@@ -180,22 +180,19 @@ button, input {
 }
 
 #free-container {
-  /* background-color: var(--hero-grey); */
   background: linear-gradient(to right, var(--hero-purple), rgba(196, 59, 255, 0.6));
   padding: 0;
 }
 
 #free-card-container {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   color: white;
-  /* background: linear-gradient(to right, var(--hero-purple), rgba(196, 59, 255, 0.6)); */
-  border-radius: 10px;
   margin: auto auto;
   padding: 3em 4em;
   width: 80%;
-  clip-path: inset(0% 0% round 10px);
+  clip-path: inset(0% 0%);
   overflow: hidden;
 }
 
@@ -232,7 +229,7 @@ button, input {
 }
 
 #free-card-container .text-container {
-  width: 40%;
+  width: 45%;
 }
 
 #free-card-container h2 {
