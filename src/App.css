@@ -676,7 +676,6 @@ button, input {
 }
 
 .sub-module-progress-row-container {
-  /* border-bottom: 1px solid white; */
   padding: 5px 0;
   color: white;
   display: flex;
