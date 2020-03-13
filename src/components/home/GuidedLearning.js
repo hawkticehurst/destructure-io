@@ -6,8 +6,8 @@ function GuidedLearning() {
       <div className="text-container">
         <h1>Guided learning.</h1>
         <p>
-          Read through structured learning modules that guide you through
-          the process of understanding and working with each data structure.
+          Access learning modules that guide you through the process
+          of understanding and working with each data structure.
         </p>
       </div>
       <div className="img-container right-image">
