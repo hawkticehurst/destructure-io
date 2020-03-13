@@ -19,8 +19,8 @@ function Free() {
       <div className="text-container">
         <h1>Free. &nbsp;For everyone.</h1>
         <p>
-          Destructure.io is created by a group of software engineers who believe that quality programming resources
-          should be available to all.
+          Destructure.io is a platform created by software engineers who believe quality programming resources
+          should be accessible to anyone, anywhere.
         </p>
         <div style={{ "display": "inline-block" }}>
           <div id="free-get-started-container">
