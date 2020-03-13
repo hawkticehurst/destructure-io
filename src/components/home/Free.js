@@ -22,7 +22,7 @@ function Free() {
           Destructure.io is a platform created by software engineers who believe quality programming resources
           should be accessible to anyone, anywhere.
         </p>
-        <div style={{ "display": "inline-block" }}>
+        <div className="inline-block">
           <div id="free-get-started-container">
             <h2 onClick={getStarted} className="bold">Get Started</h2>
             <img src={require('./images/arrow-right.svg')} alt="Arrow Right Icon" />

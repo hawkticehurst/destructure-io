@@ -101,6 +101,10 @@ button, input {
   color: inherit !important;
 }
 
+.inline-block {
+  display: inline-block;
+}
+
 .app {
   height: 100vh;
 }
