@@ -45,9 +45,12 @@ function SideBar(props) {
           className={'sidebar ' + animationClass}
           onClick={stopPropagation}
           onAnimationEnd={onAnimationEnd}>
-          <div className="go-back-summary" onClick={onClickGoBackSummary}>
-            <img src={require('./images/arrow-left.svg')} alt="Arrow Left Icon" />
-            <p>{'Back To Summary'}</p>
+          <div className="sidebar-controls">
+            <div className="go-back-summary" onClick={onClickGoBackSummary}>
+              <img src={require('./images/arrow-left.svg')} alt="Arrow Left Icon" />
+              <p>Back To Summary</p>
+            </div>
+            <img className="sidebar-close" onClick={() => setSideBarShown(false)} src={require('./images/close.svg')} alt="Close Icon" />
           </div>
           <h1 className="sidebar-header">{headerText}</h1>
           {children}
