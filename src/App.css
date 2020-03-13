@@ -635,6 +635,12 @@ button, input {
   cursor: pointer;
 }
 
+.sidebar-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .go-back-summary {
   display: flex;
   justify-content: flex-start;
@@ -643,7 +649,7 @@ button, input {
   color: white;
   font-size: 14px;
   margin: 0.5em 0 0.5em -0.32em;
-  transition: transform 0.3s;
+  transition: transform 0.3s ease;
   transform: translateX(0);
 }
 
@@ -653,6 +659,18 @@ button, input {
 
 .go-back-summary p {
   margin: 0;
+}
+
+.sidebar-close-container {
+  margin: 0;
+  padding: 0;
+  transition: transform 0.3s ease;
+  transform: scale(1);
+}
+
+.sidebar-close-container:hover {
+  cursor: pointer;
+  transform: scale(1.2);
 }
 
 .sub-module-progress-row-container {
