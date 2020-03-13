@@ -50,7 +50,7 @@ function SummaryPage() {
         <div className="summary-hero-content">
           <h1>{title}</h1>
           <button onClick={onClickHeroBtn} className="hero-btn">
-            <span className="bold">{completionState != null ? 'Continue Module' : 'Get Started'}</span>
+            <span className="bold">{completionState != null && Object.keys(completionState).length > 0 ? 'Continue Module' : 'Get Started'}</span>
           </button>
         </div>
         <div className="summary-hero-illustration-container">
