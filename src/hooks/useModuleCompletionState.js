@@ -47,7 +47,7 @@ function useModuleCompletionState(module) {
     if (user == null) {
       window.localStorage.setItem(module, JSON.stringify(tempCompletionState));
     } else {
-      updateUserModule(module, completionState);
+      updateUserModule(module, tempCompletionState);
     }
   };
 
