@@ -13,7 +13,7 @@ function CookieConsentBanner() {
   const [bannerBottom, setBannerBottom] = useState(-150);
   const [speed, setSpeed] = useState(!hasApprovedCookies ? 10 : null);
   const { pathname } = useLocation();
-  const [render, setRender] = useState(!pathname.startsWith('/signup') && pathname.startsWith('/signin'));
+  const [render, setRender] = useState(!pathname.startsWith('/signup') && pathname.startsWith('/signin') && !pathname.startsWith('/privacy'));
 
   useInterval(() => {
     setBannerBottom(bannerBottom + 2);

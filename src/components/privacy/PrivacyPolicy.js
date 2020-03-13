@@ -12,6 +12,7 @@ function PrivacyPolicy() {
     date.setTime(date.getTime() + (6*30*24*60*60*1000)); // Expires in 6 months
     document.cookie = "destructure-cookie-approve=" + value + ";expires=" + date.toUTCString() + ";path=/";
     setHasApprovedCookies(value === 'true');
+    window.location.reload();
   };
 
   return (
