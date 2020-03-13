@@ -50,9 +50,7 @@ function SideBar(props) {
               <img src={require('./images/arrow-left.svg')} alt="Arrow Left Icon" />
               <p>{'Back To Summary'}</p>
             </div>
-            <div className="sidebar-close-container" onclick={() => setSideBarShown(false)}>
-              <img src={require('./images/close.svg')} alt="Close Icon" />
-            </div>
+            <img className="sidebar-close" onClick={() => setSideBarShown(false)} src={require('./images/close.svg')} alt="Close Icon" />
           </div>
           <h1 className="sidebar-header">{headerText}</h1>
           {children}

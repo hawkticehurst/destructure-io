@@ -624,21 +624,12 @@ button, input {
   white-space: nowrap;
 }
 
-.sidebar-header {
-  color: white;
-  border-bottom: 1px solid white;
-  margin-bottom: 5px;
-  font-size: 24px;
-}
-
-.sidebar-header span {
-  cursor: pointer;
-}
-
 .sidebar-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .go-back-summary {
@@ -661,21 +652,32 @@ button, input {
   margin: 0;
 }
 
-.sidebar-close-container {
+.sidebar-close {
+  display: block;
   margin: 0;
   padding: 0;
   transition: transform 0.3s ease;
   transform: scale(1);
 }
 
-.sidebar-close-container:hover {
+.sidebar-close:hover {
   cursor: pointer;
   transform: scale(1.2);
 }
 
+.sidebar-header {
+  color: white;
+  margin-top: 1em;
+  font-size: 24px;
+}
+
+.sidebar-header span {
+  cursor: pointer;
+}
+
 .sub-module-progress-row-container {
-  border-bottom: 1px solid white;
-  padding: 5px;
+  /* border-bottom: 1px solid white; */
+  padding: 5px 0;
   color: white;
   display: flex;
   align-items: center;
@@ -735,7 +737,6 @@ button, input {
   min-width: 48px;
   min-height: 48px;
   margin-right: .5em;
-  margin-left: 5px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -245,9 +245,9 @@ function LearningModule() {
         }
         <div className="back-next-container next-btn">
           <button onClick={onClickNext}>
-             {
-               selectedSubModuleIndex < subModuleList.length ? 'Next' : 'Finish'
-             }
+            {
+              selectedSubModuleIndex < subModuleList.length ? 'Next' : 'Finish'
+            }
           </button>
         </div>
       </div>
