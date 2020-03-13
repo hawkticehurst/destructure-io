@@ -7,14 +7,16 @@ import { useParams } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import contentOutline from '../../lesson-content/contentOutline.json';
 import useModuleCompletionState, { filenameToSubModuleKey } from '../../hooks/useModuleCompletionState';
+import { getUserModule } from '../../firebase/firebase';
+import { useFirebaseUser } from '../../hooks/user';
 
 function SummaryPage() {
   const history = useHistory();
   const { module } = useParams();
   const [summaryHeightCalcString, setSummaryHeightCalcString] = useState("")
   const containerRef = useRef(null);
+  const user = useFirebaseUser();
   const {
-    completionState,
     getCompletionState,
     updateCompletionState,
     getCurrentSubmodule
@@ -42,6 +44,8 @@ function SummaryPage() {
     history.push(getStartedLink);
   };
 
+  const hasStartedModule = user == null ? window.localStorage.getItem(module) != null : getUserModule(module) != null;
+
   return (
     <div>
       <NavBar navBarType="homepage" />
@@ -50,7 +54,7 @@ function SummaryPage() {
         <div className="summary-hero-content">
           <h1>{title}</h1>
           <button onClick={onClickHeroBtn} className="hero-btn">
-            <span className="bold">{completionState != null && Object.keys(completionState).length > 0 ? 'Continue Module' : 'Get Started'}</span>
+            <span className="bold">{hasStartedModule ? 'Continue Module' : 'Get Started'}</span>
           </button>
         </div>
         <div className="summary-hero-illustration-container">
