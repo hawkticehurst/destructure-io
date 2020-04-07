@@ -47,7 +47,8 @@ function useAnimation(onComplete) {
   const timeline = useRef([]); // Array of callback functions for each line in animation
   const timelineIndex = useRef(0);
   const isPlayingFullAnimation = useRef(false);
-
+  const nextAnim = useRef(null);
+  
   /*
   options: [{
     targets: String selector or DOM element... or Array of those things
@@ -188,7 +189,7 @@ function useAnimation(onComplete) {
           }
         }
         if (isPlayingFullAnimation.current && timelineIndex.current < timeline.current.length - 1) {
-          setTimeout(stepAnimation, largestDuration);
+          nextAnim.current = setTimeout(stepAnimation, largestDuration);
         }
       });
     }
@@ -218,6 +219,7 @@ function useAnimation(onComplete) {
     timeline.current = [];
     timelineIndex.current = 0;
     isPlayingFullAnimation.current = false;
+    clearTimeout(nextAnim.current);
   };
 
   return {
