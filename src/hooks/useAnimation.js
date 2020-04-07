@@ -78,7 +78,8 @@ function useAnimation(onComplete) {
         duration,
         delay
       } = optionObj;
-      const completeTime = (duration != null ? duration : 1000) + (delay != null ? delay : 0);
+      const realDelay = !shouldRunImmediately && delay != null ? delay : 0;
+      const completeTime = (duration != null ? duration : 1000) + (realDelay != null ? realDelay : 0);
       if (completeTime > largestDuration) {
         largestDuration = completeTime;
       }
@@ -154,7 +155,7 @@ function useAnimation(onComplete) {
               element.style.opacity = opacity;
             }
           });
-        }, delay);
+        }, realDelay);
       });
     });
 
@@ -225,6 +226,7 @@ function useAnimation(onComplete) {
     playFullAnimation,
     pauseAnimation,
     previousLine,
+    clearAnimations,
     isPlayingFullAnimation
   };
 }

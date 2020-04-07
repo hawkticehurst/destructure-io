@@ -103,6 +103,7 @@
         "java": [{
           "given": "  public void setNodeAtIndex(Node head, int index, int newData) {",
           "animations": [
+            "createVarTable,index,2,newData,10"
 
           ]
         },
@@ -115,7 +116,7 @@
         {
           "given": "    int i = 0;",
           "animations": [
-            "createVarTable,i,0"
+            "addVarTableRow,i,0"
           ]
         }
       ]

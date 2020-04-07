@@ -102,9 +102,6 @@ function VisualizationComponent(props, ref) {
   // Note Line numbers are not including the hidden code at the top.
   const selectedLineNumber = useRef(0);
 
-  // const tl = useRef(null); // Anime.js timeline object, instatiated in useEffect after rendered = true
-  // const isCurrentlyPaused = useRef(true); // Keeps track if we are in the middle of an animation or not
-  // const isPlayingFullAnimationOld = useRef(false); // True if clicked Play all instead of next line
   const hasVariableTable = useRef(false); // True if createVarTable is in animations
   const [rendered, setRendered] = useState(false); // Flips to true when all the SVGs we need are created
 
@@ -118,8 +115,6 @@ function VisualizationComponent(props, ref) {
 
   const onAnimationComplete = () => {
     selectedLineNumber.current = 0;
-    // isCurrentlyPaused.current = true;
-    // isPlayingFullAnimationOld.current = false;
     setPlayDisabled(false);
     updateLine(selectedLineNumber.current);
     setAnimationComplete(true);
@@ -134,23 +129,15 @@ function VisualizationComponent(props, ref) {
     hasVariableTable.current = false;
   };
 
-  const { addAnimation, stepAnimation, playFullAnimation, isPlayingFullAnimation } = useAnimation(onAnimationComplete);
+  const { addAnimation, stepAnimation, playFullAnimation, clearAnimations, isPlayingFullAnimation } = useAnimation(onAnimationComplete);
 
   const onStepBegin = () => {
-    // isCurrentlyPaused.current = false;
     selectedLineNumber.current++;
-    // Don't show the updated line if there are no animations on it
-    // if (animationStringArray != null && animationStringArray.length > 0) {
-      updateLine(selectedLineNumber.current);
-    // }
+    updateLine(selectedLineNumber.current);
     setPlayDisabled(true);
   };
 
   const onStepEnd = () => {
-    // // isCurrentlyPaused.current = true;
-    // if (!isPlayingFullAnimationOld.current) { // && animationStringArray !== null && animationStringArray.length > 0) {
-    //   pauseAnimation();
-    // }
     if (!isPlayingFullAnimation.current) {
       setPlayDisabled(false);
     }
@@ -242,13 +229,7 @@ function VisualizationComponent(props, ref) {
 
   // Reset everything when the submodule changes
   useEffect(() => {
-    // if (tl.current != null) {
-    //   tl.current.pause();
-    //   tl.current = null;
-    // }
     selectedLineNumber.current = 0;
-    // isCurrentlyPaused.current = true;
-    // isPlayingFullAnimationOld.current = false;
     allNodes.current = [];
     nodesToBeInserted.current = [];
     insertedNodes.current = [];
@@ -259,6 +240,7 @@ function VisualizationComponent(props, ref) {
     setRendered(false);
     setPlayDisabled(false);
     setAnimationsArray(removeTrailingNull(animations));
+    clearAnimations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [animations, preStartAnimations]);
 
@@ -271,20 +253,6 @@ function VisualizationComponent(props, ref) {
         parseAndCallAnimation(animationString, true);
       });
       animationsArray.forEach(animationStringArray => {
-        // Add a callback so we know when the animation started
-        // tl.current.add({
-        //   duration: 100, // Anime.js issue - begin doesn't always get called when this is 0
-        //   begin: () => {
-        //     isCurrentlyPaused.current = false;
-        //     selectedLineNumber.current++;
-        //     // Don't show the updated line if there are no animations on it
-        //     if (animationStringArray != null && animationStringArray.length > 0) {
-        //       updateLine(selectedLineNumber.current);
-        //     }
-        //     setPlayDisabled(true);
-        //   }
-        // });
-
         // Add all of our animations to the timeline
         if (animationStringArray !== null) {
           animationStringArray.forEach(animationString => {
@@ -299,45 +267,8 @@ function VisualizationComponent(props, ref) {
             }
           });
         }
-
-        // Add a callback so we know when the animation ended
-        // tl.current.add({
-        //   duration: 0,
-        //   complete: () => {
-        //     isCurrentlyPaused.current = true;
-        //     if (!isPlayingFullAnimationOld.current && animationStringArray !== null && animationStringArray.length > 0) {
-        //       pauseAnimation();
-        //     }
-        //   }
-        // });
       });
     } else {
-      // Create the timeline and add all of the SVGs that we will need to the DOM
-      // tl.current = anime.timeline({
-      //   // Delay is needed, because pause does not happen immediately. This should prevent that race condition.
-      //   delay: 100,
-      //   autoplay: false,
-      //   easing: 'easeOutExpo',
-      //   duration: ANIME_DURATION,
-      //   complete: () => {
-      //     selectedLineNumber.current = 0;
-      //     isCurrentlyPaused.current = true;
-      //     isPlayingFullAnimationOld.current = false;
-      //     setPlayDisabled(false);
-      //     updateLine(selectedLineNumber.current);
-      //     setAnimationComplete(true);
-      //
-      //     // TODO This is a hack to "reset" the preStartAnimations
-      //     allNodes.current = [];
-      //     nodesToBeInserted.current = [];
-      //     insertedNodes.current = [];
-      //     allPointers.current = [];
-      //     allVariableRows.current = [];
-      //     insertedRows.current = [];
-      //     tl.current = null;
-      //     hasVariableTable.current = false;
-      //   }
-      // });
       // Determine all of the nodes and pointers we will create
       [[...preStartAnimations], ...animationsArray].forEach(animationStringArray => {
         if (animationStringArray !== null) {
@@ -395,12 +326,6 @@ function VisualizationComponent(props, ref) {
     }
   };
 
-  // const playFullAnimation = () => {
-  //   // if (allNodes.current.length !== 0) {
-  //   //   isPlayingFullAnimationOld.current = true;
-  //   // }
-  //   // nextLine();
-  // };
 
   const pauseAnimation = () => {
   //   isPlayingFullAnimationOld.current = false;
@@ -531,13 +456,6 @@ function VisualizationComponent(props, ref) {
         opacity: '1',
       }
     ], shouldRunImmediately);
-
-    // // Fade in new data
-    // animate({
-    //   targets: newData,
-    //   translateY: '-=15px',
-    //   opacity: '1'
-    // }, shouldRunImmediately, '-=' + ANIME_DURATION); // Offset ensures that both animations happen at the same time
 
     nodeObj.selectedDataIndex++;
   };
@@ -773,13 +691,6 @@ function VisualizationComponent(props, ref) {
       }
     ], shouldRunImmediately);
 
-    // Fade in new data
-    // animate({
-    //   targets: newData,
-    //   translateY: '-=15px',
-    //   opacity: '1'
-    // }, shouldRunImmediately, '-=' + ANIME_DURATION); // Offset ensures that both animations happen at the same time
-
     variableRow.selectedValueIndex++;
   };
 
@@ -797,16 +708,6 @@ function VisualizationComponent(props, ref) {
       translateY: '+=150px'
     };
   };
-
-  // Helper function to replace calls to tl.current.add and anime()
-  // const animate = (options, shouldRunImmediately = false, timelineOffset = undefined) => {
-  //   if (shouldRunImmediately) {
-  //     options.duration = 0;
-  //     anime(options);
-  //   } else {
-  //     tl.current.add(options, timelineOffset);
-  //   }
-  // };
 
   if (!rendered) {
     return null;
