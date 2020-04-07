@@ -104,7 +104,6 @@
       "code": {
         "java": [{
           "given": "    for (int i = 1; i < size; i++) {",
-
           "animations": [
             [
               "addVarTableRow,i,1"
@@ -147,14 +146,16 @@
               "setRowData,i,4"
             ]
           ]
-        },
-        {
-          "given": "    return head;",
-          "animations": [
-
-          ]
         }
       ]
+    }
+  },
+  {
+    "type": "auto",
+    "code": {
+      "java": [{
+        "given": "    return head;"
+      }]
     }
   },
   {

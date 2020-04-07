@@ -77,7 +77,10 @@ function LearningModule() {
             tempTrueSelectedLineMap[iterationNumber] = startingLine + i;
             if (code[language][i].animations != null && code[language][i].animations.length > 0) {
               if (Array.isArray(code[language][i].animations[0])) {
-                tempAnimationStrings = [...tempAnimationStrings, code[language][i].animations[loopIteration]];
+                const nextAnimation = (code[language][i].animations[loopIteration] != null &&
+                                       code[language][i].animations[loopIteration].length > 0) ?
+                                       code[language][i].animations[loopIteration] : null;
+                tempAnimationStrings = [...tempAnimationStrings, nextAnimation];
               } else {
                 tempAnimationStrings = [...tempAnimationStrings, code[language][i].animations];
               }
