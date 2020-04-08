@@ -1,5 +1,4 @@
 import React, { useEffect, memo, forwardRef, useImperativeHandle, useRef, useState } from "react";
-// import anime from 'animejs';
 import useAnimation  from '../../hooks/useAnimation';
 import LinkedListNode from './LinkedListNode';
 import LinkedListPointer from './LinkedListPointer';
