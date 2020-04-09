@@ -48,7 +48,7 @@ function useAnimation(onComplete) {
   const timelineIndex = useRef(0);
   const isPlayingFullAnimation = useRef(false);
   const nextAnim = useRef(null);
-  
+
   /*
   options: [{
     targets: String selector or DOM element... or Array of those things
@@ -56,8 +56,6 @@ function useAnimation(onComplete) {
     translateX : ^^
     width: ^^
     height: ^^
-    x: ^^
-    y: ^^
     opacity: exact value
     duration: number ms
     delay: number ms
@@ -73,8 +71,6 @@ function useAnimation(onComplete) {
         translateY,
         width,
         height,
-        x,
-        y,
         opacity,
         duration,
         delay
@@ -146,12 +142,6 @@ function useAnimation(onComplete) {
             if (height != null) {
               element.style.height = getCalculatedValue(height, oldStyle.height);
             }
-            if (x != null) {
-              element.setAttribute('x', getCalculatedValue(x, element.getAttribute('x')));
-            }
-            if (y != null) {
-              element.setAttribute('y', getCalculatedValue(x, element.getAttribute('y')));
-            }
             if (opacity != null) {
               element.style.opacity = opacity;
             }
@@ -208,7 +198,13 @@ function useAnimation(onComplete) {
   };
 
   const pauseAnimation = () => {
-
+    const node = document.querySelector('#node2');
+    console.log(node.style.transform);
+    const transformValue = window.getComputedStyle(node).transform;
+    // transform(node, node.style.transform);
+    node.style.transition = 'none !important';
+    transform(node, transformValue);
+    console.log(node.style.offsetHeight);
   };
 
   const previousLine = () => {

@@ -14,8 +14,8 @@ function LinkedListPointer(props) {
 
   const yValue = hasVariableTable ? 'calc((100vh - 6.5em) / 2 + 85px)' : 'calc((100vh - 6.5em) / 2 + 60px)'
   return (
-    <svg id={pointerID + '-container'} x="100px" y={yValue}>
-      <g id={pointerID} className="hidden">
+    <svg id={pointerID + '-container'} x="0" y={yValue}>
+      <g id={pointerID} className="hidden" style={{transform: 'translateX(100px)'}}>
         <rect
           id={pointerID + '-tip'}
           width="4px"

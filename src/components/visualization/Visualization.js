@@ -128,7 +128,7 @@ function VisualizationComponent(props, ref) {
     hasVariableTable.current = false;
   };
 
-  const { addAnimation, stepAnimation, playFullAnimation, clearAnimations, isPlayingFullAnimation } = useAnimation(onAnimationComplete);
+  const { addAnimation, stepAnimation, playFullAnimation, clearAnimations, isPlayingFullAnimation, pauseAnimation } = useAnimation(onAnimationComplete);
 
   const onStepBegin = () => {
     selectedLineNumber.current++;
@@ -326,11 +326,11 @@ function VisualizationComponent(props, ref) {
   };
 
 
-  const pauseAnimation = () => {
-  //   isPlayingFullAnimationOld.current = false;
-  //   // tl.current.pause();
-  //   setPlayDisabled(false);
-  };
+  // const pauseAnimation = () => {
+  // //   isPlayingFullAnimationOld.current = false;
+  // //   // tl.current.pause();
+  // //   setPlayDisabled(false);
+  // };
 
   // TODO this doesn't work
   const previousLine = () => {
@@ -389,14 +389,14 @@ function VisualizationComponent(props, ref) {
     const animations = [];
     if (otherPointerAtLocation != null) {
       animations.push({
-        targets: otherPointerAtLocation.id + '-container',
-        x: '-=30px',
+        targets: otherPointerAtLocation.id,
+        translateX: '-=30px',
         duration: 500
       });
       animations.push({
         duration: 0,
-        targets: pointer + '-container',
-        x: '+=30px',
+        targets: pointer,
+        translateX: '+=30px',
       });
       otherPointerAtLocation.offest = -30;
       newPointerObj.offset = 30;
@@ -528,8 +528,8 @@ function VisualizationComponent(props, ref) {
     if (pointerAtNextSpot != null) {
       animations.push({
         duration: 500,
-        targets: pointerAtNextSpot.id + '-container',
-        x: numNodes > 0 ? '+=30px' : '-=30px'
+        targets: pointerAtNextSpot.id,
+        translateX: numNodes > 0 ? '+=30px' : '-=30px'
       });
       timelineOffset += 500;
       pointerAtNextSpot.offset = numNodes > 0 ? 30 : -30;
@@ -545,8 +545,8 @@ function VisualizationComponent(props, ref) {
     // Move the pointer to the desired distance in the correct direction
     animations.push({
       duration: 500,
-      targets: pointer + '-container',
-      x: direction + finalDistance + 'px',
+      targets: pointer,
+      translateX: direction + finalDistance + 'px',
       delay: timelineOffset
     });
     timelineOffset += 500;
@@ -555,8 +555,8 @@ function VisualizationComponent(props, ref) {
     if (pointerAtPrevSpot != null) {
       animations.push({
         duration: 500,
-        targets: pointerAtPrevSpot.id + '-container',
-        x: pointerAtPrevSpot.offset > 0 ? '-=30px' : '+=30px',
+        targets: pointerAtPrevSpot.id,
+        translateX: pointerAtPrevSpot.offset > 0 ? '-=30px' : '+=30px',
         delay: timelineOffset
       });
       pointerAtPrevSpot.offset = 0;
