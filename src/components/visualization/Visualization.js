@@ -133,7 +133,6 @@ function VisualizationComponent(props, ref) {
   const onStepBegin = () => {
     selectedLineNumber.current++;
     updateLine(selectedLineNumber.current);
-    setPlayDisabled(true);
   };
 
   const onStepEnd = () => {
@@ -321,16 +320,22 @@ function VisualizationComponent(props, ref) {
     if (allNodes.current.length === 0) {
       setRendered(false);
     } else {
+      setPlayDisabled(true);
       stepAnimation();
     }
   };
 
+  const onPressPlay = () => {
+    playFullAnimation();
+    setPlayDisabled(true);
+  };
 
-  // const pauseAnimation = () => {
-  // //   isPlayingFullAnimationOld.current = false;
-  // //   // tl.current.pause();
-  // //   setPlayDisabled(false);
-  // };
+  const onPressPause = () => {
+    pauseAnimation();
+  //   isPlayingFullAnimationOld.current = false;
+  //   // tl.current.pause();
+    setPlayDisabled(false);
+  };
 
   // TODO this doesn't work
   const previousLine = () => {
@@ -345,8 +350,8 @@ function VisualizationComponent(props, ref) {
 
   useImperativeHandle(ref, () => ({
     nextLine,
-    playFullAnimation,
-    pauseAnimation,
+    playFullAnimation: onPressPlay,
+    pauseAnimation: onPressPause,
     previousLine
   }));
 

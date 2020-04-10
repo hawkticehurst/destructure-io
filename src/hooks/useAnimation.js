@@ -17,7 +17,7 @@ function transform(element, value) {
 
 function optionalTimeout(callback, delay) {
   if (delay != null && delay > 0) {
-    setTimeout(callback, delay);
+    return setTimeout(callback, delay);
   } else {
     callback();
   }
@@ -50,6 +50,28 @@ function useAnimation(onComplete) {
   const nextAnim = useRef(null);
 
   /*
+  Array of animations for the currently active animation in the timeline
+  [
+    {
+    animation: () => void
+    delay: time in ms
+    timer: timerID, null if had 0 delay
+    duration: time in ms
+    pause: () => void // function to stop the animation
+    }
+  ]
+  */
+  const currentAnimations = useRef([]);
+  // const currentAnimationsIndex = useRef(-1);
+  const startTime = useRef(0); // time unpaused
+  const timeElapsed  = useRef(0); // Only updates on pause
+  const isPaused = useRef(false);
+  const largestCompleteTimes = useRef([]);
+  const completeStep = useRef(() => {});
+  const completeStepTimer = useRef(null);
+  // const timeRemaining = useRef(0);
+
+  /*
   options: [{
     targets: String selector or DOM element... or Array of those things
     translateY: String exact value or +/-= value
@@ -63,7 +85,7 @@ function useAnimation(onComplete) {
   */
   const addAnimation = (options, shouldRunImmediately = false, onBeginStep, onCompleteStep) => {
     const animations = [];
-    let largestDuration = 0;
+    let largestCompleteTime = 0;
     options.forEach(optionObj => {
       const {
         targets,
@@ -77,8 +99,8 @@ function useAnimation(onComplete) {
       } = optionObj;
       const realDelay = !shouldRunImmediately && delay != null ? delay : 0;
       const completeTime = (duration != null ? duration : 1000) + (realDelay != null ? realDelay : 0);
-      if (completeTime > largestDuration) {
-        largestDuration = completeTime;
+      if (completeTime > largestCompleteTime) {
+        largestCompleteTime = completeTime;
       }
 
       const domElements = [];
@@ -98,15 +120,34 @@ function useAnimation(onComplete) {
         }
       }
 
-      animations.push(() => {
-        optionalTimeout(() => {
-          domElements.forEach(element => {
-            const transitionDuration = (duration != null && !shouldRunImmediately) ?
-              ((duration / 1000) + 's') :
-              (shouldRunImmediately ? '0s' : '1s');
-            element.style.transitionDuration = transitionDuration;
+      const transitionDuration = (duration != null && !shouldRunImmediately) ?
+        ((duration / 1000) + 's') :
+        (shouldRunImmediately ? '0s' : '1s');
 
-            const oldStyle = window.getComputedStyle(element);
+      animations.push(() => {
+        let oldStyles = [];
+        const callAnimationCallback = (isFirstCall = true) => {
+          if (isFirstCall) {
+            oldStyles = domElements.map(element => {
+              const style = window.getComputedStyle(element);
+              return {
+                transform: style.transform,
+                width: style.width,
+                height: style.height
+              };
+            });
+          }
+
+          // currentAnimationsIndex.current++;
+          const hasStarted = realDelay < timeElapsed.current;
+          const transitionDurationReal = hasStarted ?
+                                         transitionDuration - (timeElapsed.current - realDelay) :
+                                         transitionDuration;
+          domElements.forEach((element, i) => {
+            element.style.transitionDuration = transitionDurationReal;
+
+            // const oldStyle = window.getComputedStyle(element);
+            const oldStyle = oldStyles[i];
 
             let transformValue;
             let oldTransformX = '0px';
@@ -146,22 +187,62 @@ function useAnimation(onComplete) {
               element.style.opacity = opacity;
             }
           });
-        }, realDelay);
+        };
+        const timerID = optionalTimeout(callAnimationCallback, realDelay);
+
+        const pause = () => {
+          domElements.forEach(element => {
+            const style = window.getComputedStyle(element);
+            transform(element, style.transform);
+            element.style.width = style.width;
+            element.style.height = style.height;
+            element.style.opacity = style.opacity;
+          });
+        };
+
+        currentAnimations.current.push({
+          animation: callAnimationCallback,
+          delay: realDelay,
+          duration: transitionDuration,
+          timer: timerID,
+          pause,
+        })
       });
     });
+
+    if (!shouldRunImmediately) {
+      largestCompleteTimes.current.push(largestCompleteTime);
+    }
 
     const animationCallback = () => {
       if (onBeginStep != null) {
         onBeginStep();
       }
 
+      // currentAnimationsIndex.current = -1;
+      currentAnimations.current = [];
+      timeElapsed.current = 0;
+      completeStep.current = () => {};
+      startTime.current = new Date().getTime();
+      // timeRemaining.current = null;
+
       animations.forEach(animation => {
         if (animation != null) {
           animation();
         }
       });
-      if (onCompleteStep != null) {
-        setTimeout(onCompleteStep, largestDuration);
+
+      completeStep.current = () => {
+        if (onCompleteStep != null) {
+          onCompleteStep();
+        }
+        if (onComplete != null && timelineIndex.current > 0 && timelineIndex.current > timeline.current.length - 1) {
+          clearAnimations();
+          onComplete();
+        }
+      };
+      if (!shouldRunImmediately) {
+        completeStepTimer.current = setTimeout(completeStep.current, largestCompleteTime);
       }
     };
 
@@ -170,26 +251,32 @@ function useAnimation(onComplete) {
     } else {
       timeline.current.push(() => {
         animationCallback();
-
-        // If we are on the timeline and reached the end, reset
-        if (timelineIndex.current >= timeline.current.length - 1) {
-          clearAnimations();
-          if (onComplete != null) {
-            setTimeout(onComplete, largestDuration);
-          }
-        }
         if (isPlayingFullAnimation.current && timelineIndex.current < timeline.current.length - 1) {
-          nextAnim.current = setTimeout(stepAnimation, largestDuration);
+          nextAnim.current = setTimeout(stepAnimation, largestCompleteTime);
         }
       });
     }
   };
 
   const stepAnimation = () => {
-    timeline.current[timelineIndex.current]();
-    if (timelineIndex.current < timeline.current.length - 1) {
-      timelineIndex.current++;
+    if (isPaused.current) { // resume after was paused
+      isPaused.current = false;
+      completeStepTimer.current = setTimeout(completeStep.current, largestCompleteTimes.current[timelineIndex.current] - timeElapsed.current);
+      for (let i = 0; i < currentAnimations.current.length; i++) {
+        const currAnimation = currentAnimations.current[i];
+        const hasStarted = currAnimation.delay < timeElapsed.current;
+        if (!hasStarted || (currAnimation.delay + (parseInt(currAnimation.duration) * 1000)) > timeElapsed.current) {
+          currAnimation.timer = optionalTimeout(() => currAnimation.animation(!hasStarted), hasStarted ? 0 : currAnimation.delay - timeElapsed.current);
+        }
+      }
+      nextAnim.current = setTimeout(stepAnimation, largestCompleteTimes.current[timelineIndex.current] - timeElapsed.current);
+    } else {
+      timeline.current[timelineIndex.current]();
+      if (timelineIndex.current < timeline.current.length) {
+        timelineIndex.current++;
+      }
     }
+    isPaused.current = false;
   };
 
   const playFullAnimation = () => {
@@ -198,13 +285,36 @@ function useAnimation(onComplete) {
   };
 
   const pauseAnimation = () => {
-    const node = document.querySelector('#node2');
-    console.log(node.style.transform);
-    const transformValue = window.getComputedStyle(node).transform;
-    // transform(node, node.style.transform);
-    node.style.transition = 'none !important';
-    transform(node, transformValue);
-    console.log(node.style.offsetHeight);
+    isPaused.current = true;
+
+    // Calculate time passed on current animation
+    timeElapsed.current += (new Date().getTime() - startTime.current);
+
+    // Stop future animation steps from playing
+    isPlayingFullAnimation.current = false;
+    clearTimeout(nextAnim.current);
+
+    // Stop future animations in the current step from playing and pause everything that is playing
+    for (let i = 0; i < currentAnimations.current.length; i++) {
+      const currentAnimation = currentAnimations.current[i];
+      clearTimeout(currentAnimation.timer);
+      if ((currentAnimation.delay < timeElapsed.current) && ((currentAnimation.delay + (parseInt(currentAnimation.duration) * 1000)) < timeElapsed.current)) {
+        currentAnimation.pause();
+      }
+    }
+
+    // Stop the onComplete timer
+    clearTimeout(completeStepTimer.current);
+
+    // timeRemaining.current = currentAnimations.current[currentAnimationsIndex.current].duration -  new Date().getTime() - startTime.current;
+
+    // const node = document.querySelector('#node2');
+    // console.log(node.style.transform);
+    // const transformValue = window.getComputedStyle(node).transform;
+    // // transform(node, node.style.transform);
+    // node.style.transition = 'none !important';
+    // transform(node, transformValue);
+    // console.log(node.style.offsetHeight);
   };
 
   const previousLine = () => {
