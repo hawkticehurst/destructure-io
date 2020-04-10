@@ -332,27 +332,14 @@ function VisualizationComponent(props, ref) {
 
   const onPressPause = () => {
     pauseAnimation();
-  //   isPlayingFullAnimationOld.current = false;
-  //   // tl.current.pause();
     setPlayDisabled(false);
   };
 
-  // TODO this doesn't work
-  const previousLine = () => {
-  //   // if (isCurrentlyPaused.current) {
-  //   //   isCurrentlyPaused.current = false;
-  //   //   selectedLineNumber.current--;
-  //   //   updateLine(selectedLineNumber.current);
-  //   //   tl.current.reverse();
-  //   //   tl.current.play();
-  //   // }
-  };
 
   useImperativeHandle(ref, () => ({
     nextLine,
     playFullAnimation: onPressPlay,
-    pauseAnimation: onPressPause,
-    previousLine
+    pauseAnimation: onPressPause
   }));
 
   /********* Public Animations *********/

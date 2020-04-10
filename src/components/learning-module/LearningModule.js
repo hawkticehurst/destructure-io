@@ -139,10 +139,6 @@ function LearningModule() {
     visualizationRef.current.nextLine();
   };
 
-  // const setPreviousLine = () => {
-  //   visualizationRef.current.previousLine();
-  // };
-
   const startAnimation = () => {
     visualizationRef.current.playFullAnimation();
   };
@@ -241,7 +237,6 @@ function LearningModule() {
             <div className="animate-btn-container">
               <button onClick={startAnimation} disabled={playDisabled || animationComplete}>Play</button>
               <button onClick={stopAnimation} disabled={!playDisabled}>Pause</button>
-              {/*<button onClick={setPreviousLine}>Previous Line BROKEN</button> */}
               <button onClick={setNextLine} disabled={playDisabled}>{animationComplete ? 'Reset' : 'Step'}</button>
             </div>
           )
