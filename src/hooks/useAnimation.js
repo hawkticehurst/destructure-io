@@ -63,14 +63,12 @@ function useAnimation(onComplete) {
   */
   const currentAnimations = useRef([]);
   const currentAnimationValues = useRef([]);
-  // const currentAnimationsIndex = useRef(-1);
   const startTime = useRef(0); // time unpaused
   const timeElapsed  = useRef(0); // Only updates on pause
   const isPaused = useRef(false);
   const largestCompleteTimes = useRef([]);
   const completeStep = useRef(() => {});
   const completeStepTimer = useRef(null);
-  // const timeRemaining = useRef(0);
 
   /*
   options: [{
