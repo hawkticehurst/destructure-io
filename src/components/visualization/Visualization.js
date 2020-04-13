@@ -118,7 +118,6 @@ function VisualizationComponent(props, ref) {
     updateLine(selectedLineNumber.current);
     setAnimationComplete(true);
 
-    // TODO This is a hack to "reset" the preStartAnimations
     allNodes.current = [];
     nodesToBeInserted.current = [];
     insertedNodes.current = [];
@@ -258,7 +257,7 @@ function VisualizationComponent(props, ref) {
           });
           addCurrentToTimeline();
         } else {
-          addAnimation([], false, () => {}, () => {
+          addAnimation([{duration: 0}], false, () => {}, () => {
             selectedLineNumber.current++;
             if (!isPlayingFullAnimation.current) {
               stepAnimation();
