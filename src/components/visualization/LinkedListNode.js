@@ -5,11 +5,12 @@ import React from 'react';
  * nodeID {String} - ID to apply to the node such as "node1"
  * data {String} - Initial data to put in the Node
  * hasVariableTable {boolean} - Determines the y position
+ * animationHeight {number} - px height of the animation svg
  */
 function LinkedListNode(props) {
-  const { nodeID, data, hasVariableTable } = props;
+  const { animationHeight, nodeID, data, hasVariableTable } = props;
 
-  const yValue = hasVariableTable ? 'calc((100vh - 6.5em) / 2 - 175px)' : 'calc((100vh - 6.5em) / 2 - 200px)'
+  const yValue = hasVariableTable ? (animationHeight / 2) - 175 : (animationHeight / 2) - 200;
   return (
     <svg x="50px" y={yValue}>
       <g id={nodeID} className="node hidden">

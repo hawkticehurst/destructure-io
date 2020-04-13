@@ -4,6 +4,8 @@ import LinkedListNode from './LinkedListNode';
 import LinkedListPointer from './LinkedListPointer';
 import VariableTableRow from './VariableTableRow';
 
+const NAV_AND_BOTTOM_HEIGHT = 104; // in pixels
+
 /*
 MVP TODOS:
 - Data in linkedListNode is not centered if only 1 character
@@ -700,6 +702,8 @@ function VisualizationComponent(props, ref) {
     return null;
   }
 
+  const animationHeight = document.documentElement.clientHeight - NAV_AND_BOTTOM_HEIGHT;
+
   const svgWdith = allNodes.current.length > 3 ? allNodes.current.length * 200 + 50 : '100%';
   return (
     <div>
@@ -707,14 +711,14 @@ function VisualizationComponent(props, ref) {
         {
           allNodes.current.map((node, i) => {
             const id = node.id.substring(1); // Remove the #
-            return <LinkedListNode key={id + i} nodeID={id} data={node.data} hasVariableTable={hasVariableTable.current} />
+            return <LinkedListNode key={id + i} animationHeight={animationHeight} nodeID={id} data={node.data} hasVariableTable={hasVariableTable.current} />
           })
         }
 
         {
           allPointers.current.map((pointer, i) => {
             const id = pointer.id.substring(1); // Remove the #
-            return <LinkedListPointer key={id + i} pointerID={id} name={pointer.name} hasVariableTable={hasVariableTable.current} />
+            return <LinkedListPointer key={id + i} animationHeight={animationHeight} pointerID={id} name={pointer.name} hasVariableTable={hasVariableTable.current} />
           })
         }
 

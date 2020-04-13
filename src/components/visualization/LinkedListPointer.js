@@ -5,14 +5,15 @@ import React from 'react';
  * pointerID {String} - ID to apply to the node such as "node1"
  * name {String} - Display name of the pointer
  * hasVariableTable {boolean} - Determines the y position
+ * animationHeight {number} - px height of the animation svg
  */
 function LinkedListPointer(props) {
-  const { pointerID, name, hasVariableTable } = props;
+  const { animationHeight, pointerID, name, hasVariableTable } = props;
 
   // TODO this is a hack, because "curr" takes less space than "head", find a way to calc this
   const textOffset = name === 'curr' ? '5px' : '0px';
 
-  const yValue = hasVariableTable ? 'calc((100vh - 6.5em) / 2 + 85px)' : 'calc((100vh - 6.5em) / 2 + 60px)'
+  const yValue = hasVariableTable ? (animationHeight / 2) + 85 : (animationHeight / 2) + 60;
   return (
     <svg id={pointerID + '-container'} x="100px" y={yValue}>
       <g id={pointerID} className="hidden">
