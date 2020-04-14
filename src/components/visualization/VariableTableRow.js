@@ -14,7 +14,9 @@ function VariableTableRow(props) {
       <rect className="row-cell" x="4px" y="4px" rx="2px"></rect>
       <rect className="row-cell" x="102px" y="4px" rx="2px"></rect>
       <text className="variable-value" x="49px" y="17px" dominantBaseline="middle" textAnchor="middle">{variable}</text>
-      <text className="data-value" x="149px" y="17px" dominantBaseline="middle" textAnchor="middle">{value}</text>
+      <g className="data-value-container">
+        <text className="data-value" x="149px" y="17px" dominantBaseline="middle" textAnchor="middle">{value}</text>
+      </g>
     </g>
   );
 }
