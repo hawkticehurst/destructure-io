@@ -1,4 +1,4 @@
-# Node Warrior
+# destructure.io
 
 An interactive visualization platform for learning data structures.
 
