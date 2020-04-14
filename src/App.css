@@ -1575,7 +1575,7 @@ text {
 .summary-modules {
   position: absolute;
   top: -2.5em;
-  width: calc(100% - 8em);
+  width: calc(100% - 8em - 3px);
   margin: 0 4em 0 4em;
   border-radius: 5px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.4);
@@ -1748,13 +1748,6 @@ text {
 
   .hero-circle {
     display: none;
-    /* TODO: Figure out if we can make this smaller somehow?? */
-    /* align-self: center;
-    position: absolute;
-    bottom: 10px;
-    min-width: 20px;
-    min-height: 20px;
-    font-size: 12px; */
   }
 
   .content-container {
@@ -1984,7 +1977,7 @@ text {
   }
 
   .summary-modules {
-    width: calc(100% - 4em);
+    width: calc(100% - 4em - 3px);
     margin: 0 2em 0 2em;
   }
 
@@ -2340,7 +2333,7 @@ text {
   }
 
   .summary-modules {
-    width: calc(100% - 4em);
+    width: calc(100% - 4em - 3px);
     margin: 0 2em 0 2em;
   }
 
@@ -2694,7 +2687,7 @@ text {
   }
 
   .summary-modules {
-    width: calc(100% - 4em);
+    width: calc(100% - 4em - 3px);
     margin: 0 2em 0 2em;
   }
 
@@ -2804,7 +2797,7 @@ text {
 
 /********* Desktop Styles *********/
 @media only screen and (min-width: 961px) {
-	/* TODO: Move desktop specific styles written before all media queries into this media query */
+	/* POTENTIAL TODO: Move desktop specific styles written before all media queries into this media query */
 }
 
 /********* Big Desktop Styles *********/
@@ -3019,7 +3012,7 @@ text {
   }
 
   .summary-modules {
-    width: calc(100% - 20em);
+    width: calc(100% - 20em - 3px);
     margin: 0 10em 0 10em;
   }
 
