@@ -6,8 +6,8 @@ An interactive visualization platform for learning data structures.
 
 *Prerequisite: [Download npm/node.js](https://www.npmjs.com/get-npm)*
 
-1. Clone or download the `master branch` of the [destructure.io](https://github.com/hawkticehurst/destructure-io) repository.
-2. Run `npm install` in the NodeWarrior base directory.
+1. Clone or download the `master branch` of the [destructure-io](https://github.com/hawkticehurst/destructure-io) repository.
+2. Run `npm install` in the destructure-io base directory.
 3. Run `npm start` to start a local development server. 
 4. Navigate to the localhost URL (i.e. http://localhost:3000) given in the output of `npm start` in your web browser of choice (we recommend Chrome).
 
