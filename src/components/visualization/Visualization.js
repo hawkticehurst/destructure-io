@@ -336,7 +336,6 @@ function VisualizationComponent(props, ref) {
     setPlayDisabled(false);
   };
 
-
   useImperativeHandle(ref, () => ({
     nextLine,
     playFullAnimation: onPressPlay,

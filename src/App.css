@@ -1311,6 +1311,10 @@ button, input {
   background-color: #D6D0FF;
 }
 
+.hidden-chunk .code-line {
+  overflow: hidden;
+}
+
 .selected-line {
   background-color: var(--hero-yellow);
 }
