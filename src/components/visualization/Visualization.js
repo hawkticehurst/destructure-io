@@ -424,9 +424,12 @@ function VisualizationComponent(props, ref) {
     const nodeObj = allNodes.current.find(currNode => currNode.id === node);
     const currDataIndex = nodeObj.selectedDataIndex;
     const dataFieldContainer = document.querySelector(node + " > .node-data-field");
-    const currData = document.querySelectorAll(node + " > .node-data-field .node-data-text")[currDataIndex];
+    const currData = document.querySelectorAll(node + " > .node-data-field .node-data-text-container")[currDataIndex];
 
     // Create new data text element to replace old data text element
+    const newDataGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    newDataGroup.setAttribute("opacity", "0");
+    newDataGroup.setAttribute('class', 'node-data-text-container');
     const newData = document.createElementNS("http://www.w3.org/2000/svg", "text");
     newData.classList.add("text");
     newData.setAttribute("x", "110px");
@@ -434,9 +437,9 @@ function VisualizationComponent(props, ref) {
     newData.setAttribute("dominant-baseline", "middle");
     newData.setAttribute("text-anchor", "middle");
     newData.setAttribute("fill", "#000");
-    newData.setAttribute("opacity", "0");
     newData.textContent = data;
-    dataFieldContainer.appendChild(newData);
+    newDataGroup.appendChild(newData);
+    dataFieldContainer.appendChild(newDataGroup);
 
     // Fade out old data
     animate({
@@ -447,7 +450,7 @@ function VisualizationComponent(props, ref) {
 
     // Fade in new data
     animate({
-      targets: newData,
+      targets: newDataGroup,
       translateY: '-=15px',
       opacity: '1'
     }, shouldRunImmediately, '-=' + ANIME_DURATION); // Offset ensures that both animations happen at the same time
@@ -640,10 +643,13 @@ function VisualizationComponent(props, ref) {
     const row = '#var-table-row-' + variableName;
     const variableRow = allVariableRows.current.find(row => row.name === variableName);
     const currDataIndex = variableRow.selectedValueIndex;
-    const currData = document.querySelectorAll(row + " > .data-value")[currDataIndex];
+    const currData = document.querySelectorAll(row + " > .data-value-container")[currDataIndex];
     const rowContainer = document.querySelector(row);
 
     // Create new data text element to replace old data text element
+    const newDataGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    newDataGroup.setAttribute("opacity", "0");
+    newDataGroup.setAttribute('class', 'data-value-container');
     const newData = document.createElementNS("http://www.w3.org/2000/svg", "text");
     newData.classList.add("data-value");
     newData.setAttribute("x", "149px");
@@ -651,9 +657,9 @@ function VisualizationComponent(props, ref) {
     newData.setAttribute("dominant-baseline", "middle");
     newData.setAttribute("text-anchor", "middle");
     newData.setAttribute("fill", "#000");
-    newData.setAttribute("opacity", "0");
     newData.textContent = data;
-    rowContainer.appendChild(newData);
+    newDataGroup.appendChild(newData);
+    rowContainer.appendChild(newDataGroup);
 
     // Fade out old data
     animate({
@@ -664,7 +670,7 @@ function VisualizationComponent(props, ref) {
 
     // Fade in new data
     animate({
-      targets: newData,
+      targets: newDataGroup,
       translateY: '-=15px',
       opacity: '1'
     }, shouldRunImmediately, '-=' + ANIME_DURATION); // Offset ensures that both animations happen at the same time
@@ -707,7 +713,7 @@ function VisualizationComponent(props, ref) {
   const svgWdith = allNodes.current.length > 3 ? allNodes.current.length * 200 + 50 : '100%';
   return (
     <div>
-      <svg width={svgWdith} height="calc(100vh - 6.5em)">
+      <svg width={svgWdith} height={animationHeight}>
         {
           allNodes.current.map((node, i) => {
             const id = node.id.substring(1); // Remove the #
