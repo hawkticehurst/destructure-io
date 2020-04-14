@@ -2,8 +2,6 @@
 
 An interactive visualization platform for learning data structures.
 
-Visit our [landing page](https://harik98.github.io/NodeWarrior/) to get an overview of the project and its goals.
-
 ## Local Deployment Instructions
 
 *Prerequisite: [Download npm/node.js](https://www.npmjs.com/get-npm)*
