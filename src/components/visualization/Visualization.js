@@ -1,5 +1,5 @@
 import React, { useEffect, memo, forwardRef, useImperativeHandle, useRef, useState } from "react";
-import anime from 'animejs';
+import useAnimation  from '../../hooks/useAnimation';
 import LinkedListNode from './LinkedListNode';
 import LinkedListPointer from './LinkedListPointer';
 import VariableTableRow from './VariableTableRow';
@@ -103,9 +103,6 @@ function VisualizationComponent(props, ref) {
   // Note Line numbers are not including the hidden code at the top.
   const selectedLineNumber = useRef(0);
 
-  const tl = useRef(null); // Anime.js timeline object, instatiated in useEffect after rendered = true
-  const isCurrentlyPaused = useRef(true); // Keeps track if we are in the middle of an animation or not
-  const isPlayingFullAnimation = useRef(false); // True if clicked Play all instead of next line
   const hasVariableTable = useRef(false); // True if createVarTable is in animations
   const [rendered, setRendered] = useState(false); // Flips to true when all the SVGs we need are created
 
@@ -115,6 +112,63 @@ function VisualizationComponent(props, ref) {
   const allPointers = useRef([]); // Every pointer the animation will need, this gets filled on mount
   const allVariableRows = useRef([]); // All of the rows to insert, have name, value and selectedValueIndex
   const insertedRows = useRef([]); // Row IDs inserted in variable table
+  const currentAnimations = useRef([]); // Animations for current line not added to timeline yet
+
+  const onAnimationComplete = () => {
+    selectedLineNumber.current = 0;
+    setPlayDisabled(false);
+    updateLine(selectedLineNumber.current);
+    setAnimationComplete(true);
+
+    allNodes.current = [];
+    nodesToBeInserted.current = [];
+    insertedNodes.current = [];
+    allPointers.current = [];
+    allVariableRows.current = [];
+    insertedRows.current = [];
+    hasVariableTable.current = false;
+  };
+
+  const { addAnimation, stepAnimation, playFullAnimation, clearAnimations, isPlayingFullAnimation, pauseAnimation } = useAnimation(onAnimationComplete);
+
+  const onStepBegin = () => {
+    selectedLineNumber.current++;
+    updateLine(selectedLineNumber.current);
+  };
+
+  const onStepEnd = () => {
+    if (!isPlayingFullAnimation.current) {
+      setPlayDisabled(false);
+    }
+  };
+
+  const animate = (options, shouldRunImmediately = false) => {
+    if (shouldRunImmediately) {
+      addAnimation(options, shouldRunImmediately);
+    } else {
+      let minDelay = 0;
+      currentAnimations.current.forEach(animation => {
+        const duration = animation.duration != null ? animation.duration : ANIME_DURATION;
+        const delay = animation.delay != null ? animation.delay : 0;
+        const time = duration + delay;
+        if (time > minDelay) {
+          minDelay = time;
+        }
+      });
+      const delayedOptions = options.map(option => {
+        return {
+          ...option,
+          delay: option.delay != null ? option.delay + minDelay : minDelay
+        }
+      });
+      currentAnimations.current = [...currentAnimations.current, ...delayedOptions];
+    }
+  };
+
+  const addCurrentToTimeline = () => {
+    addAnimation(currentAnimations.current, false, onStepBegin, onStepEnd);
+    currentAnimations.current = [];
+  };
 
   // Helper function to remove nulls, only from end of array
   const removeTrailingNull = (arr) => {
@@ -174,13 +228,7 @@ function VisualizationComponent(props, ref) {
 
   // Reset everything when the submodule changes
   useEffect(() => {
-    if (tl.current != null) {
-      tl.current.pause();
-      tl.current = null;
-    }
     selectedLineNumber.current = 0;
-    isCurrentlyPaused.current = true;
-    isPlayingFullAnimation.current = false;
     allNodes.current = [];
     nodesToBeInserted.current = [];
     insertedNodes.current = [];
@@ -191,6 +239,7 @@ function VisualizationComponent(props, ref) {
     setRendered(false);
     setPlayDisabled(false);
     setAnimationsArray(removeTrailingNull(animations));
+    clearAnimations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [animations, preStartAnimations]);
 
@@ -202,68 +251,23 @@ function VisualizationComponent(props, ref) {
       preStartAnimations.forEach(animationString => {
         parseAndCallAnimation(animationString, true);
       });
-
-
       animationsArray.forEach(animationStringArray => {
-        // Add a callback so we know when the animation started
-        tl.current.add({
-          duration: 100, // Anime.js issue - begin doesn't always get called when this is 0
-          begin: () => {
-            isCurrentlyPaused.current = false;
-            selectedLineNumber.current++;
-            // Don't show the updated line if there are no animations on it
-            if (animationStringArray != null && animationStringArray.length > 0) {
-              updateLine(selectedLineNumber.current);
-            }
-            setPlayDisabled(true);
-          }
-        });
-
         // Add all of our animations to the timeline
         if (animationStringArray !== null) {
           animationStringArray.forEach(animationString => {
             parseAndCallAnimation(animationString, false);
           });
-        }
-
-        // Add a callback so we know when the animation ended
-        tl.current.add({
-          duration: 0,
-          complete: () => {
-            isCurrentlyPaused.current = true;
-            if (!isPlayingFullAnimation.current && animationStringArray !== null && animationStringArray.length > 0) {
-              pauseAnimation();
+          addCurrentToTimeline();
+        } else {
+          addAnimation([{duration: 0}], false, () => {}, () => {
+            selectedLineNumber.current++;
+            if (!isPlayingFullAnimation.current) {
+              stepAnimation();
             }
-          }
-        });
+          });
+        }
       });
     } else {
-      // Create the timeline and add all of the SVGs that we will need to the DOM
-      tl.current = anime.timeline({
-        // Delay is needed, because pause does not happen immediately. This should prevent that race condition.
-        delay: 100,
-        autoplay: false,
-        easing: 'easeOutExpo',
-        duration: ANIME_DURATION,
-        complete: () => {
-          selectedLineNumber.current = 0;
-          isCurrentlyPaused.current = true;
-          isPlayingFullAnimation.current = false;
-          setPlayDisabled(false);
-          updateLine(selectedLineNumber.current);
-          setAnimationComplete(true);
-
-          // TODO This is a hack to "reset" the preStartAnimations
-          allNodes.current = [];
-          nodesToBeInserted.current = [];
-          insertedNodes.current = [];
-          allPointers.current = [];
-          allVariableRows.current = [];
-          insertedRows.current = [];
-          tl.current = null;
-          hasVariableTable.current = false;
-        }
-      });
       // Determine all of the nodes and pointers we will create
       [[...preStartAnimations], ...animationsArray].forEach(animationStringArray => {
         if (animationStringArray !== null) {
@@ -317,39 +321,26 @@ function VisualizationComponent(props, ref) {
     if (allNodes.current.length === 0) {
       setRendered(false);
     } else {
-      tl.current.play();
+      setPlayDisabled(true);
+      stepAnimation();
     }
   };
 
-  const playFullAnimation = () => {
-    if (allNodes.current.length !== 0) {
-      isPlayingFullAnimation.current = true;
-    }
-    nextLine();
+  const onPressPlay = () => {
+    playFullAnimation();
+    setPlayDisabled(true);
   };
 
-  const pauseAnimation = () => {
-    isPlayingFullAnimation.current = false;
-    tl.current.pause();
+  const onPressPause = () => {
+    pauseAnimation();
     setPlayDisabled(false);
   };
 
-  // TODO this doesn't work
-  const previousLine = () => {
-    // if (isCurrentlyPaused.current) {
-    //   isCurrentlyPaused.current = false;
-    //   selectedLineNumber.current--;
-    //   updateLine(selectedLineNumber.current);
-    //   tl.current.reverse();
-    //   tl.current.play();
-    // }
-  };
 
   useImperativeHandle(ref, () => ({
     nextLine,
-    playFullAnimation,
-    pauseAnimation,
-    previousLine
+    playFullAnimation: onPressPlay,
+    pauseAnimation: onPressPause
   }));
 
   /********* Public Animations *********/
@@ -362,21 +353,24 @@ function VisualizationComponent(props, ref) {
    * @param {boolean} shouldRunImmediately if the animation should run with 0 duration
    */
   const createNewNode = (nodeID, data, shouldRunImmediately = false) => {
+    const animations = [];
+
     // If we create the first node, always just insert it
     if (insertedNodes.current.length === 0) {
       insertedNodes.current.push(nodeID);
-      animate({
+      animate([{
         duration: 0,
         targets: nodeID,
         translateY: '+=150px',
-      }, shouldRunImmediately, '-=' + ANIME_DURATION); // TODO is this offset doing anything?
+      }], true);
     } else {
       nodesToBeInserted.current.push(nodeID);
     }
-    animate({
+    animations.push({
       targets: nodeID,
       opacity: '1'
-    }, shouldRunImmediately);
+    });
+    animate(animations, shouldRunImmediately);
   };
 
   const createNewPointer = (pointer, shouldRunImmediately = false) => {
@@ -385,26 +379,29 @@ function VisualizationComponent(props, ref) {
     const otherPointerAtLocation = allPointers.current.find(pointerObj => {
       return pointerObj.location === newPointerLocation && pointerObj.inserted;
     });
+    const animations = [];
     if (otherPointerAtLocation != null) {
-      animate({
-        targets: otherPointerAtLocation.id + '-container',
-        x: '-=30px',
+      animations.push({
+        targets: otherPointerAtLocation.id,
+        translateX: '-=30px',
         duration: 500
-      }, shouldRunImmediately);
-      animate({
+      });
+      animations.push({
         duration: 0,
-        targets: pointer + '-container',
-        x: '+=30px',
-      }, shouldRunImmediately);
+        targets: pointer,
+        translateX: '+=30px',
+      });
       otherPointerAtLocation.offest = -30;
       newPointerObj.offset = 30;
     }
 
-    animate({
+    animations.push({
       targets: pointer,
-      opacity: '1'
-    }, shouldRunImmediately, otherPointerAtLocation != null ? '-=500' : '-=0');
+      opacity: '1',
+      delay: otherPointerAtLocation != null ? 500 : 0
+    });
     newPointerObj.inserted = true;
+    animate(animations, shouldRunImmediately);
   };
 
   /**
@@ -414,10 +411,10 @@ function VisualizationComponent(props, ref) {
    * @param {boolean} shouldRunImmediately if the animation should run with 0 duration
    */
   const deleteNode = (node, shouldRunImmediately = false) => {
-    animate({
+    animate([{
       targets: node,
       opacity: '0'
-    }, shouldRunImmediately);
+    }], shouldRunImmediately);
   };
 
   const setNodeData = (node, data, shouldRunImmediately=false) => {
@@ -442,18 +439,18 @@ function VisualizationComponent(props, ref) {
     dataFieldContainer.appendChild(newDataGroup);
 
     // Fade out old data
-    animate({
-      targets: currData,
-      translateY: '-=15px',
-      opacity: '0'
-    }, shouldRunImmediately);
-
-    // Fade in new data
-    animate({
-      targets: newDataGroup,
-      translateY: '-=15px',
-      opacity: '1'
-    }, shouldRunImmediately, '-=' + ANIME_DURATION); // Offset ensures that both animations happen at the same time
+    animate([
+      {
+        targets: currData,
+        translateY: '-=15px',
+        opacity: '0'
+      },
+      {
+        targets: newDataGroup,
+        translateY: '-=15px',
+        opacity: '1',
+      }
+    ], shouldRunImmediately);
 
     nodeObj.selectedDataIndex++;
   };
@@ -463,34 +460,39 @@ function VisualizationComponent(props, ref) {
    * Note this cannot be used to move a node that is already inserted.
    */
   const insertNodeAtIndex = (index, node, shouldRunImmediately = false) => {
+    const animations = [];
+
     // insert at head
     if (index < 1) {
       // Make room in Linked List for new node
-      animate({
+      animations.push({
         targets: ['#head-pointer'].concat(insertedNodes.current),
         translateX: '+=200px'
-      }, shouldRunImmediately);
+      });
 
       // Move new node inline with list
-      moveNodeInline(node, shouldRunImmediately);
+      animations.push({...getMoveNodeInlineOptions(node), delay: ANIME_DURATION});
 
       // Set nodes next to point to the old head
-      setPointerToNext(node + '-pointer', shouldRunImmediately);
+      animations.push({...getSetPointerToNextOptions(node + '-pointer'), delay: ANIME_DURATION * 2});
       insertedNodes.current.push(node);
       insertedNodes.current = [node, ...insertedNodes.current]
     } else if (index >= insertedNodes.current.length) { // insert at tail
       // move the node over
       const distance = insertedNodes.current.length * 200;
-      animate({
+      animations.push({
         targets: node,
         translateX: '+=' + distance + 'px'
-      }, shouldRunImmediately);
+      });
 
       // Move new node inline with list
-      moveNodeInline(node, shouldRunImmediately);
+      animations.push({...getMoveNodeInlineOptions(node), delay: ANIME_DURATION});
 
       // Set old tail node pointer to new node
-      setPointerToNext(insertedNodes.current[insertedNodes.current.length - 1] + '-pointer', shouldRunImmediately);
+      animations.push({
+        ...getSetPointerToNextOptions(insertedNodes.current[insertedNodes.current.length - 1] + '-pointer'),
+        delay: ANIME_DURATION * 2
+      });
       insertedNodes.current.push(node);
     } else { // TODO insert in middle
       //TODO
@@ -498,6 +500,7 @@ function VisualizationComponent(props, ref) {
     }
 
     nodesToBeInserted.current = nodesToBeInserted.current.filter(oldNode => oldNode !== node);
+    animate(animations, shouldRunImmediately);
   };
 
   /**
@@ -515,14 +518,15 @@ function VisualizationComponent(props, ref) {
       return pointerObj.location === (oldLocation + numNodes) && pointerObj.inserted && pointerObj.id !== pointer;
     });
     let timelineOffset = 0; // Allows us to show multiple animations at once
+    const animations = [];
 
     // Move the pointer at the next spot over
     if (pointerAtNextSpot != null) {
-      animate({
+      animations.push({
         duration: 500,
-        targets: pointerAtNextSpot.id + '-container',
-        x: numNodes > 0 ? '+=30px' : '-=30px'
-      }, shouldRunImmediately);
+        targets: pointerAtNextSpot.id,
+        translateX: numNodes > 0 ? '+=30px' : '-=30px'
+      });
       timelineOffset += 500;
       pointerAtNextSpot.offset = numNodes > 0 ? 30 : -30;
     }
@@ -535,64 +539,70 @@ function VisualizationComponent(props, ref) {
     const direction = numNodes < 0 ? '-=' : '+=';
 
     // Move the pointer to the desired distance in the correct direction
-    animate({
+    animations.push({
       duration: 500,
-      targets: pointer + '-container',
-      x: direction + finalDistance + 'px',
-    }, shouldRunImmediately, '-=' + timelineOffset);
+      targets: pointer,
+      translateX: direction + finalDistance + 'px',
+      delay: timelineOffset
+    });
     timelineOffset += 500;
 
     // Move the pointer on the previous node back to the center of its node
     if (pointerAtPrevSpot != null) {
-      animate({
+      animations.push({
         duration: 500,
-        targets: pointerAtPrevSpot.id + '-container',
-        x: pointerAtPrevSpot.offset > 0 ? '-=30px' : '+=30px'
-      }, shouldRunImmediately, '-=' + timelineOffset);
+        targets: pointerAtPrevSpot.id,
+        translateX: pointerAtPrevSpot.offset > 0 ? '-=30px' : '+=30px',
+        delay: timelineOffset
+      });
       pointerAtPrevSpot.offset = 0;
     }
 
     movePointerObj.location += numNodes;
     movePointerObj.offset = pointerAtNextSpot != null ? numNodes > 0 ? -30 : 30 : 0;
+    animate(animations, shouldRunImmediately);
   };
 
   const setPointerNull = (pointer, shouldRunImmediately = false) => {
-    animate({
+    animate([{
       targets: pointer + '-tip',
       translateY: '+=75px',
       height: '-=75px'
-    }, shouldRunImmediately);
+    }], shouldRunImmediately);
   };
 
   const elongatePointer = (pointer, shouldRunImmediately = false) => {
-    animate({
+    animate([{
       targets: pointer + '-tip',
       translateY: '-=75px',
       height: '+=75px'
-    }, shouldRunImmediately);
+    }], shouldRunImmediately);
   };
 
-  /**
-   * create a new var table
-   * @param rows {Array[id]} Array of row ids to create
-   */
-   const createVarTable = (rows=[], shouldRunImmediately=false) => {
-    animate({
+ /**
+  * create a new var table
+  * @param rows {Array[id]} Array of row ids to create
+  */
+  const createVarTable = (rows=[], shouldRunImmediately=false) => {
+    const animations = [];
+    animations.push({
       targets: '#var-table',
       opacity: '1'
-    }, shouldRunImmediately);
+    });
 
     if (rows != null) {
       for (let row of rows) {
         const rowID = '#var-table-row-' + row;
         insertedRows.current.push(rowID);
         const rowNum = insertedRows.current.indexOf(rowID) + 1;
-        animate({
+        animations.push({
           targets: rowID,
-          translateY: rowNum * 26 + "px"
-        }, shouldRunImmediately, '-=' + ANIME_DURATION)
+          translateY: rowNum * 26 + "px",
+          delay: ANIME_DURATION
+        });
       }
     }
+    animate(animations, shouldRunImmediately);
   };
 
   // Add row to table
@@ -600,10 +610,10 @@ function VisualizationComponent(props, ref) {
     const id = '#var-table-row-' + name;
     insertedRows.current.push(id);
     const rowNum = insertedRows.current.indexOf(id) + 1;
-    animate({
+    animate([{
       targets: id,
       translateY: rowNum * 26 + "px"
-    }, shouldRunImmediately)
+    }], shouldRunImmediately)
   };
 
   // Remove given row from table
@@ -611,11 +621,12 @@ function VisualizationComponent(props, ref) {
     const row = '#var-table-row-' + variableName;
     const rowNum = insertedRows.indexOf(row) + 1;
     const isLastRow = rowNum === insertedRows.current.length - 2;
+    const animations = [];
 
-    animate({
+    animations.push({
       targets: row,
       translateY: "-=" + rowNum * 26 + "px"
-    }, shouldRunImmediately)
+    });
 
     if (rowNum > 0) {
       insertedRows.current.splice(rowNum - 1, 1);
@@ -624,18 +635,21 @@ function VisualizationComponent(props, ref) {
     if (insertedRows.current.length > 0) {
       if (!isLastRow) {
         for (let insertedRow of insertedRows) {
-          animate({
+          animations.push({
             targets: insertedRow,
-            translateY: "-=26px"
-          }, shouldRunImmediately, '-=' + ANIME_DURATION)
+            translateY: "-=26px",
+            delay: ANIME_DURATION
+          });
         }
       }
     } else {
-      animate({
+      animations.push({
         targets: '#var-table',
-        opacity: '0'
-      }, shouldRunImmediately, '-=' + ANIME_DURATION)
+        opacity: '0',
+        delay: ANIME_DURATION
+      });
     }
+    animate(animations, shouldRunImmediately);
   };
 
   // Update row data
@@ -662,46 +676,35 @@ function VisualizationComponent(props, ref) {
     rowContainer.appendChild(newDataGroup);
 
     // Fade out old data
-    animate({
-      targets: currData,
-      translateY: '-=15px',
-      opacity: '0'
-    }, shouldRunImmediately);
-
-    // Fade in new data
-    animate({
-      targets: newDataGroup,
-      translateY: '-=15px',
-      opacity: '1'
-    }, shouldRunImmediately, '-=' + ANIME_DURATION); // Offset ensures that both animations happen at the same time
+    animate([
+      {
+        targets: currData,
+        translateY: '-=15px',
+        opacity: '0'
+      },
+      {
+        targets: newDataGroup,
+        translateY: '-=15px',
+        opacity: '1',
+      }
+    ], shouldRunImmediately);
 
     variableRow.selectedValueIndex++;
   };
 
   /********* Internal Only Animations *********/
-  const setPointerToNext = (pointer, shouldRunImmediately=false) => {
-    animate({
+  const getSetPointerToNextOptions = (pointer) => {
+    return {
       targets: pointer,
       width: '+=90px'
-    }, shouldRunImmediately);
+    };
   };
 
-  const moveNodeInline = (node, shouldRunImmediately = false) => {
-    animate({
+  const getMoveNodeInlineOptions = (node) => {
+    return {
       targets: node,
       translateY: '+=150px'
-    }, shouldRunImmediately)
-  };
-
-  // Helper function to replace calls to tl.current.add and anime()
-  const animate = (options, shouldRunImmediately = false, timelineOffset = undefined) => {
-    if (shouldRunImmediately) {
-      options.duration = 0;
-      anime(options);
-    } else {
-
-      tl.current.add(options, timelineOffset);
-    }
+    };
   };
 
   if (!rendered) {
