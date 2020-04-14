@@ -2804,7 +2804,7 @@ text {
 
 /********* Desktop Styles *********/
 @media only screen and (min-width: 961px) {
-	/* TODO: Move styles written before all media queries into this media query */
+	/* TODO: Move desktop specific styles written before all media queries into this media query */
 }
 
 /********* Big Desktop Styles *********/
