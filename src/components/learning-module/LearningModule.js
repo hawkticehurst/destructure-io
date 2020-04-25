@@ -42,6 +42,76 @@ function LearningModule() {
     updateCompletionState
   } = useModuleCompletionState(module);
 
+  const STEP_TOUR_INDEX = 4; // Index of when pressing step moves tour step forward
+  const START_TOUR_INDEX = 6; // Index of when pressing play moves step forward
+  const STOP_TOUR_INDEX = 7; // Index of when pressing pause moves step forward
+  const tourSteps = [
+    {
+      visibleSidebar: false,
+      selector: '',
+      content: `Welcome to destructure.io! Click through this tutorial to learn
+                how to use the site and all of its features.`,
+    },
+    {
+      visibleSidebar: false,
+      selector: '.text-content-paragraphs',
+      content: `Each lesson will start with a detailed explanation of what you will
+                learn, building off the previous lessons.`,
+    },
+    {
+      visibleSidebar: false,
+      selector: '.code-display-container',
+      content: `With each lesson, we also will have a block of example code.
+                Don't worry about this code yet, you'll learn all this and more soon!`,
+    },
+    {
+      visibleSidebar: false,
+      selector: '.chunk-collapsed',
+      content: `Some code will start off collapsed. This code is supplementary to the
+                material of the current lesson, but feel free to open it up to see more!`,
+      position: 'top'
+    },
+    {
+      canContinue: () => selectedLine >= 0,
+      visibleSidebar: false,
+      selector: '.step-btn',
+      content: `To start an animation, press the step button.
+                This will animate one line of code at a time. Go ahead and press it a few times!`,
+    },
+    {
+      visibleSidebar: false,
+      selector: '.selected-line',
+      content: `Notice that as you animate code, we highlight the related line of code.`,
+    },
+    {
+      visibleSidebar: false,
+      selector: '.play-btn',
+      content: `Alternatively, you can play the entire animation at once by clicking play!`,
+    },
+    {
+      visibleSidebar: false,
+      selector: '.pause-btn',
+      content: `And of course you can pause animations if they are in progerss!`,
+    },
+    {
+      canContinue: () => sideBarShown === true,
+      visibleSidebar: false,
+      selector: '.hamburger-icon',
+      content: `Click on the menu icon to open the sidebar and track your progress!`,
+    },
+    {
+      visibleSidebar: true,
+      selector: '.progress-circle-filled',
+      content: `Click these circles to flag lessons for later or mark them as complete.`,
+    }
+    ,
+    {
+      visibleSidebar: false,
+      selector: '.next-btn',
+      content: `That's all for now, press next to move on to the first lesson!`,
+    }
+  ];
+
   useEffect(() => {
     let tempData;
     const moduleData = contentOutline.modules.find(moduleObj => moduleObj.directory === module);
@@ -136,8 +206,8 @@ function LearningModule() {
   }
 
   const setNextLine = () => {
-    if (tourStep === 4) {
-      nextTourStep(true);
+    if (tourStep === STEP_TOUR_INDEX) {
+      nextTourStep(undefined, true);
     }
 
     if (animationComplete) {
@@ -147,16 +217,16 @@ function LearningModule() {
   };
 
   const startAnimation = () => {
-    if (tourStep === 6) {
-      nextTourStep(true);
+    if (tourStep === START_TOUR_INDEX) {
+      nextTourStep(undefined, true);
     }
 
     visualizationRef.current.playFullAnimation();
   };
 
   const stopAnimation = () => {
-    if (tourStep === 7) {
-      nextTourStep(true);
+    if (tourStep === STOP_TOUR_INDEX) {
+      nextTourStep(undefined, true);
     }
 
     visualizationRef.current.pauseAnimation();
@@ -191,15 +261,16 @@ function LearningModule() {
       codeChunkKeyOffset={selectedSubmoduleName} />
   );
 
-  const nextTourStep = (force = false) => {
+  // need event here, because the library passes it
+  const nextTourStep = (event, force = false) => {
     if (!force) {
-      if ((tourStep === 4 && selectedLine < 0) ||
-          (tourStep === 8 && sideBarShown === false)) {
+      if (tourSteps[tourStep].canContinue != null && !tourSteps[tourStep].canContinue()) {
         return;
       }
     }
 
-    if (tourStep === 9) {
+    if (tourStep + 1 < tourSteps.length &&
+      tourSteps[tourStep].visibleSidebar && !tourSteps[tourStep + 1].visibleSidebar) {
       setSideBarShown(false);
     }
 
@@ -223,75 +294,17 @@ function LearningModule() {
   };
 
   const gotoTourStep = (step) => {
-    if (step === 9 && !sideBarShown) {
+    if (tourSteps[step].visibleSidebar && !sideBarShown) {
       setSideBarShown(true);
-      // Add a delay so the sidebar can have time to go away
-      setTimeout(() => setTourStep(9), 500);
-      return;
-    } else if (step === 10 && sideBarShown) {
+      setTimeout(() => setTourStep(step), 500);
+    } else if (!tourSteps[step].visibleSidebar && sideBarShown) {
       setSideBarShown(false);
-      // Add a delay so the sidebar can have time to go away
-      setTimeout(() => setTourStep(10), 500);
-      return;
+      setTimeout(() => setTourStep(step), 500);
+    } else {
+      setTourStep(step);
     }
-
-
     setTourStep(step);
   };
-
-  const tourSteps = [
-    {
-      selector: '',
-      content: `Welcome to destructure.io! Click through this tutorial to learn
-                how to use the site and all of its features.`,
-    },
-    {
-      selector: '.text-content-paragraphs',
-      content: `Each lesson will start with a detailed explanation of what you will
-                learn, building off the previous lessons.`,
-    },
-    {
-      selector: '.code-display-container',
-      content: `With each lesson, we also will have a block of example code.
-                Don't worry about this code yet, you'll learn all this and more soon!`,
-    },
-    {
-      selector: '.chunk-collapsed',
-      content: `Some code will start off collapsed. This code is supplementary to the
-                material of the current lesson, but feel free to open it up to see more!`,
-      position: 'top'
-    },
-    {
-      selector: '.step-btn',
-      content: `To start an animation, press the step button.
-                This will animate one line of code at a time. Go ahead and press it a few times!`,
-    },
-    {
-      selector: '.selected-line',
-      content: `Notice that as you animate code, we highlight the related line of code.`,
-    },
-    {
-      selector: '.play-btn',
-      content: `Alternatively, you can play the entire animation at once by clicking play!`,
-    },
-    {
-      selector: '.pause-btn',
-      content: `And of course you can pause animations if they are in progerss!`,
-    },
-    {
-      selector: '.hamburger-icon',
-      content: `Click on the menu icon to open the sidebar and track your progress!`,
-    },
-    {
-      selector: '.progress-circle-filled',
-      content: `Click these circles to flag lessons for later or mark them as complete.`,
-    }
-    ,
-    {
-      selector: '.next-btn',
-      content: `That's all for now, press next to move on to the first lesson!`,
-    }
-  ];
 
   return (
     <Fragment>
@@ -316,7 +329,7 @@ function LearningModule() {
           navBarType="module"
           toggleSideBar={() => {
             if (tourStep === 8) {
-              setTimeout(() => nextTourStep(true), 500);
+              setTimeout(() => nextTourStep(undefined, true), 500);
             }
             setSideBarShown(!sideBarShown);
           }}

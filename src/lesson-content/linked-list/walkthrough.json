@@ -87,7 +87,6 @@
         },
         {
           "given": "    Node curr = head;",
-          "tooltip": "Note we must use a curr pointer instead of moving the head pointer itself. If we moved head we would lose access to the earlier elements in the list, because nothing would point to them anymore (more on this in later modules).",
           "animations": [
             "createNewPointer,#curr-pointer,curr"
           ]
