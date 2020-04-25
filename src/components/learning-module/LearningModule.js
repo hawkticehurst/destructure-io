@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Fragment } from 'react';
+import Tour from 'reactour';
 import TwoPaneResizable from '../common/TwoPaneResizable';
 import CodeDisplay from '../code-display/CodeDisplay';
 import NavBar from '../common/NavBar';
@@ -31,6 +32,7 @@ function LearningModule() {
   const [subModuleFilename, setSubmoduleFilename] = useState('');
   const [animationStrings, setAnimationStrings] = useState([]);
   const [preStartAnimations, setPreStartAnimations] = useState([]);
+  const [tourStep, setTourStep] = useState(0);
   const learningContentPaneRef = useRef(null);
   const visualizationRef = useRef(null);
   const { module, submodule } = useParams();
@@ -116,6 +118,7 @@ function LearningModule() {
     setLoading(false);
     setAnimationComplete(false);
     setHasFinishedAnimation(false);
+    setTourStep(0);
   }, [module, submodule]); // Only run this function when the module or submodule changes
 
   // Prevent showing errors while files are loaded in
@@ -133,6 +136,10 @@ function LearningModule() {
   }
 
   const setNextLine = () => {
+    if (tourStep === 4) {
+      nextTourStep(true);
+    }
+
     if (animationComplete) {
       setAnimationComplete(false);
     }
@@ -140,10 +147,18 @@ function LearningModule() {
   };
 
   const startAnimation = () => {
+    if (tourStep === 6) {
+      nextTourStep(true);
+    }
+
     visualizationRef.current.playFullAnimation();
   };
 
   const stopAnimation = () => {
+    if (tourStep === 7) {
+      nextTourStep(true);
+    }
+
     visualizationRef.current.pauseAnimation();
   };
 
@@ -176,80 +191,205 @@ function LearningModule() {
       codeChunkKeyOffset={selectedSubmoduleName} />
   );
 
+  const nextTourStep = (force = false) => {
+    if (!force) {
+      if ((tourStep === 4 && selectedLine < 0) ||
+          (tourStep === 8 && sideBarShown === false)) {
+        return;
+      }
+    }
+
+    if (tourStep === 9) {
+      setSideBarShown(false);
+    }
+
+    setTourStep(prev => (prev < tourSteps.length - 1 ? prev + 1 : prev));
+  };
+
+  const prevTourStep = () => {
+    if (tourStep === 10) {
+      setSideBarShown(true);
+      // Add a delay so the sidebar can come back out
+      setTimeout(() => setTourStep(9), 500);
+      return;
+    } else if (tourStep === 9) {
+        setSideBarShown(false);
+        // Add a delay so the sidebar can have time to go away
+        setTimeout(() => setTourStep(8), 500);
+        return;
+      }
+
+    setTourStep(prev => (prev > 0 ? prev - 1 : prev));
+  };
+
+  const gotoTourStep = (step) => {
+    if (step === 9 && !sideBarShown) {
+      setSideBarShown(true);
+      // Add a delay so the sidebar can have time to go away
+      setTimeout(() => setTourStep(9), 500);
+      return;
+    } else if (step === 10 && sideBarShown) {
+      setSideBarShown(false);
+      // Add a delay so the sidebar can have time to go away
+      setTimeout(() => setTourStep(10), 500);
+      return;
+    }
+
+
+    setTourStep(step);
+  };
+
+  const tourSteps = [
+    {
+      selector: '',
+      content: `Welcome to destructure.io! Click through this tutorial to learn
+                how to use the site and all of its features.`,
+    },
+    {
+      selector: '.text-content-paragraphs',
+      content: `Each lesson will start with a detailed explanation of what you will
+                learn, building off the previous lessons.`,
+    },
+    {
+      selector: '.code-display-container',
+      content: `With each lesson, we also will have a block of example code.
+                Don't worry about this code yet, you'll learn all this and more soon!`,
+    },
+    {
+      selector: '.chunk-collapsed',
+      content: `Some code will start off collapsed. This code is supplementary to the
+                material of the current lesson, but feel free to open it up to see more!`,
+      position: 'top'
+    },
+    {
+      selector: '.step-btn',
+      content: `To start an animation, press the step button.
+                This will animate one line of code at a time. Go ahead and press it a few times!`,
+    },
+    {
+      selector: '.selected-line',
+      content: `Notice that as you animate code, we highlight the related line of code.`,
+    },
+    {
+      selector: '.play-btn',
+      content: `Alternatively, you can play the entire animation at once by clicking play!`,
+    },
+    {
+      selector: '.pause-btn',
+      content: `And of course you can pause animations if they are in progerss!`,
+    },
+    {
+      selector: '.hamburger-icon',
+      content: `Click on the menu icon to open the sidebar and track your progress!`,
+    },
+    {
+      selector: '.progress-circle-filled',
+      content: `Click these circles to flag lessons for later or mark them as complete.`,
+    }
+    ,
+    {
+      selector: '.next-btn',
+      content: `That's all for now, press next to move on to the first lesson!`,
+    }
+  ];
+
   return (
-    <div>
-      <SideBar headerText={moduleName + ' Lessons'} summaryLink={'/learn/' + module} setSideBarShown={setSideBarShown} sideBarShown={sideBarShown}>
-        {
-          subModuleList.map((subModule, index) => {
-            return (
-              <SubModuleProgressRow
-                onClickLink={() => setSideBarShown(false)}
-                link={filenameToPath(subModule.filename)}
-                moduleTitle={index + 1 + '. ' + subModule.name}
-                completionState={getCompletionState(subModule.filename)}
-                completionStateChanged={(state) => updateCompletionState(subModule.filename, state)}
-                selected={index + 1 === selectedSubModuleIndex}
-                key={index} />
-            );
-          })
-        }
-      </SideBar>
-      <NavBar
-        navBarType="module"
-        toggleSideBar={() => setSideBarShown(!sideBarShown)}
-        SubModuleTitle={selectedSubModuleIndex + '. ' + selectedSubmoduleName} />
-      <div className="learning-module-container">
-        <TwoPaneResizable
-          firstComponentRef={learningContentPaneRef}
-          firstComponent={
-            <LearningContent
-              contentTitleString={selectedSubmoduleName}
-              contentParagraphs={data.paragraphs}
-              codeChunkKeyOffset={selectedSubmoduleName}
-              codeDisplay={codeDisplay}
-            />
-          }
-          secondComponent={
-            <Visualization
-              animations={animationStrings}
-              preStartAnimations={preStartAnimations != null ? preStartAnimations : []}
-              updateLine={setSelectedLine}
-              setPlayDisabled={setPlayDisabled}
-              setAnimationComplete={(isComplete) => {
-                setAnimationComplete(isComplete);
-                if (isComplete) {
-                  setHasFinishedAnimation(true);
-                }
-              }}
-              ref={visualizationRef} />
-          }
-          initialStartSize={45}
-        />
-      </div>
-      <div className="module-btn-container">
-        <div className="back-next-container">
+    <Fragment>
+      <div>
+        <SideBar headerText={moduleName + ' Lessons'} summaryLink={'/learn/' + module} setSideBarShown={setSideBarShown} sideBarShown={sideBarShown}>
           {
-            selectedSubModuleIndex > 1 ? <button onClick={onClickBack}>Back</button> : null
+            subModuleList.map((subModule, index) => {
+              return (
+                <SubModuleProgressRow
+                  onClickLink={() => setSideBarShown(false)}
+                  link={filenameToPath(subModule.filename)}
+                  moduleTitle={index + '. ' + subModule.name}
+                  completionState={getCompletionState(subModule.filename)}
+                  completionStateChanged={(state) => updateCompletionState(subModule.filename, state)}
+                  selected={index + 1 === selectedSubModuleIndex}
+                  key={index} />
+              );
+            })
           }
-        </div>
-        {
-          data.noAnimations ? null : (
-            <div className="animate-btn-container">
-              <button onClick={startAnimation} disabled={playDisabled || animationComplete}>Play</button>
-              <button onClick={stopAnimation} disabled={!playDisabled}>Pause</button>
-              <button onClick={setNextLine} disabled={playDisabled}>{animationComplete ? 'Reset' : 'Step'}</button>
-            </div>
-          )
-        }
-        <div className="back-next-container next-btn">
-          <button onClick={onClickNext}>
-            {
-              selectedSubModuleIndex < subModuleList.length ? 'Next' : 'Finish'
+        </SideBar>
+        <NavBar
+          navBarType="module"
+          toggleSideBar={() => {
+            if (tourStep === 8) {
+              setTimeout(() => nextTourStep(true), 500);
             }
-          </button>
+            setSideBarShown(!sideBarShown);
+          }}
+          SubModuleTitle={(selectedSubModuleIndex - 1) + '. ' + selectedSubmoduleName} />
+        <div className="learning-module-container">
+          <TwoPaneResizable
+            firstComponentRef={learningContentPaneRef}
+            firstComponent={
+              <LearningContent
+                contentTitleString={selectedSubmoduleName}
+                contentParagraphs={data.paragraphs}
+                codeChunkKeyOffset={selectedSubmoduleName}
+                codeDisplay={codeDisplay}
+              />
+            }
+            secondComponent={
+              <Visualization
+                animations={animationStrings}
+                preStartAnimations={preStartAnimations != null ? preStartAnimations : []}
+                updateLine={setSelectedLine}
+                setPlayDisabled={setPlayDisabled}
+                setAnimationComplete={(isComplete) => {
+                  setAnimationComplete(isComplete);
+                  if (isComplete) {
+                    setHasFinishedAnimation(true);
+                  }
+                }}
+                ref={visualizationRef} />
+            }
+            initialStartSize={45}
+          />
+        </div>
+        <div className="module-btn-container">
+          <div className="back-next-container">
+            {
+              selectedSubModuleIndex > 1 ? <button onClick={onClickBack}>Back</button> : null
+            }
+          </div>
+          {
+            data.noAnimations ? null : (
+              <div className="animate-btn-container">
+                <button className="play-btn" onClick={startAnimation} disabled={playDisabled || animationComplete}>Play</button>
+                <button className="pause-btn" onClick={stopAnimation} disabled={!playDisabled}>Pause</button>
+                <button className="step-btn" onClick={setNextLine} disabled={playDisabled}>{animationComplete ? 'Reset' : 'Step'}</button>
+              </div>
+            )
+          }
+          <div className="back-next-container next-btn">
+            <button className="next-btn" onClick={onClickNext}>
+              {
+                selectedSubModuleIndex < subModuleList.length ? 'Next' : 'Finish'
+              }
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+      {
+        submodule === 'walkthrough' ? (
+          <Tour
+            accentColor="#5d42ff"
+            closeWithMask={false}
+            nextStep={nextTourStep}
+            prevStep={prevTourStep}
+            getCurrentStep={gotoTourStep}
+            goToStep={tourStep}
+            showCloseButton={false}
+            steps={tourSteps}
+            isOpen={true}
+            rounded={8}
+             />
+        ) : null
+      }
+    </Fragment>
   );
 }
 

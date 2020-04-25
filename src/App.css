@@ -955,6 +955,11 @@ button, input {
   height: var(--learning-module-height);
 }
 
+[data-tour-elem="controls"] {
+  display: flex !important;
+  justify-content: center !important;
+}
+
 /********* RESIZABLE PANE COMPONENT *********/
 .two-column-container {
   display: flex;
@@ -983,7 +988,7 @@ button, input {
 }
 
 .pane {
-  overflow: scroll;
+  overflow: auto;
   height: 100%;
   min-width: 20%;
   max-width: 80%;
@@ -1012,7 +1017,7 @@ button, input {
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.module-btn-container button {
+.module-btn-container button, .tour-end-btn {
   background-color: var(--hero-purple);
   color: white;
   border-style: none;
@@ -1265,7 +1270,7 @@ button, input {
 
 /********* CODE DISPLAY *********/
 .code-display-container {
-  overflow: scroll;
+  overflow: auto;
   height: 100%;
   border-radius: 5px;
   background-color: white;
@@ -2018,6 +2023,7 @@ text {
   .device-too-small p {
     font-size: 14px;
   }
+
 
   /********* PRIVACY POLICY PAGE *********/
   .privacy-policy {

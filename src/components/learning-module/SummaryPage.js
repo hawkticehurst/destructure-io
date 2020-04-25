@@ -84,7 +84,7 @@ function SummaryPage() {
                 const link = moduleLink + '/' + filenameToSubModuleKey(submodule.filename);
                 return <SubModuleProgressRow
                   key={i}
-                  moduleTitle={(i + 1) + '. ' + submodule.name}
+                  moduleTitle={i + '. ' + submodule.name}
                   link={link}
                   completionState={getCompletionState(submodule.filename)}
                   selected={false}
