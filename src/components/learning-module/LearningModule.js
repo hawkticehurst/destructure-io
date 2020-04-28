@@ -42,9 +42,11 @@ function LearningModule() {
     updateCompletionState
   } = useModuleCompletionState(module);
 
+  const OPEN_HIDDEN_TOUR_INDEX = 3; // Index of when we should open code before highlighting
   const STEP_TOUR_INDEX = 4; // Index of when pressing step moves tour step forward
-  const START_TOUR_INDEX = 6; // Index of when pressing play moves step forward
-  const STOP_TOUR_INDEX = 7; // Index of when pressing pause moves step forward
+  const START_TOUR_INDEX = 7; // Index of when pressing play moves step forward
+  const STOP_TOUR_INDEX = 8; // Index of when pressing pause moves step forward
+  const SHOW_SIDEBAR_TOUR_INDEX = 9;
   const tourSteps = [
     {
       visibleSidebar: false,
@@ -61,18 +63,19 @@ function LearningModule() {
     {
       visibleSidebar: false,
       selector: '.code-display-container',
-      content: `With each lesson, we also will have a block of example code.
+      content: `With each lesson, there will also be a block of example code.
                 Don't worry about this code yet, you'll learn all this and more soon!`,
     },
     {
       visibleSidebar: false,
-      selector: '.chunk-collapsed',
+      selector: '.hidden-chunk',
       content: `Some code will start off collapsed. This code is supplementary to the
-                material of the current lesson, but feel free to open it up to see more!`,
+                material of the current lesson, but always feel free to open it up to get more context!`,
       position: 'top'
     },
     {
       canContinue: () => selectedLine >= 0,
+      disabledRight: selectedLine < 0,
       visibleSidebar: false,
       selector: '.step-btn',
       content: `To start an animation, press the step button.
@@ -80,8 +83,15 @@ function LearningModule() {
     },
     {
       visibleSidebar: false,
+      selector: '.visualization',
+      content: `As you step through code, the visualization will update one step at a time!`,
+      position: 'left'
+    },
+    {
+      visibleSidebar: false,
       selector: '.selected-line',
-      content: `Notice that as you animate code, we highlight the related line of code.`,
+      content: `With each step of the animation, the related line of code will highlight!`,
+      position: 'left'
     },
     {
       visibleSidebar: false,
@@ -91,10 +101,11 @@ function LearningModule() {
     {
       visibleSidebar: false,
       selector: '.pause-btn',
-      content: `And of course you can pause animations if they are in progerss!`,
+      content: `And of course you can pause animations if they are in progress!`,
     },
     {
       canContinue: () => sideBarShown === true,
+      disabledRight: sideBarShown === false,
       visibleSidebar: false,
       selector: '.hamburger-icon',
       content: `Click on the menu icon to open the sidebar and track your progress!`,
@@ -103,8 +114,7 @@ function LearningModule() {
       visibleSidebar: true,
       selector: '.progress-circle-filled',
       content: `Click these circles to flag lessons for later or mark them as complete.`,
-    }
-    ,
+    },
     {
       visibleSidebar: false,
       selector: '.next-btn',
@@ -207,7 +217,7 @@ function LearningModule() {
 
   const setNextLine = () => {
     if (tourStep === STEP_TOUR_INDEX) {
-      nextTourStep(undefined, true);
+      setTimeout(() => nextTourStep(undefined, true), 500);
     }
 
     if (animationComplete) {
@@ -269,6 +279,14 @@ function LearningModule() {
       }
     }
 
+    if (tourStep + 1 === OPEN_HIDDEN_TOUR_INDEX && document.querySelector('.chunk-collapsed') != null) {
+      document.querySelector('.chevron.right').click();
+      setTimeout(() => {
+        setTourStep(prev => (prev < tourSteps.length - 1 ? prev + 1 : prev));
+      }, 500);
+      return;
+    }
+
     if (tourStep + 1 < tourSteps.length &&
       tourSteps[tourStep].visibleSidebar && !tourSteps[tourStep + 1].visibleSidebar) {
       setSideBarShown(false);
@@ -278,15 +296,23 @@ function LearningModule() {
   };
 
   const prevTourStep = () => {
-    if (tourStep === 10) {
+    if (tourStep - 1 === OPEN_HIDDEN_TOUR_INDEX && document.querySelector('.chunk-collapsed') != null) {
+      document.querySelector('.chevron.right').click();
+      setTimeout(() => {
+        setTourStep(OPEN_HIDDEN_TOUR_INDEX);
+      }, 500);
+      return;
+    }
+
+    if (tourStep === SHOW_SIDEBAR_TOUR_INDEX + 1) {
       setSideBarShown(true);
       // Add a delay so the sidebar can come back out
-      setTimeout(() => setTourStep(9), 500);
+      setTimeout(() => setTourStep(SHOW_SIDEBAR_TOUR_INDEX), 500);
       return;
-    } else if (tourStep === 9) {
+    } else if (tourStep === SHOW_SIDEBAR_TOUR_INDEX) {
         setSideBarShown(false);
         // Add a delay so the sidebar can have time to go away
-        setTimeout(() => setTourStep(8), 500);
+        setTimeout(() => setTourStep(SHOW_SIDEBAR_TOUR_INDEX - 1), 500);
         return;
       }
 
@@ -297,11 +323,15 @@ function LearningModule() {
     if (tourSteps[step].visibleSidebar && !sideBarShown) {
       setSideBarShown(true);
       setTimeout(() => setTourStep(step), 500);
+      return;
     } else if (!tourSteps[step].visibleSidebar && sideBarShown) {
       setSideBarShown(false);
       setTimeout(() => setTourStep(step), 500);
-    } else {
-      setTourStep(step);
+      return;
+    } else if (step === OPEN_HIDDEN_TOUR_INDEX && document.querySelector('.chunk-collapsed') != null) {
+      document.querySelector('.chevron.right').click();
+      setTimeout(() => setTourStep(step), 500);
+      return;
     }
     setTourStep(step);
   };
@@ -328,7 +358,7 @@ function LearningModule() {
         <NavBar
           navBarType="module"
           toggleSideBar={() => {
-            if (tourStep === 8) {
+            if (tourStep === SHOW_SIDEBAR_TOUR_INDEX) {
               setTimeout(() => nextTourStep(undefined, true), 500);
             }
             setSideBarShown(!sideBarShown);
@@ -393,7 +423,7 @@ function LearningModule() {
             closeWithMask={false}
             nextStep={nextTourStep}
             prevStep={prevTourStep}
-            getCurrentStep={gotoTourStep}
+            dotClick={gotoTourStep}
             goToStep={tourStep}
             showCloseButton={false}
             steps={tourSteps}

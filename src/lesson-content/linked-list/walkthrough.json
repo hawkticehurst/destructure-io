@@ -52,31 +52,11 @@
       }
     },
     {
-      "type": "hidden",
-      "code": {
-        "java": [
-          {
-            "given": "  public static void main(string[] args) {"
-          },
-          {
-            "given": "    Node head = createListSizeN(4);"
-          },
-          {
-            "given": "  }"
-          },
-          {
-            "given": ""
-          }
-        ]
-      }
-    },
-    {
       "type": "auto",
       "code": {
         "java": [{
-          "given": "  public Node createListSizeN(int size) {",
+          "given": "  public static void main(string[] args) {",
           "animations": [
-              "createVarTable,size,4"
           ]
         },{
           "given": "    Node head = new Node(0);",
@@ -96,10 +76,10 @@
     },
     {
       "type": "loop",
-      "loopCounter": [3],
+      "loopCounter": [2],
       "code": {
         "java": [{
-          "given": "    for (int i = 1; i < size; i++) {",
+          "given": "    for (int i = 1; i < 3; i++) {",
           "animations": [
             [
               "addVarTableRow,i,1"

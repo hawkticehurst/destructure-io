@@ -714,7 +714,7 @@ function VisualizationComponent(props, ref) {
 
   const svgWdith = allNodes.current.length > 3 ? allNodes.current.length * 200 + 50 : '100%';
   return (
-    <div>
+    <div className="visualization">
       <svg width={svgWdith} height={animationHeight}>
         {
           allNodes.current.map((node, i) => {
