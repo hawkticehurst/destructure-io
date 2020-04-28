@@ -11,6 +11,10 @@
       "directory": "linked-list",
       "submodules": [
         {
+          "name": "Walkthrough",
+          "filename": "walkthrough.json"
+        },
+        {
           "name": "What is a Linked List?",
           "filename": "whatIsALinkedList.json"
         },

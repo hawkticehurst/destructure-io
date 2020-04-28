@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Fragment } from 'react';
+import Tour from 'reactour';
 import TwoPaneResizable from '../common/TwoPaneResizable';
 import CodeDisplay from '../code-display/CodeDisplay';
 import NavBar from '../common/NavBar';
@@ -31,6 +32,7 @@ function LearningModule() {
   const [subModuleFilename, setSubmoduleFilename] = useState('');
   const [animationStrings, setAnimationStrings] = useState([]);
   const [preStartAnimations, setPreStartAnimations] = useState([]);
+  const [tourStep, setTourStep] = useState(0);
   const learningContentPaneRef = useRef(null);
   const visualizationRef = useRef(null);
   const { module, submodule } = useParams();
@@ -39,6 +41,86 @@ function LearningModule() {
     getCompletionState,
     updateCompletionState
   } = useModuleCompletionState(module);
+
+  const OPEN_HIDDEN_TOUR_INDEX = 3; // Index of when we should open code before highlighting
+  const STEP_TOUR_INDEX = 4; // Index of when pressing step moves tour step forward
+  const START_TOUR_INDEX = 7; // Index of when pressing play moves step forward
+  const STOP_TOUR_INDEX = 8; // Index of when pressing pause moves step forward
+  const SHOW_SIDEBAR_TOUR_INDEX = 9;
+  const tourSteps = [
+    {
+      visibleSidebar: false,
+      selector: '',
+      content: `Welcome to destructure.io! Click through this tutorial to learn
+                how to use the site and all of its features.`,
+    },
+    {
+      visibleSidebar: false,
+      selector: '.text-content-paragraphs',
+      content: `Each lesson will start with a detailed explanation of what you will
+                learn, building off the previous lessons.`,
+    },
+    {
+      visibleSidebar: false,
+      selector: '.code-display-container',
+      content: `With each lesson, there will also be a block of example code.
+                Don't worry about this code yet, you'll learn all this and more soon!`,
+    },
+    {
+      visibleSidebar: false,
+      selector: '.hidden-chunk',
+      content: `Some code will start off collapsed. This code is supplementary to the
+                material of the current lesson, but always feel free to open it up to get more context!`,
+      position: 'top'
+    },
+    {
+      canContinue: () => selectedLine >= 0,
+      disabledRight: selectedLine < 0,
+      visibleSidebar: false,
+      selector: '.step-btn',
+      content: `To start an animation, press the step button.
+                This will animate one line of code at a time. Go ahead and press it a few times!`,
+    },
+    {
+      visibleSidebar: false,
+      selector: '.visualization',
+      content: `As you step through code, the visualization will update one step at a time!`,
+      position: 'left'
+    },
+    {
+      visibleSidebar: false,
+      selector: '.selected-line',
+      content: `With each step of the animation, the related line of code will highlight!`,
+      position: 'left'
+    },
+    {
+      visibleSidebar: false,
+      selector: '.play-btn',
+      content: `Alternatively, you can play the entire animation at once by clicking play!`,
+    },
+    {
+      visibleSidebar: false,
+      selector: '.pause-btn',
+      content: `And of course you can pause animations if they are in progress!`,
+    },
+    {
+      canContinue: () => sideBarShown === true,
+      disabledRight: sideBarShown === false,
+      visibleSidebar: false,
+      selector: '.hamburger-icon',
+      content: `Click on the menu icon to open the sidebar and track your progress!`,
+    },
+    {
+      visibleSidebar: true,
+      selector: '.progress-circle-filled',
+      content: `Click these circles to flag lessons for later or mark them as complete.`,
+    },
+    {
+      visibleSidebar: false,
+      selector: '.next-btn',
+      content: `That's all for now, press next to move on to the first lesson!`,
+    }
+  ];
 
   useEffect(() => {
     let tempData;
@@ -116,6 +198,7 @@ function LearningModule() {
     setLoading(false);
     setAnimationComplete(false);
     setHasFinishedAnimation(false);
+    setTourStep(0);
   }, [module, submodule]); // Only run this function when the module or submodule changes
 
   // Prevent showing errors while files are loaded in
@@ -133,6 +216,10 @@ function LearningModule() {
   }
 
   const setNextLine = () => {
+    if (tourStep === STEP_TOUR_INDEX) {
+      setTimeout(() => nextTourStep(undefined, true), 500);
+    }
+
     if (animationComplete) {
       setAnimationComplete(false);
     }
@@ -140,10 +227,18 @@ function LearningModule() {
   };
 
   const startAnimation = () => {
+    if (tourStep === START_TOUR_INDEX) {
+      nextTourStep(undefined, true);
+    }
+
     visualizationRef.current.playFullAnimation();
   };
 
   const stopAnimation = () => {
+    if (tourStep === STOP_TOUR_INDEX) {
+      nextTourStep(undefined, true);
+    }
+
     visualizationRef.current.pauseAnimation();
   };
 
@@ -176,80 +271,168 @@ function LearningModule() {
       codeChunkKeyOffset={selectedSubmoduleName} />
   );
 
+  // need event here, because the library passes it
+  const nextTourStep = (event, force = false) => {
+    if (!force) {
+      if (tourSteps[tourStep].canContinue != null && !tourSteps[tourStep].canContinue()) {
+        return;
+      }
+    }
+
+    if (tourStep + 1 === OPEN_HIDDEN_TOUR_INDEX && document.querySelector('.chunk-collapsed') != null) {
+      document.querySelector('.chevron.right').click();
+      setTimeout(() => {
+        setTourStep(prev => (prev < tourSteps.length - 1 ? prev + 1 : prev));
+      }, 500);
+      return;
+    }
+
+    if (tourStep + 1 < tourSteps.length &&
+      tourSteps[tourStep].visibleSidebar && !tourSteps[tourStep + 1].visibleSidebar) {
+      setSideBarShown(false);
+    }
+
+    setTourStep(prev => (prev < tourSteps.length - 1 ? prev + 1 : prev));
+  };
+
+  const prevTourStep = () => {
+    if (tourStep - 1 === OPEN_HIDDEN_TOUR_INDEX && document.querySelector('.chunk-collapsed') != null) {
+      document.querySelector('.chevron.right').click();
+      setTimeout(() => {
+        setTourStep(OPEN_HIDDEN_TOUR_INDEX);
+      }, 500);
+      return;
+    }
+
+    if (tourStep === SHOW_SIDEBAR_TOUR_INDEX + 1) {
+      setSideBarShown(true);
+      // Add a delay so the sidebar can come back out
+      setTimeout(() => setTourStep(SHOW_SIDEBAR_TOUR_INDEX), 500);
+      return;
+    } else if (tourStep === SHOW_SIDEBAR_TOUR_INDEX) {
+        setSideBarShown(false);
+        // Add a delay so the sidebar can have time to go away
+        setTimeout(() => setTourStep(SHOW_SIDEBAR_TOUR_INDEX - 1), 500);
+        return;
+      }
+
+    setTourStep(prev => (prev > 0 ? prev - 1 : prev));
+  };
+
+  const gotoTourStep = (step) => {
+    if (tourSteps[step].visibleSidebar && !sideBarShown) {
+      setSideBarShown(true);
+      setTimeout(() => setTourStep(step), 500);
+      return;
+    } else if (!tourSteps[step].visibleSidebar && sideBarShown) {
+      setSideBarShown(false);
+      setTimeout(() => setTourStep(step), 500);
+      return;
+    } else if (step === OPEN_HIDDEN_TOUR_INDEX && document.querySelector('.chunk-collapsed') != null) {
+      document.querySelector('.chevron.right').click();
+      setTimeout(() => setTourStep(step), 500);
+      return;
+    }
+    setTourStep(step);
+  };
+
   return (
-    <div>
-      <SideBar headerText={moduleName + ' Lessons'} summaryLink={'/learn/' + module} setSideBarShown={setSideBarShown} sideBarShown={sideBarShown}>
-        {
-          subModuleList.map((subModule, index) => {
-            return (
-              <SubModuleProgressRow
-                onClickLink={() => setSideBarShown(false)}
-                link={filenameToPath(subModule.filename)}
-                moduleTitle={index + 1 + '. ' + subModule.name}
-                completionState={getCompletionState(subModule.filename)}
-                completionStateChanged={(state) => updateCompletionState(subModule.filename, state)}
-                selected={index + 1 === selectedSubModuleIndex}
-                key={index} />
-            );
-          })
-        }
-      </SideBar>
-      <NavBar
-        navBarType="module"
-        toggleSideBar={() => setSideBarShown(!sideBarShown)}
-        SubModuleTitle={selectedSubModuleIndex + '. ' + selectedSubmoduleName} />
-      <div className="learning-module-container">
-        <TwoPaneResizable
-          firstComponentRef={learningContentPaneRef}
-          firstComponent={
-            <LearningContent
-              contentTitleString={selectedSubmoduleName}
-              contentParagraphs={data.paragraphs}
-              codeChunkKeyOffset={selectedSubmoduleName}
-              codeDisplay={codeDisplay}
-            />
-          }
-          secondComponent={
-            <Visualization
-              animations={animationStrings}
-              preStartAnimations={preStartAnimations != null ? preStartAnimations : []}
-              updateLine={setSelectedLine}
-              setPlayDisabled={setPlayDisabled}
-              setAnimationComplete={(isComplete) => {
-                setAnimationComplete(isComplete);
-                if (isComplete) {
-                  setHasFinishedAnimation(true);
-                }
-              }}
-              ref={visualizationRef} />
-          }
-          initialStartSize={45}
-        />
-      </div>
-      <div className="module-btn-container">
-        <div className="back-next-container">
+    <Fragment>
+      <div>
+        <SideBar headerText={moduleName + ' Lessons'} summaryLink={'/learn/' + module} setSideBarShown={setSideBarShown} sideBarShown={sideBarShown}>
           {
-            selectedSubModuleIndex > 1 ? <button onClick={onClickBack}>Back</button> : null
+            subModuleList.map((subModule, index) => {
+              return (
+                <SubModuleProgressRow
+                  onClickLink={() => setSideBarShown(false)}
+                  link={filenameToPath(subModule.filename)}
+                  moduleTitle={index + '. ' + subModule.name}
+                  completionState={getCompletionState(subModule.filename)}
+                  completionStateChanged={(state) => updateCompletionState(subModule.filename, state)}
+                  selected={index + 1 === selectedSubModuleIndex}
+                  key={index} />
+              );
+            })
           }
-        </div>
-        {
-          data.noAnimations ? null : (
-            <div className="animate-btn-container">
-              <button onClick={startAnimation} disabled={playDisabled || animationComplete}>Play</button>
-              <button onClick={stopAnimation} disabled={!playDisabled}>Pause</button>
-              <button onClick={setNextLine} disabled={playDisabled}>{animationComplete ? 'Reset' : 'Step'}</button>
-            </div>
-          )
-        }
-        <div className="back-next-container next-btn">
-          <button onClick={onClickNext}>
-            {
-              selectedSubModuleIndex < subModuleList.length ? 'Next' : 'Finish'
+        </SideBar>
+        <NavBar
+          navBarType="module"
+          toggleSideBar={() => {
+            if (tourStep === SHOW_SIDEBAR_TOUR_INDEX) {
+              setTimeout(() => nextTourStep(undefined, true), 500);
             }
-          </button>
+            setSideBarShown(!sideBarShown);
+          }}
+          SubModuleTitle={(selectedSubModuleIndex - 1) + '. ' + selectedSubmoduleName} />
+        <div className="learning-module-container">
+          <TwoPaneResizable
+            firstComponentRef={learningContentPaneRef}
+            firstComponent={
+              <LearningContent
+                contentTitleString={selectedSubmoduleName}
+                contentParagraphs={data.paragraphs}
+                codeChunkKeyOffset={selectedSubmoduleName}
+                codeDisplay={codeDisplay}
+              />
+            }
+            secondComponent={
+              <Visualization
+                animations={animationStrings}
+                preStartAnimations={preStartAnimations != null ? preStartAnimations : []}
+                updateLine={setSelectedLine}
+                setPlayDisabled={setPlayDisabled}
+                setAnimationComplete={(isComplete) => {
+                  setAnimationComplete(isComplete);
+                  if (isComplete) {
+                    setHasFinishedAnimation(true);
+                  }
+                }}
+                ref={visualizationRef} />
+            }
+            initialStartSize={45}
+          />
+        </div>
+        <div className="module-btn-container">
+          <div className="back-next-container">
+            {
+              selectedSubModuleIndex > 1 ? <button onClick={onClickBack}>Back</button> : null
+            }
+          </div>
+          {
+            data.noAnimations ? null : (
+              <div className="animate-btn-container">
+                <button className="play-btn" onClick={startAnimation} disabled={playDisabled || animationComplete}>Play</button>
+                <button className="pause-btn" onClick={stopAnimation} disabled={!playDisabled}>Pause</button>
+                <button className="step-btn" onClick={setNextLine} disabled={playDisabled}>{animationComplete ? 'Reset' : 'Step'}</button>
+              </div>
+            )
+          }
+          <div className="back-next-container next-btn">
+            <button className="next-btn" onClick={onClickNext}>
+              {
+                selectedSubModuleIndex < subModuleList.length ? 'Next' : 'Finish'
+              }
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+      {
+        submodule === 'walkthrough' ? (
+          <Tour
+            accentColor="#5d42ff"
+            closeWithMask={false}
+            nextStep={nextTourStep}
+            prevStep={prevTourStep}
+            dotClick={gotoTourStep}
+            goToStep={tourStep}
+            showCloseButton={false}
+            steps={tourSteps}
+            isOpen={true}
+            rounded={8}
+             />
+        ) : null
+      }
+    </Fragment>
   );
 }
 
