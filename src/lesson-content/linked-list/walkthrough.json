@@ -82,7 +82,7 @@
           "given": "    for (int i = 1; i < 3; i++) {",
           "animations": [
             [
-              "addVarTableRow,i,1"
+              "createVarTable,i,1"
             ], [], []
           ]
         },
