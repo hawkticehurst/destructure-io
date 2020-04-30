@@ -5,13 +5,28 @@ import { useHistory } from "react-router-dom";
 /**
  * Required Props:
  * children {React Node} - Content to be contained in the sideBar
- * headerText {String} - Heading to display for the sidebar
  * summaryLink {String} - Link for clicking header text. i.e. /learn/linked-list
  * setSideBarShown {function} - set if the sideBar should be shown
  * sideBarShown {boolean} - true if sideBar is showing, else false
+ *
+ * Optional Props:
+ * headerText {String} - Heading to display for the sidebar
+ * isSidebarRight {Boolean} - true ot put sidebar on right side of screen. Defaults false.
+ * showBackToSummary {Boolean} - True to add a back to summary page button. False to hide it. Defaults false.
+ * hideControlsDivider {Boolean} - True to hide the line under the close button. Defaults false.
+ *
  */
 function SideBar(props) {
-  const { children, headerText, summaryLink, setSideBarShown, sideBarShown } = props;
+  const {
+    children,
+    headerText,
+    summaryLink,
+    setSideBarShown,
+    sideBarShown,
+    isSidebarRight,
+    showBackToSummary,
+    hideControlsDivider
+  } = props;
   const history = useHistory();
   const [render, setRender] = useState(sideBarShown);
 
@@ -37,22 +52,33 @@ function SideBar(props) {
   };
 
   const animationClass = sideBarShown ? 'sidebar-fade-in' : 'sidebar-fade-out';
+  const sidebarRightClass = isSidebarRight === true ? ' sidebar-right' : '';
   return (
     render ? (
       <Fragment>
         <PageTint clickedTint={() => setSideBarShown(false)} tintShown={sideBarShown} />
         <div
-          className={'sidebar ' + animationClass}
+          className={'sidebar ' + animationClass + sidebarRightClass}
           onClick={stopPropagation}
           onAnimationEnd={onAnimationEnd}>
-          <div className="sidebar-controls">
+          <div className={'sidebar-controls' + (hideControlsDivider ? ' hide-bottom-border' : '')}>
             <div className="go-back-summary" onClick={onClickGoBackSummary}>
-              <img src={require('./images/arrow-left.svg')} alt="Arrow Left Icon" />
-              <p>Back To Summary</p>
+              {
+                showBackToSummary === true ? (
+                  <Fragment>
+                    <img src={require('./images/arrow-left.svg')} alt="Arrow Left Icon" />
+                    <p>Back To Summary</p>
+                  </Fragment>
+                ) : null
+              }
             </div>
             <img className="sidebar-close" onClick={() => setSideBarShown(false)} src={require('./images/close.svg')} alt="Close Icon" />
           </div>
-          <h1 className="sidebar-header">{headerText}</h1>
+          {
+            headerText != null ? (
+              <h1 className="sidebar-header">{headerText}</h1>
+            ) : null
+          }
           {children}
         </div>
       </Fragment>
