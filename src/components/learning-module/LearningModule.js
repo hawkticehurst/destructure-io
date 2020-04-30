@@ -367,6 +367,8 @@ function LearningModule() {
         <div className="learning-module-container">
           <TwoPaneResizable
             firstComponentRef={learningContentPaneRef}
+            firstComponentName="Learn"
+            secondComponentName="Visualization"
             firstComponent={
               <LearningContent
                 contentTitleString={selectedSubmoduleName}

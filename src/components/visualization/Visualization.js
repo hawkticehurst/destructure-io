@@ -4,8 +4,6 @@ import LinkedListNode from './LinkedListNode';
 import LinkedListPointer from './LinkedListPointer';
 import VariableTableRow from './VariableTableRow';
 
-const NAV_AND_BOTTOM_HEIGHT = 104; // in pixels
-
 /*
 MVP TODOS:
 - Data in linkedListNode is not centered if only 1 character
@@ -251,7 +249,7 @@ function VisualizationComponent(props, ref) {
       preStartAnimations.forEach(animationString => {
         parseAndCallAnimation(animationString, true);
       });
-      animationsArray.forEach(animationStringArray => {
+      animationsArray.forEach((animationStringArray) => {
         // Add all of our animations to the timeline
         if (animationStringArray !== null) {
           animationStringArray.forEach(animationString => {
@@ -710,7 +708,8 @@ function VisualizationComponent(props, ref) {
     return null;
   }
 
-  const animationHeight = document.documentElement.clientHeight - NAV_AND_BOTTOM_HEIGHT;
+  const navAndBottomHeight = document.querySelector('.nav-bar-container').offsetHeight + document.querySelector('.module-btn-container').offsetHeight;
+  const animationHeight = document.documentElement.clientHeight - navAndBottomHeight;
 
   const svgWdith = allNodes.current.length > 3 ? allNodes.current.length * 200 + 50 : '100%';
   return (

@@ -1,17 +1,11 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
-import { useFirebaseUser } from '../../hooks/user';
 
 function Free() {
-  const user = useFirebaseUser();
   const history = useHistory();
 
   const getStarted = () => {
-    if (user == null) {
-      history.push('/signup');
-    } else {
-      history.push('/learn');
-    }
+    history.push('/learn');
   };
 
   return (

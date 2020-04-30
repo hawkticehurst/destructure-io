@@ -75,6 +75,10 @@ button, input {
   outline: none;
 }
 
+svg {
+  display: block;
+}
+
 .invisible {
   opacity: 0;
   z-index: -2;
@@ -1009,6 +1013,12 @@ button, input {
   height: 100%;
   min-width: 20%;
   max-width: 80%;
+  position: relative;
+}
+
+.second-pane { /* Hack to prevent visualization from overflowing vertically */
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .pane-resizing {
@@ -1019,6 +1029,18 @@ button, input {
 .pane-resizing-horizontal {
   overflow: hidden;
   cursor: row-resize;
+}
+
+.pane-title {
+  position: absolute;
+  margin: 0;
+  top: 0;
+  right: 10px;
+  font-size: 14px;
+  background-color: lightgray;
+  padding: 10px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 /********* ANIMATION BUTTONS *********/
@@ -1082,7 +1104,7 @@ button, input {
 
 /********* TEXT CONTENT COMPONENT *********/
 .text-content-container {
-  padding: 0.75em 1.5em 1.5em 1.5em;
+  padding: 2em 1.5em 1.5em 1.5em;
 }
 
 .text-content-container h1 {
@@ -1685,7 +1707,7 @@ text {
   top: 10%;
   width: 50%;
   max-height: 75%;
-  overflow: scroll;
+  overflow: auto;
   left: 25%;
   background-color: var(--hero-white);
   border-radius: 8px;

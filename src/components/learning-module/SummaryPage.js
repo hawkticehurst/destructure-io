@@ -35,13 +35,15 @@ function SummaryPage() {
     return <PageNotFound />
   }
 
-  const { name, descriptionParagraphs, whatYouWillLearnParagraphs, submodules } = moduleObj;
+  const { name, descriptionParagraphs, whatYouWillLearnParagraphs, realWorldApplicationsParagraphs, submodules } = moduleObj;
   const moduleLink = '/learn/' + module;
-  const getStartedLink = moduleLink + '/' + getCurrentSubmodule(submodules);
+  const getStartedLink = submodules != null ? (moduleLink + '/' + getCurrentSubmodule(submodules)) : null;
   const title = 'Learn ' + name + (name.endsWith('s') ? '' : 's');
 
   const onClickHeroBtn = () => {
-    history.push(getStartedLink);
+    if (getStartedLink != null) {
+      history.push(getStartedLink);
+    }
   };
 
   const hasStartedModule = user == null ? window.localStorage.getItem(module) != null : getUserModule(module) != null;
@@ -54,7 +56,13 @@ function SummaryPage() {
         <div className="summary-hero-content">
           <h1>{title}</h1>
           <button onClick={onClickHeroBtn} className="hero-btn">
-            <span className="bold">{hasStartedModule ? 'Continue Module' : 'Get Started'}</span>
+            <span className="bold">
+              {
+                getStartedLink == null ? 'Coming Soon' : (
+                  hasStartedModule ? 'Continue Module' : 'Get Started'
+                )
+              }
+            </span>
           </button>
         </div>
         <div className="summary-hero-illustration-container">
@@ -64,38 +72,50 @@ function SummaryPage() {
 
       <div className="summary-page-content">
         <div className="summary-overview-container">
-          <h2>Module Overview</h2>
-          {
-            descriptionParagraphs.map((paragraph, i) => {
-              return <p className="summary-page-description" key={i}>{paragraph}</p>
-            })
-          }
           <h2>What You'll Learn</h2>
           {
             whatYouWillLearnParagraphs.map((paragraph, i) => {
               return <p className="summary-page-description" key={i}>{paragraph}</p>
             })
           }
+
+          <h2>Real World Applications</h2>
+          {
+            realWorldApplicationsParagraphs.map((paragraph, i) => {
+              return <p className="summary-page-description" key={i}>{paragraph}</p>
+            })
+          }
+
+          <h2>Content Overview</h2>
+          {
+            descriptionParagraphs.map((paragraph, i) => {
+              return <p className="summary-page-description" key={i}>{paragraph}</p>
+            })
+          }
         </div>
-        <div className="summary-modules-container" style={{ "height": summaryHeightCalcString }}>
-          <div className="summary-modules" ref={containerRef}>
-            {
-              submodules.map((submodule, i) => {
-                const link = moduleLink + '/' + filenameToSubModuleKey(submodule.filename);
-                return <SubModuleProgressRow
-                  key={i}
-                  moduleTitle={i + '. ' + submodule.name}
-                  link={link}
-                  completionState={getCompletionState(submodule.filename)}
-                  selected={false}
-                  completionStateChanged={(state) => updateCompletionState(submodule.filename, state)}
-                  rowClass="syllabus-row"
-                  shouldShowStartBtn={true}
-                />
-              })
-            }
-          </div>
-        </div>
+        {
+          submodules != null ? (
+            <div className="summary-modules-container" style={{ "height": summaryHeightCalcString }}>
+              <div className="summary-modules" ref={containerRef}>
+                {
+                  submodules.map((submodule, i) => {
+                    const link = moduleLink + '/' + filenameToSubModuleKey(submodule.filename);
+                    return <SubModuleProgressRow
+                      key={i}
+                      moduleTitle={i + '. ' + submodule.name}
+                      link={link}
+                      completionState={getCompletionState(submodule.filename)}
+                      selected={false}
+                      completionStateChanged={(state) => updateCompletionState(submodule.filename, state)}
+                      rowClass="syllabus-row"
+                      shouldShowStartBtn={true}
+                    />
+                  })
+                }
+              </div>
+            </div>
+          ) : null
+        }
       </div>
 
       <Footer />
