@@ -5,12 +5,12 @@ import { useHistory } from "react-router-dom";
 /**
  * Required Props:
  * children {React Node} - Content to be contained in the sideBar
- * summaryLink {String} - Link for clicking header text. i.e. /learn/linked-list
  * setSideBarShown {function} - set if the sideBar should be shown
  * sideBarShown {boolean} - true if sideBar is showing, else false
  *
  * Optional Props:
  * headerText {String} - Heading to display for the sidebar
+ * summaryLink {String} - Link for clicking header text. i.e. /learn/linked-list
  * isSidebarRight {Boolean} - true ot put sidebar on right side of screen. Defaults false.
  * showBackToSummary {Boolean} - True to add a back to summary page button. False to hide it. Defaults false.
  * hideControlsDivider {Boolean} - True to hide the line under the close button. Defaults false.
@@ -48,7 +48,9 @@ function SideBar(props) {
   };
 
   const onClickGoBackSummary = () => {
-    history.push(summaryLink)
+    if (summaryLink != null) {
+      history.push(summaryLink);
+    }
   };
 
   const animationClass = sideBarShown ? 'sidebar-fade-in' : 'sidebar-fade-out';
