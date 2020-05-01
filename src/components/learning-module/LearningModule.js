@@ -33,6 +33,7 @@ function LearningModule() {
   const [animationStrings, setAnimationStrings] = useState([]);
   const [preStartAnimations, setPreStartAnimations] = useState([]);
   const [tourStep, setTourStep] = useState(0);
+  const [tourOpen, setTourOpen] = useState(true);
   const learningContentPaneRef = useRef(null);
   const visualizationRef = useRef(null);
   const { module, submodule } = useParams();
@@ -427,9 +428,9 @@ function LearningModule() {
             prevStep={prevTourStep}
             dotClick={gotoTourStep}
             goToStep={tourStep}
-            showCloseButton={false}
             steps={tourSteps}
-            isOpen={true}
+            isOpen={tourOpen}
+            onRequestClose={() => setTourOpen(false)}
             rounded={8}
              />
         ) : null

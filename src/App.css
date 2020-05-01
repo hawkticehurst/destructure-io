@@ -503,6 +503,7 @@ svg {
 /* Adjust modules button, title, and links container to have the same width */
 .module-nav-bar .nav-back-btn, .module-nav-bar .nav-bar-container h1, .module-nav-bar .nav-links-container {
   flex: 1;
+  cursor: inherit;
 }
 
 .module-nav-bar .nav-back-btn {
@@ -603,11 +604,13 @@ svg {
 .nav-back-btn p {
   color: black;
   margin-left: 0.3em;
+  cursor: pointer;
 }
 
 .hamburger-icon {
   width: var(--hamburger-icon-width);
   height: var(--hamburger-icon-height);
+  cursor: pointer;
 }
 
 /********* FOOTER COMPONENT *********/
@@ -981,6 +984,13 @@ svg {
   text-align: center;
 }
 
+.reactour__close {
+  top: 10px;
+  right: 10px;
+  width: 12px;
+  height: 12px;
+}
+
 /********* RESIZABLE PANE COMPONENT *********/
 .two-column-container {
   display: flex;
@@ -1037,7 +1047,8 @@ svg {
   top: 0;
   right: 10px;
   font-size: 14px;
-  background-color: lightgray;
+  background-color: var(--hero-purple);
+  color: var(--hero-white);
   padding: 10px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
