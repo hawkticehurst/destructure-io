@@ -8,9 +8,10 @@ import {useHistory} from "react-router-dom";
  *
  * Optional Props:
  * link {String} - link to module
+ * comingSoon {Boolean} True if coming soon. False default
  */
 function CatalogCard(props) {
-  const { link, title, description } = props;
+  const { link, title, description, comingSoon } = props;
   const history = useHistory();
 
   const onClick = () => {
@@ -19,12 +20,12 @@ function CatalogCard(props) {
     }
   };
 
-  const className = link == null ? 'catalog-card coming-soon' : 'catalog-card';
+  const className = comingSoon ? 'catalog-card coming-soon' : 'catalog-card';
 
   return (
     <div className={className} onClick={onClick}>
       <h2>{title}</h2>
-      <p>{link != null ? description : 'Coming Soon'}</p>
+      <p>{!comingSoon ? description : 'Coming Soon'}</p>
     </div>
   );
 }

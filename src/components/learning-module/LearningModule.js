@@ -33,6 +33,7 @@ function LearningModule() {
   const [animationStrings, setAnimationStrings] = useState([]);
   const [preStartAnimations, setPreStartAnimations] = useState([]);
   const [tourStep, setTourStep] = useState(0);
+  const [tourOpen, setTourOpen] = useState(true);
   const learningContentPaneRef = useRef(null);
   const visualizationRef = useRef(null);
   const { module, submodule } = useParams();
@@ -367,6 +368,8 @@ function LearningModule() {
         <div className="learning-module-container">
           <TwoPaneResizable
             firstComponentRef={learningContentPaneRef}
+            firstComponentName="Learn"
+            secondComponentName="Visualization"
             firstComponent={
               <LearningContent
                 contentTitleString={selectedSubmoduleName}
@@ -425,9 +428,9 @@ function LearningModule() {
             prevStep={prevTourStep}
             dotClick={gotoTourStep}
             goToStep={tourStep}
-            showCloseButton={false}
             steps={tourSteps}
-            isOpen={true}
+            isOpen={tourOpen}
+            onRequestClose={() => setTourOpen(false)}
             rounded={8}
              />
         ) : null

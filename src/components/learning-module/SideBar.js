@@ -69,7 +69,7 @@ function SideBar(props) {
                 showBackToSummary === true ? (
                   <Fragment>
                     <img src={require('./images/arrow-left.svg')} alt="Arrow Left Icon" />
-                    <p>Back To Summary</p>
+                    <p>Back To Module Overview</p>
                   </Fragment>
                 ) : null
               }

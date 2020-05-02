@@ -13,14 +13,13 @@ function Catalog(props) {
         <hr />
       </div>
       <div className="catalog-card-container">
-        <CatalogCard title="Learn Arrays" description="Learn one of the most fundamental data structures in computer science." />
-        <CatalogCard title="Learn Nodes" description="Learn one of the most fundamental data structures in computer science." />
+        <CatalogCard link="/learn/arrays" comingSoon={true} title="Learn Arrays" description="Learn one of the most fundamental data structures in computer science." />
         <CatalogCard link="/learn/linked-list" title="Learn Linked Lists" description="Learn one of the most fundamental data structures in computer science." />
-        <CatalogCard title="Learn Stacks" description="Learn one of the most fundamental data structures in computer science." />
-        <CatalogCard title="Learn Queues" description="Learn one of the most fundamental data structures in computer science." />
-        <CatalogCard title="Learn Maps" description="Learn one of the most fundamental data structures in computer science." />
-        <CatalogCard title="Learn Trees" description="Learn one of the most fundamental data structures in computer science." />
-        <CatalogCard title="Learn Graphs" description="Learn one of the most fundamental data structures in computer science." />
+        <CatalogCard link="/learn/stacks" comingSoon={true} title="Learn Stacks" description="Learn one of the most fundamental data structures in computer science." />
+        <CatalogCard link="/learn/queues" title="Learn Queues" comingSoon={true} description="Learn one of the most fundamental data structures in computer science." />
+        <CatalogCard link="/learn/maps" comingSoon={true} title="Learn Maps" description="Learn one of the most fundamental data structures in computer science." />
+        <CatalogCard link="/learn/trees" title="Learn Trees" comingSoon={true} description="Learn one of the most fundamental data structures in computer science." />
+        <CatalogCard link="/learn/graphs" title="Learn Graphs" comingSoon={true} description="Learn one of the most fundamental data structures in computer science." />
       </div>
       <hr />
       <Footer />

@@ -1,5 +1,7 @@
 import { useRef } from 'react';
 
+const SPEED_OFFSET = 1.2; // multiplies durations by this offset to make them faster/slower
+
 /**
  * Safer wrapper function around .style.transform = value
  *
@@ -114,8 +116,10 @@ function useAnimation(onComplete) {
         duration,
         delay
       } = optionObj;
+      const durationOffset = duration * SPEED_OFFSET;
+
       const realDelay = !shouldRunImmediately && delay != null ? delay : 0;
-      const completeTime = (duration != null ? duration : 1000) + (realDelay != null ? realDelay : 0);
+      const completeTime = (duration != null ? durationOffset : 1000 * SPEED_OFFSET) + (realDelay != null ? realDelay : 0);
       if (completeTime > largestCompleteTime) {
         largestCompleteTime = completeTime;
       }
@@ -140,8 +144,8 @@ function useAnimation(onComplete) {
 
       // Convert transitions to "1s" syntax like CSS uses
       const transitionDuration = (duration != null && !shouldRunImmediately) ?
-        ((duration / 1000) + 's') :
-        (shouldRunImmediately ? '0s' : '1s');
+        ((durationOffset / 1000) + 's') :
+        (shouldRunImmediately ? '0s' : (1 * SPEED_OFFSET) + 's');
 
       animations.push(() => {
         const callAnimationCallback = (isFirstTimeCalled = true, index = 0) => {

@@ -12,7 +12,7 @@ import React, {useEffect, useRef, useState} from 'react';
  *                           This is useful for resetting scroll heights
  */
 function TwoPaneResizable(props) {
-  const {firstComponent, secondComponent, initialStartSize, splitHorizontal, firstComponentRef} = props;
+  const {firstComponent, secondComponent, initialStartSize, splitHorizontal, firstComponentRef, firstComponentName, secondComponentName} = props;
   const [startSize, setstartSize] = useState(initialStartSize != null ? initialStartSize : 50);
   const [isResizing, setIsResizing] = useState(false);
   const container = useRef(null);
@@ -55,10 +55,20 @@ function TwoPaneResizable(props) {
   return (
     <div className={containerClass} ref={container}>
       <div ref={firstComponentRef} className={paneClass} style={{flex: startSize}}>
+        {
+          firstComponentName != null ? (
+            <h2 className="pane-title">{firstComponentName}</h2>
+          ) : null
+        }
         {firstComponent}
       </div>
       <div className={dividerClass} onMouseDown={onMouseDown} />
-      <div className={paneClass} style={{flex: 100 - startSize}}>
+      <div className={paneClass + ' second-pane'} style={{flex: 100 - startSize}}>
+        {
+          secondComponentName != null ? (
+            <h2 className="pane-title">{secondComponentName}</h2>
+          ) : null
+        }
         {secondComponent}
       </div>
     </div>
