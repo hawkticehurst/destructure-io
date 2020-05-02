@@ -699,6 +699,15 @@ svg {
   white-space: nowrap;
 }
 
+.sidebar-right {
+  right: 0;
+  left: auto;
+}
+
+.sidebar .hide-bottom-border {
+  border-bottom: none !important;
+}
+
 .sidebar-controls {
   display: flex;
   justify-content: space-between;

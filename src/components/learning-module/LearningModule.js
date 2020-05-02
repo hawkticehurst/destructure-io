@@ -340,7 +340,7 @@ function LearningModule() {
   return (
     <Fragment>
       <div>
-        <SideBar headerText={moduleName + ' Lessons'} summaryLink={'/learn/' + module} setSideBarShown={setSideBarShown} sideBarShown={sideBarShown}>
+        <SideBar showBackToSummary={true} headerText={moduleName + ' Lessons'} summaryLink={'/learn/' + module} setSideBarShown={setSideBarShown} sideBarShown={sideBarShown}>
           {
             subModuleList.map((subModule, index) => {
               return (
