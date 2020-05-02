@@ -935,10 +935,10 @@ svg {
   transform: scale(1);
   transition: all 0.3s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 }
 
-.catalog-card:not(.coming-soon):hover {
-  cursor: pointer;
+.catalog-card:hover {
   transform: scale(1.01);
   box-shadow: 0 1px 11px rgba(0,0,0,0.3);
 }
@@ -1584,7 +1584,13 @@ text {
   color: var(--hero-black);
 }
 
-.summary-hero-container button:hover {
+.summary-hero-content button:disabled {
+  background-color: gray;
+  cursor: default;
+  color: white;
+}
+
+.summary-hero-container button:hover:not(:disabled) {
   background-color: var(--hero-yellow-highlighted);
 }
 

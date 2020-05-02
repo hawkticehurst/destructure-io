@@ -55,7 +55,7 @@ function SummaryPage() {
       <div className="summary-hero-container">
         <div className="summary-hero-content">
           <h1>{title}</h1>
-          <button onClick={onClickHeroBtn} className="hero-btn">
+          <button onClick={onClickHeroBtn} className="hero-btn" disabled={getStartedLink == null}>
             <span className="bold">
               {
                 getStartedLink == null ? 'Coming Soon' : (

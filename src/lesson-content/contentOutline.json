@@ -67,23 +67,23 @@
     {
       "name": "Stacks",
       "descriptionParagraphs": [
-        "The term “stack” can be used to describe any linear data structure that resembles a real, physical stack. Stacks are commonly described as being Last In First Out (LIFO), a classification that indicates its structure is such that items are added to the data structure on top of the existing items in the stack."
+        "The term “stack” can be used to describe any linear data structure that resembles a physical deck of cards. Stacks are commonly described as being Last In First Out (LIFO), where items are added to the data structure on top of the existing items in the stack and removed from the top of the stack."
       ],
       "whatYouWillLearnParagraphs": [
         "In this module, you will see how a stack can be created using object-oriented programming and other helpful data structures. Once created, you will learn about the fundamental functions of a stack, “push” (adding an element to the stack) and “pop” (removing an element from the stack)."
       ],
       "realWorldApplicationsParagraphs": [
-        "Stacks can be used to represent any objects that are stacked on top of each other, like a deck of cards, but they can also represent certain patterns in computing. One good example of this is a web browser’s back-forward button: as you navigate to different webpages your browser will stack up all the previous pages for you, so that each time you click the back button you take one link off the stack and go back to the last page you visited"
+        "Stacks can be used to represent any objects that are stacked on top of each other, like a deck of cards, but they can also represent certain patterns in computing. One good example of this is a web browser’s back-forward button: as you navigate to different webpages your browser will stack up all the previous pages for you, so that each time you click the back button you take one link off the stack and go back to the last page you visited."
       ],
       "directory": "stacks"
     },
     {
       "name": "Queues",
       "descriptionParagraphs": [
-        ""
+        "A queue is another linear data structure that has a specific order in which operations are performed. Queues are described as being First In First Out (FIFO) which means that the first item added to the queue would also be the first item removed from the queue."
       ],
       "whatYouWillLearnParagraphs": [
-        "In this module, you will see how a queue can be created using object-oriented programming and other helpful data structures. Once created, you will learn about the fundamental functions of a stack, “enqueue” (adding an element to the stack) and “dequeue” (removing an element from the stack)."
+        "In this module, you will see how a queue can be created using object-oriented programming and other helpful data structures. Once created, you will learn about the fundamental functions of a queue, “enqueue” (adding an element to the queue) and “dequeue” (removing an element from the queue)."
       ],
       "realWorldApplicationsParagraphs": [
         "One common application of queues is when an application is trying to limit the amount of people accessing it at one time so it makes the users form a “line” or queue to wait to access it. If a user tries to log onto a website while the website is under stress, they will be put in a queue behind all the people that logged in before them, and as the website is able to handle more traffic the users will move up in the line until they are finally taken out of the queue and allowed to access the website."
@@ -93,28 +93,41 @@
     {
       "name": "Maps",
       "descriptionParagraphs": [
-        "Maps are abstract data structures that are collections of pairs of corresponding keys and values. This collection of pairs is exclusive such that each key can only appear once within a single map."
+        "Maps are abstract data structures that are collections of pairs of corresponding keys and values. This structure maps each item, known as a key, to a value in the map, allowing the user to look up any value as long as they have the corresponding key."
       ],
       "whatYouWillLearnParagraphs": [
         "In this module, you will learn how to create and manipulate a map data structure. This includes populating the collection by inserting pairs, managing the collection by deleting pairs, accessing the values stored in the map, and replacing the values associated with a key in the map."
       ],
       "realWorldApplicationsParagraphs": [
-        "Maps can be used to associate more than just an index to a value, as can be shown in a gradebook for a school. If you wanted to find out the GPA of a particular student stored in your system, you could create a map that mapped each student’s name to their GPA. To find any student’s GPA quickly, you simply search for that student’s name in the keys of the map and the corresponding value would be their GPA."
+        "Maps can be used to associate more than just an index to a value, as can be shown in a gradebook for a school. If you wanted to find out the GPA of a particular student stored in your system, you could create a map that mapped each student’s name to their GPA. To find any student’s GPA quickly, you simply search for that student’s name in the keys of the map and the corresponding value would be their GPA. "
       ],
       "directory": "maps"
     },
     {
       "name": "Trees",
       "descriptionParagraphs": [
-        "A tree is a non-linear linked data structure that consists of connected nodes."
+        "A tree is a non-linear linked data structure that consists of connected nodes. Instead of the linear structure, trees order data hierarchically. This means that the nodes in the tree can be represented similarly to a family tree, with each node connected to parent nodes and/or child nodes."
       ],
       "whatYouWillLearnParagraphs": [
-        ""
+        "In this module, you will learn how a tree data structure is formed starting with the first node, or root node. You will learn how the nodes in a tree can contain data as well as references to one or more child nodes and how the relationship between these nodes, called edges, can be managed and traversed. You’ll also see how trees can be a useful data structure when performing searches and in other algorithm cases."
       ],
       "realWorldApplicationsParagraphs": [
         "Trees have been very famously used to implement file structures on most computer’s operating systems. To traverse through the files in your computer, you click through different folders which take you down the levels of the file “tree” until you get to the files you want, which are the nodes. These file structures operate in a top-down fashion, where the root folder is the absolute top of the tree and a file with no folders beneath it is at the root of the tree."
       ],
       "directory": "trees"
+    },
+    {
+      "name": "Graphs",
+      "descriptionParagraphs": [
+        "A graph is a non-linear data structure that consists of a set of nodes (or vertices) and a set of edges that connects those nodes. As opposed to linear data structures, in a graph, a single node can be connected to any number of other nodes, and the edges that connect them can be either directed or undirected."
+      ],
+      "whatYouWillLearnParagraphs": [
+        "In this module, you will learn how to represent a graph using data structures you are already familiar with as well as an object-oriented approach to representing nodes and edges. We will also learn how to perform the useful operations associated with graphs such as sorting, traversing, and searching."
+      ],
+      "realWorldApplicationsParagraphs": [
+        "Graphs can be used to solve many real-world problems. Picture an airline booking system that allows customers to book several connected flights between different airports. A good way for this platform to organize the data would be to represent different airports as nodes and the flights connecting these airports as edges."
+      ],
+      "directory": "graphs"
     }
   ]
 }
