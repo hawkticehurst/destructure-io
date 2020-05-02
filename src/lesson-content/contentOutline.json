@@ -44,10 +44,6 @@
         {
           "name": "Changing Data At Position \"N\"",
           "filename": "changingDataAtPositionN.json"
-        },
-        {
-          "name": "Inserting Nodes At The Head",
-          "filename": "insertingNodesAtTheHead.json"
         }
       ]
     },
