@@ -75,8 +75,10 @@ function LearningModule() {
       position: 'top'
     },
     {
-      canContinue: () => selectedLine >= 0,
-      disabledRight: selectedLine < 0,
+      nextOverride: () => {
+        visualizationRef.current.nextLine();
+        setTourStep(tourStep + 1);
+      },
       visibleSidebar: false,
       selector: '.step-btn',
       content: `To start an animation, press the step button.
@@ -105,8 +107,10 @@ function LearningModule() {
       content: `And of course you can pause animations if they are in progress!`,
     },
     {
-      canContinue: () => sideBarShown === true,
-      disabledRight: sideBarShown === false,
+      nextOverride: () => {
+        setSideBarShown(true);
+        setTimeout(() => setTourStep(tourStep + 1), 500);
+      },
       visibleSidebar: false,
       selector: '.hamburger-icon',
       content: `Click on the menu icon to open the sidebar and track your progress!`,
@@ -218,7 +222,7 @@ function LearningModule() {
 
   const setNextLine = () => {
     if (tourStep === STEP_TOUR_INDEX) {
-      setTimeout(() => nextTourStep(undefined, true), 500);
+      nextTourStep();
     }
 
     if (animationComplete) {
@@ -229,7 +233,7 @@ function LearningModule() {
 
   const startAnimation = () => {
     if (tourStep === START_TOUR_INDEX) {
-      nextTourStep(undefined, true);
+      nextTourStep();
     }
 
     visualizationRef.current.playFullAnimation();
@@ -237,7 +241,7 @@ function LearningModule() {
 
   const stopAnimation = () => {
     if (tourStep === STOP_TOUR_INDEX) {
-      nextTourStep(undefined, true);
+      nextTourStep();
     }
 
     visualizationRef.current.pauseAnimation();
@@ -272,12 +276,10 @@ function LearningModule() {
       codeChunkKeyOffset={selectedSubmoduleName} />
   );
 
-  // need event here, because the library passes it
-  const nextTourStep = (event, force = false) => {
-    if (!force) {
-      if (tourSteps[tourStep].canContinue != null && !tourSteps[tourStep].canContinue()) {
-        return;
-      }
+  const nextTourStep = () => {
+    if (tourSteps[tourStep].nextOverride != null) {
+      tourSteps[tourStep].nextOverride();
+      return;
     }
 
     if (tourStep + 1 === OPEN_HIDDEN_TOUR_INDEX && document.querySelector('.chunk-collapsed') != null) {
@@ -360,7 +362,7 @@ function LearningModule() {
           navBarType="module"
           toggleSideBar={() => {
             if (tourStep === SHOW_SIDEBAR_TOUR_INDEX) {
-              setTimeout(() => nextTourStep(undefined, true), 500);
+              setTimeout(() => nextTourStep(), 500);
             }
             setSideBarShown(!sideBarShown);
           }}
