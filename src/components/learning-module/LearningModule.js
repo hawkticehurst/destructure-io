@@ -82,7 +82,7 @@ function LearningModule() {
       visibleSidebar: false,
       selector: '.step-btn',
       content: `To start an animation, press the step button.
-                This will animate one line of code at a time. Go ahead and press it a few times!`,
+                This will animate one line of code at a time. Go ahead and press it!`,
     },
     {
       visibleSidebar: false,
