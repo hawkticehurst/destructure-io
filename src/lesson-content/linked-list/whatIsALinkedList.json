@@ -2,11 +2,11 @@
   "paragraphs": [
     "Linked Lists are one of the most common and useful data structures in computer science. They contain a $italic(linear) set of ordered elements called $italic(nodes), where each node represents one piece of data in our list, similar to an index of an array.",
     "However, these nodes cannot be explicitly referenced by index (i.e. there is no equivalent to the $code(array[index]) syntax seen with arrays). Instead, each node keeps a $italic(reference) to the next element in the list, allowing us to follow the chain of nodes all the way to the end of the list. We will see this process in more detail throughout the module, but you can think of it as similar to following clues in a scavenger hunt. Each clue gives directions to the next clue until reaching the end location.",
-    "Below is the implementation of a $code(Node) that we will be using and exploring more deeply throughout the module. Each element, called a $code(Node), contains two fields: their $code(data), and a link ($italic(reference)) to the $code(next) node in the list. "
+    "Below is the implementation of a $code(Node) that we will be using and exploring more deeply throughout the module. Each element, called a $code(Node), contains two fields: their $code(data), and a link ($italic(reference)) to the $code(next) node in the list. ",
+    "In the example visualization, we have 3 $code(Node) objects, representing a list of size 3. Continue to the next lesson to start learning how to build these lists up!"
   ],
   "preStartAnimations": [
     "createNewNode,0,#node0",
-    "createNewPointer,#head-pointer,head",
     "createNewNode,1,#node1",
     "insertNodeAtIndex,tail,#node1",
     "createNewNode,2,#node2",

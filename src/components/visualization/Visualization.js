@@ -4,29 +4,6 @@ import LinkedListNode from './LinkedListNode';
 import LinkedListPointer from './LinkedListPointer';
 import VariableTableRow from './VariableTableRow';
 
-/*
-MVP TODOS:
-- Data in linkedListNode is not centered if only 1 character
-- pointer names are not always centered
-- setPointerToNext uses 90px, it was 100px before but that made it too big. It looks right, but should probably figure out the exact right length
-
-HOPEFUL MVP TODOS:
-- How to handle two pointers on the same node at once (see insert at tail). Worst case we can just ignore these
-- Add "highlight" animation that can highlight certain things by following a path.
-    - Parameters: Array (of any size) of highlightables (nodeID, nextPointerID, dataID, pointerID(such as curr/head))
-- Make next Pointers arrows instead of lines
-- Make LinkedListPointers (these are like "head" and "curr") arrows instead of lines
-- Make pointers point to the "Node" part instead of just somewhere random on the box
-     - We might want to move the head/curr pointers to the top (and maybe have new nodes come from bottom?)
-- Firefox and Safari are completely broken spacing - Maybe issue with how we use vh?
-- We need a way to have a pointer point to a non-inserted node.
-      - Example: Node temp = new Node(1); This calls NewNode then we need to point temp to it, but its not inserted yet
-
-LATER TODOS:
-- Insert Node in Middle of List, see insertNodeAtIndex()
-- Reverse doesn't work. Spent a long time on this one, probably not worth the effort right now.
-*/
-
 /**
   * Required Props:
   * animations {String[]} – Array of Animation strings as defined below
@@ -115,7 +92,6 @@ function VisualizationComponent(props, ref) {
   const onAnimationComplete = () => {
     selectedLineNumber.current = 0;
     setPlayDisabled(false);
-    updateLine(selectedLineNumber.current);
     setAnimationComplete(true);
 
     allNodes.current = [];

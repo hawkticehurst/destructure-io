@@ -226,6 +226,7 @@ function LearningModule() {
     }
 
     if (animationComplete) {
+      setSelectedLine(0);
       setAnimationComplete(false);
     }
     visualizationRef.current.nextLine();
