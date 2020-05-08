@@ -8,7 +8,16 @@ import { Link } from 'react-router-dom';
  * navBarType {String} - String representing which version of the navbar to render
  *    Nav Bar Types: 'summary', 'module', 'homepage', 'catalog', 'sign-in', 'sign-up'
  */
-function Footer() {
+function Footer(props) {
+  const { landing } = props;
+
+  let privacy = <Link to="/privacy">Privacy Policy</Link>;
+    
+  
+  if (landing) {
+    privacy = null;
+  }
+
   return (
     <div className="footer-container">
       {/* <div className="footer-link-container">
@@ -38,7 +47,7 @@ function Footer() {
         </div>
         <p>Copyright © 2020 destructure.io</p>
         <div className="footer-legal-container">
-          <Link to="/privacy">Privacy Policy</Link>
+          {privacy}
         </div>
       </div>
     </div>

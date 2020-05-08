@@ -160,6 +160,11 @@ svg {
   margin: 0 0 0 5em;
 }
 
+.about-text-container {
+  width: 80%;
+  text-align: center;
+}
+
 .text-container {
   width: 30%;
 }
@@ -444,7 +449,7 @@ svg {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 10em;
+  margin-top: 3em;
 }
 
 .team-card-container {
