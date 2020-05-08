@@ -25,7 +25,7 @@ function About(props) {
           <Team />
         </div>
       </main>
-      <Footer />
+      <Footer landing={true} />
     </div>
   );
 }
