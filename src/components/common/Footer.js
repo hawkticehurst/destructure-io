@@ -15,7 +15,7 @@ function Footer(props) {
     
   
   if (landing) {
-    privacy = "Open sourced on May 22nd, 2020.";
+    privacy = <a href="https://github.com/hawkticehurst/destructure-io" target="_blank">Open sourced on May 22nd, 2020.</a>;
   }
 
   return (
