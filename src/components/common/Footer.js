@@ -15,7 +15,7 @@ function Footer(props) {
     
   
   if (landing) {
-    privacy = null;
+    privacy = "Open sourced on May 22nd, 2020.";
   }
 
   return (
