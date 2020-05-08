@@ -7,7 +7,7 @@ function LandingNavBar(props) {
   let landingLink = about ? <Link to="/landing">Back to Landing</Link> : <Link to="/about">About</Link>;
   return (
     <div className="nav-bar-container homepage-nav-bar">
-      <h1><Link to="/">destructure.io</Link></h1>
+      <h1>destructure.io</h1>
       <div className="nav-links-container">
         {landingLink}
       </div>

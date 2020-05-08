@@ -12,7 +12,7 @@ function LandingPage(props) {
     <div>
       <LandingNavBar about={false}/>
       <main>
-        <Hero />
+        <Hero landing={true}/>
         <div id="linked-list" className="content-container">
           <LinkedList />
         </div>
@@ -23,10 +23,10 @@ function LandingPage(props) {
           <Catalog />
         </div>
         <div id="free-container" className="content-container">
-          <Free />
+          <Free landing={true} />
         </div>
       </main>
-      <Footer />
+      <Footer landing={true} />
     </div>
   );
 }
