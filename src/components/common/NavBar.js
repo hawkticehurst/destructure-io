@@ -53,8 +53,8 @@ function NavBar(props) {
   ) : null;
 
   const signInLink = user == null ? navBarType === 'module' ? (
-    <Link to={window.location.pathname} onClick={() => setShowLoginDropdown(!showLoginDropdown)}>Log In</Link>
-  ) : <Link to="/signin">Log In</Link> : null;
+    <Link to={window.location.pathname} onClick={() => setShowLoginDropdown(!showLoginDropdown)}>Sign In</Link>
+  ) : <Link to="/signin">Sign In</Link> : null;
 
   const signUpLink = user == null ? (
     <Link to="/signup">Sign Up</Link>
