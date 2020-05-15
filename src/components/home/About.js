@@ -1,16 +1,12 @@
 import React from 'react';
-import LandingNavBar from '../common/LandingNavBar';
+import NavBar from '../common/NavBar';
 import Footer from '../common/Footer';
-import LinkedList from './LinkedList';
-import GuidedLearning from './GuidedLearning';
-import Catalog from './Catalog';
-import Free from './Free';
 import Team from './Team';
 
 function About(props) {
   return (
     <div>
-      <NavBar />
+      <NavBar navBarType="homepage" />
       <main>
         <div className="team-container">
           <div className="about-text-container">

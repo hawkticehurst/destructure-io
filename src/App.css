@@ -163,6 +163,7 @@ svg {
 .about-text-container {
   width: 80%;
   text-align: center;
+  font-size: 18px;
 }
 
 .text-container {
