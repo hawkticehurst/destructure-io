@@ -25,6 +25,7 @@ function App() {
     <UserContext.Provider value={{ user }}>
       <Router>
         <div className="app">
+          <CookieConsentBanner />
           <ScrollToTop />
           <Switch>
             <Route path="/signin">
