@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 300 300" style="enable-background:new 0 0 300 300;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#5D42FF;}
-	.st1{fill:#FFFFFF;}
-	.st2{font-family:'Arial';}
-	.st3{font-size:240px;}
-</style>
+<!-- Generator: Adobe Illustrator 16.0.4, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="300px" height="300px" viewBox="-149.5 642.5 300 300" enable-background="new -149.5 642.5 300 300" xml:space="preserve">
 <g id="bg">
-	<path class="st0" d="M259.82,300H40.18C17.99,300,0,282.01,0,259.82V40.18C0,17.99,17.99,0,40.18,0h219.64
-		C282.01,0,300,17.99,300,40.18v219.64C300,282.01,282.01,300,259.82,300z"/>
+	<path fill="#5D42FF" d="M110.552,943h-221.104C-132.89,943-151,924.891-151,902.552V681.447c0-22.338,18.11-40.447,40.448-40.447
+		h221.104C132.891,641,151,659.109,151,681.447v221.104C151,924.891,132.891,943,110.552,943z"/>
 </g>
 <g id="_x7B___x7D_">
-	<text transform="matrix(1 0 0 1 40.3158 214.3584)" class="st1 st2 st3">{ }</text>
+	<text transform="matrix(1 0 0 1 -113.7529 856.4404)" fill="#FFFFFF" font-family="'ArialMT'" font-size="241.6">{ }</text>
 </g>
 </svg>
