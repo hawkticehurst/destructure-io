@@ -10,7 +10,7 @@ import Team from './Team';
 function About(props) {
   return (
     <div>
-      <LandingNavBar about={true} />
+      <NavBar />
       <main>
         <div className="team-container">
           <div className="about-text-container">

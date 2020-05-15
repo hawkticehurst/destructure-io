@@ -62,6 +62,8 @@ function NavBar(props) {
 
   const catalogLink = <Link to="/learn">Catalog</Link>;
 
+  const aboutLink = <Link to="/about">About</Link>;
+
   return (
     <div className={containerClass}>
       {showLoginDropdown ? (
@@ -72,6 +74,7 @@ function NavBar(props) {
       {backBtn}
       <h1><Link to="/">destructure.io</Link></h1>
       <div className="nav-links-container">
+        {aboutLink}
         {catalogLink}
         {signInLink}
         {signUpLink}
