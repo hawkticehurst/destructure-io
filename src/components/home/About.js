@@ -9,6 +9,15 @@ function About(props) {
       <NavBar navBarType="homepage" />
       <main>
         <div className="team-container">
+        <div className="about-text-container">
+            <h1>What's this for?</h1>
+            <p>
+              Data structures are notoriously challenging programming concepts for students who are trying to learn to code.
+            </p>
+            <p>
+              We want to help develop good mental models of data structures and in increase a student's ability to succeed in technical challenges.
+            </p>
+          </div>
           <div className="about-text-container">
             <h1>Who's this for?</h1>
             <p>
