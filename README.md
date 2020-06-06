@@ -1,6 +1,10 @@
-# destructure.io
+<h1 align="center">destructure.io</h1>
 
-An interactive visualization platform for learning data structures.
+<h4 align="center">An interactive visualization platform for learning data structures.</h4>
+
+<p align="center">
+  <a href="#local-deployment-instructions">Local Deployment Instructions</a>&nbsp;|&nbsp;<a href="#npm-reference">NPM Reference</a>&nbsp;|&nbsp;<a href="#authors">Authors</a>&nbsp;|&nbsp;<a href="#license">License</a>&nbsp;
+</p>
 
 ## Local Deployment Instructions
 
@@ -36,8 +40,8 @@ npm run eject
 * Zachary Palmer –– [zachbhs@uw.edu](mailto:zachbhs@uw.edu)
 * Hawk Ticehurst –– [hawkt88@uw.edu](mailto:hawkt88@uw.edu)
 
-## Licensing
-Contributions are licensed through MIT Open Source.
+## License
+Contributions are licensed through [MIT](LICENSE) Open Source.
 
 ## Notes & Acknowledgements
 This project was started as a part of the 2020 [Capstone Project](https://ischool.uw.edu/capstone) course at the University of Washington Information School.

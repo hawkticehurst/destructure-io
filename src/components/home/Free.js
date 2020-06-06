@@ -1,12 +1,21 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
 
-function Free() {
+function Free(props) {
+  const { landing } = props;
   const history = useHistory();
 
   const getStarted = () => {
     history.push('/learn');
   };
+
+  let getStartedLink = <h2 onClick={getStarted} className="bold">Get Started</h2>;
+  let getStartedArrow = <img src={require('./images/arrow-right.svg')} alt="Arrow Right Icon" />;
+
+  if (landing) {
+    getStartedLink = null;
+    getStartedArrow = null;
+  }
 
   return (
     <div id="free-card-container">
@@ -18,8 +27,8 @@ function Free() {
         </p>
         <div className="inline-block">
           <div id="free-get-started-container">
-            <h2 onClick={getStarted} className="bold">Get Started</h2>
-            <img src={require('./images/arrow-right.svg')} alt="Arrow Right Icon" />
+            {getStartedLink}
+            {getStartedArrow}
           </div>
         </div>
       </div>

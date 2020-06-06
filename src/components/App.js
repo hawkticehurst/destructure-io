@@ -4,6 +4,8 @@ import SummaryPage from './learning-module/SummaryPage';
 import Catalog from './catalog/Catalog';
 import SignInUp from './auth/SignInUp';
 import HomePage from './home/HomePage';
+import LandingPage from './home/LandingPage';
+import About from './home/About';
 import DeviceTooSmall from './common/DeviceTooSmall';
 import CookieConsentBanner from './privacy/CookieConsentBanner';
 import PrivacyPolicy from './privacy/PrivacyPolicy';
@@ -45,6 +47,12 @@ function App() {
             </Route>
             <Route path={'/privacy'}>
               <PrivacyPolicy />
+            </Route>
+            <Route path={'/landing'}>
+              <LandingPage />
+            </Route>
+            <Route path={'/about'}>
+              <About />
             </Route>
             <Route path="/">
               <HomePage />

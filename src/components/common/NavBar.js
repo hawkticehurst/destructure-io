@@ -53,14 +53,16 @@ function NavBar(props) {
   ) : null;
 
   const signInLink = user == null ? navBarType === 'module' ? (
-    <Link to={window.location.pathname} onClick={() => setShowLoginDropdown(!showLoginDropdown)}>Log In</Link>
-  ) : <Link to="/signin">Log In</Link> : null;
+    <Link to={window.location.pathname} onClick={() => setShowLoginDropdown(!showLoginDropdown)}>Sign In</Link>
+  ) : <Link to="/signin">Sign In</Link> : null;
 
   const signUpLink = user == null ? (
     <Link to="/signup">Sign Up</Link>
   ) : null;
 
   const catalogLink = <Link to="/learn">Catalog</Link>;
+
+  const aboutLink = <Link to="/about">About</Link>;
 
   return (
     <div className={containerClass}>
@@ -72,6 +74,7 @@ function NavBar(props) {
       {backBtn}
       <h1><Link to="/">destructure.io</Link></h1>
       <div className="nav-links-container">
+        {aboutLink}
         {catalogLink}
         {signInLink}
         {signUpLink}

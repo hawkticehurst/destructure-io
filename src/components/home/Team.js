@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 function Team() {
   return (
     <Fragment>
-      <h1>Who's responsible for all of this?</h1>
+      <h1>Team</h1>
       <div className="team-card-container">
         <div className="team-card">
           <img
