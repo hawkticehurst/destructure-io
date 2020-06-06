@@ -43,7 +43,7 @@ npm run eject
 * Hawk Ticehurst –– [hawkt88@uw.edu](mailto:hawkt88@uw.edu)
 
 ## License
-Contributions are licensed through MIT Open Source.
+Contributions are licensed through [MIT](LICENSE) Open Source.
 
 ## Notes & Acknowledgements
 This project was started as a part of the 2020 [Capstone Project](https://ischool.uw.edu/capstone) course at the University of Washington Information School.
