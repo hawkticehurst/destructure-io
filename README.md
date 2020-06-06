@@ -6,6 +6,8 @@
   <a href="#local-deployment-instructions">Local Deployment Instructions</a>&nbsp;|&nbsp;<a href="#npm-reference">NPM Reference</a>&nbsp;|&nbsp;<a href="#authors">Authors</a>&nbsp;|&nbsp;<a href="#license">License</a>&nbsp;
 </p>
 
+<div align="center"><img src="assets/destructure.gif"/></div>
+
 ## Local Deployment Instructions
 
 *Prerequisite: [Download npm/node.js](https://www.npmjs.com/get-npm)*
@@ -36,9 +38,9 @@ npm run eject
 
 ## Authors
 * Conner Ardman –– [ardmanc@uw.edu](mailto:ardmanc@uw.edu)
+* Hawk Ticehurst –– [hawkt88@uw.edu](mailto:hawkt88@uw.edu)
 * Hari Kaushik –– [harik98@uw.edu](mailto:harik98@uw.edu)
 * Zachary Palmer –– [zachbhs@uw.edu](mailto:zachbhs@uw.edu)
-* Hawk Ticehurst –– [hawkt88@uw.edu](mailto:hawkt88@uw.edu)
 
 ## License
 Contributions are licensed through [MIT](LICENSE) Open Source.
