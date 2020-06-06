@@ -6,8 +6,6 @@
   <a href="#local-deployment-instructions">Local Deployment Instructions</a>&nbsp;|&nbsp;<a href="#npm-reference">NPM Reference</a>&nbsp;|&nbsp;<a href="#authors">Authors</a>&nbsp;|&nbsp;<a href="#license">License</a>&nbsp;
 </p>
 
-<div align="center"><img src="assets/slider.gif"/></div>
-
 ## Local Deployment Instructions
 
 *Prerequisite: [Download npm/node.js](https://www.npmjs.com/get-npm)*
