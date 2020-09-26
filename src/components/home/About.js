@@ -9,7 +9,7 @@ function About(props) {
       <NavBar navBarType="homepage" />
       <main>
         <div className="team-container">
-        <div className="about-text-container">
+          <div className="about-text-container">
             <h1>What's this for?</h1>
             <p>
               Data structures are notoriously challenging programming concepts for students who are trying to learn to code.
@@ -19,7 +19,7 @@ function About(props) {
           <div className="about-text-container">
             <h1>Who's this for?</h1>
             <p>
-              We hope this will be a useful educational aid for those learning programming at an intermediate level 
+              We hope this will be a useful educational aid for those learning programming at an intermediate level
               and for instructors to use as supplementary material for data structures courses.
             </p>
           </div>
@@ -28,7 +28,7 @@ function About(props) {
           <Team />
         </div>
       </main>
-      <Footer landing={true} />
+      <Footer githubLink={true} />
     </div>
   );
 }
