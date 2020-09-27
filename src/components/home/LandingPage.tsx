@@ -7,12 +7,12 @@ import Catalog from './Catalog';
 import Free from './Free';
 import Hero from './Hero';
 
-function LandingPage(props) {
+function LandingPage() {
   return (
     <div>
-      <LandingNavBar about={false}/>
+      <LandingNavBar about={false} />
       <main>
-        <Hero landing={true}/>
+        <Hero landing={true} />
         <div id="linked-list" className="content-container">
           <LinkedList />
         </div>
