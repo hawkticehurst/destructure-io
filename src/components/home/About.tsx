@@ -3,7 +3,7 @@ import NavBar from '../common/NavBar';
 import Footer from '../common/Footer';
 import Team from './Team';
 
-function About(props) {
+function About() {
   return (
     <div>
       <NavBar navBarType="homepage" />
