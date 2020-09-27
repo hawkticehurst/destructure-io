@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 type Props = {
-  githubLink?: boolean
+  landing?: boolean
 }
 
-function Footer({ githubLink }: Props) {
+function Footer({ landing }: Props) {
   const currentYear = new Date().getFullYear();
-  const footerLink = !githubLink ? <Link to="/privacy">Privacy Policy</Link> :
+  const footerLink = !landing ? <Link to="/privacy">Privacy Policy</Link> :
     <a href="https://github.com/hawkticehurst/destructure-io">Github</a>;
 
   return (
