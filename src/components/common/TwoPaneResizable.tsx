@@ -1,4 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+
+type FixMeLater = any;
 
 /**
  * Required Props:
@@ -11,11 +13,28 @@ import React, {useEffect, useRef, useState} from 'react';
  * firstComponentRef {Ref} - Ref created with useRef to be the container div of firstComponent
  *                           This is useful for resetting scroll heights
  */
-function TwoPaneResizable(props) {
-  const {firstComponent, secondComponent, initialStartSize, splitHorizontal, firstComponentRef, firstComponentName, secondComponentName} = props;
+type Props = {
+  firstComponent: React.Component,
+  secondComponent: React.Component,
+  initialStartSize?: number,
+  splitHorizontal?: boolean,
+  firstComponentRef?: FixMeLater,
+  firstComponentName?: string,
+  secondComponentName?: string
+}
+
+function TwoPaneResizable({
+  firstComponent,
+  secondComponent,
+  initialStartSize,
+  splitHorizontal,
+  firstComponentRef,
+  firstComponentName,
+  secondComponentName
+}: Props) {
   const [startSize, setstartSize] = useState(initialStartSize != null ? initialStartSize : 50);
   const [isResizing, setIsResizing] = useState(false);
-  const container = useRef(null);
+  const container = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.addEventListener('mouseup', onMouseUp);
@@ -27,23 +46,25 @@ function TwoPaneResizable(props) {
     };
   });
 
-  const onMouseMove = (event) => {
+  const onMouseMove = (event: FixMeLater) => {
     if (!isResizing) {
       return;
     }
 
-    const clientStart = splitHorizontal ? event.clientY : event.clientX;
-    const bound = container.current.getBoundingClientRect();
-    const boundStart = splitHorizontal ? bound.top : bound.left;
-    const containerSize = splitHorizontal ? container.current.offsetHeight : container.current.offsetWidth;
-    setstartSize((clientStart - boundStart) / containerSize * 100);
+    if (container.current !== null) {
+      const clientStart = splitHorizontal ? event.clientY : event.clientX;
+      const bound = container.current.getBoundingClientRect();
+      const boundStart = splitHorizontal ? bound.top : bound.left;
+      const containerSize = splitHorizontal ? container.current.offsetHeight : container.current.offsetWidth;
+      setstartSize((clientStart - boundStart) / containerSize * 100);
+    }
   };
 
   const onMouseUp = () => {
     setIsResizing(false);
   };
 
-  const onMouseDown = (event) => {
+  const onMouseDown = (event: FixMeLater) => {
     event.preventDefault();
     setIsResizing(true);
   };
@@ -54,7 +75,7 @@ function TwoPaneResizable(props) {
 
   return (
     <div className={containerClass} ref={container}>
-      <div ref={firstComponentRef} className={paneClass} style={{flex: startSize}}>
+      <div ref={firstComponentRef} className={paneClass} style={{ flex: startSize }}>
         {
           firstComponentName != null ? (
             <h2 className="pane-title">{firstComponentName}</h2>
@@ -63,7 +84,7 @@ function TwoPaneResizable(props) {
         {firstComponent}
       </div>
       <div className={dividerClass} onMouseDown={onMouseDown} />
-      <div className={paneClass + ' second-pane'} style={{flex: 100 - startSize}}>
+      <div className={paneClass + ' second-pane'} style={{ flex: 100 - startSize }}>
         {
           secondComponentName != null ? (
             <h2 className="pane-title">{secondComponentName}</h2>
