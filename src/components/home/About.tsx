@@ -28,7 +28,7 @@ function About() {
           <Team />
         </div>
       </main>
-      <Footer githubLink={true} />
+      <Footer landing={true} />
     </div>
   );
 }
