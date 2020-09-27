@@ -6,10 +6,13 @@ import { getApproveCookie } from '../../hooks/useModuleCompletionState';
 import { useLocation } from 'react-router-dom';
 
 function CookieConsentBanner() {
-  const cookieApprovalStatus = getApproveCookie();
-  const hasApprovedCookies = cookieApprovalStatus === 'true'; // this can return a string, so explicit check false
+  // const cookieApprovalStatus = getApproveCookie();
+  // const hasApprovedCookies = cookieApprovalStatus === 'true'; // this can return a string, so explicit check false
+
+  // TODO: Maker sure this logic works compared to above
+  const hasApprovedCookies = getApproveCookie();
   const [showModal, setShowModal] = useState(false);
-  const [showBanner, setShowBanner] = useState(!hasApprovedCookies && cookieApprovalStatus !== 'false');
+  const [showBanner, setShowBanner] = useState(!hasApprovedCookies);
   const [bannerBottom, setBannerBottom] = useState(-150);
   const [speed, setSpeed] = useState(!hasApprovedCookies ? 10 : null);
   const { pathname } = useLocation();
@@ -28,7 +31,7 @@ function CookieConsentBanner() {
 
   const setApproveCookie = (value) => {
     const date = new Date();
-    date.setTime(date.getTime() + (6*30*24*60*60*1000)); // Expires in 6 months
+    date.setTime(date.getTime() + (6 * 30 * 24 * 60 * 60 * 1000)); // Expires in 6 months
     document.cookie = "destructure-cookie-approve=" + value + ";expires=" + date.toUTCString() + ";path=/";
     setShowModal(false);
     setShowBanner(false);
@@ -69,7 +72,7 @@ function CookieConsentBanner() {
       }
       {
         !showModal && showBanner ? (
-          <div className="cookie-consent-banner" style={{bottom: bannerBottom}}>
+          <div className="cookie-consent-banner" style={{ bottom: bannerBottom }}>
             <p>
               This site uses cookies and local web storage to save your progress in our learning
               modules. You can read more about our specific usage in our{' '}

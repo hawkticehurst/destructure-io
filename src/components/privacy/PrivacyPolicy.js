@@ -5,11 +5,11 @@ import PrivacySection from './PrivacySection';
 import { getApproveCookie } from '../../hooks/useModuleCompletionState';
 
 function PrivacyPolicy() {
-  const [hasApprovedCookies, setHasApprovedCookies] = useState(getApproveCookie() === 'true'); // this can return a string, so explicit check false
+  const [hasApprovedCookies, setHasApprovedCookies] = useState(getApproveCookie()); // this can return a string, so explicit check false
 
   const setApproveCookie = (value) => {
     const date = new Date();
-    date.setTime(date.getTime() + (6*30*24*60*60*1000)); // Expires in 6 months
+    date.setTime(date.getTime() + (6 * 30 * 24 * 60 * 60 * 1000)); // Expires in 6 months
     document.cookie = "destructure-cookie-approve=" + value + ";expires=" + date.toUTCString() + ";path=/";
     setHasApprovedCookies(value === 'true');
     window.location.reload();
@@ -42,7 +42,7 @@ function PrivacyPolicy() {
         <PrivacySection
           title="Introduction"
           text={
-          `
+            `
           We take your privacy very seriously. We only collect information necessary for the proper functioning of
           the site and nothing else. This page outlines exactly what data we collect and why we collect it, but if you
           ever have any questions or concerns, we encourage you to contact us.
@@ -52,7 +52,7 @@ function PrivacyPolicy() {
         <PrivacySection
           title="Personally Identifiable Information"
           text={
-          `
+            `
           The only piece of personally identifiable information we collect is your email address
           when you sign up for the site. We use this information to store your progress through our
           learning modules, but you can completely opt-out by not signing up for an account.
@@ -64,19 +64,19 @@ function PrivacyPolicy() {
         <PrivacySection
           title="How We Use And Store Your Information"
           text={
-          [
-            <span>
-              All of our authentication and database services are run using{' '}
-              <a target="__blank" rel="noopener noreferrer" href="https://policies.google.com/technologies/partner-sites">Google Firebase</a>,
+            [
+              <span>
+                All of our authentication and database services are run using{' '}
+                <a target="__blank" rel="noopener noreferrer" href="https://policies.google.com/technologies/partner-sites">Google Firebase</a>,
               a highly trusted third party platform. When you sign up for an account, we store your email
               and an encrypted password on Firebase. Additionally, we store your current completion
               state of every module on the site. This allows us to retain this information when you
               leave the website.
             </span>,
-          `
+              `
           We will never sell this information or any other information to any third parties.
           `
-          ]
+            ]
           } />
 
         <PrivacySection
@@ -129,16 +129,16 @@ function PrivacyPolicy() {
         <PrivacySection
           title="Changes To This Policy"
           text={
-          [`
+            [`
           We will occasionally update this policy statement to include information about new features
           of the site or to further clarify how we handle data privacy. We encourage you to periodically
           review this page for our latest policies.
           `,
-          `
+              `
           Regardless of these changes, our philosophy on privacy will never change, and we will never
           sell any of your data.
           `
-          ]
+            ]
           } />
       </div>
       <hr />
