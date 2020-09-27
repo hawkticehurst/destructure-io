@@ -1,4 +1,5 @@
 <svg width="0" height="0" class="hidden">
+
   <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" id="hamburger-icon">
     <title>Menu</title>
     <desc>A line styled icon from Orion Icon Library.</desc>
@@ -8,6 +9,7 @@
     <path data-name="layer1" fill="none" stroke="#202020" stroke-miterlimit="10"
     stroke-width="4" d="M14 46h36" stroke-linejoin="round" stroke-linecap="round"></path>
   </symbol>
+
   <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" id="cross-icon">
     <title>Close</title>
     <desc>A line styled icon from Orion Icon Library.</desc>
@@ -15,6 +17,7 @@
     fill="none" stroke="#202020" stroke-miterlimit="10" stroke-width="4" d="M41.999 20.002l-22 22m22 0L20 20"
     stroke-linejoin="round" stroke-linecap="round"></path>
   </symbol>
+
   <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" id="mail-icon">
     <title>Envelope</title>
     <desc>A line styled icon from Orion Icon Library.</desc>
@@ -24,4 +27,5 @@
     <path data-name="layer1" fill="none" stroke="#202020" stroke-miterlimit="10"
     stroke-width="4" d="M2 12h60v40H2z" stroke-linejoin="round" stroke-linecap="round"></path>
   </symbol>
+  
 </svg>
