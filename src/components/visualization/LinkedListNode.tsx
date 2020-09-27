@@ -7,10 +7,16 @@ import React from 'react';
  * hasVariableTable {boolean} - Determines the y position
  * animationHeight {number} - px height of the animation svg
  */
-function LinkedListNode(props) {
-  const { animationHeight, nodeID, data, hasVariableTable } = props;
+type Props = {
+  nodeID: string,
+  data: string,
+  hasVariableTable: boolean,
+  animationHeight: number
+}
 
+function LinkedListNode({ nodeID, data, hasVariableTable, animationHeight }: Props) {
   const yValue = hasVariableTable ? (animationHeight / 2) - 175 : (animationHeight / 2) - 200;
+
   return (
     <svg x="50px" y={yValue}>
       <g id={nodeID} className="node hidden">
@@ -22,7 +28,7 @@ function LinkedListNode(props) {
         <g className="node-data-field">
           <text x="10px" y="55px">data</text>
           <text x="60px" y="55px">=</text>
-          <rect x="85px" y="39px"/ >
+          <rect x="85px" y="39px" />
           <rect x="85px" y="39px" />
           <g className="node-data-text-container">
             <text className="node-data-text" id={nodeID + '-data'} x="110px" y="51px" dominantBaseline="middle" textAnchor="middle">{data}</text>
