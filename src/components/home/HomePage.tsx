@@ -7,7 +7,7 @@ import Catalog from './Catalog';
 import Free from './Free';
 import Hero from './Hero';
 
-function HomePage(props) {
+function HomePage() {
   return (
     <div>
       <NavBar navBarType="homepage" />
