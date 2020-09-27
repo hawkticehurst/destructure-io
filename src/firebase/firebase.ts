@@ -3,6 +3,8 @@ import firebase from 'firebase/app';
 // TODO: Use async/await eventually
 // TODO: Reference inline TODOs below
 
+type FixMeLater = any
+
 export const doCreateUserWithEmailAndPassword = (email: string, password: string) => {
   return new Promise((resolve, reject) => {
     firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
@@ -54,23 +56,23 @@ export const deleteUser = () => {
   }
 }
 
-export const addModule = (moduleData: any) => {
+export const addModule = (moduleData: FixMeLater) => {
   // Get a key for a new set.
   let newModuleKey = firebase.database().ref().child('modules').push().key;
 
-  let updates: any = {};
+  let updates: FixMeLater = {};
   updates['/modules/' + newModuleKey] = moduleData;
 
   firebase.database().ref().update(updates);
   return newModuleKey;
 }
 
-export const updateUserModule = (moduleKey: number, moduleData: any) => {
+export const updateUserModule = (moduleKey: string, moduleData: FixMeLater) => {
   const currentlySignedInUser = firebase.auth().currentUser;
   if (currentlySignedInUser) {
     const uid = currentlySignedInUser.uid;
 
-    let updates: any = {};
+    let updates: FixMeLater = {};
     // This code will come into play when the user attempts a module
     // The module id will be written under their user id, fixing the many-many
     // relationship of modules to users
@@ -84,7 +86,7 @@ export const updateUserModule = (moduleKey: number, moduleData: any) => {
   }
 }
 
-export const getUserModule = (moduleKey: number) => {
+export const getUserModule = (moduleKey: string) => {
   const currentlySignedInUser = firebase.auth().currentUser;
   if (currentlySignedInUser) {
     const uid = currentlySignedInUser.uid;
