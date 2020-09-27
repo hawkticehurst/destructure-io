@@ -1,21 +1,19 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
 
-function Free(props) {
-  const { landing } = props;
+type Props = {
+  landing: boolean
+}
+
+function Free({ landing }: Props) {
   const history = useHistory();
 
   const getStarted = () => {
     history.push('/learn');
   };
 
-  let getStartedLink = <h2 onClick={getStarted} className="bold">Get Started</h2>;
-  let getStartedArrow = <img src={require('./images/arrow-right.svg')} alt="Arrow Right Icon" />;
-
-  if (landing) {
-    getStartedLink = null;
-    getStartedArrow = null;
-  }
+  const getStartedLink = landing ? <h2 onClick={getStarted} className="bold">Get Started</h2> : null;
+  const getStartedArrow = landing ? <img src={require('./images/arrow-right.svg')} alt="Arrow Right Icon" /> : null;
 
   return (
     <div id="free-card-container">
