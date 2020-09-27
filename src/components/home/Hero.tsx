@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from "react-router-dom";
 
 type Props = {
-  landing: boolean
+  landing?: boolean
 }
 
 function Hero({ landing }: Props) {
@@ -19,7 +19,7 @@ function Hero({ landing }: Props) {
     }
   };
 
-  const button = landing ?
+  const button = !landing ?
     <button onClick={onClickHeroBtn} className="hero-btn">
       <span className="bold">Get Started</span> – It's free!
     </button> : null;
