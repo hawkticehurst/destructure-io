@@ -7,11 +7,11 @@ import { getApproveCookie } from '../../hooks/useModuleCompletionState';
 function PrivacyPolicy() {
   const [hasApprovedCookies, setHasApprovedCookies] = useState(getApproveCookie()); // this can return a string, so explicit check false
 
-  const setApproveCookie = (value) => {
+  const setApproveCookie = (value: boolean) => {
     const date = new Date();
     date.setTime(date.getTime() + (6 * 30 * 24 * 60 * 60 * 1000)); // Expires in 6 months
     document.cookie = "destructure-cookie-approve=" + value + ";expires=" + date.toUTCString() + ";path=/";
-    setHasApprovedCookies(value === 'true');
+    setHasApprovedCookies(value);
     window.location.reload();
   };
 
@@ -32,7 +32,7 @@ function PrivacyPolicy() {
                 prevent the site from saving your state when you change pages. Would you like to
                 instead opt-in to cookies and local storage?
               </p>
-              <button className="hero-btn" onClick={() => setApproveCookie("true")}>
+              <button className="hero-btn" onClick={() => setApproveCookie(true)}>
                 <span className="bold">Yes</span> - Opt in to Cookies and local web storage
               </button>
             </div>
