@@ -1,7 +1,7 @@
 import React, { useState , Fragment } from 'react';
 import { useHistory, Link } from "react-router-dom";
 import { doSignInWithEmailAndPassword, doCreateUserWithEmailAndPassword } from '../../firebase/firebase';
-import contentOutline from '../../lesson-content/contentOutline.json';
+import moduleSummaries from '../../lesson-content/moduleSummaries.json';
 import { updateUserModule } from '../../firebase/firebase';
 import { getApproveCookie } from '../../hooks/useModuleCompletionState';
 
@@ -49,7 +49,7 @@ function SignInUpInputs(props) {
   };
 
   const didSignUp = () => {
-    contentOutline.modules.map(module => module.directory).forEach(module => {
+    moduleSummaries.modules.map(module => module.directory).forEach(module => {
       updateUserModule(module, JSON.parse(window.localStorage.getItem(module)));
     });
   };

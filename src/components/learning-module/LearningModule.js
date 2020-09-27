@@ -8,7 +8,7 @@ import SideBar from './SideBar';
 import SubModuleProgressRow from './SubModuleProgressRow';
 import LearningContent from './LearningContent';
 import Visualization from '../visualization/Visualization';
-import contentOutline from '../../lesson-content/contentOutline.json';
+import moduleSummaries from '../../lesson-content/moduleSummaries.json';
 import { useParams, useHistory } from "react-router-dom";
 import useModuleCompletionState, { filenameToSubModuleKey } from '../../hooks/useModuleCompletionState';
 
@@ -129,7 +129,7 @@ function LearningModule() {
 
   useEffect(() => {
     let tempData;
-    const moduleData = contentOutline.modules.find(moduleObj => moduleObj.directory === module);
+    const moduleData = moduleSummaries.modules.find(moduleObj => moduleObj.directory === module);
     if (moduleData == null) {
       setError(true);
       return;
@@ -208,8 +208,8 @@ function LearningModule() {
 
   // Prevent showing errors while files are loaded in
   if (loading) {
-    for (const currModuleIndex in contentOutline.modules) {
-      if (contentOutline.modules[currModuleIndex].directory === module) {
+    for (const currModuleIndex in moduleSummaries.modules) {
+      if (moduleSummaries.modules[currModuleIndex].directory === module) {
         return null;
       }
     }
