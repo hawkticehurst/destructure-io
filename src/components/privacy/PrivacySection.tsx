@@ -1,8 +1,10 @@
 import React from 'react';
 
+type FixMeLater = any;
+
 type Props = {
   title: string,
-  text: string
+  text: string | FixMeLater[]
 }
 
 function PrivacySection({ title, text }: Props) {
