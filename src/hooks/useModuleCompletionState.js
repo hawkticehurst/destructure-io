@@ -10,7 +10,7 @@ export const getApproveCookie = () => {
   const cookies = "; " + document.cookie;
   const parts = cookies.split("; destructure-cookie-approve=");
   if (parts.length === 2) {
-    return parts.pop().split(";").shift();
+    return parts.pop().split(";").shift() === "true"; // TODO: Confirm this works!!
   } return false;
 };
 
@@ -40,7 +40,7 @@ function useModuleCompletionState(module) {
     if (state === 'complete') {
       state = 'completed';
     }
-    const tempCompletionState = {...completionState};
+    const tempCompletionState = { ...completionState };
     tempCompletionState[filenameToSubModuleKey(submodule)] = state;
     setCompletionState(tempCompletionState);
 
