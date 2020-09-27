@@ -29,7 +29,7 @@ function CookieConsentBanner() {
     setRender(!pathname.startsWith('/signup') && !pathname.startsWith('/signin') && !pathname.startsWith('/privacy'));
   }, [pathname]);
 
-  const setApproveCookie = (value) => {
+  const setApproveCookie = (value: boolean) => {
     const date = new Date();
     date.setTime(date.getTime() + (6 * 30 * 24 * 60 * 60 * 1000)); // Expires in 6 months
     document.cookie = "destructure-cookie-approve=" + value + ";expires=" + date.toUTCString() + ";path=/";
@@ -59,10 +59,10 @@ function CookieConsentBanner() {
                 Read more about how we use cookies on our <Link to="/privacy" onClick={() => setShowModal(false)}>Privacy Policy</Link>.
               </p>
               <div className="cookie-deny-buttons">
-                <button className="hero-btn" onClick={() => setApproveCookie("false")}>
+                <button className="hero-btn" onClick={() => setApproveCookie(false)}>
                   <span className="bold">Yes</span> - Opt out of Cookies
                 </button>
-                <button className="hero-btn" onClick={() => setApproveCookie("true")}>
+                <button className="hero-btn" onClick={() => setApproveCookie(true)}>
                   <span className="bold">No</span> - I want these features and opt-in to cookies and local storage
                 </button>
               </div>
@@ -79,7 +79,7 @@ function CookieConsentBanner() {
               <Link to="/privacy">Privacy Policy</Link>. Do you agree to these terms?
             </p>
             <div className="cookie-buttons">
-              <button className="hero-btn" onClick={() => setApproveCookie("true")}>Accept</button>
+              <button className="hero-btn" onClick={() => setApproveCookie(true)}>Accept</button>
               <button className="hero-btn reject-btn" onClick={() => setShowModal(true)}>Decline</button>
             </div>
           </div>
