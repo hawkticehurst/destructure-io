@@ -1,9 +1,11 @@
 import { useEffect, useRef } from 'react';
 
+type FixMeLater = any;
+
 // delay = null to end the callback, similar to setTimeout
 // Based on https://overreacted.io/making-setinterval-declarative-with-react-hooks/
-function useInterval(callback, delay) {
-  const savedCallback = useRef();
+function useInterval(callback: FixMeLater, delay: number) {
+  const savedCallback = useRef<Function>();
 
   // Remember the latest callback.
   useEffect(() => {
@@ -13,7 +15,9 @@ function useInterval(callback, delay) {
   // Set up the interval.
   useEffect(() => {
     function tick() {
-      savedCallback.current();
+      if (savedCallback.current) {
+        savedCallback.current();
+      }
     }
     if (delay !== null) {
       let id = setInterval(tick, delay);
