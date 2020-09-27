@@ -2,37 +2,49 @@ import { useEffect, useState } from 'react';
 import { useFirebaseUser } from './user';
 import { updateUserModule, getUserModule } from '../firebase/firebase';
 
-export const filenameToSubModuleKey = filename => {
+type FixMeLater = any;
+
+export const filenameToSubModuleKey = (filename: string) => {
   return filename.substring(0, filename.length - '.json'.length);
 };
 
 export const getApproveCookie = () => {
   const cookies = "; " + document.cookie;
-  const parts = cookies.split("; destructure-cookie-approve=");
-  if (parts.length === 2) {
-    return parts.pop().split(";").shift() === "true"; // TODO: Confirm this works!!
-  } return false;
+  const cookieComponents = cookies.split("; destructure-cookie-approve=");
+  if (cookieComponents.length === 2) {
+    const destructureCookieApproveVal = cookieComponents.pop();
+    if (destructureCookieApproveVal) {
+      return destructureCookieApproveVal.split(";").shift() === "true"; // TODO: Confirm this works!!
+    }
+  }
+  return false;
 };
 
 // Custom hook for handling completion state of submodules
-function useModuleCompletionState(module) {
-  const [completionState, setCompletionState] = useState({});
+function useModuleCompletionState(module: FixMeLater) {
+  const [completionState, setCompletionState] = useState<FixMeLater>({});
   const user = useFirebaseUser();
-  const hasApprovedCookies = getApproveCookie() === 'true';
+  const hasApprovedCookies = getApproveCookie();
 
   useEffect(() => {
     if (!hasApprovedCookies) {
       return;
     }
 
-    if (user == null) {
-      setCompletionState(JSON.parse(window.localStorage.getItem(module)));
+    if (user === null) {
+      const localModuleString = window.localStorage.getItem(module);
+      if (localModuleString) {
+        setCompletionState(JSON.parse(localModuleString));
+      }
     } else {
-      getUserModule(module).then(setCompletionState);
+      const userModule = getUserModule(module);
+      if (userModule) {
+        userModule.then(setCompletionState);
+      }
     }
   }, [module, user, hasApprovedCookies]);
 
-  const updateCompletionState = (submodule, state) => {
+  const updateCompletionState = (submodule: FixMeLater, state: string) => {
     if (!hasApprovedCookies) {
       return;
     }
@@ -40,7 +52,8 @@ function useModuleCompletionState(module) {
     if (state === 'complete') {
       state = 'completed';
     }
-    const tempCompletionState = { ...completionState };
+
+    const tempCompletionState: FixMeLater = { ...completionState };
     tempCompletionState[filenameToSubModuleKey(submodule)] = state;
     setCompletionState(tempCompletionState);
 
@@ -51,18 +64,18 @@ function useModuleCompletionState(module) {
     }
   };
 
-  const getCompletionState = filename => {
+  const getCompletionState = (filename: string) => {
     if (!hasApprovedCookies) {
       return 'incomplete';
     }
 
     const key = filenameToSubModuleKey(filename);
-    if (completionState != null && key in completionState) {
+    if (completionState !== null && key in completionState) {
       return completionState[key];
     } return 'incomplete';
   };
 
-  const getCurrentSubmodule = submodules => {
+  const getCurrentSubmodule = (submodules: FixMeLater) => {
     if (!hasApprovedCookies) {
       return filenameToSubModuleKey(submodules[0].filename);
     };
@@ -73,7 +86,7 @@ function useModuleCompletionState(module) {
     }
 
     if (completionState != null) {
-      const currentSubmodule = submodules.find(subModule => {
+      const currentSubmodule = submodules.find((subModule: FixMeLater) => {
         return completionState[filenameToSubModuleKey(subModule.filename)] !== 'completed'
       });
       if (currentSubmodule == null) {
