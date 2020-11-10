@@ -5,7 +5,7 @@ import PageNotFound from '../common/PageNotFound';
 import SubModuleProgressRow from './SubModuleProgressRow';
 import { useParams } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
-import contentOutline from '../../lesson-content/contentOutline.json';
+import moduleSummaries from '../../lesson-content/moduleSummaries.json';
 import useModuleCompletionState, { filenameToSubModuleKey } from '../../hooks/useModuleCompletionState';
 import { getUserModule } from '../../firebase/firebase';
 import { useFirebaseUser } from '../../hooks/user';
@@ -30,7 +30,7 @@ function SummaryPage() {
     }
   }, []);
 
-  const moduleObj = contentOutline.modules.find(moduleObj => moduleObj.directory === module);
+  const moduleObj = moduleSummaries.modules.find(moduleObj => moduleObj.directory === module);
   if (moduleObj == null) {
     return <PageNotFound />
   }

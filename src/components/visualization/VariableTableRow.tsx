@@ -6,8 +6,13 @@ import React from 'react';
  * value {string} - the starting value of the row
  * rowID {String} - ID of the row
  */
-function VariableTableRow(props) {
-  const { variable, value, rowID } = props;
+type Props = {
+  variable: string,
+  value: string,
+  rowID: string
+}
+
+function VariableTableRow({ variable, value, rowID }: Props) {
   return (
     <g className="var-table-row" id={rowID}>
       <rect className="row-bg"></rect>

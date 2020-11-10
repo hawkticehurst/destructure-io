@@ -1,8 +1,11 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
 
-function Hero(props) {
-  const { landing } = props;
+type Props = {
+  landing?: boolean
+}
+
+function Hero({ landing }: Props) {
   const history = useHistory();
 
   const onClickHeroBtn = () => {
@@ -15,15 +18,11 @@ function Hero(props) {
       linkedList.scrollIntoView({ behavior: 'smooth' });
     }
   };
-  
-  let button = 
+
+  const button = !landing ?
     <button onClick={onClickHeroBtn} className="hero-btn">
       <span className="bold">Get Started</span> – It's free!
-    </button>;
-
-  if (landing) {
-    button = null;
-  }
+    </button> : null;
 
   return (
     <div className="landing-hero-container">

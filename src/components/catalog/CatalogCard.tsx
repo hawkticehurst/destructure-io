@@ -1,5 +1,5 @@
 import React from 'react';
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 /**
  * Required Props:
@@ -10,10 +10,15 @@ import {useHistory} from "react-router-dom";
  * link {String} - link to module
  * comingSoon {Boolean} True if coming soon. False default
  */
-function CatalogCard(props) {
-  const { link, title, description, comingSoon } = props;
-  const history = useHistory();
+type Prop = {
+  title: string,
+  description: string,
+  link?: string,
+  comingSoon?: boolean
+}
 
+function CatalogCard({ title, description, link, comingSoon }: Prop) {
+  const history = useHistory();
   const onClick = () => {
     if (link) {
       history.push(link);

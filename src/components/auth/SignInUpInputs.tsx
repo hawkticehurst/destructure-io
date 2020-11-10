@@ -1,31 +1,41 @@
-import React, { useState , Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import { useHistory, Link } from "react-router-dom";
 import { doSignInWithEmailAndPassword, doCreateUserWithEmailAndPassword } from '../../firebase/firebase';
-import contentOutline from '../../lesson-content/contentOutline.json';
+import moduleSummaries from '../../lesson-content/moduleSummaries.json';
 import { updateUserModule } from '../../firebase/firebase';
 import { getApproveCookie } from '../../hooks/useModuleCompletionState';
 
+type FixMeLater = any
+
+// TODO: Confirm props are actually optional
+// TODO: Declare more specific function type for onSignIn prop
 /**
  * Optional props:
  * isSignIn: {boolean} - Defaults false, true to show sign in instead of sign up
  * onSignIn: {function} - Function to call when signed in
  */
-function SignInUpInputs(props) {
-  const { isSignIn, onSignIn } = props;
+type Props = {
+  isSignIn?: boolean,
+  onSignIn?: Function
+}
+
+function SignInUpInputs({ isSignIn, onSignIn }: Props) {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+  // TODO: Potentially use better hook for error checking (i.e. use Error type vs string)
+  const [error, setError] = useState('');
   const [labelChecked, setLabelChecked] = useState(false);
-  const [hasApprovedCookies, setHasApprovedCookies] = useState(getApproveCookie() === 'true');
+  // TODO: Confirm change from getApproveCookie() === "true" to getApproveCookie() worked
+  const [hasApprovedCookies, setHasApprovedCookies] = useState(getApproveCookie());
 
-  const isValidEmail = email => {
+  const isValidEmail = (email: string) => {
     // eslint-disable-next-line
-    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+    let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return emailRegex.test(String(email).toLowerCase());
   }
 
-  const onSubmit = event => {
+  const onSubmit = (event: FixMeLater) => {
     event.preventDefault();
     if (!hasApprovedCookies) {
       if (!labelChecked) {
@@ -33,7 +43,7 @@ function SignInUpInputs(props) {
         return;
       }
       const date = new Date();
-      date.setTime(date.getTime() + (6*30*24*60*60*1000)); // Expires in 6 months
+      date.setTime(date.getTime() + (6 * 30 * 24 * 60 * 60 * 1000)); // Expires in 6 months
       document.cookie = "destructure-cookie-approve=true;expires=" + date.toUTCString() + ";path=/";
       setHasApprovedCookies(true);
     }
@@ -49,13 +59,17 @@ function SignInUpInputs(props) {
   };
 
   const didSignUp = () => {
-    contentOutline.modules.map(module => module.directory).forEach(module => {
-      updateUserModule(module, JSON.parse(window.localStorage.getItem(module)));
+    moduleSummaries.modules.map(module => module.directory).forEach(module => {
+      const localModuleString = window.localStorage.getItem(module);
+      if (localModuleString) {
+        updateUserModule(module, JSON.parse(localModuleString));
+      }
     });
   };
 
   const didSignIn = () => {
-    if (window.location.pathname.startsWith('/learn')) {
+    // TODO: Cleaner way of checking if onSignIn is undefined or not?
+    if (window.location.pathname.startsWith('/learn') && onSignIn) {
       onSignIn();
       return;
     }
@@ -77,23 +91,13 @@ function SignInUpInputs(props) {
 
   const headerText = isSignIn ? 'Sign In' : 'Sign Up';
 
-  const footerPrompt = isSignIn ? (
-    <p>
-      Not a member? <Link to="/signup">Sign up for free!</Link>
-    </p>
-  ) : (
-      <p>
-        Not ready to sign up yet? <Link to="/learn">Continue as guest</Link>
-      </p>
-    );
+  const footerPrompt = isSignIn ?
+    <p>Not a member? <Link to="/signup">Sign up for free!</Link></p> :
+    <p>Not ready to sign up yet? <Link to="/learn">Continue as guest</Link></p>;
 
   return (
     <Fragment>
-      {
-        error != null ? (
-          <div className="sign-in-up-error">{error}</div>
-        ) : null
-      }
+      {error.length > 0 ? <div className="sign-in-up-error">{error}</div> : null}
       <div className="sign-in-up-flex-container">
         <div className="sign-in-up-container">
           <h1>{headerText}</h1>
@@ -116,19 +120,19 @@ function SignInUpInputs(props) {
               type="password"
               placeholder="Password"
             />
-          {
-            !hasApprovedCookies ? (
-              <label className="accept-cookie-label">
-                I accept the <Link to="/privacy">Privacy Policy</Link> and opt-in to cookies.
-                <input
-                  name="accept-cookie"
-                  type="checkbox"
-                  checked={labelChecked}
-                  onChange={() => setLabelChecked(!labelChecked)} />
-                <span className="checkmark" />
-              </label>
-            ) : null
-          }
+            {
+              !hasApprovedCookies ? (
+                <label className="accept-cookie-label">
+                  I accept the <Link to="/privacy">Privacy Policy</Link> and opt-in to cookies.
+                  <input
+                    name="accept-cookie"
+                    type="checkbox"
+                    checked={labelChecked}
+                    onChange={() => setLabelChecked(!labelChecked)} />
+                  <span className="checkmark" />
+                </label>
+              ) : null
+            }
           </div>
           <button onClick={onSubmit} className="hero-btn sign-in-up-button">
             <span className="bold">{headerText}</span>

@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from '../common/NavBar';
+import LandingNavBar from '../common/LandingNavBar';
 import Footer from '../common/Footer';
 import LinkedList from './LinkedList';
 import GuidedLearning from './GuidedLearning';
@@ -7,12 +7,12 @@ import Catalog from './Catalog';
 import Free from './Free';
 import Hero from './Hero';
 
-function HomePage(props) {
+function LandingPage() {
   return (
     <div>
-      <NavBar navBarType="homepage" />
+      <LandingNavBar about={false} />
       <main>
-        <Hero />
+        <Hero landing={true} />
         <div id="linked-list" className="content-container">
           <LinkedList />
         </div>
@@ -23,12 +23,12 @@ function HomePage(props) {
           <Catalog />
         </div>
         <div id="free-container" className="content-container">
-          <Free />
+          <Free landing={true} />
         </div>
       </main>
-      <Footer />
+      <Footer landing={true} />
     </div>
   );
 }
 
-export default HomePage;
+export default LandingPage;

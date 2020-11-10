@@ -6,10 +6,13 @@ import { getApproveCookie } from '../../hooks/useModuleCompletionState';
 import { useLocation } from 'react-router-dom';
 
 function CookieConsentBanner() {
-  const cookieApprovalStatus = getApproveCookie();
-  const hasApprovedCookies = cookieApprovalStatus === 'true'; // this can return a string, so explicit check false
+  // const cookieApprovalStatus = getApproveCookie();
+  // const hasApprovedCookies = cookieApprovalStatus === 'true'; // this can return a string, so explicit check false
+
+  // TODO: Maker sure this logic works compared to above
+  const hasApprovedCookies = getApproveCookie();
   const [showModal, setShowModal] = useState(false);
-  const [showBanner, setShowBanner] = useState(!hasApprovedCookies && cookieApprovalStatus !== 'false');
+  const [showBanner, setShowBanner] = useState(!hasApprovedCookies);
   const [bannerBottom, setBannerBottom] = useState(-150);
   const [speed, setSpeed] = useState(!hasApprovedCookies ? 10 : null);
   const { pathname } = useLocation();
@@ -26,9 +29,9 @@ function CookieConsentBanner() {
     setRender(!pathname.startsWith('/signup') && !pathname.startsWith('/signin') && !pathname.startsWith('/privacy'));
   }, [pathname]);
 
-  const setApproveCookie = (value) => {
+  const setApproveCookie = (value: boolean) => {
     const date = new Date();
-    date.setTime(date.getTime() + (6*30*24*60*60*1000)); // Expires in 6 months
+    date.setTime(date.getTime() + (6 * 30 * 24 * 60 * 60 * 1000)); // Expires in 6 months
     document.cookie = "destructure-cookie-approve=" + value + ";expires=" + date.toUTCString() + ";path=/";
     setShowModal(false);
     setShowBanner(false);
@@ -56,10 +59,10 @@ function CookieConsentBanner() {
                 Read more about how we use cookies on our <Link to="/privacy" onClick={() => setShowModal(false)}>Privacy Policy</Link>.
               </p>
               <div className="cookie-deny-buttons">
-                <button className="hero-btn" onClick={() => setApproveCookie("false")}>
+                <button className="hero-btn" onClick={() => setApproveCookie(false)}>
                   <span className="bold">Yes</span> - Opt out of Cookies
                 </button>
-                <button className="hero-btn" onClick={() => setApproveCookie("true")}>
+                <button className="hero-btn" onClick={() => setApproveCookie(true)}>
                   <span className="bold">No</span> - I want these features and opt-in to cookies and local storage
                 </button>
               </div>
@@ -69,14 +72,14 @@ function CookieConsentBanner() {
       }
       {
         !showModal && showBanner ? (
-          <div className="cookie-consent-banner" style={{bottom: bannerBottom}}>
+          <div className="cookie-consent-banner" style={{ bottom: bannerBottom }}>
             <p>
               This site uses cookies and local web storage to save your progress in our learning
               modules. You can read more about our specific usage in our{' '}
               <Link to="/privacy">Privacy Policy</Link>. Do you agree to these terms?
             </p>
             <div className="cookie-buttons">
-              <button className="hero-btn" onClick={() => setApproveCookie("true")}>Accept</button>
+              <button className="hero-btn" onClick={() => setApproveCookie(true)}>Accept</button>
               <button className="hero-btn reject-btn" onClick={() => setShowModal(true)}>Decline</button>
             </div>
           </div>

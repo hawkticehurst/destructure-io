@@ -4,24 +4,34 @@ import { doSignOut } from '../../firebase/firebase';
 import { useFirebaseUser } from '../../hooks/user';
 import SignInUpInputs from '../auth/SignInUpInputs';
 
+type FixMeLater = any;
+
+// TODO: Potentially create a type or interface for the specific navBarType
+//       strings defined in the comment below
+
 /**
  * Required Props:
  * toggleSideBar {function} - Callback for toggling the sidebar
- * SubModuleTitle {String} - Title of current submodule
+ * subModuleTitle {String} - Title of current submodule
  * navBarType {String} - String representing which version of the navbar to render
  *    Nav Bar Types: 'summary', 'module', 'homepage', 'catalog', 'sign-in', 'sign-up'
  */
-function NavBar(props) {
-  const { toggleSideBar, SubModuleTitle, navBarType } = props;
+type Props = {
+  toggleSideBar?: FixMeLater,
+  subModuleTitle?: string,
+  navBarType: string
+}
+
+function NavBar({ toggleSideBar, subModuleTitle, navBarType }: Props) {
   const [showLoginDropdown, setShowLoginDropdown] = useState(false);
   const user = useFirebaseUser();
 
   useEffect(() => {
-    const onClickPageShouldCloseLogin = (event) => {
+    const onClickPageShouldCloseLogin = (event: FixMeLater) => {
       if (showLoginDropdown &&
-          event.path.find(el => el.classList != null &&
+        event.path.find((el: FixMeLater) => el.classList != null &&
           el.classList.contains('sign-in-dropdown')) == null) {
-          setShowLoginDropdown(false);
+        setShowLoginDropdown(false);
       }
     };
 
@@ -43,7 +53,7 @@ function NavBar(props) {
       <svg className="hamburger-icon" onClick={toggleSideBar}>
         <use xlinkHref="/website-icons.svg#hamburger-icon"></use>
       </svg>
-      <p onClick={toggleSideBar}>{SubModuleTitle}</p>
+      <p onClick={toggleSideBar}>{subModuleTitle}</p>
     </div>
   ) : null;
 
