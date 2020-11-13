@@ -29,7 +29,7 @@ function CookieConsentBanner() {
     setRender(!pathname.startsWith('/signup') && !pathname.startsWith('/signin') && !pathname.startsWith('/privacy'));
   }, [pathname]);
 
-  const setApproveCookie = (value: boolean) => {
+  const setApproveCookie = (value) => {
     const date = new Date();
     date.setTime(date.getTime() + (6 * 30 * 24 * 60 * 60 * 1000)); // Expires in 6 months
     document.cookie = "destructure-cookie-approve=" + value + ";expires=" + date.toUTCString() + ";path=/";
