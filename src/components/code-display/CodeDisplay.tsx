@@ -23,29 +23,40 @@ import CodeChunk from './CodeChunk';
     },
   ]
  */
-function CodeDisplay(props) {
-  const { codeData, language, selectedLine, codeChunkKeyOffset } = props;
+type FixMeLater = any;
+
+type Props = {
+  codeData: FixMeLater;
+  language: string;
+  selectedLine: number;
+  codeChunkKeyOffset: string | number;
+}
+
+function CodeDisplay({ codeData, language, selectedLine, codeChunkKeyOffset }: Props) {
 
   // This is a bit hacky, but it listens for horizontal scrolls on the code display
   // If any happen, it makes sure all lines stay the full width of the container,
   // which keeps the background colors visable.
   useEffect(() => {
-    document.querySelector('.code-display-container').addEventListener('scroll', () => {
-      const chunks = document.querySelectorAll('.chunk');
-      let maxWidth = 0;
-      chunks.forEach((line) => {
-        if (line.scrollWidth > maxWidth) {
-          maxWidth = line.scrollWidth;
-        }
+    const codeDisplayContainer = document.querySelector('.code-display-container');
+    if (codeDisplayContainer) {
+      codeDisplayContainer.addEventListener('scroll', () => {
+        const chunks: NodeListOf<HTMLElement> = document.querySelectorAll('.chunk');
+        let maxWidth = 0;
+        chunks.forEach((line) => {
+          if (line.scrollWidth > maxWidth) {
+            maxWidth = line.scrollWidth;
+          }
+        });
+        chunks.forEach((line) => {
+          line.style.width = maxWidth + "px";
+        });
       });
-      chunks.forEach((line) => {
-        line.style.width = maxWidth + "px";
-      });
-    });
+    }
   }, []);
 
   let currLineNumber = 1;
-  const codeChunks = codeData.map((chunkObj, index) => {
+  const codeChunks = codeData.map((chunkObj: FixMeLater, index: number) => {
     const { code, type } = chunkObj;
     const codeChunk = (
       <CodeChunk
@@ -54,7 +65,7 @@ function CodeDisplay(props) {
         lineNumberStart={currLineNumber}
         isHidden={type === "hidden"}
         selectedLine={selectedLine}
-        key={index + codeChunkKeyOffset} />
+        key={index.toString() + codeChunkKeyOffset} />
     );
     currLineNumber += code[language].length;
     return codeChunk;

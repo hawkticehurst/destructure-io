@@ -11,18 +11,33 @@ import CodeLine from './CodeLine';
  * isHidden {Boolean} - Defaults to false, if true it shows as "grayed out"
  * selectedLine {number} - Number of selected line. If undefined or -1 is passed, no lines are selected
  */
-function CodeChunk(props) {
-  const { code, language, lineNumberStart, isHidden, selectedLine } = props;
+type FixMeLater = any;
+
+type Props = {
+  code: FixMeLater;
+  language: string;
+  lineNumberStart: number;
+  isHidden?: boolean;
+  selectedLine?: number;
+}
+
+function CodeChunk({ code, language, lineNumberStart, isHidden, selectedLine }: Props) {
   const [isCollapsed, setIsCollapsed] = useState(isHidden);
-  const [maxHeight, setMaxHeight] = useState(null);
+  const [maxHeight, setMaxHeight] = useState(0);
 
   useEffect(() => {
     const calcHeight = () => {
-      return document.querySelector('.code-content').offsetHeight;
+      const codeContent: HTMLDivElement | null = document.querySelector('.code-content')
+      if (codeContent) {
+        return codeContent.offsetHeight;
+      }
     };
 
     const setMaxHeightOneLine = () => {
-      setMaxHeight(calcHeight());
+      const height = calcHeight();
+      if (height) {
+        setMaxHeight(height);
+      }
     };
 
     if (isCollapsed) {
@@ -30,7 +45,10 @@ function CodeChunk(props) {
       window.addEventListener("resize", setMaxHeightOneLine);
     } else if (code.length > 1) {
       window.removeEventListener("resize", setMaxHeightOneLine);
-      setMaxHeight(calcHeight() * code.length);
+      const height = calcHeight();
+      if (height) {
+        setMaxHeight(height * code.length);
+      }
     }
 
     return () => {
@@ -38,7 +56,7 @@ function CodeChunk(props) {
     };
   }, [isCollapsed, code.length]);
 
-  const codeLines = code.map((lineData, index) => {
+  const codeLines = code.map((lineData: FixMeLater, index: number) => {
     const lineNumber = index + lineNumberStart;
     return <CodeLine
             language={language}
@@ -62,15 +80,19 @@ function CodeChunk(props) {
     className += " hidden-chunk";
   }
 
-  const style = maxHeight != null ? {
-    maxHeight
-  } : null;
-  return (
-    <div className={className} style={style}>
-      {codeLines}
-    </div>
-  );
+  // const style = maxHeight > 0 ? {
+  //   {"maxHeight": maxHeight}
+  // } : null;
 
+  let codeChunk: JSX.Element;
+
+  if (maxHeight > 0) {
+    codeChunk = <div className={className} style={{"maxHeight": maxHeight}}>{codeLines}</div>;
+  } else {
+    codeChunk = <div className={className}>{codeLines}</div>;
+  }
+
+  return codeChunk;
 }
 
 export default CodeChunk;

@@ -15,23 +15,36 @@ import TooltipContainer from '../common/TooltipContainer';
  * isSelected {Boolean} - defaults to false, true to show code as selected
  * tooltip {String} - String to show as a tooltip with the line.
  */
-function CodeLine(props) {
-  const {
-    code,
-    language,
-    lineNumber,
-    isCollapsed,
-    onChevronClick,
-    isHidden,
-    isSelected,
-    tooltip
-  } = props;
+type FixMeLater = any;
+
+type Props = {
+  code: string;
+  language: string;
+  lineNumber: number;
+  isCollapsed?: boolean;
+  onChevronClick?: FixMeLater;
+  isHidden?: boolean;
+  isSelected?: boolean;
+  tooltip?: string;
+}
+
+function CodeLine({
+  code,
+  language,
+  lineNumber,
+  isCollapsed,
+  onChevronClick,
+  isHidden,
+  isSelected,
+  tooltip
+}: Props) {
 
   const hasChevron = onChevronClick != null && isHidden;
-  const chevron = hasChevron ?
-  <span
+  const chevron = hasChevron && onChevronClick ? (
+    <span
     className={isCollapsed ? "chevron right" : "chevron bottom"}
     onClick={onChevronClick} />
+  )
   : null;
 
   const lineClass = isSelected ? "code-line selected-line" : "code-line";

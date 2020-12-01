@@ -19,8 +19,17 @@ import './highlight-styles/hidden.scss';
  * Example usage:
  * <CodeHighlight language="java">int x = 5;</CodeHighlight>
  */
-function CodeHighlight(props) {
-  const { language, children, isHidden, isSelected, isInline } = props;
+type FixMeLater = any;
+
+type Props = {
+  language: string;
+  children: FixMeLater;
+  isHidden?: boolean;
+  isSelected?: boolean;
+  isInline?: boolean;
+}
+
+function CodeHighlight({ language, children, isHidden, isSelected, isInline }: Props) {
   const codeRef = useRef(null);
 
   useEffect(() => {
