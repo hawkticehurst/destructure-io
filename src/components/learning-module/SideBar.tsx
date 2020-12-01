@@ -2,6 +2,8 @@ import React, { useEffect, useState, Fragment } from "react";
 import PageTint from "../common/PageTint";
 import { useHistory } from "react-router-dom";
 
+type FixMeLater = any;
+
 /**
  * Required Props:
  * children {React Node} - Content to be contained in the sideBar
@@ -16,17 +18,27 @@ import { useHistory } from "react-router-dom";
  * hideControlsDivider {Boolean} - True to hide the line under the close button. Defaults false.
  *
  */
-function SideBar(props) {
-  const {
-    children,
-    headerText,
-    summaryLink,
-    setSideBarShown,
-    sideBarShown,
-    isSidebarRight,
-    showBackToSummary,
-    hideControlsDivider,
-  } = props;
+type Props = {
+  children: JSX.Element;
+  setSideBarShown: Function;
+  sideBarShown: boolean;
+  headerText?: string;
+  summaryLink?: string;
+  isSidebarRight?: boolean;
+  showBackToSummary?: boolean;
+  hideControlsDivider?: boolean;
+};
+
+function SideBar({
+  children,
+  headerText,
+  summaryLink,
+  setSideBarShown,
+  sideBarShown,
+  isSidebarRight,
+  showBackToSummary,
+  hideControlsDivider,
+}: Props) {
   const history = useHistory();
   const [render, setRender] = useState(sideBarShown);
 
@@ -43,7 +55,7 @@ function SideBar(props) {
   };
 
   // Don't click on things below the sideBar
-  const stopPropagation = (event) => {
+  const stopPropagation = (event: FixMeLater) => {
     event.stopPropagation();
   };
 
