@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 type FixMeLater = any;
 
@@ -8,9 +8,9 @@ type FixMeLater = any;
  * tintShown {boolean} - true if tint is shown, false otherwise
  */
 type Props = {
-  clickedTint: Function,
-  tintShown: boolean
-}
+  clickedTint: Function;
+  tintShown: boolean;
+};
 
 function PageTint({ clickedTint, tintShown }: Props) {
   const [render, setRender] = useState(tintShown);
@@ -34,13 +34,14 @@ function PageTint({ clickedTint, tintShown }: Props) {
     }
   };
 
-  const animationClass = tintShown ? 'tint-fade-in' : 'tint-fade-out';
+  const animationClass = tintShown ? "tint-fade-in" : "tint-fade-out";
   return render ? (
     <div
-      className={'page-tint ' + animationClass}
+      className={"page-tint " + animationClass}
       onAnimationEnd={onAnimationEnd}
-      onClick={onClick} />
-  ) : null
+      onClick={onClick}
+    />
+  ) : null;
 }
 
 export default PageTint;

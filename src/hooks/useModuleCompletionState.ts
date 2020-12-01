@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { useFirebaseUser } from './user';
-import { updateUserModule, getUserModule } from '../firebase/firebase';
+import { useEffect, useState } from "react";
+import { useFirebaseUser } from "./user";
+import { updateUserModule, getUserModule } from "../firebase/firebase";
 
 type FixMeLater = any;
 
 export const filenameToSubModuleKey = (filename: string) => {
-  return filename.substring(0, filename.length - '.json'.length);
+  return filename.substring(0, filename.length - ".json".length);
 };
 
 export const getApproveCookie = () => {
@@ -49,8 +49,8 @@ function useModuleCompletionState(module: FixMeLater) {
       return;
     }
 
-    if (state === 'complete') {
-      state = 'completed';
+    if (state === "complete") {
+      state = "completed";
     }
 
     const tempCompletionState: FixMeLater = { ...completionState };
@@ -66,32 +66,39 @@ function useModuleCompletionState(module: FixMeLater) {
 
   const getCompletionState = (filename: string) => {
     if (!hasApprovedCookies) {
-      return 'incomplete';
+      return "incomplete";
     }
 
     const key = filenameToSubModuleKey(filename);
     if (completionState !== null && key in completionState) {
       return completionState[key];
-    } return 'incomplete';
+    }
+    return "incomplete";
   };
 
   const getCurrentSubmodule = (submodules: FixMeLater) => {
     if (!hasApprovedCookies) {
       return filenameToSubModuleKey(submodules[0].filename);
-    };
+    }
 
-    const lastViewed = window.localStorage.getItem('last-viewed-' + module);
+    const lastViewed = window.localStorage.getItem("last-viewed-" + module);
     if (lastViewed != null) {
       return lastViewed;
     }
 
     if (completionState != null) {
       const currentSubmodule = submodules.find((subModule: FixMeLater) => {
-        return completionState[filenameToSubModuleKey(subModule.filename)] !== 'completed'
+        return (
+          completionState[filenameToSubModuleKey(subModule.filename)] !==
+          "completed"
+        );
       });
       if (currentSubmodule == null) {
-        return filenameToSubModuleKey(submodules[submodules.length - 1].filename);
-      } return filenameToSubModuleKey(currentSubmodule.filename);
+        return filenameToSubModuleKey(
+          submodules[submodules.length - 1].filename
+        );
+      }
+      return filenameToSubModuleKey(currentSubmodule.filename);
     }
     return filenameToSubModuleKey(submodules[0].filename);
   };
@@ -100,7 +107,7 @@ function useModuleCompletionState(module: FixMeLater) {
     completionState,
     updateCompletionState,
     getCompletionState,
-    getCurrentSubmodule
+    getCurrentSubmodule,
   };
 }
 

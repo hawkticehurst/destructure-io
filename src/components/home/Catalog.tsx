@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from "react";
 
 function Catalog() {
   return (
@@ -33,8 +33,8 @@ function Catalog() {
         <h1>A growing catalog of content.</h1>
         <p>
           We are committed to covering the basics of computer science data
-          structures. You can look forward to modules ranging from Linked
-          Lists to Heaps and everything in between.
+          structures. You can look forward to modules ranging from Linked Lists
+          to Heaps and everything in between.
         </p>
       </div>
     </Fragment>

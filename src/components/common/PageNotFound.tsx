@@ -1,6 +1,6 @@
-import React from 'react';
-import NavBar from './NavBar';
-import { Link } from 'react-router-dom';
+import React from "react";
+import NavBar from "./NavBar";
+import { Link } from "react-router-dom";
 
 function PageNotFound() {
   return (

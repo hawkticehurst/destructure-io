@@ -90,81 +90,67 @@
     {
       "type": "auto",
       "code": {
-        "java": [{
-          "given": "  public void insertNodesAtHead(Node head, int num) {",
-          "animations": [
-            "createVarTable,num,2"
-          ]
-        }
-      ]
+        "java": [
+          {
+            "given": "  public void insertNodesAtHead(Node head, int num) {",
+            "animations": ["createVarTable,num,2"]
+          }
+        ]
       }
     },
     {
       "type": "loop",
       "loopCounter": [2],
       "code": {
-        "java": [{
-          "given": "    for (int i = 0; i < num; i++) {",
-          "animations": [
-            ["addVarTableRow,i,0"], []
-          ]
-        },
-        {
-          "given": "      Node temp = new Node(i);",
-          "animations": [
-            [
-              "createNewNode,0,#node3"
-            ],
-            [
-              "createNewNode,1,#node4"
+        "java": [
+          {
+            "given": "    for (int i = 0; i < num; i++) {",
+            "animations": [["addVarTableRow,i,0"], []]
+          },
+          {
+            "given": "      Node temp = new Node(i);",
+            "animations": [
+              ["createNewNode,0,#node3"],
+              ["createNewNode,1,#node4"]
             ]
-          ]
-        },
-        {
-          "given": "      temp.next = head;",
-          "animations": [
-            [
-              "insertNodeAtIndex,0,#node3"
-            ],
-            [
-              "insertNodeAtIndex,0,#node4"
+          },
+          {
+            "given": "      temp.next = head;",
+            "animations": [
+              ["insertNodeAtIndex,0,#node3"],
+              ["insertNodeAtIndex,0,#node4"]
             ]
-          ]
-        },
-        {
-          "given": "      head = temp;",
-          "animations": [
-            "movePointer,#head-pointer,-1"
-          ]
-        },
-        {
-          "given": "    }",
-          "animations": [
-            [
-              "setRowData,i,1"
-            ],
-            [
-              "setRowData,i,2"
-            ]
-          ]
-        }]
+          },
+          {
+            "given": "      head = temp;",
+            "animations": ["movePointer,#head-pointer,-1"]
+          },
+          {
+            "given": "    }",
+            "animations": [["setRowData,i,1"], ["setRowData,i,2"]]
+          }
+        ]
       }
     },
-  {
-    "type": "auto",
-    "code": {
-      "java": [{
-        "given": "  }"
-      }]
+    {
+      "type": "auto",
+      "code": {
+        "java": [
+          {
+            "given": "  }"
+          }
+        ]
+      }
+    },
+    {
+      "type": "auto",
+      "code": {
+        "java": [
+          {
+            "given": "}"
+          }
+        ]
+      }
     }
-  },
-  {
-    "type": "auto",
-    "code": {
-      "java": [{
-        "given": "}"
-      }]
-    }
-  }
   ]
 }

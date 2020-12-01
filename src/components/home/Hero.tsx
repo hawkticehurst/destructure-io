@@ -1,35 +1,38 @@
-import React from 'react';
+import React from "react";
 import { useHistory } from "react-router-dom";
 
 type Props = {
-  landing?: boolean
-}
+  landing?: boolean;
+};
 
 function Hero({ landing }: Props) {
   const history = useHistory();
 
   const onClickHeroBtn = () => {
-    history.push('/learn');
+    history.push("/learn");
   };
 
   const onClickHeroChevron = () => {
-    const linkedList = document.getElementById('linked-list');
+    const linkedList = document.getElementById("linked-list");
     if (linkedList != null) {
-      linkedList.scrollIntoView({ behavior: 'smooth' });
+      linkedList.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-  const button = !landing ?
+  const button = !landing ? (
     <button onClick={onClickHeroBtn} className="hero-btn">
       <span className="bold">Get Started</span> – It's free!
-    </button> : null;
+    </button>
+  ) : null;
 
   return (
     <div className="landing-hero-container">
-      <h1>An interactive visualization platform for learning data structures.</h1>
+      <h1>
+        An interactive visualization platform for learning data structures.
+      </h1>
       {button}
       <span id="chevron" className="hero-circle" onClick={onClickHeroChevron}>
-        <img src={require('./images/arrow-down.svg')} alt="Arrow Down Icon" />
+        <img src={require("./images/arrow-down.svg")} alt="Arrow Down Icon" />
       </span>
     </div>
   );

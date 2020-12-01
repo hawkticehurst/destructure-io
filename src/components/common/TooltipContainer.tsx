@@ -1,4 +1,4 @@
-import React, { useState, useRef, FunctionComponent } from 'react';
+import React, { useState, useRef, FunctionComponent } from "react";
 
 type FixMeLater = any;
 
@@ -13,23 +13,32 @@ const TooltipContainer: FunctionComponent = ({ children }) => {
     if (tooltipRef.current !== null && containerRef.current !== null) {
       const size = tooltipRef.current.getBoundingClientRect();
       setTooltipLeft(containerRef.current.getBoundingClientRect().left - 20);
-      setTooltipTop(containerRef.current.getBoundingClientRect().bottom - size.height - 25);
+      setTooltipTop(
+        containerRef.current.getBoundingClientRect().bottom - size.height - 25
+      );
       setIsTooltipShown(true);
     }
   };
 
-  const tooltipClass = isTooltipShown ? 'tooltip' : 'tooltip invisible';
+  const tooltipClass = isTooltipShown ? "tooltip" : "tooltip invisible";
 
   return (
     <div>
-      <div style={{ zIndex: 4 }} ref={containerRef} onMouseEnter={showTooltip} onMouseLeave={() => setIsTooltipShown(false)}>
+      <div
+        style={{ zIndex: 4 }}
+        ref={containerRef}
+        onMouseEnter={showTooltip}
+        onMouseLeave={() => setIsTooltipShown(false)}>
         <span className="tooltip-indicator" />
       </div>
-      <div ref={tooltipRef} className={tooltipClass} style={{ top: tooltipTop, left: tooltipLeft }}>
+      <div
+        ref={tooltipRef}
+        className={tooltipClass}
+        style={{ top: tooltipTop, left: tooltipLeft }}>
         {children}
       </div>
     </div>
   );
-}
+};
 
 export default TooltipContainer;
