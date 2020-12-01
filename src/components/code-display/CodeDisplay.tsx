@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import CodeChunk from './CodeChunk';
+import React, { useEffect } from "react";
+import CodeChunk from "./CodeChunk";
 
 /**
  * Required Props:
@@ -30,18 +30,26 @@ type Props = {
   language: string;
   selectedLine: number;
   codeChunkKeyOffset: string | number;
-}
+};
 
-function CodeDisplay({ codeData, language, selectedLine, codeChunkKeyOffset }: Props) {
-
+function CodeDisplay({
+  codeData,
+  language,
+  selectedLine,
+  codeChunkKeyOffset,
+}: Props) {
   // This is a bit hacky, but it listens for horizontal scrolls on the code display
   // If any happen, it makes sure all lines stay the full width of the container,
   // which keeps the background colors visable.
   useEffect(() => {
-    const codeDisplayContainer = document.querySelector('.code-display-container');
+    const codeDisplayContainer = document.querySelector(
+      ".code-display-container"
+    );
     if (codeDisplayContainer) {
-      codeDisplayContainer.addEventListener('scroll', () => {
-        const chunks: NodeListOf<HTMLElement> = document.querySelectorAll('.chunk');
+      codeDisplayContainer.addEventListener("scroll", () => {
+        const chunks: NodeListOf<HTMLElement> = document.querySelectorAll(
+          ".chunk"
+        );
         let maxWidth = 0;
         chunks.forEach((line) => {
           if (line.scrollWidth > maxWidth) {
@@ -65,16 +73,13 @@ function CodeDisplay({ codeData, language, selectedLine, codeChunkKeyOffset }: P
         lineNumberStart={currLineNumber}
         isHidden={type === "hidden"}
         selectedLine={selectedLine}
-        key={index.toString() + codeChunkKeyOffset} />
+        key={index.toString() + codeChunkKeyOffset}
+      />
     );
     currLineNumber += code[language].length;
     return codeChunk;
   });
-  return (
-    <div className="code-display-container">
-      {codeChunks}
-    </div>
-  );
+  return <div className="code-display-container">{codeChunks}</div>;
 }
 
 export default CodeDisplay;

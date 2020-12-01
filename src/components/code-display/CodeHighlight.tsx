@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import { findDOMNode }  from 'react-dom';
-import hljs from 'highlight.js';
-import './highlight-styles/light.scss'; // examples of options, most need to be downloaded: https://highlightjs.org/static/demo/
-import './highlight-styles/hidden.scss';
+import React, { useEffect, useRef } from "react";
+import { findDOMNode } from "react-dom";
+import hljs from "highlight.js";
+import "./highlight-styles/light.scss"; // examples of options, most need to be downloaded: https://highlightjs.org/static/demo/
+import "./highlight-styles/hidden.scss";
 
 /**
  * Required Props:
@@ -27,9 +27,15 @@ type Props = {
   isHidden?: boolean;
   isSelected?: boolean;
   isInline?: boolean;
-}
+};
 
-function CodeHighlight({ language, children, isHidden, isSelected, isInline }: Props) {
+function CodeHighlight({
+  language,
+  children,
+  isHidden,
+  isSelected,
+  isInline,
+}: Props) {
   const codeRef = useRef(null);
 
   useEffect(() => {
@@ -37,20 +43,25 @@ function CodeHighlight({ language, children, isHidden, isSelected, isInline }: P
   });
 
   return (
-    <span className={isHidden ? "hidden-code" : isSelected ? "selected-code" : "standard-code"}>
-      {
-        isInline ? (
-            <code className={language + 'code-format inline'} ref={codeRef}>
-              {children}
-            </code>
-        ) : (
-          <pre className="code-format">
-            <code className={language} ref={codeRef}>
-              {children}
-            </code>
-          </pre>
-        )
-      }
+    <span
+      className={
+        isHidden
+          ? "hidden-code"
+          : isSelected
+          ? "selected-code"
+          : "standard-code"
+      }>
+      {isInline ? (
+        <code className={language + "code-format inline"} ref={codeRef}>
+          {children}
+        </code>
+      ) : (
+        <pre className="code-format">
+          <code className={language} ref={codeRef}>
+            {children}
+          </code>
+        </pre>
+      )}
     </span>
   );
 }

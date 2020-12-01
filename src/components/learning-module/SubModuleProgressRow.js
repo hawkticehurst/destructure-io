@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 /**
  * Required Props:
@@ -23,7 +23,7 @@ function SubModuleProgressRow(props) {
     selected,
     onClickLink,
     rowClass,
-    shouldShowStartBtn
+    shouldShowStartBtn,
   } = props;
   const [isCompleted, setIsCompleted] = useState(completionState);
   const history = useHistory();
@@ -33,15 +33,15 @@ function SubModuleProgressRow(props) {
   }, [completionState]);
 
   const toggleCompletionState = () => {
-    if (isCompleted === 'flagged') {
-      completionStateChanged('completed');
-      setIsCompleted('completed');
-    } else if (isCompleted == null || isCompleted === 'incomplete') {
-      completionStateChanged('flagged');
-      setIsCompleted('flagged');
+    if (isCompleted === "flagged") {
+      completionStateChanged("completed");
+      setIsCompleted("completed");
+    } else if (isCompleted == null || isCompleted === "incomplete") {
+      completionStateChanged("flagged");
+      setIsCompleted("flagged");
     } else {
-      completionStateChanged('incomplete');
-      setIsCompleted('incomplete');
+      completionStateChanged("incomplete");
+      setIsCompleted("incomplete");
     }
   };
 
@@ -49,28 +49,41 @@ function SubModuleProgressRow(props) {
     if (!shouldShowStartBtn) {
       history.push(link);
       onClickLink();
-    };
+    }
   };
 
-  const containerClass = selected ? 'sub-module-progress-row-container progress-row-selected' : 'sub-module-progress-row-container';
-  const exclamationIcon = <img src={require('./images/exclamation.svg')} alt="Exclamation Icon" />;
-  const checkmarkIcon = <img src={require('./images/checkmark.svg')} alt="Checkmark Icon" />;
-  const progressIcon = isCompleted === 'flagged' ? exclamationIcon : isCompleted === 'completed' ? checkmarkIcon : '';
+  const containerClass = selected
+    ? "sub-module-progress-row-container progress-row-selected"
+    : "sub-module-progress-row-container";
+  const exclamationIcon = (
+    <img src={require("./images/exclamation.svg")} alt="Exclamation Icon" />
+  );
+  const checkmarkIcon = (
+    <img src={require("./images/checkmark.svg")} alt="Checkmark Icon" />
+  );
+  const progressIcon =
+    isCompleted === "flagged"
+      ? exclamationIcon
+      : isCompleted === "completed"
+      ? checkmarkIcon
+      : "";
   return (
-    <div className={containerClass + (rowClass != null ? (' ' + rowClass) : '')}>
-      <div className="progress-circle-filled" onClick={toggleCompletionState}>{progressIcon}</div>
+    <div className={containerClass + (rowClass != null ? " " + rowClass : "")}>
+      <div className="progress-circle-filled" onClick={toggleCompletionState}>
+        {progressIcon}
+      </div>
       <div className="sub-module-title-container" onClick={onClickContainer}>
         <h3>
-          <Link to={link} onClick={onClickLink}>{moduleTitle}</Link>
+          <Link to={link} onClick={onClickLink}>
+            {moduleTitle}
+          </Link>
         </h3>
       </div>
-      {
-        shouldShowStartBtn ? (
-          <Link to={link} onClick={onClickLink}>
-            <button className="summary-module-btn">Start</button>
-          </Link>
-        ) : null
-      }
+      {shouldShowStartBtn ? (
+        <Link to={link} onClick={onClickLink}>
+          <button className="summary-module-btn">Start</button>
+        </Link>
+      ) : null}
     </div>
   );
 }

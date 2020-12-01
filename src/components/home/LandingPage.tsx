@@ -1,11 +1,11 @@
-import React from 'react';
-import LandingNavBar from '../common/LandingNavBar';
-import Footer from '../common/Footer';
-import LinkedList from './LinkedList';
-import GuidedLearning from './GuidedLearning';
-import Catalog from './Catalog';
-import Free from './Free';
-import Hero from './Hero';
+import React from "react";
+import LandingNavBar from "../common/LandingNavBar";
+import Footer from "../common/Footer";
+import LinkedList from "./LinkedList";
+import GuidedLearning from "./GuidedLearning";
+import Catalog from "./Catalog";
+import Free from "./Free";
+import Hero from "./Hero";
 
 function LandingPage() {
   return (

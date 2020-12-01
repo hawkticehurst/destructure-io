@@ -54,101 +54,86 @@
     {
       "type": "auto",
       "code": {
-        "java": [{
-          "given": "  public static void main(string[] args) {",
-          "animations": [
-          ]
-        },{
-          "given": "    Node head = new Node(0);",
-          "animations": [
-            "createNewNode,0,#node1",
-            "createNewPointer,#head-pointer,head"
-          ]
-        },
-        {
-          "given": "    Node curr = head;",
-          "animations": [
-            "createNewPointer,#curr-pointer,curr"
-          ]
-        }
-      ]
+        "java": [
+          {
+            "given": "  public static void main(string[] args) {",
+            "animations": []
+          },
+          {
+            "given": "    Node head = new Node(0);",
+            "animations": [
+              "createNewNode,0,#node1",
+              "createNewPointer,#head-pointer,head"
+            ]
+          },
+          {
+            "given": "    Node curr = head;",
+            "animations": ["createNewPointer,#curr-pointer,curr"]
+          }
+        ]
       }
     },
     {
       "type": "loop",
       "loopCounter": [2],
       "code": {
-        "java": [{
-          "given": "    for (int i = 1; i < 3; i++) {",
-          "animations": [
-            [
-              "createVarTable,i,1"
-            ], [], []
-          ]
-        },
-        {
-          "given": "      curr.next = new Node(i);",
-          "animations": [
-            [
-              "createNewNode,1,#node2",
-              "insertNodeAtIndex,tail"
-            ],
-            [
-              "createNewNode,2,#node3",
-              "insertNodeAtIndex,tail"
-            ],
-            [
-              "createNewNode,3,#node4",
-              "insertNodeAtIndex,tail"
+        "java": [
+          {
+            "given": "    for (int i = 1; i < 3; i++) {",
+            "animations": [["createVarTable,i,1"], [], []]
+          },
+          {
+            "given": "      curr.next = new Node(i);",
+            "animations": [
+              ["createNewNode,1,#node2", "insertNodeAtIndex,tail"],
+              ["createNewNode,2,#node3", "insertNodeAtIndex,tail"],
+              ["createNewNode,3,#node4", "insertNodeAtIndex,tail"]
             ]
-          ]
-        },
-        {
-          "given": "      curr = curr.next;",
-          "animations": [
-            "movePointer,#curr-pointer,1"
-          ]
-        },
-        {
-          "given": "    }",
-          "animations": [
-            [
-              "setRowData,i,2"
-            ],
-            [
-              "setRowData,i,3"
-            ],
-            [
-              "setRowData,i,4"
+          },
+          {
+            "given": "      curr = curr.next;",
+            "animations": ["movePointer,#curr-pointer,1"]
+          },
+          {
+            "given": "    }",
+            "animations": [
+              ["setRowData,i,2"],
+              ["setRowData,i,3"],
+              ["setRowData,i,4"]
             ]
-          ]
-        }
-      ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "auto",
+      "code": {
+        "java": [
+          {
+            "given": "    return head;"
+          }
+        ]
+      }
+    },
+    {
+      "type": "auto",
+      "code": {
+        "java": [
+          {
+            "given": "  }"
+          }
+        ]
+      }
+    },
+    {
+      "type": "auto",
+      "code": {
+        "java": [
+          {
+            "given": "}"
+          }
+        ]
+      }
     }
-  },
-  {
-    "type": "auto",
-    "code": {
-      "java": [{
-        "given": "    return head;"
-      }]
-    }
-  },
-  {
-    "type": "auto",
-    "code": {
-      "java": [{
-        "given": "  }"
-      }]
-    }
-  },
-  {
-    "type": "auto",
-    "code": {
-      "java": [{
-        "given": "}"
-      }]
-    }
-  }
   ]
 }

@@ -1,6 +1,6 @@
-import React from 'react';
-import CodeHighlight from './CodeHighlight';
-import TooltipContainer from '../common/TooltipContainer';
+import React from "react";
+import CodeHighlight from "./CodeHighlight";
+import TooltipContainer from "../common/TooltipContainer";
 
 /**
  * Required Props:
@@ -26,7 +26,7 @@ type Props = {
   isHidden?: boolean;
   isSelected?: boolean;
   tooltip?: string;
-}
+};
 
 function CodeLine({
   code,
@@ -36,39 +36,37 @@ function CodeLine({
   onChevronClick,
   isHidden,
   isSelected,
-  tooltip
+  tooltip,
 }: Props) {
-
   const hasChevron = onChevronClick != null && isHidden;
-  const chevron = hasChevron && onChevronClick ? (
-    <span
-    className={isCollapsed ? "chevron right" : "chevron bottom"}
-    onClick={onChevronClick} />
-  )
-  : null;
+  const chevron =
+    hasChevron && onChevronClick ? (
+      <span
+        className={isCollapsed ? "chevron right" : "chevron bottom"}
+        onClick={onChevronClick}
+      />
+    ) : null;
 
   const lineClass = isSelected ? "code-line selected-line" : "code-line";
 
   return (
     <div className={lineClass}>
-      <div className="line-number">
-        {lineNumber}
+      <div className="line-number">{lineNumber}</div>
+      <div className={hasChevron ? "chevron-container" : ""}>
+        <div className="chevron-offset">{chevron}</div>
       </div>
-      <div className={hasChevron ? 'chevron-container' : ''}>
-        <div className="chevron-offset">
-          {chevron}
-        </div>
-      </div>
-      {
-        tooltip != null ? (
-          <TooltipContainer>
-            <span>{tooltip}</span>
-          </TooltipContainer>
-        ) : null
-      }
+      {tooltip != null ? (
+        <TooltipContainer>
+          <span>{tooltip}</span>
+        </TooltipContainer>
+      ) : null}
       <div className="code-content">
-        <CodeHighlight isHidden={isHidden} isSelected={isSelected} language={language}>
-          {code + (onChevronClick != null && isHidden && isCollapsed ? '...}' : '')}
+        <CodeHighlight
+          isHidden={isHidden}
+          isSelected={isSelected}
+          language={language}>
+          {code +
+            (onChevronClick != null && isHidden && isCollapsed ? "...}" : "")}
         </CodeHighlight>
       </div>
     </div>

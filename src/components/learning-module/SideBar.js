@@ -1,5 +1,5 @@
-import React, { useEffect, useState, Fragment } from 'react';
-import PageTint from '../common/PageTint';
+import React, { useEffect, useState, Fragment } from "react";
+import PageTint from "../common/PageTint";
 import { useHistory } from "react-router-dom";
 
 /**
@@ -25,7 +25,7 @@ function SideBar(props) {
     sideBarShown,
     isSidebarRight,
     showBackToSummary,
-    hideControlsDivider
+    hideControlsDivider,
   } = props;
   const history = useHistory();
   const [render, setRender] = useState(sideBarShown);
@@ -53,39 +53,48 @@ function SideBar(props) {
     }
   };
 
-  const animationClass = sideBarShown ? 'sidebar-fade-in' : 'sidebar-fade-out';
-  const sidebarRightClass = isSidebarRight === true ? ' sidebar-right' : '';
-  return (
-    render ? (
-      <Fragment>
-        <PageTint clickedTint={() => setSideBarShown(false)} tintShown={sideBarShown} />
+  const animationClass = sideBarShown ? "sidebar-fade-in" : "sidebar-fade-out";
+  const sidebarRightClass = isSidebarRight === true ? " sidebar-right" : "";
+  return render ? (
+    <Fragment>
+      <PageTint
+        clickedTint={() => setSideBarShown(false)}
+        tintShown={sideBarShown}
+      />
+      <div
+        className={"sidebar " + animationClass + sidebarRightClass}
+        onClick={stopPropagation}
+        onAnimationEnd={onAnimationEnd}>
         <div
-          className={'sidebar ' + animationClass + sidebarRightClass}
-          onClick={stopPropagation}
-          onAnimationEnd={onAnimationEnd}>
-          <div className={'sidebar-controls' + (hideControlsDivider ? ' hide-bottom-border' : '')}>
-            <div className="go-back-summary" onClick={onClickGoBackSummary}>
-              {
-                showBackToSummary === true ? (
-                  <Fragment>
-                    <img src={require('./images/arrow-left.svg')} alt="Arrow Left Icon" />
-                    <p>Back To Module Overview</p>
-                  </Fragment>
-                ) : null
-              }
-            </div>
-            <img className="sidebar-close" onClick={() => setSideBarShown(false)} src={require('./images/close.svg')} alt="Close Icon" />
+          className={
+            "sidebar-controls" +
+            (hideControlsDivider ? " hide-bottom-border" : "")
+          }>
+          <div className="go-back-summary" onClick={onClickGoBackSummary}>
+            {showBackToSummary === true ? (
+              <Fragment>
+                <img
+                  src={require("./images/arrow-left.svg")}
+                  alt="Arrow Left Icon"
+                />
+                <p>Back To Module Overview</p>
+              </Fragment>
+            ) : null}
           </div>
-          {
-            headerText != null ? (
-              <h1 className="sidebar-header">{headerText}</h1>
-            ) : null
-          }
-          {children}
+          <img
+            className="sidebar-close"
+            onClick={() => setSideBarShown(false)}
+            src={require("./images/close.svg")}
+            alt="Close Icon"
+          />
         </div>
-      </Fragment>
-    ) : null
-  );
+        {headerText != null ? (
+          <h1 className="sidebar-header">{headerText}</h1>
+        ) : null}
+        {children}
+      </div>
+    </Fragment>
+  ) : null;
 }
 
 export default SideBar;

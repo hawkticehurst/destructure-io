@@ -4,7 +4,8 @@
   }
 }
 
-.selected-code, .standard-code {
+.selected-code,
+.standard-code {
   .hljs {
     display: block;
     padding: 0.5em;
@@ -32,7 +33,7 @@
 
   .hljs-variable,
   .hljs-template-variable {
-    color: #3F6E74;
+    color: #3f6e74;
   }
 
   .hljs-code,
@@ -43,7 +44,7 @@
 
   .hljs-regexp,
   .hljs-link {
-    color: #0E0EFF;
+    color: #0e0eff;
   }
 
   .hljs-title,
@@ -58,7 +59,6 @@
     color: #643820;
   }
 
-
   .hljs-class .hljs-title,
   .hljs-type,
   .hljs-built_in,
@@ -68,7 +68,7 @@
   }
 
   .hljs-attr {
-    color: #836C28;
+    color: #836c28;
   }
 
   .hljs-subst {

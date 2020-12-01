@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from "react";
 
 function GuidedLearning() {
   return (
@@ -6,20 +6,20 @@ function GuidedLearning() {
       <div className="text-container">
         <h1>Guided learning.</h1>
         <p>
-          Access learning modules that guide you through the process
-          of understanding and working with each data structure.
+          Access learning modules that guide you through the process of
+          understanding and working with each data structure.
         </p>
       </div>
       <div className="img-container right-image">
         <div className="progress-row-container">
           <div className="progress-circle-filled-home">
-            <img src={require('./images/checkmark.svg')} alt="Checkmark Icon" />
+            <img src={require("./images/checkmark.svg")} alt="Checkmark Icon" />
           </div>
           <div className="progress-line-filled" />
         </div>
         <div className="progress-row-container">
           <div className="progress-circle-filled-home">
-            <img src={require('./images/checkmark.svg')} alt="Checkmark Icon" />
+            <img src={require("./images/checkmark.svg")} alt="Checkmark Icon" />
           </div>
           <div className="progress-line-filled" />
         </div>

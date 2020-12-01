@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { doSignOut } from '../../firebase/firebase';
-import { useFirebaseUser } from '../../hooks/user';
-import SignInUpInputs from '../auth/SignInUpInputs';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { doSignOut } from "../../firebase/firebase";
+import { useFirebaseUser } from "../../hooks/user";
+import SignInUpInputs from "../auth/SignInUpInputs";
 
 type FixMeLater = any;
 
@@ -17,10 +17,10 @@ type FixMeLater = any;
  *    Nav Bar Types: 'summary', 'module', 'homepage', 'catalog', 'sign-in', 'sign-up'
  */
 type Props = {
-  toggleSideBar?: FixMeLater,
-  subModuleTitle?: string,
-  navBarType: string
-}
+  toggleSideBar?: FixMeLater;
+  subModuleTitle?: string;
+  navBarType: string;
+};
 
 function NavBar({ toggleSideBar, subModuleTitle, navBarType }: Props) {
   const [showLoginDropdown, setShowLoginDropdown] = useState(false);
@@ -28,47 +28,63 @@ function NavBar({ toggleSideBar, subModuleTitle, navBarType }: Props) {
 
   useEffect(() => {
     const onClickPageShouldCloseLogin = (event: FixMeLater) => {
-      if (showLoginDropdown &&
-        event.path.find((el: FixMeLater) => el.classList != null &&
-          el.classList.contains('sign-in-dropdown')) == null) {
+      if (
+        showLoginDropdown &&
+        event.path.find(
+          (el: FixMeLater) =>
+            el.classList != null && el.classList.contains("sign-in-dropdown")
+        ) == null
+      ) {
         setShowLoginDropdown(false);
       }
     };
 
     if (showLoginDropdown) {
-      document.addEventListener('click', onClickPageShouldCloseLogin);
+      document.addEventListener("click", onClickPageShouldCloseLogin);
     }
-    return () => document.removeEventListener('click', onClickPageShouldCloseLogin);
+    return () =>
+      document.removeEventListener("click", onClickPageShouldCloseLogin);
   }, [showLoginDropdown]);
 
   let containerClass = "nav-bar-container";
-  if (['homepage', 'catalog', 'sign-in', 'sign-up'].includes(navBarType)) {
+  if (["homepage", "catalog", "sign-in", "sign-up"].includes(navBarType)) {
     containerClass += " homepage-nav-bar";
   } else if (navBarType === "module") {
     containerClass += " module-nav-bar";
   }
 
-  const backBtn = navBarType === "module" ? (
-    <div className="nav-back-btn">
-      <svg className="hamburger-icon" onClick={toggleSideBar}>
-        <use xlinkHref="/website-icons.svg#hamburger-icon"></use>
-      </svg>
-      <p onClick={toggleSideBar}>{subModuleTitle}</p>
-    </div>
-  ) : null;
+  const backBtn =
+    navBarType === "module" ? (
+      <div className="nav-back-btn">
+        <svg className="hamburger-icon" onClick={toggleSideBar}>
+          <use xlinkHref="/website-icons.svg#hamburger-icon"></use>
+        </svg>
+        <p onClick={toggleSideBar}>{subModuleTitle}</p>
+      </div>
+    ) : null;
 
   // Using a link here is a bit hacky but makes sure we don't have different styles compared to actual links
-  const signOutLink = user != null ? (
-    <Link to={window.location.pathname} onClick={doSignOut}>Log Out</Link>
-  ) : null;
+  const signOutLink =
+    user != null ? (
+      <Link to={window.location.pathname} onClick={doSignOut}>
+        Log Out
+      </Link>
+    ) : null;
 
-  const signInLink = user == null ? navBarType === 'module' ? (
-    <Link to={window.location.pathname} onClick={() => setShowLoginDropdown(!showLoginDropdown)}>Sign In</Link>
-  ) : <Link to="/signin">Sign In</Link> : null;
+  const signInLink =
+    user == null ? (
+      navBarType === "module" ? (
+        <Link
+          to={window.location.pathname}
+          onClick={() => setShowLoginDropdown(!showLoginDropdown)}>
+          Sign In
+        </Link>
+      ) : (
+        <Link to="/signin">Sign In</Link>
+      )
+    ) : null;
 
-  const signUpLink = user == null ? (
-    <Link to="/signup">Sign Up</Link>
-  ) : null;
+  const signUpLink = user == null ? <Link to="/signup">Sign Up</Link> : null;
 
   const catalogLink = <Link to="/learn">Catalog</Link>;
 
@@ -78,11 +94,16 @@ function NavBar({ toggleSideBar, subModuleTitle, navBarType }: Props) {
     <div className={containerClass}>
       {showLoginDropdown ? (
         <div className="sign-in-dropdown">
-          <SignInUpInputs isSignIn={true} onSignIn={() => setShowLoginDropdown(false)} />
+          <SignInUpInputs
+            isSignIn={true}
+            onSignIn={() => setShowLoginDropdown(false)}
+          />
         </div>
       ) : null}
       {backBtn}
-      <h1><Link to="/">destructure.io</Link></h1>
+      <h1>
+        <Link to="/">destructure.io</Link>
+      </h1>
       <div className="nav-links-container">
         {aboutLink}
         {catalogLink}

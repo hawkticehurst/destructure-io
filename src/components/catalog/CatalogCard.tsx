@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { useHistory } from "react-router-dom";
 
 /**
@@ -11,11 +11,11 @@ import { useHistory } from "react-router-dom";
  * comingSoon {Boolean} True if coming soon. False default
  */
 type Prop = {
-  title: string,
-  description: string,
-  link?: string,
-  comingSoon?: boolean
-}
+  title: string;
+  description: string;
+  link?: string;
+  comingSoon?: boolean;
+};
 
 function CatalogCard({ title, description, link, comingSoon }: Prop) {
   const history = useHistory();
@@ -25,12 +25,12 @@ function CatalogCard({ title, description, link, comingSoon }: Prop) {
     }
   };
 
-  const className = comingSoon ? 'catalog-card coming-soon' : 'catalog-card';
+  const className = comingSoon ? "catalog-card coming-soon" : "catalog-card";
 
   return (
     <div className={className} onClick={onClick}>
       <h2>{title}</h2>
-      <p>{!comingSoon ? description : 'Coming Soon'}</p>
+      <p>{!comingSoon ? description : "Coming Soon"}</p>
     </div>
   );
 }

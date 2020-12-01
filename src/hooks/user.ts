@@ -1,9 +1,11 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import firebase from 'firebase/app';
+import { createContext, useContext, useState, useEffect } from "react";
+import firebase from "firebase/app";
 
 type FixMeLater = any;
 
-export const UserContext = createContext<{ user: firebase.User } | { user: null }>({ user: null });
+export const UserContext = createContext<
+  { user: firebase.User } | { user: null }
+>({ user: null });
 
 export const useFirebaseUser = () => {
   return useContext(UserContext).user;
@@ -31,4 +33,4 @@ export const useAuth = () => {
   }, []);
 
   return state;
-}
+};

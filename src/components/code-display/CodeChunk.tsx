@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import CodeLine from './CodeLine';
+import React, { useState, useEffect } from "react";
+import CodeLine from "./CodeLine";
 
 /**
  * Required Props:
@@ -19,15 +19,23 @@ type Props = {
   lineNumberStart: number;
   isHidden?: boolean;
   selectedLine?: number;
-}
+};
 
-function CodeChunk({ code, language, lineNumberStart, isHidden, selectedLine }: Props) {
+function CodeChunk({
+  code,
+  language,
+  lineNumberStart,
+  isHidden,
+  selectedLine,
+}: Props) {
   const [isCollapsed, setIsCollapsed] = useState(isHidden);
   const [maxHeight, setMaxHeight] = useState(0);
 
   useEffect(() => {
     const calcHeight = () => {
-      const codeContent: HTMLDivElement | null = document.querySelector('.code-content')
+      const codeContent: HTMLDivElement | null = document.querySelector(
+        ".code-content"
+      );
       if (codeContent) {
         return codeContent.offsetHeight;
       }
@@ -58,23 +66,26 @@ function CodeChunk({ code, language, lineNumberStart, isHidden, selectedLine }: 
 
   const codeLines = code.map((lineData: FixMeLater, index: number) => {
     const lineNumber = index + lineNumberStart;
-    return <CodeLine
-            language={language}
-            code={lineData.given}
-            lineNumber={lineNumber}
-            onChevronClick={index === 0 ? () => setIsCollapsed(!isCollapsed) : null}
-            isCollapsed={isCollapsed}
-            isHidden={isHidden}
-            isSelected={selectedLine === lineNumber}
-            tooltip={lineData.tooltip}
-            key={index} />
+    return (
+      <CodeLine
+        language={language}
+        code={lineData.given}
+        lineNumber={lineNumber}
+        onChevronClick={index === 0 ? () => setIsCollapsed(!isCollapsed) : null}
+        isCollapsed={isCollapsed}
+        isHidden={isHidden}
+        isSelected={selectedLine === lineNumber}
+        tooltip={lineData.tooltip}
+        key={index}
+      />
+    );
   });
 
   let className = "chunk";
   if (isCollapsed) {
     className += " chunk-collapsed";
   } else {
-    className += " chunk-open"
+    className += " chunk-open";
   }
   if (isHidden) {
     className += " hidden-chunk";
@@ -87,7 +98,11 @@ function CodeChunk({ code, language, lineNumberStart, isHidden, selectedLine }: 
   let codeChunk: JSX.Element;
 
   if (maxHeight > 0) {
-    codeChunk = <div className={className} style={{"maxHeight": maxHeight}}>{codeLines}</div>;
+    codeChunk = (
+      <div className={className} style={{ maxHeight: maxHeight }}>
+        {codeLines}
+      </div>
+    );
   } else {
     codeChunk = <div className={className}>{codeLines}</div>;
   }

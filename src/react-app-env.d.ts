@@ -1,2 +1,2 @@
 /// <reference types="react-scripts" />
-declare module 'highlight.js';
+declare module "highlight.js";

@@ -100,78 +100,66 @@
     {
       "type": "auto",
       "code": {
-        "java": [{
-          "given": "  public void incrementList(Node head) {",
-          "animations": [
-
-          ]
-        },
-        {
-          "given": "    Node curr = head;",
-          "animations": [
-            "createNewPointer,#curr-pointer,curr"
-          ]
-        }
-      ]
+        "java": [
+          {
+            "given": "  public void incrementList(Node head) {",
+            "animations": []
+          },
+          {
+            "given": "    Node curr = head;",
+            "animations": ["createNewPointer,#curr-pointer,curr"]
+          }
+        ]
       }
     },
     {
       "type": "loop",
       "loopCounter": [4],
       "code": {
-        "java": [{
-          "given": "    while(curr != null) {",
-          "animations": [
-
-          ]
-        },
-        {
-          "given": "      curr.data++;",
-          "animations": [
-              [
-                "setNodeData,#node0,1"
-              ],
-              [
-                "setNodeData,#node1,2"
-              ],
-              [
-                "setNodeData,#node2,3"
-              ],
-              [
-                "setNodeData,#node3,4"
-              ]
-          ]
-        },
-        {
-          "given": "      curr = curr.next;",
-          "animations": [
-            "movePointer,#curr-pointer,1"
-          ]
-        },
-        {
-          "given": "    }",
-          "animations": [
-
-          ]
-        }
-      ]
+        "java": [
+          {
+            "given": "    while(curr != null) {",
+            "animations": []
+          },
+          {
+            "given": "      curr.data++;",
+            "animations": [
+              ["setNodeData,#node0,1"],
+              ["setNodeData,#node1,2"],
+              ["setNodeData,#node2,3"],
+              ["setNodeData,#node3,4"]
+            ]
+          },
+          {
+            "given": "      curr = curr.next;",
+            "animations": ["movePointer,#curr-pointer,1"]
+          },
+          {
+            "given": "    }",
+            "animations": []
+          }
+        ]
+      }
+    },
+    {
+      "type": "auto",
+      "code": {
+        "java": [
+          {
+            "given": "  }"
+          }
+        ]
+      }
+    },
+    {
+      "type": "auto",
+      "code": {
+        "java": [
+          {
+            "given": "}"
+          }
+        ]
+      }
     }
-  },
-  {
-    "type": "auto",
-    "code": {
-      "java": [{
-        "given": "  }"
-      }]
-    }
-  },
-  {
-    "type": "auto",
-    "code": {
-      "java": [{
-        "given": "}"
-      }]
-    }
-  }
   ]
 }

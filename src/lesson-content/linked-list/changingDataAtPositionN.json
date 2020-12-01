@@ -100,103 +100,85 @@
     {
       "type": "auto",
       "code": {
-        "java": [{
-          "given": "  public void setNodeAtIndex(Node head, int index, int newData) {",
-          "animations": [
-            "createVarTable,index,2,newData,10"
-
-          ]
-        },
-        {
-          "given": "    Node curr = head;",
-          "animations": [
-            "createNewPointer,#curr-pointer,curr"
-          ]
-        },
-        {
-          "given": "    int i = 0;",
-          "animations": [
-            "addVarTableRow,i,0"
-          ]
-        }
-      ]
+        "java": [
+          {
+            "given": "  public void setNodeAtIndex(Node head, int index, int newData) {",
+            "animations": ["createVarTable,index,2,newData,10"]
+          },
+          {
+            "given": "    Node curr = head;",
+            "animations": ["createNewPointer,#curr-pointer,curr"]
+          },
+          {
+            "given": "    int i = 0;",
+            "animations": ["addVarTableRow,i,0"]
+          }
+        ]
       }
     },
     {
       "type": "loop",
       "loopCounter": [2],
       "code": {
-        "java": [{
-          "given": "    while(curr != null && i < index) {",
-          "animations": [
-
-          ]
-        },
-        {
-          "given": "      curr = curr.next;",
-          "animations": [
-            [
-              "movePointer,#curr-pointer,1"
-            ],
-            [
-              "movePointer,#curr-pointer,1"
+        "java": [
+          {
+            "given": "    while(curr != null && i < index) {",
+            "animations": []
+          },
+          {
+            "given": "      curr = curr.next;",
+            "animations": [
+              ["movePointer,#curr-pointer,1"],
+              ["movePointer,#curr-pointer,1"]
             ]
-
-          ]
-        },
-        {
-          "given": "      i++;",
-          "animations": [
-            [
-              "setRowData,i,1"
-            ],
-            [
-              "setRowData,i,2"
-            ]
-          ]
-        },
-        {
-          "given": "    }",
-          "animations": [
-
-          ]
-        }
-      ]
-    }
-  },
-  {
-    "type": "auto",
-    "code": {
-      "java": [{
-        "given": "    if (curr != null)"
-      },
-      {
-        "given": "      curr.data = newData;",
-        "animations": [
-          "setNodeData,#node2,10"
+          },
+          {
+            "given": "      i++;",
+            "animations": [["setRowData,i,1"], ["setRowData,i,2"]]
+          },
+          {
+            "given": "    }",
+            "animations": []
+          }
         ]
-      },
-      {
-        "given": "    }"
       }
-    ]
+    },
+    {
+      "type": "auto",
+      "code": {
+        "java": [
+          {
+            "given": "    if (curr != null)"
+          },
+          {
+            "given": "      curr.data = newData;",
+            "animations": ["setNodeData,#node2,10"]
+          },
+          {
+            "given": "    }"
+          }
+        ]
+      }
+    },
+    {
+      "type": "auto",
+      "code": {
+        "java": [
+          {
+            "given": "  }"
+          }
+        ]
+      }
+    },
+    {
+      "type": "auto",
+      "code": {
+        "java": [
+          {
+            "given": "}"
+          }
+        ]
+      }
     }
-  },
-  {
-    "type": "auto",
-    "code": {
-      "java": [{
-        "given": "  }"
-      }]
-    }
-  },
-  {
-    "type": "auto",
-    "code": {
-      "java": [{
-        "given": "}"
-      }]
-    }
-  }
   ]
 }

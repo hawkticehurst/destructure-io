@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import NavBar from './NavBar';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import NavBar from "./NavBar";
+import { Link } from "react-router-dom";
 
 function DeviceTooSmall() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    window.addEventListener('resize', updateSize);
-    return () => window.removeEventListener('resize', updateSize);
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
   }, []);
 
   useEffect(() => {
@@ -26,8 +26,9 @@ function DeviceTooSmall() {
       <div className="device-too-small">
         <h1>Sorry, destructure.io requires a computer.</h1>
         <p>
-          To properly visualize data structures, we need a larger screen
-          than available on mobile devices. Please visit the application from a computer.
+          To properly visualize data structures, we need a larger screen than
+          available on mobile devices. Please visit the application from a
+          computer.
         </p>
         <p>
           <Link to="/">Back to home.</Link>

@@ -1,77 +1,90 @@
-import React, { useEffect, memo, forwardRef, useImperativeHandle, useRef, useState } from "react";
-import useAnimation  from '../../hooks/useAnimation';
-import LinkedListNode from './LinkedListNode';
-import LinkedListPointer from './LinkedListPointer';
-import VariableTableRow from './VariableTableRow';
+import React, {
+  useEffect,
+  memo,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
+import useAnimation from "../../hooks/useAnimation";
+import LinkedListNode from "./LinkedListNode";
+import LinkedListPointer from "./LinkedListPointer";
+import VariableTableRow from "./VariableTableRow";
 
 /**
-  * Required Props:
-  * animations {String[]} – Array of Animation strings as defined below
-  * updateLine {Function} - Callback run to update the line number of parent
-  * setAnimationComplete {Function} - Callback run when the animation finishes
-  * preStartAnimations {String[]} – Array of Animation strings as defined below to have complete before the animation starts
-  *
-  * Animation strings are comma seperated values. The first value is the name of the function to be called.
-  * Other values correspond to arguments to the functions, always as strings.
-  * Below is a list of all possible animation string function names and their parameters.
-  *
-  *  createNewNode:
-  *           parameter1 OPTIONAL: data - defaults its node number
-  *           parameter2 OPTIONAL: Node ID - defaults to next available
-  *           Example: "createNewNode,4,#node3"
-  *
-  *  createNewPointer:
-  *           parameter1: Pointer ID
-  *           parameter2: Display name
-  *           Example: "createNewPointer,#head-pointer,head"
-  *
-  *  deleteNode:
-  *           parameter1: Node ID
-  *           Example: "deleteNode,#node3"
-  *
-  *  setNodeData:
-  *           parameter1: Node ID
-  *           parameter2: data to set
-  *           Example: "setNodeData,#node3,5"
-  *
-  *  insertNodeAtIndex:
-  *           parameter1: index to insert the node. Optionally pass "tail" to set as tail node. (We need this, because loops tail is ambiguous)
-  *           parameter2 OPTIONAL: Node ID - if ommitted goes not last created node
-  *           Example: "insertNodeAtIndex,#node3,1"
-  *
-  *  movePointer:
-  *           parameter1: Pointer ID
-  *           parameter2: Number of nodes to move it over, negative to move left
-  *           Example: "movePointer,#head-pointer,-1"
-  *
-  *  setPointerNull:
-  *           parameter1: Pointer ID
-  *           Example: "setPointerNull,#node3-pointer"
-  *
-  *  elongatePointer:
-  *           parameter1: Pointer ID
-  *           Example: "elongatePointer,#node3-pointer"
-  *
-  *  createVarTable:
-  *           Example: "createVarTable"
-  *           Parameters: name,value,name,value,etc for rows to start as inserted
-  *
-  *  addVarTableRow:
-  *           parameter1: variable name
-  *           parameter2: starting value
-  *           Example: "addVarTableRow,i,0"
-  *
-  * removeVarTableRow:
-  *           parameter1: variable name
-  *           Example: "removeVarTableRow,i"
-  *
-  * setRowData:
-  *           parameter1: variable name
-  *           parameter2: data
-  *           Example: "setRowData,i,25"
-  */
+ * Required Props:
+ * animations {String[]} – Array of Animation strings as defined below
+ * updateLine {Function} - Callback run to update the line number of parent
+ * setAnimationComplete {Function} - Callback run when the animation finishes
+ * preStartAnimations {String[]} – Array of Animation strings as defined below to have complete before the animation starts
+ *
+ * Animation strings are comma seperated values. The first value is the name of the function to be called.
+ * Other values correspond to arguments to the functions, always as strings.
+ * Below is a list of all possible animation string function names and their parameters.
+ *
+ *  createNewNode:
+ *           parameter1 OPTIONAL: data - defaults its node number
+ *           parameter2 OPTIONAL: Node ID - defaults to next available
+ *           Example: "createNewNode,4,#node3"
+ *
+ *  createNewPointer:
+ *           parameter1: Pointer ID
+ *           parameter2: Display name
+ *           Example: "createNewPointer,#head-pointer,head"
+ *
+ *  deleteNode:
+ *           parameter1: Node ID
+ *           Example: "deleteNode,#node3"
+ *
+ *  setNodeData:
+ *           parameter1: Node ID
+ *           parameter2: data to set
+ *           Example: "setNodeData,#node3,5"
+ *
+ *  insertNodeAtIndex:
+ *           parameter1: index to insert the node. Optionally pass "tail" to set as tail node. (We need this, because loops tail is ambiguous)
+ *           parameter2 OPTIONAL: Node ID - if ommitted goes not last created node
+ *           Example: "insertNodeAtIndex,#node3,1"
+ *
+ *  movePointer:
+ *           parameter1: Pointer ID
+ *           parameter2: Number of nodes to move it over, negative to move left
+ *           Example: "movePointer,#head-pointer,-1"
+ *
+ *  setPointerNull:
+ *           parameter1: Pointer ID
+ *           Example: "setPointerNull,#node3-pointer"
+ *
+ *  elongatePointer:
+ *           parameter1: Pointer ID
+ *           Example: "elongatePointer,#node3-pointer"
+ *
+ *  createVarTable:
+ *           Example: "createVarTable"
+ *           Parameters: name,value,name,value,etc for rows to start as inserted
+ *
+ *  addVarTableRow:
+ *           parameter1: variable name
+ *           parameter2: starting value
+ *           Example: "addVarTableRow,i,0"
+ *
+ * removeVarTableRow:
+ *           parameter1: variable name
+ *           Example: "removeVarTableRow,i"
+ *
+ * setRowData:
+ *           parameter1: variable name
+ *           parameter2: data
+ *           Example: "setRowData,i,25"
+ */
 function VisualizationComponent(props, ref) {
-  const { animations, preStartAnimations, updateLine, setPlayDisabled, setAnimationComplete } = props;
+  const {
+    animations,
+    preStartAnimations,
+    updateLine,
+    setPlayDisabled,
+    setAnimationComplete,
+  } = props;
   const ANIME_DURATION = 1000;
 
   // Line number in the code we are currently on, starting at 0.
@@ -103,7 +116,14 @@ function VisualizationComponent(props, ref) {
     hasVariableTable.current = false;
   };
 
-  const { addAnimation, stepAnimation, playFullAnimation, clearAnimations, isPlayingFullAnimation, pauseAnimation } = useAnimation(onAnimationComplete);
+  const {
+    addAnimation,
+    stepAnimation,
+    playFullAnimation,
+    clearAnimations,
+    isPlayingFullAnimation,
+    pauseAnimation,
+  } = useAnimation(onAnimationComplete);
 
   const onStepBegin = () => {
     selectedLineNumber.current++;
@@ -121,21 +141,25 @@ function VisualizationComponent(props, ref) {
       addAnimation(options, shouldRunImmediately);
     } else {
       let minDelay = 0;
-      currentAnimations.current.forEach(animation => {
-        const duration = animation.duration != null ? animation.duration : ANIME_DURATION;
+      currentAnimations.current.forEach((animation) => {
+        const duration =
+          animation.duration != null ? animation.duration : ANIME_DURATION;
         const delay = animation.delay != null ? animation.delay : 0;
         const time = duration + delay;
         if (time > minDelay) {
           minDelay = time;
         }
       });
-      const delayedOptions = options.map(option => {
+      const delayedOptions = options.map((option) => {
         return {
           ...option,
-          delay: option.delay != null ? option.delay + minDelay : minDelay
-        }
+          delay: option.delay != null ? option.delay + minDelay : minDelay,
+        };
       });
-      currentAnimations.current = [...currentAnimations.current, ...delayedOptions];
+      currentAnimations.current = [
+        ...currentAnimations.current,
+        ...delayedOptions,
+      ];
     }
   };
 
@@ -157,45 +181,51 @@ function VisualizationComponent(props, ref) {
     return newArray;
   };
 
-  const [animationsArray, setAnimationsArray] = useState(removeTrailingNull(animations));
+  const [animationsArray, setAnimationsArray] = useState(
+    removeTrailingNull(animations)
+  );
 
   // Converts an animation string to funciton calls based on the rules listed
   // in component header comment
   const parseAndCallAnimation = (animationString, shouldRunImmediately) => {
-    const parameters = animationString.replace(/\s/g, '').split(',');
+    const parameters = animationString.replace(/\s/g, "").split(",");
     const functionName = parameters[0];
-    if (functionName === 'createNewNode') {
-      const nodeNumber = insertedNodes.current.length + nodesToBeInserted.current.length + 1;
+    if (functionName === "createNewNode") {
+      const nodeNumber =
+        insertedNodes.current.length + nodesToBeInserted.current.length + 1;
       const data = parameters.length > 1 ? parameters[1] : nodeNumber;
-      const nodeID = parameters.length > 2 ? parameters[2] : '#node' + nodeNumber;
+      const nodeID =
+        parameters.length > 2 ? parameters[2] : "#node" + nodeNumber;
       createNewNode(nodeID, data, shouldRunImmediately);
-    } else if (functionName === 'createNewPointer') {
+    } else if (functionName === "createNewPointer") {
       createNewPointer(parameters[1], shouldRunImmediately);
-    } else if (functionName === 'deleteNode') {
+    } else if (functionName === "deleteNode") {
       deleteNode(parameters[1], shouldRunImmediately);
-    } else if (functionName === 'setNodeData') {
+    } else if (functionName === "setNodeData") {
       setNodeData(parameters[1], parameters[2], shouldRunImmediately);
-    } else if (functionName === 'insertNodeAtIndex') {
-      const index = parameters[1] === 'tail' ? insertedNodes.current.length : parameters[1];
-      const node = parameters.length === 2 ? nodesToBeInserted.current[0] : parameters[2];
+    } else if (functionName === "insertNodeAtIndex") {
+      const index =
+        parameters[1] === "tail" ? insertedNodes.current.length : parameters[1];
+      const node =
+        parameters.length === 2 ? nodesToBeInserted.current[0] : parameters[2];
       insertNodeAtIndex(index, node, shouldRunImmediately);
-    } else if (functionName === 'movePointer') {
+    } else if (functionName === "movePointer") {
       movePointer(parameters[1], parameters[2], shouldRunImmediately);
-    } else if (functionName === 'setPointerNull') {
+    } else if (functionName === "setPointerNull") {
       setPointerNull(parameters[1], shouldRunImmediately);
-    } else if (functionName === 'elongatePointer') {
+    } else if (functionName === "elongatePointer") {
       elongatePointer(parameters[1], shouldRunImmediately);
-    } else if (functionName === 'createVarTable') {
+    } else if (functionName === "createVarTable") {
       let rows = [];
-      for (let i = 1; i < parameters.length; i+=2) {
+      for (let i = 1; i < parameters.length; i += 2) {
         rows.push(parameters[i]);
       }
       createVarTable(rows, shouldRunImmediately);
-    } else if (functionName === 'addVarTableRow') {
+    } else if (functionName === "addVarTableRow") {
       addVarTableRow(parameters[1], parameters[2], shouldRunImmediately);
-    } else if (functionName === 'removeVarTableRow') {
+    } else if (functionName === "removeVarTableRow") {
       removeVarTableRow(parameters[1], shouldRunImmediately);
-    } else if (functionName === 'setRowData') {
+    } else if (functionName === "setRowData") {
       setRowData(parameters[1], parameters[2], shouldRunImmediately);
     }
   };
@@ -222,68 +252,76 @@ function VisualizationComponent(props, ref) {
   // If rendered is false -> Create the SVGs that the timeline will need, set renered true
   useEffect(() => {
     if (rendered) {
-      preStartAnimations.forEach(animationString => {
+      preStartAnimations.forEach((animationString) => {
         parseAndCallAnimation(animationString, true);
       });
       animationsArray.forEach((animationStringArray) => {
         // Add all of our animations to the timeline
         if (animationStringArray !== null) {
-          animationStringArray.forEach(animationString => {
+          animationStringArray.forEach((animationString) => {
             parseAndCallAnimation(animationString, false);
           });
           addCurrentToTimeline();
         } else {
-          addAnimation([{duration: 0}], false, () => {}, () => {
-            selectedLineNumber.current++;
-            if (!isPlayingFullAnimation.current) {
-              stepAnimation();
+          addAnimation(
+            [{ duration: 0 }],
+            false,
+            () => {},
+            () => {
+              selectedLineNumber.current++;
+              if (!isPlayingFullAnimation.current) {
+                stepAnimation();
+              }
             }
-          });
+          );
         }
       });
     } else {
       // Determine all of the nodes and pointers we will create
-      [[...preStartAnimations], ...animationsArray].forEach(animationStringArray => {
-        if (animationStringArray !== null) {
-          animationStringArray.forEach(animationString => {
-            const parameters = animationString.split(',');
-            const functionName = parameters[0];
-            if (functionName === 'createNewNode') {
-              const nodeNumber = allNodes.current.length + 1;
-              const data = parameters.length > 1 ? parameters[1] : nodeNumber;
-              const nodeID = parameters.length > 2 ? parameters[2] : '#node' + nodeNumber;
-              allNodes.current.push({
-                id: nodeID,
-                data,
-                selectedDataIndex: 0
-              });
-            } else if (functionName === 'createNewPointer') {
-              allPointers.current.push({
-                id: parameters[1],
-                name: parameters[2],
-                location: 0,
-                offset: 0,
-                inserted: false
-              });
-            } else if (functionName === 'addVarTableRow') {
-              allVariableRows.current.push({
-                name: parameters[1],
-                value: parameters[2],
-                selectedValueIndex: 0
-              });
-            } else if (functionName === 'createVarTable') {
-              hasVariableTable.current = true;
-              for (let i = 1; i < parameters.length; i+=2) {
-                allVariableRows.current.push({
-                  name: parameters[i],
-                  value: parameters[i + 1],
-                  selectedValueIndex: 0
+      [[...preStartAnimations], ...animationsArray].forEach(
+        (animationStringArray) => {
+          if (animationStringArray !== null) {
+            animationStringArray.forEach((animationString) => {
+              const parameters = animationString.split(",");
+              const functionName = parameters[0];
+              if (functionName === "createNewNode") {
+                const nodeNumber = allNodes.current.length + 1;
+                const data = parameters.length > 1 ? parameters[1] : nodeNumber;
+                const nodeID =
+                  parameters.length > 2 ? parameters[2] : "#node" + nodeNumber;
+                allNodes.current.push({
+                  id: nodeID,
+                  data,
+                  selectedDataIndex: 0,
                 });
+              } else if (functionName === "createNewPointer") {
+                allPointers.current.push({
+                  id: parameters[1],
+                  name: parameters[2],
+                  location: 0,
+                  offset: 0,
+                  inserted: false,
+                });
+              } else if (functionName === "addVarTableRow") {
+                allVariableRows.current.push({
+                  name: parameters[1],
+                  value: parameters[2],
+                  selectedValueIndex: 0,
+                });
+              } else if (functionName === "createVarTable") {
+                hasVariableTable.current = true;
+                for (let i = 1; i < parameters.length; i += 2) {
+                  allVariableRows.current.push({
+                    name: parameters[i],
+                    value: parameters[i + 1],
+                    selectedValueIndex: 0,
+                  });
+                }
               }
-            }
-          });
+            });
+          }
         }
-      });
+      );
       setRendered(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -313,7 +351,7 @@ function VisualizationComponent(props, ref) {
   useImperativeHandle(ref, () => ({
     nextLine,
     playFullAnimation: onPressPlay,
-    pauseAnimation: onPressPause
+    pauseAnimation: onPressPause,
   }));
 
   /********* Public Animations *********/
@@ -331,38 +369,46 @@ function VisualizationComponent(props, ref) {
     // If we create the first node, always just insert it
     if (insertedNodes.current.length === 0) {
       insertedNodes.current.push(nodeID);
-      animate([{
-        duration: 0,
-        targets: nodeID,
-        translateY: '+=150px',
-      }], true);
+      animate(
+        [
+          {
+            duration: 0,
+            targets: nodeID,
+            translateY: "+=150px",
+          },
+        ],
+        true
+      );
     } else {
       nodesToBeInserted.current.push(nodeID);
     }
     animations.push({
       targets: nodeID,
-      opacity: '1'
+      opacity: "1",
     });
     animate(animations, shouldRunImmediately);
   };
 
   const createNewPointer = (pointer, shouldRunImmediately = false) => {
-    const newPointerObj = allPointers.current.find(pointerObj => pointerObj.id === pointer);
-    const newPointerLocation = newPointerObj.location != null ? newPointerObj.location : 0;
-    const otherPointerAtLocation = allPointers.current.find(pointerObj => {
+    const newPointerObj = allPointers.current.find(
+      (pointerObj) => pointerObj.id === pointer
+    );
+    const newPointerLocation =
+      newPointerObj.location != null ? newPointerObj.location : 0;
+    const otherPointerAtLocation = allPointers.current.find((pointerObj) => {
       return pointerObj.location === newPointerLocation && pointerObj.inserted;
     });
     const animations = [];
     if (otherPointerAtLocation != null) {
       animations.push({
         targets: otherPointerAtLocation.id,
-        translateX: '-=30px',
-        duration: 500
+        translateX: "-=30px",
+        duration: 500,
       });
       animations.push({
         duration: 0,
         targets: pointer,
-        translateX: '+=30px',
+        translateX: "+=30px",
       });
       otherPointerAtLocation.offest = -30;
       newPointerObj.offset = 30;
@@ -370,8 +416,8 @@ function VisualizationComponent(props, ref) {
 
     animations.push({
       targets: pointer,
-      opacity: '1',
-      delay: otherPointerAtLocation != null ? 500 : 0
+      opacity: "1",
+      delay: otherPointerAtLocation != null ? 500 : 0,
     });
     newPointerObj.inserted = true;
     animate(animations, shouldRunImmediately);
@@ -384,23 +430,38 @@ function VisualizationComponent(props, ref) {
    * @param {boolean} shouldRunImmediately if the animation should run with 0 duration
    */
   const deleteNode = (node, shouldRunImmediately = false) => {
-    animate([{
-      targets: node,
-      opacity: '0'
-    }], shouldRunImmediately);
+    animate(
+      [
+        {
+          targets: node,
+          opacity: "0",
+        },
+      ],
+      shouldRunImmediately
+    );
   };
 
-  const setNodeData = (node, data, shouldRunImmediately=false) => {
-    const nodeObj = allNodes.current.find(currNode => currNode.id === node);
+  const setNodeData = (node, data, shouldRunImmediately = false) => {
+    const nodeObj = allNodes.current.find((currNode) => currNode.id === node);
     const currDataIndex = nodeObj.selectedDataIndex;
-    const dataFieldContainer = document.querySelector(node + " > .node-data-field");
-    const currData = document.querySelectorAll(node + " > .node-data-field .node-data-text-container")[currDataIndex];
+    const dataFieldContainer = document.querySelector(
+      node + " > .node-data-field"
+    );
+    const currData = document.querySelectorAll(
+      node + " > .node-data-field .node-data-text-container"
+    )[currDataIndex];
 
     // Create new data text element to replace old data text element
-    const newDataGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    const newDataGroup = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "g"
+    );
     newDataGroup.setAttribute("opacity", "0");
-    newDataGroup.setAttribute('class', 'node-data-text-container');
-    const newData = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    newDataGroup.setAttribute("class", "node-data-text-container");
+    const newData = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "text"
+    );
     newData.classList.add("text");
     newData.setAttribute("x", "110px");
     newData.setAttribute("y", "66px");
@@ -412,18 +473,21 @@ function VisualizationComponent(props, ref) {
     dataFieldContainer.appendChild(newDataGroup);
 
     // Fade out old data
-    animate([
-      {
-        targets: currData,
-        translateY: '-=15px',
-        opacity: '0'
-      },
-      {
-        targets: newDataGroup,
-        translateY: '-=15px',
-        opacity: '1',
-      }
-    ], shouldRunImmediately);
+    animate(
+      [
+        {
+          targets: currData,
+          translateY: "-=15px",
+          opacity: "0",
+        },
+        {
+          targets: newDataGroup,
+          translateY: "-=15px",
+          opacity: "1",
+        },
+      ],
+      shouldRunImmediately
+    );
 
     nodeObj.selectedDataIndex++;
   };
@@ -439,40 +503,59 @@ function VisualizationComponent(props, ref) {
     if (index < 1) {
       // Make room in Linked List for new node
       animations.push({
-        targets: ['#head-pointer'].concat(insertedNodes.current),
-        translateX: '+=200px'
+        targets: ["#head-pointer"].concat(insertedNodes.current),
+        translateX: "+=200px",
       });
 
       // Move new node inline with list
-      animations.push({...getMoveNodeInlineOptions(node), delay: ANIME_DURATION});
+      animations.push({
+        ...getMoveNodeInlineOptions(node),
+        delay: ANIME_DURATION,
+      });
 
       // Set nodes next to point to the old head
-      animations.push({...getSetPointerToNextOptions(node + '-pointer'), delay: ANIME_DURATION * 2});
+      animations.push({
+        ...getSetPointerToNextOptions(node + "-pointer"),
+        delay: ANIME_DURATION * 2,
+      });
       insertedNodes.current.push(node);
-      insertedNodes.current = [node, ...insertedNodes.current]
-    } else if (index >= insertedNodes.current.length) { // insert at tail
+      insertedNodes.current = [node, ...insertedNodes.current];
+    } else if (index >= insertedNodes.current.length) {
+      // insert at tail
       // move the node over
       const distance = insertedNodes.current.length * 200;
       animations.push({
         targets: node,
-        translateX: '+=' + distance + 'px'
+        translateX: "+=" + distance + "px",
       });
 
       // Move new node inline with list
-      animations.push({...getMoveNodeInlineOptions(node), delay: ANIME_DURATION});
+      animations.push({
+        ...getMoveNodeInlineOptions(node),
+        delay: ANIME_DURATION,
+      });
 
       // Set old tail node pointer to new node
       animations.push({
-        ...getSetPointerToNextOptions(insertedNodes.current[insertedNodes.current.length - 1] + '-pointer'),
-        delay: ANIME_DURATION * 2
+        ...getSetPointerToNextOptions(
+          insertedNodes.current[insertedNodes.current.length - 1] + "-pointer"
+        ),
+        delay: ANIME_DURATION * 2,
       });
       insertedNodes.current.push(node);
-    } else { // TODO insert in middle
+    } else {
+      // TODO insert in middle
       //TODO
-      insertedNodes.current = [...insertedNodes.current.slice(0, index), node, ...insertedNodes.current.slice(index)]
+      insertedNodes.current = [
+        ...insertedNodes.current.slice(0, index),
+        node,
+        ...insertedNodes.current.slice(index),
+      ];
     }
 
-    nodesToBeInserted.current = nodesToBeInserted.current.filter(oldNode => oldNode !== node);
+    nodesToBeInserted.current = nodesToBeInserted.current.filter(
+      (oldNode) => oldNode !== node
+    );
     animate(animations, shouldRunImmediately);
   };
 
@@ -480,15 +563,26 @@ function VisualizationComponent(props, ref) {
    * Moves a pointer some number of nodes over from its current position
    * @param numNodes {Number} Number of nodes to move the pointer. Negative to move left
    */
-  const movePointer = (pointer, numNodes, shouldRunImmediately=false) => {
-    const movePointerObj = allPointers.current.find(pointerObj => pointerObj.id === pointer);
-    const oldLocation = movePointerObj.location != null ? movePointerObj.location : 0;
+  const movePointer = (pointer, numNodes, shouldRunImmediately = false) => {
+    const movePointerObj = allPointers.current.find(
+      (pointerObj) => pointerObj.id === pointer
+    );
+    const oldLocation =
+      movePointerObj.location != null ? movePointerObj.location : 0;
 
-    const pointerAtPrevSpot = allPointers.current.find(pointerObj => {
-      return pointerObj.location === oldLocation && pointerObj.inserted && pointerObj.id !== pointer;
+    const pointerAtPrevSpot = allPointers.current.find((pointerObj) => {
+      return (
+        pointerObj.location === oldLocation &&
+        pointerObj.inserted &&
+        pointerObj.id !== pointer
+      );
     });
-    const pointerAtNextSpot = allPointers.current.find(pointerObj => {
-      return pointerObj.location === (oldLocation + numNodes) && pointerObj.inserted && pointerObj.id !== pointer;
+    const pointerAtNextSpot = allPointers.current.find((pointerObj) => {
+      return (
+        pointerObj.location === oldLocation + numNodes &&
+        pointerObj.inserted &&
+        pointerObj.id !== pointer
+      );
     });
     let timelineOffset = 0; // Allows us to show multiple animations at once
     const animations = [];
@@ -498,7 +592,7 @@ function VisualizationComponent(props, ref) {
       animations.push({
         duration: 500,
         targets: pointerAtNextSpot.id,
-        translateX: numNodes > 0 ? '+=30px' : '-=30px'
+        translateX: numNodes > 0 ? "+=30px" : "-=30px",
       });
       timelineOffset += 500;
       pointerAtNextSpot.offset = numNodes > 0 ? 30 : -30;
@@ -506,17 +600,19 @@ function VisualizationComponent(props, ref) {
 
     // Calculate the distance that the pointer needs to travel and which direction to travel in
     const distanceBetweenNodes = Math.abs(200 * numNodes);
-    const distanceToCurrentMiddle = movePointerObj.offset * (numNodes > 0 ? -1 : 1);
+    const distanceToCurrentMiddle =
+      movePointerObj.offset * (numNodes > 0 ? -1 : 1);
     const distanceFromNextOffset = pointerAtNextSpot == null ? 0 : -30;
-    const finalDistance = distanceBetweenNodes + distanceToCurrentMiddle + distanceFromNextOffset;
-    const direction = numNodes < 0 ? '-=' : '+=';
+    const finalDistance =
+      distanceBetweenNodes + distanceToCurrentMiddle + distanceFromNextOffset;
+    const direction = numNodes < 0 ? "-=" : "+=";
 
     // Move the pointer to the desired distance in the correct direction
     animations.push({
       duration: 500,
       targets: pointer,
-      translateX: direction + finalDistance + 'px',
-      delay: timelineOffset
+      translateX: direction + finalDistance + "px",
+      delay: timelineOffset,
     });
     timelineOffset += 500;
 
@@ -525,53 +621,64 @@ function VisualizationComponent(props, ref) {
       animations.push({
         duration: 500,
         targets: pointerAtPrevSpot.id,
-        translateX: pointerAtPrevSpot.offset > 0 ? '-=30px' : '+=30px',
-        delay: timelineOffset
+        translateX: pointerAtPrevSpot.offset > 0 ? "-=30px" : "+=30px",
+        delay: timelineOffset,
       });
       pointerAtPrevSpot.offset = 0;
     }
 
     movePointerObj.location += numNodes;
-    movePointerObj.offset = pointerAtNextSpot != null ? numNodes > 0 ? -30 : 30 : 0;
+    movePointerObj.offset =
+      pointerAtNextSpot != null ? (numNodes > 0 ? -30 : 30) : 0;
     animate(animations, shouldRunImmediately);
   };
 
   const setPointerNull = (pointer, shouldRunImmediately = false) => {
-    animate([{
-      targets: pointer + '-tip',
-      translateY: '+=75px',
-      height: '-=75px'
-    }], shouldRunImmediately);
+    animate(
+      [
+        {
+          targets: pointer + "-tip",
+          translateY: "+=75px",
+          height: "-=75px",
+        },
+      ],
+      shouldRunImmediately
+    );
   };
 
   const elongatePointer = (pointer, shouldRunImmediately = false) => {
-    animate([{
-      targets: pointer + '-tip',
-      translateY: '-=75px',
-      height: '+=75px'
-    }], shouldRunImmediately);
+    animate(
+      [
+        {
+          targets: pointer + "-tip",
+          translateY: "-=75px",
+          height: "+=75px",
+        },
+      ],
+      shouldRunImmediately
+    );
   };
 
- /**
-  * create a new var table
-  * @param rows {Array[id]} Array of row ids to create
-  */
-  const createVarTable = (rows=[], shouldRunImmediately=false) => {
+  /**
+   * create a new var table
+   * @param rows {Array[id]} Array of row ids to create
+   */
+  const createVarTable = (rows = [], shouldRunImmediately = false) => {
     const animations = [];
     animations.push({
-      targets: '#var-table',
-      opacity: '1'
+      targets: "#var-table",
+      opacity: "1",
     });
 
     if (rows != null) {
       for (let row of rows) {
-        const rowID = '#var-table-row-' + row;
+        const rowID = "#var-table-row-" + row;
         insertedRows.current.push(rowID);
         const rowNum = insertedRows.current.indexOf(rowID) + 1;
         animations.push({
           targets: rowID,
           translateY: rowNum * 26 + "px",
-          delay: ANIME_DURATION
+          delay: ANIME_DURATION,
         });
       }
     }
@@ -579,26 +686,31 @@ function VisualizationComponent(props, ref) {
   };
 
   // Add row to table
-  const addVarTableRow = (name, value, shouldRunImmediately=false) => {
-    const id = '#var-table-row-' + name;
+  const addVarTableRow = (name, value, shouldRunImmediately = false) => {
+    const id = "#var-table-row-" + name;
     insertedRows.current.push(id);
     const rowNum = insertedRows.current.indexOf(id) + 1;
-    animate([{
-      targets: id,
-      translateY: rowNum * 26 + "px"
-    }], shouldRunImmediately)
+    animate(
+      [
+        {
+          targets: id,
+          translateY: rowNum * 26 + "px",
+        },
+      ],
+      shouldRunImmediately
+    );
   };
 
   // Remove given row from table
-  const removeVarTableRow = (variableName, shouldRunImmediately=false) => {
-    const row = '#var-table-row-' + variableName;
+  const removeVarTableRow = (variableName, shouldRunImmediately = false) => {
+    const row = "#var-table-row-" + variableName;
     const rowNum = insertedRows.indexOf(row) + 1;
     const isLastRow = rowNum === insertedRows.current.length - 2;
     const animations = [];
 
     animations.push({
       targets: row,
-      translateY: "-=" + rowNum * 26 + "px"
+      translateY: "-=" + rowNum * 26 + "px",
     });
 
     if (rowNum > 0) {
@@ -611,33 +723,43 @@ function VisualizationComponent(props, ref) {
           animations.push({
             targets: insertedRow,
             translateY: "-=26px",
-            delay: ANIME_DURATION
+            delay: ANIME_DURATION,
           });
         }
       }
     } else {
       animations.push({
-        targets: '#var-table',
-        opacity: '0',
-        delay: ANIME_DURATION
+        targets: "#var-table",
+        opacity: "0",
+        delay: ANIME_DURATION,
       });
     }
     animate(animations, shouldRunImmediately);
   };
 
   // Update row data
-  const setRowData = (variableName, data, shouldRunImmediately=false) => {
-    const row = '#var-table-row-' + variableName;
-    const variableRow = allVariableRows.current.find(row => row.name === variableName);
+  const setRowData = (variableName, data, shouldRunImmediately = false) => {
+    const row = "#var-table-row-" + variableName;
+    const variableRow = allVariableRows.current.find(
+      (row) => row.name === variableName
+    );
     const currDataIndex = variableRow.selectedValueIndex;
-    const currData = document.querySelectorAll(row + " > .data-value-container")[currDataIndex];
+    const currData = document.querySelectorAll(
+      row + " > .data-value-container"
+    )[currDataIndex];
     const rowContainer = document.querySelector(row);
 
     // Create new data text element to replace old data text element
-    const newDataGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    const newDataGroup = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "g"
+    );
     newDataGroup.setAttribute("opacity", "0");
-    newDataGroup.setAttribute('class', 'data-value-container');
-    const newData = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    newDataGroup.setAttribute("class", "data-value-container");
+    const newData = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "text"
+    );
     newData.classList.add("data-value");
     newData.setAttribute("x", "149px");
     newData.setAttribute("y", "32px");
@@ -649,18 +771,21 @@ function VisualizationComponent(props, ref) {
     rowContainer.appendChild(newDataGroup);
 
     // Fade out old data
-    animate([
-      {
-        targets: currData,
-        translateY: '-=15px',
-        opacity: '0'
-      },
-      {
-        targets: newDataGroup,
-        translateY: '-=15px',
-        opacity: '1',
-      }
-    ], shouldRunImmediately);
+    animate(
+      [
+        {
+          targets: currData,
+          translateY: "-=15px",
+          opacity: "0",
+        },
+        {
+          targets: newDataGroup,
+          translateY: "-=15px",
+          opacity: "1",
+        },
+      ],
+      shouldRunImmediately
+    );
 
     variableRow.selectedValueIndex++;
   };
@@ -669,14 +794,14 @@ function VisualizationComponent(props, ref) {
   const getSetPointerToNextOptions = (pointer) => {
     return {
       targets: pointer,
-      width: '+=90px'
+      width: "+=90px",
     };
   };
 
   const getMoveNodeInlineOptions = (node) => {
     return {
       targets: node,
-      translateY: '+=150px'
+      translateY: "+=150px",
     };
   };
 
@@ -684,46 +809,77 @@ function VisualizationComponent(props, ref) {
     return null;
   }
 
-  const navAndBottomHeight = document.querySelector('.nav-bar-container').offsetHeight + document.querySelector('.module-btn-container').offsetHeight;
-  const animationHeight = document.documentElement.clientHeight - navAndBottomHeight;
+  const navAndBottomHeight =
+    document.querySelector(".nav-bar-container").offsetHeight +
+    document.querySelector(".module-btn-container").offsetHeight;
+  const animationHeight =
+    document.documentElement.clientHeight - navAndBottomHeight;
 
-  const svgWdith = allNodes.current.length > 3 ? allNodes.current.length * 200 + 50 : '100%';
+  const svgWdith =
+    allNodes.current.length > 3 ? allNodes.current.length * 200 + 50 : "100%";
   return (
     <div className="visualization">
       <svg width={svgWdith} height={animationHeight}>
-        {
-          allNodes.current.map((node, i) => {
-            const id = node.id.substring(1); // Remove the #
-            return <LinkedListNode key={id + i} animationHeight={animationHeight} nodeID={id} data={node.data} hasVariableTable={hasVariableTable.current} />
-          })
-        }
+        {allNodes.current.map((node, i) => {
+          const id = node.id.substring(1); // Remove the #
+          return (
+            <LinkedListNode
+              key={id + i}
+              animationHeight={animationHeight}
+              nodeID={id}
+              data={node.data}
+              hasVariableTable={hasVariableTable.current}
+            />
+          );
+        })}
 
-        {
-          allPointers.current.map((pointer, i) => {
-            const id = pointer.id.substring(1); // Remove the #
-            return <LinkedListPointer key={id + i} animationHeight={animationHeight} pointerID={id} name={pointer.name} hasVariableTable={hasVariableTable.current} />
-          })
-        }
+        {allPointers.current.map((pointer, i) => {
+          const id = pointer.id.substring(1); // Remove the #
+          return (
+            <LinkedListPointer
+              key={id + i}
+              animationHeight={animationHeight}
+              pointerID={id}
+              name={pointer.name}
+              hasVariableTable={hasVariableTable.current}
+            />
+          );
+        })}
 
         <svg x="50px" y="10px">
           <g id="var-table" className="hidden">
-            {
-              allVariableRows.current.map((variable, i) => {
-                const id = 'var-table-row-' + variable.name;
-                return <VariableTableRow
-                          key={id + i}
-                          rowID={id}
-                          variable={variable.name}
-                          value={variable.value} />
-              })
-            }
+            {allVariableRows.current.map((variable, i) => {
+              const id = "var-table-row-" + variable.name;
+              return (
+                <VariableTableRow
+                  key={id + i}
+                  rowID={id}
+                  variable={variable.name}
+                  value={variable.value}
+                />
+              );
+            })}
             {/* Table Title */}
             <g className="var-table-row" id="var-table-title-row">
               <rect className="row-bg"></rect>
               <rect className="row-cell" x="4px" y="4px" rx="2px"></rect>
               <rect className="row-cell" x="102px" y="4px" rx="2px"></rect>
-              <text x="49px" y="17px" fill="#fff" dominantBaseline="middle" textAnchor="middle">Variable</text>
-              <text x="149px" y="17px" fill="#fff" dominantBaseline="middle" textAnchor="middle">Value</text>
+              <text
+                x="49px"
+                y="17px"
+                fill="#fff"
+                dominantBaseline="middle"
+                textAnchor="middle">
+                Variable
+              </text>
+              <text
+                x="149px"
+                y="17px"
+                fill="#fff"
+                dominantBaseline="middle"
+                textAnchor="middle">
+                Value
+              </text>
             </g>
           </g>
         </svg>
@@ -740,11 +896,17 @@ function VisualizationComponent(props, ref) {
  * If returns true, don't rerender. Else rerender as usual
  */
 function shouldPreventRerender(prevProps, nextProps) {
-  return nextProps.animations === null || prevProps.animations === nextProps.animations;
-};
+  return (
+    nextProps.animations === null ||
+    prevProps.animations === nextProps.animations
+  );
+}
 
 // ForwardRef to Allow the parent to access functions made public above
 // Memo so we can prevent the component from rerendering with  shouldPreventRerender
-const Visualization = memo(forwardRef(VisualizationComponent), shouldPreventRerender);
+const Visualization = memo(
+  forwardRef(VisualizationComponent),
+  shouldPreventRerender
+);
 
 export default Visualization;

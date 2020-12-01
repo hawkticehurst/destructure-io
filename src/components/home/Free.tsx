@@ -1,27 +1,34 @@
-import React from 'react';
+import React from "react";
 import { useHistory } from "react-router-dom";
 
 type Props = {
-  landing?: boolean
-}
+  landing?: boolean;
+};
 
 function Free({ landing }: Props) {
   const history = useHistory();
 
   const getStarted = () => {
-    history.push('/learn');
+    history.push("/learn");
   };
 
-  const getStartedLink = !landing ? <h2 onClick={getStarted} className="bold">Get Started</h2> : null;
-  const getStartedArrow = !landing ? <img src={require('./images/arrow-right.svg')} alt="Arrow Right Icon" /> : null;
+  const getStartedLink = !landing ? (
+    <h2 onClick={getStarted} className="bold">
+      Get Started
+    </h2>
+  ) : null;
+  const getStartedArrow = !landing ? (
+    <img src={require("./images/arrow-right.svg")} alt="Arrow Right Icon" />
+  ) : null;
 
   return (
     <div id="free-card-container">
       <div className="text-container">
         <h1>Free. &nbsp;For everyone.</h1>
         <p>
-          Destructure.io is a platform created by software engineers who believe quality programming resources
-          should be accessible to anyone, anywhere.
+          Destructure.io is a platform created by software engineers who believe
+          quality programming resources should be accessible to anyone,
+          anywhere.
         </p>
         <div className="inline-block">
           <div id="free-get-started-container">
@@ -35,18 +42,39 @@ function Free({ landing }: Props) {
           <g className="node">
             <rect x="0" y="0" rx="12px" />
             <g className="node-data-field">
-              <text x="10px" y="55px">data</text>
-              <text x="60px" y="55px">=</text>
+              <text x="10px" y="55px">
+                data
+              </text>
+              <text x="60px" y="55px">
+                =
+              </text>
               <rect x="85px" y="39px" />
               <rect x="85px" y="39px" />
-              <text className="node-data-text" x="110px" y="51px" dominantBaseline="middle" textAnchor="middle">42</text>
+              <text
+                className="node-data-text"
+                x="110px"
+                y="51px"
+                dominantBaseline="middle"
+                textAnchor="middle">
+                42
+              </text>
             </g>
             <g className="node-next-field">
-              <text x="10px" y="82px">next</text>
-              <text x="60px" y="82px">=</text>
+              <text x="10px" y="82px">
+                next
+              </text>
+              <text x="60px" y="82px">
+                =
+              </text>
               <rect x="85px" y="66px" />
               <g className="node-pointer">
-                <circle r="7px" cx="110px" cy="76px" dominantBaseline="middle" textAnchor="middle" />
+                <circle
+                  r="7px"
+                  cx="110px"
+                  cy="76px"
+                  dominantBaseline="middle"
+                  textAnchor="middle"
+                />
                 <rect width="0px" x="110px" y="74px" />
               </g>
             </g>
@@ -56,12 +84,14 @@ function Free({ landing }: Props) {
           <g className="node">
             <rect x="0" y="0" rx="12px" />
             <g className="node-header">
-              <text x="50px" y="20px">Node</text>
+              <text x="50px" y="20px">
+                Node
+              </text>
             </g>
           </g>
         </svg>
       </div>
-    </div >
+    </div>
   );
 }
 

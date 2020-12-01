@@ -1,6 +1,6 @@
-import React from 'react';
-import NavBar from '../common/NavBar';
-import SignInUpInputs from './SignInUpInputs';
+import React from "react";
+import NavBar from "../common/NavBar";
+import SignInUpInputs from "./SignInUpInputs";
 
 // TODO: Confirm props are actually optional and that isSignIn is the only prop
 /**
@@ -8,11 +8,11 @@ import SignInUpInputs from './SignInUpInputs';
  * isSignIn: {boolean} - Defaults false, true to show sign in instead of sign up
  */
 type Props = {
-  isSignIn?: boolean
-}
+  isSignIn?: boolean;
+};
 
 function SignInUp({ isSignIn }: Props) {
-  const navBarType = isSignIn ? 'sign-in' : 'sign-up';
+  const navBarType = isSignIn ? "sign-in" : "sign-up";
   return (
     <div>
       <NavBar navBarType={navBarType} />

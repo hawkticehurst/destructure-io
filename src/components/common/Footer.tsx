@@ -1,14 +1,17 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 type Props = {
-  landing?: boolean
-}
+  landing?: boolean;
+};
 
 function Footer({ landing }: Props) {
   const currentYear = new Date().getFullYear();
-  const footerLink = !landing ? <Link to="/privacy">Privacy Policy</Link> :
-    <a href="https://github.com/hawkticehurst/destructure-io">Github</a>;
+  const footerLink = !landing ? (
+    <Link to="/privacy">Privacy Policy</Link>
+  ) : (
+    <a href="https://github.com/hawkticehurst/destructure-io">Github</a>
+  );
 
   return (
     <div className="footer-container">
@@ -34,12 +37,13 @@ function Footer({ landing }: Props) {
       <hr />
       <div className="footer-copyright-container">
         <div>
-          <img src={require('./images/destructure-icon.svg')} alt="Destructure.io Logo" />
+          <img
+            src={require("./images/destructure-icon.svg")}
+            alt="Destructure.io Logo"
+          />
         </div>
         <p>Copyright © {currentYear} destructure.io</p>
-        <div className="footer-legal-container">
-          {footerLink}
-        </div>
+        <div className="footer-legal-container">{footerLink}</div>
       </div>
     </div>
   );
