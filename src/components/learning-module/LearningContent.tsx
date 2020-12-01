@@ -1,28 +1,35 @@
 import React, { useMemo } from "react";
 import CodeHighlight from "../code-display/CodeHighlight";
 
+type FixMeLater = any;
+
 /**
  * Required Props:
  * contentTitleString {String} – String representing the title a sub module
  * contentParagraphs {Array} – An array of strings representing paragraphs
  *  of content of a sub module
- *  codeChunkKeyOffset {String} - unique key used tell which module we are on
+ * codeChunkKeyOffset {String} - unique key used tell which module we are on
  *
  * Optional props:
  * codeDisplay {React Component} - Component for displaying code
  */
-function LearningContent(props) {
-  const {
-    contentTitleString,
-    contentParagraphs,
-    codeDisplay,
-    codeChunkKeyOffset,
-  } = props;
+type Props = {
+  contentTitleString: string;
+  contentParagraphs: FixMeLater;
+  codeChunkKeyOffset: string;
+  codeDisplay?: FixMeLater;
+};
 
+function LearningContent({
+  contentTitleString,
+  contentParagraphs,
+  codeChunkKeyOffset,
+  codeDisplay,
+}: Props) {
   // Memoize the paragraphs split into spans, because its pretty expensive
   const paragraphs = useMemo(
     () =>
-      contentParagraphs.map((paragraph, index) => {
+      contentParagraphs.map((paragraph: FixMeLater, index: number) => {
         let isInBold = false;
         let isInItalic = false;
         let isInCode = false;
