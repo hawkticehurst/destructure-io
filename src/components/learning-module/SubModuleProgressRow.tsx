@@ -1,30 +1,42 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 
+type FixMeLater = any;
+
 /**
  * Required Props:
- * moduleTitle {String} - Name of the module
- * link {String} - Path to the module. Example: /linked-list/reverse-list
  * completionState {String} - One of "completed", "flagged" or "incomplete". Defaults "incomplete"
- * selected {boolean} - Defaults false. True if is current sub-module
  * completionStateChanged {Function} - Function called when completion state is changed
+ * link {String} - Path to the module. Example: /linked-list/reverse-list
+ * moduleTitle {String} - Name of the module
+ * selected {boolean} - Defaults false. True if is current sub-module
  * shouldShowStartBtn {Boolean} - Defaults false. True should be used when on summary page.
  *
  * Optional Props:
  * onClickLink {Function} - Function to be called when the link is clicked
  * rowClass - {String} - CSS class for the container
  */
-function SubModuleProgressRow(props) {
-  const {
-    completionState,
-    completionStateChanged,
-    link,
-    moduleTitle,
-    selected,
-    onClickLink,
-    rowClass,
-    shouldShowStartBtn,
-  } = props;
+type Props = {
+  completionState: String;
+  completionStateChanged: Function;
+  link: string;
+  moduleTitle: string;
+  selected: boolean;
+  shouldShowStartBtn: boolean;
+  onClickLink?: FixMeLater;
+  rowClass?: string;
+};
+
+function SubModuleProgressRow({
+  completionState,
+  completionStateChanged,
+  link,
+  moduleTitle,
+  selected,
+  shouldShowStartBtn,
+  onClickLink,
+  rowClass,
+}: Props) {
   const [isCompleted, setIsCompleted] = useState(completionState);
   const history = useHistory();
 
@@ -48,7 +60,9 @@ function SubModuleProgressRow(props) {
   const onClickContainer = () => {
     if (!shouldShowStartBtn) {
       history.push(link);
-      onClickLink();
+      if (onClickLink) {
+        onClickLink();
+      }
     }
   };
 
