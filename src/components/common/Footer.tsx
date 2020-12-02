@@ -1,17 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-type Props = {
-  landing?: boolean;
-};
-
-function Footer({ landing }: Props) {
+function Footer() {
   const currentYear = new Date().getFullYear();
-  const footerLink = !landing ? (
-    <Link to="/privacy">Privacy Policy</Link>
-  ) : (
-    <a href="https://github.com/hawkticehurst/destructure-io">Github</a>
-  );
 
   return (
     <div className="footer-container">
@@ -19,6 +10,7 @@ function Footer({ landing }: Props) {
         <div className="footer-company-column">
           <h2>Destructure.io</h2>
           <Link to="/about">About</Link>
+          <a href="https://github.com/hawkticehurst/destructure-io">Github</a>
         </div>
         <div className="footer-catalog-column">
           <h2>Catalog</h2>
@@ -42,7 +34,9 @@ function Footer({ landing }: Props) {
           />
         </div>
         <p>Copyright © {currentYear} destructure.io</p>
-        <div className="footer-legal-container">{footerLink}</div>
+        <div className="footer-legal-container">
+          <Link to="/privacy">Privacy Policy</Link>
+        </div>
       </div>
     </div>
   );
