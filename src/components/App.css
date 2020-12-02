@@ -1988,6 +1988,19 @@ text {
     font-size: 15px;
   }
 
+  .footer-company-column,
+  .footer-catalog-column {
+    margin-right: 0;
+  }
+
+  .footer-link-container {
+    flex-direction: column;
+  }
+
+  .footer-catalog-links {
+    grid-column-gap: 2em;
+  }
+
   /********* SIGN IN/UP PAGE *********/
   .sign-in-up-container {
     width: 80%;
@@ -2179,7 +2192,7 @@ text {
 }
 
 /********* Medium-Large Mobile Styles *********/
-@media only screen and (min-width: 321px) and (max-width: 430px) {
+@media only screen and (min-width: 321px) and (max-width: 540px) {
   /********* LANDING PAGE *********/
   .homepage-nav-bar {
     padding: 1em 2em;
@@ -2352,6 +2365,15 @@ text {
   .footer-container p,
   .footer-container a {
     font-size: 15px;
+  }
+
+  .footer-company-column,
+  .footer-catalog-column {
+    margin-right: 0;
+  }
+
+  .footer-link-container {
+    flex-direction: column;
   }
 
   /********* SIGN IN/UP PAGE *********/
@@ -2537,7 +2559,7 @@ text {
 }
 
 /********* Tablet Styles *********/
-@media only screen and (min-width: 431px) and (max-width: 960px) {
+@media only screen and (min-width: 541px) and (max-width: 960px) {
   /********* LANDING PAGE *********/
   .homepage-nav-bar {
     padding: 1em 2em;
