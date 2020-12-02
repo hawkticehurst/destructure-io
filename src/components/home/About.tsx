@@ -32,7 +32,7 @@ function About() {
         </div>
       </main>
       <hr />
-      <Footer landing={true} />
+      <Footer />
     </div>
   );
 }
