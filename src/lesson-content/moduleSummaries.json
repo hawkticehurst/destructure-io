@@ -87,17 +87,17 @@
       "directory": "queues"
     },
     {
-      "name": "Maps",
+      "name": "Hash Tables",
       "descriptionParagraphs": [
-        "Maps are abstract data structures that are collections of pairs of corresponding keys and values. This structure maps each item, known as a key, to a value in the map, allowing the user to look up any value as long as they have the corresponding key."
+        "Hash tables (sometimes also called Maps or Dictionaries) are abstract data structures that are collections of pairs of corresponding keys and values. This structure maps each item, known as a key, to a value in the hash table, allowing the user to look up any value as long as they have the corresponding key."
       ],
       "whatYouWillLearnParagraphs": [
-        "In this module, you will learn how to create and manipulate a map data structure. This includes populating the collection by inserting pairs, managing the collection by deleting pairs, accessing the values stored in the map, and replacing the values associated with a key in the map."
+        "In this module, you will learn how to create and manipulate a hash table data structure. This includes populating the collection by inserting pairs, managing the collection by deleting pairs, accessing the values stored in the hash table, and replacing the values associated with a key in the hash table."
       ],
       "realWorldApplicationsParagraphs": [
-        "Maps can be used to associate more than just an index to a value, as can be shown in a gradebook for a school. If you wanted to find out the GPA of a particular student stored in your system, you could create a map that mapped each student’s name to their GPA. To find any student’s GPA quickly, you simply search for that student’s name in the keys of the map and the corresponding value would be their GPA. "
+        "Hash tables can be used to associate more than just an index to a value, as can be shown in a gradebook for a school. If you wanted to find out the GPA of a particular student stored in your system, you could create a hash table that mapped each student’s name to their GPA. To find any student’s GPA quickly, you simply search for that student’s name in the keys of the map and the corresponding value would be their GPA. "
       ],
-      "directory": "maps"
+      "directory": "hash-tables"
     },
     {
       "name": "Trees",
