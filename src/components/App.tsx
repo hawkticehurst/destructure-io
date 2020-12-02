@@ -12,7 +12,7 @@ import PrivacyPolicy from "./privacy/PrivacyPolicy";
 import ScrollToTop from "./common/ScrollToTop";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useAuth, UserContext } from "../hooks/user";
-import "../App.css";
+import "./App.css";
 
 function App() {
   const { initializing, user } = useAuth();
