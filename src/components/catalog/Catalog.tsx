@@ -37,9 +37,9 @@ function Catalog() {
           description="Learn one of the most fundamental data structures in computer science."
         />
         <CatalogCard
-          link="/learn/maps"
+          link="/learn/hash-tables"
           comingSoon={true}
-          title="Learn Maps"
+          title="Learn Hash Tables"
           description="Learn one of the most fundamental data structures in computer science."
         />
         <CatalogCard

@@ -19,7 +19,7 @@ function Footer({ landing }: Props) {
         <div className="footer-company-column">
           <h2>Destructure.io</h2>
           <Link to="/about">About</Link>
-          <Link to="/">Contact Us</Link>
+          <Link to="/">Contact</Link>
         </div>
         <div className="footer-catalog-column">
           <h2>Catalog</h2>
@@ -28,7 +28,7 @@ function Footer({ landing }: Props) {
             <Link to="/learn/linked-list">Linked Lists</Link>
             <Link to="/learn/stacks">Stacks</Link>
             <Link to="/learn/queues">Queues</Link>
-            <Link to="/learn/maps">Maps</Link>
+            <Link to="/learn/hash-tables">Hash Tables</Link>
             <Link to="/learn/trees">Trees</Link>
             <Link to="/learn/graphs">Graphs</Link>
           </div>
