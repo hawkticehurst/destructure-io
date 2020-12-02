@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import DownArrowIcon from "./images/arrow-down.svg";
 
 type Props = {
   landing?: boolean;
@@ -32,7 +33,7 @@ function Hero({ landing }: Props) {
       </h1>
       {button}
       <span id="chevron" className="hero-circle" onClick={onClickHeroChevron}>
-        <img src={require("./images/arrow-down.svg")} alt="Arrow Down Icon" />
+        <img src={DownArrowIcon} alt="Arrow Down Icon" />
       </span>
     </div>
   );

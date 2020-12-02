@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import DestructureLogo from "./images/destructure-icon.svg";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -28,10 +29,7 @@ function Footer() {
       <hr />
       <div className="footer-copyright-container">
         <div>
-          <img
-            src={require("./images/destructure-icon.svg")}
-            alt="Destructure.io Logo"
-          />
+          <img src={DestructureLogo} alt="Destructure.io Logo" />
         </div>
         <p>Copyright © {currentYear} destructure.io</p>
         <div className="footer-legal-container">

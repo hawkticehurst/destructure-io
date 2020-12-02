@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
+import ExclamationIcon from "./images/exclamation.svg";
+import CheckmarkIcon from "./images/checkmark.svg";
 
 type FixMeLater = any;
 
@@ -69,12 +71,8 @@ function SubModuleProgressRow({
   const containerClass = selected
     ? "sub-module-progress-row-container progress-row-selected"
     : "sub-module-progress-row-container";
-  const exclamationIcon = (
-    <img src={require("./images/exclamation.svg")} alt="Exclamation Icon" />
-  );
-  const checkmarkIcon = (
-    <img src={require("./images/checkmark.svg")} alt="Checkmark Icon" />
-  );
+  const exclamationIcon = <img src={ExclamationIcon} alt="Exclamation Icon" />;
+  const checkmarkIcon = <img src={CheckmarkIcon} alt="Checkmark Icon" />;
   const progressIcon =
     isCompleted === "flagged"
       ? exclamationIcon
