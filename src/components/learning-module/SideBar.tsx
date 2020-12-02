@@ -1,6 +1,8 @@
 import React, { useEffect, useState, Fragment } from "react";
 import PageTint from "../common/PageTint";
 import { useHistory } from "react-router-dom";
+import LeftArrowIcon from "./images/arrow-left.svg";
+import CloseIcon from "./images/close.svg";
 
 type FixMeLater = any;
 
@@ -85,10 +87,7 @@ function SideBar({
           <div className="go-back-summary" onClick={onClickGoBackSummary}>
             {showBackToSummary === true ? (
               <Fragment>
-                <img
-                  src={require("./images/arrow-left.svg")}
-                  alt="Arrow Left Icon"
-                />
+                <img src={LeftArrowIcon} alt="Arrow Left Icon" />
                 <p>Back To Module Overview</p>
               </Fragment>
             ) : null}
@@ -96,7 +95,7 @@ function SideBar({
           <img
             className="sidebar-close"
             onClick={() => setSideBarShown(false)}
-            src={require("./images/close.svg")}
+            src={CloseIcon}
             alt="Close Icon"
           />
         </div>

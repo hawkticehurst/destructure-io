@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import RightArrowIcon from "./images/arrow-right.svg";
 
 type Props = {
   landing?: boolean;
@@ -18,7 +19,7 @@ function Free({ landing }: Props) {
     </h2>
   ) : null;
   const getStartedArrow = !landing ? (
-    <img src={require("./images/arrow-right.svg")} alt="Arrow Right Icon" />
+    <img src={RightArrowIcon} alt="Arrow Right Icon" />
   ) : null;
 
   return (

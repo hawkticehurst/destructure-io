@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import CheckmarkIcon from "./images/checkmark.svg";
 
 function GuidedLearning() {
   return (
@@ -13,13 +14,13 @@ function GuidedLearning() {
       <div className="img-container right-image">
         <div className="progress-row-container">
           <div className="progress-circle-filled-home">
-            <img src={require("./images/checkmark.svg")} alt="Checkmark Icon" />
+            <img src={CheckmarkIcon} alt="Checkmark Icon" />
           </div>
           <div className="progress-line-filled" />
         </div>
         <div className="progress-row-container">
           <div className="progress-circle-filled-home">
-            <img src={require("./images/checkmark.svg")} alt="Checkmark Icon" />
+            <img src={CheckmarkIcon} alt="Checkmark Icon" />
           </div>
           <div className="progress-line-filled" />
         </div>
