@@ -19,7 +19,6 @@ function Footer({ landing }: Props) {
         <div className="footer-company-column">
           <h2>Destructure.io</h2>
           <Link to="/about">About</Link>
-          <Link to="/">Contact</Link>
         </div>
         <div className="footer-catalog-column">
           <h2>Catalog</h2>

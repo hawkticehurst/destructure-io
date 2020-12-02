@@ -31,6 +31,7 @@ function About() {
           <Team />
         </div>
       </main>
+      <hr />
       <Footer landing={true} />
     </div>
   );
