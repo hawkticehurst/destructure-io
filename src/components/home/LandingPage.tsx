@@ -26,7 +26,7 @@ function LandingPage() {
           <Free landing={true} />
         </div>
       </main>
-      <Footer landing={true} />
+      <Footer />
     </div>
   );
 }
