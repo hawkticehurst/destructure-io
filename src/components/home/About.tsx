@@ -2,6 +2,7 @@ import React from "react";
 import NavBar from "../common/NavBar";
 import Footer from "../common/Footer";
 import Team from "./Team";
+import Alumni from "./Alumni";
 
 function About() {
   return (
@@ -29,6 +30,9 @@ function About() {
         </div>
         <div className="team-container">
           <Team />
+        </div>
+        <div className="team-container">
+          <Alumni />
         </div>
       </main>
       <hr />
