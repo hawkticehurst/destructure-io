@@ -12,11 +12,13 @@
 
 <div align="center"><img src="assets/destructure.gif"/></div>
 
-## Authors
-* Conner Ardman –– [ardmanc@uw.edu](mailto:ardmanc@uw.edu)
-* Hawk Ticehurst –– [hawkt88@uw.edu](mailto:hawkt88@uw.edu)
-* Hari Kaushik –– [harik98@uw.edu](mailto:harik98@uw.edu)
-* Zachary Palmer –– [zachbhs@uw.edu](mailto:zachbhs@uw.edu)
+## Active Team
+* Hawk Ticehurst –– [Email](mailto:hawkticehurst@gmail.com)
+
+## Project Alumni
+* Conner Ardman –– [GitHub](https://github.com/ConnerArdman)
+* Hari Kaushik –– [GitHub](https://github.com/harik98)
+* Zachary Palmer –– [GitHub](https://github.com/zachp98)
 
 ## Notes and Acknowledgements
 _This project was started as a part of the 2020 [Capstone Project](https://ischool.uw.edu/capstone) course at the University of Washington Information School._
