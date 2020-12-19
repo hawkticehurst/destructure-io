@@ -3,9 +3,7 @@
 <h4 align="center">An interactive visualization platform for learning data structures.</h4>
 
 <p align="center">
-  <a href="#local-deployment-instructions">Local Deployment Instructions</a>
-  &nbsp;|&nbsp;<a href="#npm-reference">NPM Reference</a>
-  &nbsp;|&nbsp;<a href="#authors">Authors</a>
+  <a href="#team">Team</a>
   &nbsp;|&nbsp;<a href="#notes-and-acknowledgements">Notes and Acknowledgements</a>
   &nbsp;|&nbsp;<a href="#license">License</a>
 </p>
