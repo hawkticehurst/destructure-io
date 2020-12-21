@@ -2,7 +2,7 @@
   "name": "destructure-io",
   "version": "1.0.0",
   "private": true,
-  "homepage": "http://hawkticehurst.github.io/destructure-io",
+  "homepage": "https://destructure.io/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
