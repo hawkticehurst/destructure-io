@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { findDOMNode } from "react-dom";
 import hljs from "highlight.js";
 import "./highlight-styles/light.scss"; // examples of options, most need to be downloaded: https://highlightjs.org/static/demo/
 import "./highlight-styles/hidden.scss";
@@ -36,10 +35,12 @@ function CodeHighlight({
   isSelected,
   isInline,
 }: Props) {
-  const codeRef = useRef(null);
+  const codeRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    hljs.highlightBlock(findDOMNode(codeRef.current));
+    if (codeRef.current) {
+      hljs.highlightBlock(codeRef.current);
+    }
   });
 
   return (
