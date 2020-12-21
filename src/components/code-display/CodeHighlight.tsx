@@ -36,10 +36,13 @@ function CodeHighlight({
   isSelected,
   isInline,
 }: Props) {
-  const codeRef = useRef(null);
+  const codeRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    hljs.highlightBlock(findDOMNode(codeRef.current));
+    if (codeRef.current) {
+      // const domNode = findDOMNode(codeRef.current);
+      hljs.highlightBlock(codeRef.current);
+    }
   });
 
   return (
