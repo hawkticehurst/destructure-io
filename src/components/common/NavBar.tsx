@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { doSignOut } from "../../firebase/firebase";
 import { useFirebaseUser } from "../../hooks/user";
 import SignInUpInputs from "../auth/SignInUpInputs";
+import MenuIcon from "./images/menu.svg";
 
 type FixMeLater = any;
 
@@ -56,9 +57,7 @@ function NavBar({ toggleSideBar, subModuleTitle, navBarType }: Props) {
   const backBtn =
     navBarType === "module" ? (
       <div className="nav-back-btn">
-        <svg className="hamburger-icon" onClick={toggleSideBar}>
-          <use xlinkHref="/website-icons.svg#hamburger-icon"></use>
-        </svg>
+        <img src={MenuIcon} alt="Sidebar icon" onClick={toggleSideBar} />
         <p onClick={toggleSideBar}>{subModuleTitle}</p>
       </div>
     ) : null;
