@@ -1,0 +1,9 @@
+<svg width="32" height="32" class="hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" id="hamburger-icon">
+  <title>Menu</title>
+  <desc>A line styled icon from Orion Icon Library.</desc>
+  <path data-name="layer2"
+  fill="none" stroke="#202020" stroke-miterlimit="10" stroke-width="4" d="M14 18h36M14 32h36"
+  stroke-linejoin="round" stroke-linecap="round"></path>
+  <path data-name="layer1" fill="none" stroke="#202020" stroke-miterlimit="10"
+  stroke-width="4" d="M14 46h36" stroke-linejoin="round" stroke-linecap="round"></path>
+</svg>

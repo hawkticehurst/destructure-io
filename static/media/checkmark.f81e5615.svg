@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-labelledby="title" 
+role="img" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32">
+  <title>Checkmark</title>
+  <path fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="4" d="M2 30l21 22 39-40"
+  stroke-linejoin="round" stroke-linecap="round"></path>
+</svg>

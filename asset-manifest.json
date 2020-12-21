@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/destructure-io/static/css/main.ca598c69.chunk.css",
+    "main.js": "/destructure-io/static/js/main.286590d4.chunk.js",
+    "main.js.map": "/destructure-io/static/js/main.286590d4.chunk.js.map",
+    "runtime-main.js": "/destructure-io/static/js/runtime-main.c2301b5f.js",
+    "runtime-main.js.map": "/destructure-io/static/js/runtime-main.c2301b5f.js.map",
+    "static/js/2.318a22b5.chunk.js": "/destructure-io/static/js/2.318a22b5.chunk.js",
+    "static/js/2.318a22b5.chunk.js.map": "/destructure-io/static/js/2.318a22b5.chunk.js.map",
+    "index.html": "/destructure-io/index.html",
+    "static/css/main.ca598c69.chunk.css.map": "/destructure-io/static/css/main.ca598c69.chunk.css.map",
+    "static/js/2.318a22b5.chunk.js.LICENSE.txt": "/destructure-io/static/js/2.318a22b5.chunk.js.LICENSE.txt",
+    "static/media/arrow-down.edf1eb6a.svg": "/destructure-io/static/media/arrow-down.edf1eb6a.svg",
+    "static/media/arrow-left.bf7374d6.svg": "/destructure-io/static/media/arrow-left.bf7374d6.svg",
+    "static/media/arrow-right.0c6a6f2c.svg": "/destructure-io/static/media/arrow-right.0c6a6f2c.svg",
+    "static/media/checkmark.7bd56c82.svg": "/destructure-io/static/media/checkmark.7bd56c82.svg",
+    "static/media/checkmark.f81e5615.svg": "/destructure-io/static/media/checkmark.f81e5615.svg",
+    "static/media/close.ffcded2c.svg": "/destructure-io/static/media/close.ffcded2c.svg",
+    "static/media/conner-profile.cc5a23cf.jpg": "/destructure-io/static/media/conner-profile.cc5a23cf.jpg",
+    "static/media/destructure-icon.df0a8522.svg": "/destructure-io/static/media/destructure-icon.df0a8522.svg",
+    "static/media/exclamation.5ae0fcaa.svg": "/destructure-io/static/media/exclamation.5ae0fcaa.svg",
+    "static/media/hari-profile.a7391010.png": "/destructure-io/static/media/hari-profile.a7391010.png",
+    "static/media/hawk-profile.75d24456.jpg": "/destructure-io/static/media/hawk-profile.75d24456.jpg",
+    "static/media/menu.1770b1d9.svg": "/destructure-io/static/media/menu.1770b1d9.svg",
+    "static/media/zach-profile.a1905656.jpg": "/destructure-io/static/media/zach-profile.a1905656.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c2301b5f.js",
+    "static/js/2.318a22b5.chunk.js",
+    "static/css/main.ca598c69.chunk.css",
+    "static/js/main.286590d4.chunk.js"
+  ]
+}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-labelledby="title"
+role="img" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64">
+  <title>Arrow Down</title>
+  <path fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2" d="M31.999 50V14"
+  stroke-linejoin="round" stroke-linecap="round"></path>
+  <path fill="none" stroke="#fff" stroke-miterlimit="10"
+  stroke-width="2" d="M18 36l14 14 14-14" stroke-linejoin="round" stroke-linecap="round"></path>
+</svg>
