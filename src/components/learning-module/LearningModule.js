@@ -411,7 +411,7 @@ function LearningModule() {
             }
             setSideBarShown(!sideBarShown);
           }}
-          SubModuleTitle={
+          subModuleTitle={
             selectedSubModuleIndex - 1 + ". " + selectedSubmoduleName
           }
         />
